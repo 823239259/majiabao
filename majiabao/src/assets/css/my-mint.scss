@@ -1,0 +1,72 @@
+$color-primary: #fff;  
+$font-color: #333;   
+.mint-header {  
+  background-color: $color-primary;  
+  color: $font-color;
+  height: 0.88rem;
+  line-height: 0.88rem;
+  font-size: 0.36rem;
+  border-bottom: 1px solid #e9e9e9;
+}  
+.mint-button:not(.is-disabled):active::after {  
+    opacity: .2 /* .6 */  
+}  
+.mint-button--primary {  
+    background-color: $color-primary;  
+}  
+.mint-button--primary.is-plain {  
+    border: 1px solid $color-primary;  
+    color: $color-primary  
+}  
+.mint-badge.is-primary {  
+  background-color: $color-primary  
+}  
+.mint-switch-input:checked + .mint-switch-core {  
+  border-color: $color-primary;  
+  background-color: $color-primary;  
+}  
+.mint-navbar .mint-tab-item.is-selected {  
+  border-bottom: 3px solid $color-primary;  
+  color: $color-primary;  
+}  
+.mint-tabbar > .mint-tab-item.is-selected {  
+  //color: $color-primary;  
+  color: #4e8bee
+}  
+.mint-searchbar-cancel {  
+  color: $color-primary;  
+}  
+.mint-checkbox-input:checked + .mint-checkbox-core {  
+  background-color: $color-primary;  
+  border-color: $color-primary;  
+}  
+.mint-radio-input:checked + .mint-radio-core {  
+  background-color: $color-primary;  
+  border-color: $color-primary;  
+}  
+.mt-range-progress {  
+  background-color: $color-primary;  
+}  
+.mt-progress-progress {  
+  background-color: $color-primary;  
+}  
+.mint-msgbox-confirm {  
+  color: $color-primary;  
+}  
+.mint-msgbox-confirm:active {  
+  color: $color-primary;  
+}  
+.mint-datetime-action {  
+  color: $color-primary;  
+}  
+.mint-swipe-indicator{
+    opacity: 0.5;
+    background-color: #fff
+}
+.is-active {
+    opacity: 1;
+}
+.mint-tabbar{
+    position: fixed;
+    border-top:1px solid #e6e6e6; 
+}
