@@ -7,8 +7,8 @@ let market = {
   state: {
     quoteConfig:{
 			version: '5.1.2',    //版本
-			//url_real: "ws://192.168.0.232:19002",  //测试地址
-			url_real: "ws://quote.zhishutianxia.com:19002",   //正式地址
+			url_real: "ws://192.168.0.232:19002",  //测试地址
+			//url_real: "ws://quote.zhishutianxia.com:19002",   //正式地址
 			userName: "13677622344",
 			passWord: "a123456"
     },
