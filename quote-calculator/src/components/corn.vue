@@ -104,7 +104,7 @@ export default {
     moneyFormula (panelPrice, jicha, carriage) {
       //扩大倍数 避免js精度问题
       const params1 = 907; //公式参数1
-      let usPrice = ((panelPrice + jicha)*params1 + carriage*1000)/1000
+      let usPrice = ((Number(panelPrice) + Number(jicha))*params1 + Number(carriage)*1000)/1000
       return usPrice
     },
     maxLength (value, lengths = 9) {
