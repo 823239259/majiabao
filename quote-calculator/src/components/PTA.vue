@@ -46,7 +46,7 @@
 </template>
 
 <script>
-const pxPrams = 655;
+const pxPrams = 0.655;
 const danwei  = 0.2027;
 export default {
   name: 'corn',
@@ -80,7 +80,9 @@ export default {
       for (const index in listArr) {  
        if(!this.promptMsg(this[listArr[index]],msgArr[index])) return
       }
-      this.resultPrice = (((Number(this.pxPrice) * pxPrams) + Number(this.costPrice)*danwei)/1000).toFixed(3)
+      var  pxPrice = Number(this.pxPrice) * pxPrams;
+      let  costPrice = (Number(this.costPrice)*danwei)
+      this.resultPrice = (pxPrice + costPrice).toFixed(3)
     },
     promptMsg (id,msg) {
       if(!id){
