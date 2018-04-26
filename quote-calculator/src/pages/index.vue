@@ -68,6 +68,7 @@ export default {
 }
 .list-wrap{
   width: 7.5rem;
+  padding-top: 0.9rem;
   .flexList{
     justify-content: center;
   }

@@ -139,8 +139,14 @@ export default {
   input {
     background-color: #fff;
     border: solid 0.01rem #dfe4e6;
-    color: #333;
+    color: #000;
   }
+  input[disabled],input:disabled,input.disabled{  
+    color: #333;  
+    -webkit-text-fill-color:#333;  
+    -webkit-opacity:1;  
+    opacity: 1;  
+  }  
   label{
     color: #999
   }

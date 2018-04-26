@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="header">
+    <div class="header" :class="isInput?'inputHeader':''">
       <span class="back" @click="goBack"></span>
       <h2>{{id|headerName}}</h2>
     </div>
@@ -8,26 +8,26 @@
       <div class="gold-group input-group">
         <h3>参数一</h3>
         <label for="">运费 (美元/吨)</label>
-        <input @input="maxLength('carriage')" v-model="carriage" type="number" placeholder="">
+        <input @input="maxLength('carriage')" @focus="inputBug" v-model="carriage" type="number" placeholder="">
       </div>
       <div class="gold-group input-group">
         <h3>参数二</h3>
         <label for="">基差(美分/蒲式耳)</label>
-        <input @input="maxLength('jicha')" v-model="jicha" type="number" placeholder="">
+        <input @input="maxLength('jicha')" @focus="inputBug" @blur="output" v-model="jicha" type="number" placeholder="">
       </div>
       <div class="gold-group input-group">
         <h3>参数三</h3>
         <label for="">税率</label>
-        <input @input="maxLength('taxRate')" v-model="taxRate" type="number" placeholder="">
+        <input @input="maxLength('taxRate')" @focus="inputBug" @blur="output" v-model="taxRate" type="number" placeholder="">
       </div>
       <div class="gold-group input-group">
         <h3>参数四</h3>
         <label for="">汇率(人民币/美元)</label>
-        <input @input="maxLength('exchangeRate',5)" v-model="exchangeRate" type="number" placeholder="">
+        <input @input="maxLength('exchangeRate',5)" @focus="inputBug" @blur="output" v-model="exchangeRate" type="number" placeholder="">
       </div>
       <div class="gold-group input-group">
         <h3>芝加哥盘面价</h3>
-        <input @input="maxLength('panelPrice')" v-model="panelPrice" type="number" placeholder="">
+        <input @input="maxLength('panelPrice')" @focus="inputBug" @blur="output" v-model="panelPrice" type="number" placeholder="">
       </div>
       <div class="gold-group input-group">
         <h3>美国离岸成本</h3>
@@ -58,7 +58,8 @@ export default {
       exchangeRate: '',
       panelPrice: '',
       usPrice: '',
-      cnPrice: ''
+      cnPrice: '',
+      isInput: false
     }  
   },
   computed: {
@@ -114,9 +115,13 @@ export default {
       const valueArr =[61, 52, 1.14, '', '', '', '']
       keyArr.forEach((key,index) => {
         this[key] = valueArr[index]
-      })
-
-      
+      })      
+    },
+    inputBug () {
+      this.isInput = true
+    },
+    output () {
+      this.isInput = false
     }
   },
   filters: {
@@ -161,8 +166,7 @@ export default {
 .wrap{
   width: 7.5rem;
   padding-top: 1.08rem;
-  background-color: #dfe4e6;
-  
+  background-color: #dfe4e6; 
 }
 .gold-group,.zn-group{
   position: relative;
@@ -182,6 +186,12 @@ export default {
   input::-webkit-input-placeholder{
     color: #333;
   }
+  input[disabled],input:disabled,input.disabled{  
+    color: #333;  
+    -webkit-text-fill-color:#333;  
+    -webkit-opacity:1;  
+    opacity: 1;  
+  }  
   label{
     position: absolute;
     right: 0.36rem;
@@ -214,5 +224,9 @@ export default {
   background-color: #ebf0f2;
   color: #e64552;
   border: 0.02rem solid #e64552;
+}
+.inputHeader{
+  position: absolute;
+
 }
 </style>

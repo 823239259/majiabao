@@ -8,12 +8,12 @@
       <div class="gold-group input-group">
         <h3>PX价</h3>
         <label for="">人民币/克</label>
-        <input @input="maxLength('pxPrice')" v-model="pxPrice" type="number" placeholder="">
+        <input @input="maxLength('pxPrice')" @focus="inputBug" @blur="output" v-model="pxPrice" type="number" placeholder="">
       </div>
       <div class="gold-group input-group">
         <h3>费用</h3>
         <label for="">美元/盎司</label>
-        <input @input="maxLength('costPrice')" v-model="costPrice" type="number" placeholder="">
+        <input @input="maxLength('costPrice')" @focus="inputBug" @blur="output" v-model="costPrice" type="number" placeholder="">
       </div>
       <p class="text-box">PTA成本价公式：PTA成本价 = 0.655 × PX价 + 费用</p>
       <div class="gold-group input-group">
@@ -53,7 +53,7 @@ export default {
     return {
       isChange: true,
       pxPrice: '',
-      costPrice: '',
+      costPrice: '1200',
       resultPrice: ''
     }  
   },
@@ -96,6 +96,12 @@ export default {
     maxLength (value, lengths = 9) {
       if(this[value].length>lengths) this[value] = this[value].slice(0,lengths)
     },
+    inputBug () {
+      this.isInput = true
+    },
+    output () {
+      this.isInput = false
+    }
   },
 }
 </script>
@@ -125,8 +131,7 @@ export default {
 .wrap{
   width: 7.5rem;
   padding-top: 1.08rem;
-  background-color: #dfe4e6;
-  
+  background-color: #dfe4e6; 
 }
 .text-box{
   @include font(0.26rem,0.86rem,#999);
@@ -149,6 +154,12 @@ export default {
   input::-webkit-input-placeholder{
     color: #333;
   }
+  input[disabled],input:disabled,input.disabled{  
+    color: #333;  
+    -webkit-text-fill-color:#333;  
+    -webkit-opacity:1;  
+    opacity: 1;  
+  }  
   label{
     position: absolute;
     right: 0.36rem;
@@ -197,5 +208,9 @@ export default {
     list-style: disc;
     list-style-position: inside;
   }
+}
+.inputHeader{
+  position: absolute;
+
 }
 </style>
