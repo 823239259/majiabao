@@ -47,6 +47,7 @@
 
 <script>
 const pxPrams = 655;
+const danwei  = 0.2027;
 export default {
   name: 'corn',
   data () {
@@ -79,7 +80,7 @@ export default {
       for (const index in listArr) {  
        if(!this.promptMsg(this[listArr[index]],msgArr[index])) return
       }
-      this.resultPrice = (((Number(this.pxPrice) * pxPrams) + Number(this.costPrice))/1000).toFixed(3)
+      this.resultPrice = (((Number(this.pxPrice) * pxPrams) + Number(this.costPrice)*danwei)/1000).toFixed(3)
     },
     promptMsg (id,msg) {
       if(!id){
