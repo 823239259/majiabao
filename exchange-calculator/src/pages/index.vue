@@ -5,61 +5,32 @@
   </div>
   <div class="list-wrap">
     <ul>
-      <li class="item exchange_item">
-          <div class="left_box">
-              <img src="../assets/images/cny.png" alt="cny">
-              <span>CNY</span>
-          </div>
-          <div class="center_box">
-              <input type="number">
-          </div>
-          <div class="right_box">￥ (人民币)</div>
-      </li>
-      <li class="item">
-          <div class="left_box">
-              <img src="../assets/images/usd.png" alt="usd">
-              <span>USD</span>
-          </div>
-          <div class="center_box">
-              <input type="number" disabled>
-          </div>
-          <div class="right_box">$ (美元)</div>
-      </li>
-      <li class="item">
-          <div class="left_box">
-              <img src="../assets/images/eur.png" alt="cny">
-              <span>EUR</span>
-          </div>
-          <div class="center_box">
-              <input type="number" disabled>
-          </div>
-          <div class="right_box">€ (欧元)</div>
-      </li>
+         <li class="item" :class="{'exchange_item': index === 0}" @click="showTab(index)" v-for="(item,index) in indexList" :key="index">
+            <div class="left_box">
+                <img :src="flagList[item.name]" alt="cny">
+                <span>{{item.name}}</span>
+            </div>
+            <div class="center_box" v-if="index === 0">
+                <p>{{toThousands(inputMoney)||'0'}}</p>
+            </div>
+            <div class="center_box" v-else-if="index === 1">
+                <p>{{money2||'0'}}</p>
+            </div>
+             <div class="center_box" v-else-if="index === 2">
+                <p>{{money3||'0'}}</p>
+            </div>
+            <div class="right_box">{{item.code}}</div>
+        </li>
     </ul>
   </div>
-  <div class="key_wrap">
-      <ul class="key_board">
-          <li class="left">       
-            <div class="small_item">7</div>
-            <div class="small_item">8</div>
-             <div class="small_item">9</div>
-             <div class="small_item">4</div>
-             <div class="small_item">5</div>
-            <div class="small_item">6</div>
-          </li>
-         
-          <li class="clear">AC</li>
-          <li class="left">       
-            <div class="small_item">1</div>
-            <div class="small_item">2</div>
-             <div class="small_item">3</div>
-             <div class="big_item">0</div>
-             <div class="small_item">.</div>
-          </li>
-          <li class="clear_back"></li>
-          
-      </ul>
-  </div>
+<key-board @input-money="changeValue($event,'inputMoney')" ></key-board>
+  <tab-exchange 
+    v-show="tabShow" 
+    :chooseItem="chooseItem"
+    @show-modal="changeValue($event,'tabShow')"
+    @new-item="changeItem($event,'chooseItem')"
+    >
+    </tab-exchange>
   
 </div>  
 </template>
@@ -67,26 +38,138 @@
 <script>
 
 import pro from '../assets/common'
+import tabExchange from './tab_exchange'
+import keyBoard from './key_board'
 const local = pro.local;
+const configList = {
+        CNY: require('../assets/images/cny.png'),
+        USD: require('../assets/images/usd.png'),
+        EUR: require('../assets/images/eur.png'),
+        JPY: require('../assets/images/jpy.png'),
+        HKD: require('../assets/images/cny.png'),
+        KRW: require('../assets/images/krw.png'),
+        GBP: require('../assets/images/gdp.png'),
+        TWD: require('../assets/images/cny.png'),
+        AUD: require('../assets/images/cny.png'),
+    }
 export default {
   name: 'index',
   components: {
-    
+    tabExchange,
+    keyBoard
   },
   data () {
     return {
+        tabShow: false,
+        inputMoney: '1',
+        chooseItem: {},
+        chooseIndex: '',
+        currentItem1: {},
+        currentList: [],
+        currentItem2: {},
+        currentItem3: {},
+        flagList: configList,
+        initItem: ['CNY', 'USD', 'EUR'],
     }  
   },
   computed: {
      clientHeight() {
         return document.documentElement.clientHeight + 'px';
     }, 
+    rate1 () {
+        
+        return this.currentItem1&&this.currentItem2.name&&this.currentItem1[this.currentItem2.name.toLowerCase()]
+    },
+    rate2 () {
+        return this.currentItem1&&this.currentItem2.name&&this.currentItem1[this.currentItem3.name.toLowerCase()]
+    },
+    money2 () {
+        if(!this.inputMoney) return;
+        let money = this.inputMoney * this.rate1;
+        let changeMoney = this.keepDigits(money);
+        return this.toThousands(changeMoney)
+    },
+    money3 () {
+        if(!this.inputMoney) return;
+        let money = this.inputMoney * this.rate2;
+        let changeMoney = this.keepDigits(money);       
+        return this.toThousands(changeMoney);
+    },
+    indexList () {
+        return [this.currentItem1, this.currentItem2, this.currentItem3]
+    }
   },
   methods: {  
     goTo (id) {
         this.$router.push({path:id})
-      }
+    },
+    changeValue (msg, key) {
+      this[key] = msg
+      
+    },
+    changeItem (msg,key) {
+        const list = ['currentItem1', 'currentItem2', 'currentItem3']
+        this[list[this.chooseIndex]] = msg;
+        this.changeValue(msg, key)
+    },
+    showTab (index) {
+        const list = ['currentItem1', 'currentItem2', 'currentItem3']
+        this.chooseIndex = index
+        this.tabShow = true
+        this.chooseItem = this[list[index]];
+    },
+    toThousands (num,nums = 4){
+        let res=num&&num.toString().replace(/\d+/, function(n){ // 先提取整数部分
+            return n.replace(/(\d)(?=(\d{3})+$)/g,function($1){
+                return $1+",";
+            });
+        })
+        return res
+    },
+    keepDigits (num,digits = 4) {
+        let length = num.toString().split('.')[1]&&num.toString().split('.')[1].length;
+        if(length<=digits){
+            return num
+        }else{
+            num = typeof num === 'string'?parseFloat(num):num;
+            return num&&num.toFixed(digits)
+        }   
+    },
+    getList () {
+        this.$axios.post('GetExchangeRate', {
+        })
+        .then((res) => {
+            //console.log(res.data)
+            if (res.data.success == 'true') {
+                this.currentList = res.data.data
+                return res.data.data
+            }
+
+        })
+        .catch(function (error) {
+            console.log(456)
+            //console.log(error);
+        })
+        .then((abc)=>{
+            console.log(abc)
+
+            this.initItem.forEach((element,i) => {
+                this['currentItem'+(i+1)] =  abc.find(item => {
+                    return item.name === element
+                })
+            })   
+                
+        });
+
+    }
+    
+
   },
+  created () {
+      this.getList()
+   
+      
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -95,6 +178,7 @@ $bgGray: #dfe4e6;
 $bgWhite: #ffffff;
 $fontBlack: #333;
 #index{
+    width: 7.5rem;
     background-color: #ebf0f2
 }
 .header{
@@ -148,13 +232,15 @@ $fontBlack: #333;
       }
   }
   .center_box{
-      input{
+      p{
+        display: inline-block;
+        vertical-align: middle;
         width: 2.5rem;
         height: 1rem;
         background-color: #fafafa;
         border-radius: 0.08rem;
-        @include font(0.28rem,1rem,#333,left);
-        text-indent: 0.15rem
+        @include font(0.28rem,1rem,#333);
+        
       }
         
   }
@@ -164,7 +250,7 @@ $fontBlack: #333;
       color: #666;
   }
   .exchange_item{
-      .center_box input{
+      .center_box p{
           background-color: #4595e6;
           color: #fff;
       }                 
@@ -172,7 +258,8 @@ $fontBlack: #333;
   }
   }
 .key_wrap {
-    position: absolute;
+    width: 7.5rem;
+    position: fixed;
     bottom: 0;
 }
 .key_board {

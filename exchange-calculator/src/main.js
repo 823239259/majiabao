@@ -16,7 +16,7 @@ axios.interceptors.request.use((config) => {
     return Promise.reject(error);
 });
 axios.interceptors.response.use((res) =>{
-    if(res.data.msg === 'success'){
+    if(res.data.success === 'true'){
         return res;      
     }
     return Promise.reject(res);
