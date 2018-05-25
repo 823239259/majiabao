@@ -184,9 +184,9 @@ $fontBlack: #333;
   transform: translate3d(0, 100%, 0);
 }
 
-.vux-pop-in-leave {
+.vux-pop-in-leave,.vux-pop-in-enter-to {
   opacity: 1;
-  transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, 0, 0);
 }
 
 </style>

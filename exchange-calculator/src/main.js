@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import qs from 'qs'
+import fastClick from 'fastclick'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 axios.defaults.baseURL = process.env.API_HOST1;
 axios.interceptors.request.use((config) => {
@@ -30,7 +31,7 @@ Vue.config.productionTip = false
 
 Vue.prototype.$axios = axios
 Vue.prototype.$toast = Toast
-
+fastClick.attach(document.body)
 
 Vue.component('mt-switch', Switch)
 //Vue.use(Toast)
