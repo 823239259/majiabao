@@ -35,7 +35,7 @@ const configList = {
         KRW: require('../assets/images/krw.png'),
         GBP: require('../assets/images/gdp.png'),
         TWD: require('../assets/images/cny.png'),
-        AUD: require('../assets/images/aud.png'),
+        AUD: require('../assets/images/cny.png'),
     }
     
    
@@ -103,7 +103,6 @@ export default {
         this.getList()
     }
 }
-
 </script>
 <style lang="scss" scoped>
 @import "../assets/css/common.scss";
@@ -185,9 +184,9 @@ $fontBlack: #333;
   transform: translate3d(0, 100%, 0);
 }
 
-.vux-pop-in-leave,.vux-pop-in-enter-to {
+.vux-pop-in-leave {
   opacity: 1;
-  transform: translate3d(0, 0, 0);
+  transform: translate3d(0, -100%, 0);
 }
 
 </style>
