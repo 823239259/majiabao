@@ -5,8 +5,8 @@
   </div>
   <div class="list-wrap">
     <ul>
-         <li class="item" :class="{'exchange_item': index === 0}" @click="showTab(index)" v-for="(item,index) in indexList" :key="index">
-            <div class="left_box">
+         <li class="item" :class="{'exchange_item': index === 0}" v-for="(item,index) in indexList" :key="index">
+            <div class="left_box" @click="showTab(index)">
                 <img :src="flagList[item.name]" alt="cny">
                 <span>{{item.name}}</span>
             </div>
