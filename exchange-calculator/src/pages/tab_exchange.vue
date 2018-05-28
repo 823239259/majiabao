@@ -35,7 +35,7 @@ const configList = {
         KRW: require('../assets/images/krw.png'),
         GBP: require('../assets/images/gdp.png'),
         TWD: require('../assets/images/cny.png'),
-        AUD: require('../assets/images/cny.png'),
+        AUD: require('../assets/images/aud.png'),
     }
     
    
