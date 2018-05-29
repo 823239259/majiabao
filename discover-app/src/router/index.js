@@ -32,9 +32,9 @@ const router = new Router({
     },
     /* discover页面的路由配置 end */
     {
-      path:"/test",
-    	name:"test",
-    	component:load("discover/calendarNews")
+      path:"/cloud",
+    	name:"cloud",
+    	component:load("cloud")
     }
   ]
 })

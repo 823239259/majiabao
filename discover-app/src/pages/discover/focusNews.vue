@@ -24,8 +24,9 @@
 				</li>
 			</ul>
 		</div> -->
-		<iframe class="iframe" src="http://192.168.0.114:8080/ms-mcms/html/1/189/index.html" frameborder="0"></iframe>
 		<iframe class="iframe"  target="_parent" src="http://www.duokongtai.com/html/1/191/index.html" frameborder="0"></iframe>
+		<iframe class="iframe1" src="http://www.duokongtai.com/html/1/189/index.html" frameborder="0" :style="{height:iframeHeight}"></iframe>
+		
 	</div>
 </template>
 
@@ -41,6 +42,13 @@
 				{title:"俄媒数据：中石油2017年海外油气开采量增17.2%",time:"2018-02-08",imgurl:require("../../assets/images/discover/important_3.jpg"),id:"3"},
 				{title:"钢材总库存处于低位，沪钢稳居3900元/吨之上",time:"2018-02-05",imgurl:require("../../assets/images/discover/important_4.jpg"),id:"4"},
 				{title:"铜业公司业绩喜人，铜市有望进入“长牛”",time:"2018-02-03",imgurl:require("../../assets/images/discover/important_5.jpg"),id:"5"}],
+			}
+		},
+		computed: {
+			iframeHeight () {
+				const ratio = parseFloat(document.documentElement.style.fontSize)
+				console.log(ratio)
+				return (document.documentElement.clientHeight - (2.4+0.98+0.96)*ratio) + 'px'
 			}
 		},
 		methods: {
@@ -94,6 +102,10 @@
 		}
 	}
 	.iframe{
+		width: 7.5rem;
+		height: 2.4rem
+	}
+	.iframe1 {
 		width: 7.5rem;
 	}
 </style>
