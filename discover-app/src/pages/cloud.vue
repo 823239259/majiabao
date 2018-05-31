@@ -5,9 +5,10 @@
         </div>
         <div id="svg-box">
             <svg class="abc" :width='width' :height='height' @click='listener($event)' >
-                <a :href="tag.href" v-for='tag in tags' class="forTest">
+                <router-link to=""></router-link>
+                <router-link :to="tag.href" v-for='tag in tags' class="forTest" :key="tag.text">
                     <text fill='red' :x='tag.x' :y='tag.y' :font-size='20 * (600/(600-tag.z))' :fill-opacity='((400+tag.z)/600)'>{{tag.text}}</text>
-                </a>
+                </router-link>
             </svg>
         </div>
         
@@ -76,7 +77,7 @@
                 tag.x = this.CX + this.RADIUS * Math.sin(a) * Math.cos(b); //根据标签角度求出标签的x,y,z坐标
                 tag.y = this.CY + this.RADIUS * Math.sin(a) * Math.sin(b);
                 tag.z = this.RADIUS * Math.cos(a);
-                tag.href = 'https://imgss.github.io'; //给标签添加链接
+                tag.href = '/discoverSearch'; //给标签添加链接
                 tags.push(tag);
             }
             this.tags = tags; //让vue替我们完成视图更新

@@ -31,11 +31,11 @@ const router = new Router({
     	component:load("discover/importantDetails")
     },
     /* discover页面的路由配置 end */
-    {
-      path:"/cloud",
-    	name:"cloud",
-    	component:load("cloud")
-    }
+    // {
+    //   path:"/cloud",
+    // 	name:"cloud",
+    // 	component:load("cloud")
+    // }
   ]
 })
 export default router

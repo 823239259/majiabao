@@ -5,13 +5,14 @@ const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 
 function resolve (dir) {
-  return path.join(__dirname, '..', dir)
+  return path.join(__dirname, '..', dir) //path.join()方法 该方法将多个参数值字符串结合成一个路径字符串,__dirname变量值代表程序运行的根目录。
+
 }
 
 
 
 module.exports = {
-  context: path.resolve(__dirname, '../'),
+  context: path.resolve(__dirname, '../'), //path.resolve()方法 该方法以应用程序根目录为起点，根据所有的参数值字符串解析出一个绝对路径
   entry: {
     app: './src/main.js'
   },

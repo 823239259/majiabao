@@ -6,7 +6,7 @@
                 <span class="icon_account"></span>
             </mt-button> -->
             <mt-button slot="right">
-                <span class="icon_search" v-show="selected==1" @click.stop="goto('/discoverSearch')"></span>
+                <span class="icon_search" v-show="selected==3" @click.stop="goto('/discoverSearch')"></span>
                 <span class="icon_calendar" v-show="selected==2" @click.stop="toChooseDay('picker1')"></span>
             </mt-button>
         </mt-header>
@@ -36,7 +36,6 @@
                     <!-- <focus-news></focus-news> -->
                 </mt-tab-container-item>
             </mt-tab-container>
-            <router-link to="/cloud">abc</router-link>
             <mt-datetime-picker
                 ref="picker1"
                 type="date"
