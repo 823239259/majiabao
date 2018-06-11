@@ -24,8 +24,14 @@
 				</li>
 			</ul>
 		</div> -->
-		<iframe class="iframe"  target="_parent" src="http://www.duokongtai.com/html/1/191/index.html" frameborder="0"></iframe>
-		<iframe class="iframe1" src="http://www.duokongtai.com/html/1/189/index.html" frameborder="0" :style="{height:iframeHeight}"></iframe>
+		<div>
+			<iframe  id="iframe1" target="_parent" src="http://www.duokongtai.com/html/1/191/index.html" frameborder="0" :scrolling="isIphone?'no':'yes'"></iframe>
+		</div>
+		<div class="iframe-wrap" :style="{height:iframeHeight}">
+			<iframe  id="iframe2" :class="{'inherit-height':!isIphone}" src="http://www.duokongtai.com/html/1/189/index.html" frameborder="0" :scrolling="isIphone?'no':'yes'" ></iframe>
+			<!-- <iframe  id="iframe2"  src="http://www.duokongtai.com/html/1/189/index.html" frameborder="0"  :scrolling="isIphone" ></iframe> -->
+		</div>
+		
 		
 	</div>
 </template>
@@ -47,8 +53,13 @@
 		computed: {
 			iframeHeight () {
 				const ratio = parseFloat(document.documentElement.style.fontSize)
-				console.log(ratio)
+				// return (document.documentElement.clientHeight - (2.4+0.98+0.96)*ratio) 
 				return (document.documentElement.clientHeight - (2.4+0.98+0.96)*ratio) + 'px'
+			},
+			isIphone () {
+				const isIphone = window.navigator.userAgent.toLowerCase().indexOf('iphone');
+				console.log(window.navigator.userAgent.toLowerCase())
+				return isIphone>-1
 			}
 		},
 		methods: {
@@ -67,10 +78,8 @@
 						}
 					})
 				}
-	
-			},
-		}
-	
+			},			
+		},
 	}
 </script>
 
@@ -101,11 +110,24 @@
 			}
 		}
 	}
-	.iframe{
-		width: 7.5rem;
-		height: 2.4rem
+	#iframe1{
+		width: 1px;
+		min-width: 100%;
+		*width: 100%;
+		height: 2.4rem;
+
 	}
-	.iframe1 {
-		width: 7.5rem;
+	#iframe2 {
+		width: 1px;
+		min-width: 100%;
+		*width: 100%;
+	}
+	.iframe-wrap{
+		-webkit-overflow-scrolling: touch;
+		overflow: scroll;
+		&::-webkit-scrollbar {display:none}
+	}
+	.inherit-height{
+		height: inherit
 	}
 </style>

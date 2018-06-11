@@ -1,40 +1,40 @@
 <template>
-    <div id="discover" ref="viewBox"  :style="{height:clientHeight,overflow:'scroll'}">
-        <div  @click="toTop">
+    <div id="discover">
+        <div class="title_wrap"  @click="toTop">
             <mt-header fixed title="资讯">
             <!-- <mt-button slot="left" @click="goto('/my')">
                 <span class="icon_account"></span>
             </mt-button> -->
             <mt-button slot="right">
-                <span class="icon_search" v-show="selected==3" @click.stop="goto('/discoverSearch')"></span>
+                <span class="icon_search" v-show="selected==1" @click.stop="goto('/discoverSearch')"></span>
                 <span class="icon_calendar" v-show="selected==2" @click.stop="toChooseDay('picker1')"></span>
             </mt-button>
         </mt-header>
         </div>
 
         <!-- 选项卡 -->
-        <div class="tab_wrap">
+        <div class="tab_wrap" ref="viewBox" :style="{height:clientHeight}">
             <mt-navbar v-model="selected">
-                <!-- <mt-tab-item id="1">7x24</mt-tab-item> -->
-                <mt-tab-item id="1">要闻</mt-tab-item>
+                <mt-tab-item id="1">7x24</mt-tab-item>
+                <!-- <mt-tab-item id="1">要闻</mt-tab-item> -->
                 <mt-tab-item id="2">日历</mt-tab-item>
-                <mt-tab-item id="3">7x24</mt-tab-item>
+                <!-- <mt-tab-item id="3">7x24</mt-tab-item> -->
                 <!-- <mt-tab-item id="3">要闻</mt-tab-item> -->
             </mt-navbar>
 
             <!-- tab-container -->
             <mt-tab-container v-model="selected">
                 <mt-tab-container-item id="1">
-                    <!-- <discover7x24></discover7x24> -->
-                    <focus-news></focus-news>
+                    <discover7x24></discover7x24>
+                    <!-- <focus-news></focus-news> -->
                 </mt-tab-container-item>
                 <mt-tab-container-item id="2">
                     <calendar-news :newDate ="newsDate" @datePosition="getDatePosition"></calendar-news>
                 </mt-tab-container-item>
-                <mt-tab-container-item id="3">
+                <!-- <mt-tab-container-item id="3">
                     <discover7x24></discover7x24>
-                    <!-- <focus-news></focus-news> -->
-                </mt-tab-container-item>
+                    <focus-news></focus-news>
+                </mt-tab-container-item> -->
             </mt-tab-container>
             <mt-datetime-picker
                 ref="picker1"
@@ -47,8 +47,6 @@
                 :endDate="endDate"
                 @confirm="handleChange">
             </mt-datetime-picker>
-
-
         </div>
     </div>
 </template>
@@ -81,7 +79,8 @@
         },
         computed: {
             clientHeight() {
-                return document.documentElement.clientHeight + 'px';
+                const ratio = parseFloat(document.documentElement.style.fontSize)
+                return (document.documentElement.clientHeight - 0.96*ratio) + 'px'
             },
         },
         methods: {
@@ -117,8 +116,14 @@
             // 	}, 100);
             // }
             toTop () {
-                console.log(12111)
-                this.$refs.viewBox.scrollTop = 0
+                //console.log(123)
+                let topBox = this.$refs.viewBox;
+                //console.log(topBox.style.WebkitOverflowScrolling)
+                //console.log(topBox.toString())
+                topBox.style.WebkitOverflowScrolling = 'auto';
+                topBox.scrollTop = 0;
+                topBox.style.WebkitOverflowScrolling = 'touch';
+                //console.log(topBox.style.WebkitOverflowScrolling)
             }
         },
         watch: {
@@ -144,8 +149,6 @@
         // 	//window.removeEventListener('scroll', _this.forTest);
 
         // }
-
-
     }
 </script>
 
@@ -154,6 +157,7 @@
     #discover {
         width: $w;
         background-color: #fff;
+        
         .mint-navbar .mint-tab-item.is-selected {
             margin: 0;
             border-bottom: 0.03rem solid $redDeep;
@@ -167,6 +171,10 @@
             padding: 0 0.3rem;
         }
 
+    }
+    .title_wrap{
+        width: 7.5rem;
+        cursor: pointer;
     }
 
     .icon_account,
@@ -190,7 +198,10 @@
     .tab_wrap{
         margin-top: 0.96rem;
         width: 7.5rem;
-        //padding-bottom: 1.16rem;
+        overflow:scroll;
+        -webkit-overflow-scrolling: touch;
+        &::-webkit-scrollbar {display:none}
+
     }
 
 
