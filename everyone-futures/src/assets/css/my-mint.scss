@@ -1,0 +1,71 @@
+.mint-header{
+    background-color: #e44f34;
+    height: 0.96rem;
+    line-height: 0.96rem;
+    width: 7.5rem;
+    border-bottom: 1px solid #e6e6e6;
+    color: #333
+}
+.mint-header.is-fixed {
+    z-index: 999;
+}
+.mint-header-title{
+    font-size: 0.36rem
+}
+.mint-tabbar{
+	position: fixed;
+    bottom: 0;
+    border-top:1px solid #e6e6e6; 
+    z-index: 999;
+    
+}	
+#bottom_tab .mint-tab-item-label{
+	color: #c5cacc;
+}
+
+#bottom_tab .mint-tabbar {
+    width: 7.5rem;
+    background-color: #e44f34;
+}
+#bottom_tab .mint-tabbar > .mint-tab-item.is-selected {
+    background-color: #e44f34;
+    .mint-tab-item-label{
+        color: #1482f0;
+    }
+}
+.mint-navbar{
+    background-color: #e44f34; 
+}
+#help_docs .mint-tab-item .mint-tab-item-label {
+    font-size: .28rem
+}
+#datas .mint-tab-item-label ,#my_match .mint-tab-item-label {
+    font-size: .28rem
+}
+
+.mint-msgbox-btn{
+    background-color: #e64552;
+}
+.mint-msgbox-confirm{
+    color: white;   
+    font-size: 0.28rem;
+}
+.mint-msgbox-message{
+    color: black;
+}
+.mint-msgbox-header{
+    padding: 0.2rem 0rem;
+    background-color: #333340;
+}
+.mint-msgbox-title{
+     color: white;
+     font-weight: normal;
+}
+#customer_services .mint-actionsheet-listitem:nth-child(1){
+    border: 0
+}
+#datas {
+    .mint-navbar{
+        width: 4.6rem
+    }
+}

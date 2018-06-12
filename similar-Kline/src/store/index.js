@@ -53,10 +53,13 @@ export default new Vuex.Store({
 					show: true, //控制是否显示提示框
 					trigger: 'axis', //触发的位置 axis与 item 前者是在坐标轴触发 后者是在点上触发
 					axisPointer: {  //axisPointer 默认不显示 
-						type: 'cross'
+						type: 'cross',
+						lineStyle: {
+							color: 'red'
+						}
 					},
 					formatter: function (params) {
-						console.log(params)
+						//console.log(params)
 						let time = params[0].name;
 						let kd = params[0].data;
 						var rate = ((kd[2] - kd[1]) / kd[1] * 100).toFixed(2);  //收盘价  - 开盘价 / 开盘价
