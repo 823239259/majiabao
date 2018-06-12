@@ -340,7 +340,559 @@ export default new Vuex.Store({
 		},
     },
 actions: {
-		//处理交易数据
-	
+				//初始化行情
+		initQuoteClient: function(context) {
+			context.state.quoteSocket = new WebSocket(context.state.market.quoteConfig.url_real);
+			context.state.quoteSocket.onopen = function(evt) {
+//				console.log('open');
+				context.state.quoteSocket.send('{"Method":"Login","Parameters":{"UserName":"'+context.state.market.quoteConfig.userName+'","PassWord":"'+context.state.market.quoteConfig.passWord+'"}}');
+			};
+			context.state.quoteSocket.onclose = function(evt) {
+				console.log('close');
+				context.state.isshow.warningType = 1;
+				context.state.isshow.warningShow = true;
+				context.state.account.quoteStatus = false;
+			};
+			context.state.quoteSocket.onerror = function(evt) {
+//				console.log('error');
+			};
+			context.state.quoteSocket.onmessage = function(evt) {
+//				console.log('message');
+				context.state.wsjsondata = JSON.parse(evt.data);
+				if(context.state.wsjsondata.Method == "OnRspLogin") { // 登录行情服务器
+					Toast({message: '行情服务器连接成功', position: 'bottom', duration: 2000});
+					context.state.account.quoteStatus = true;
+					// 查询服务器支持品种用于订阅
+					context.state.quoteSocket.send('{"Method":"QryCommodity","Parameters":{' + null + '}}');
+				} else if(context.state.wsjsondata.Method == "OnRspQryCommodity") { // 行情服务器支持的品种
+					// 行情服务器支持的品种
+					context.state.market.markettemp = JSON.parse(evt.data).Parameters;
+					context.state.market.markettemp.forEach(function(e) {
+						var key = e.CommodityNo;
+						context.state.market.orderTemplist[key] = e;
+					});
+					if(context.state.market.commodityOrder){
+						context.state.market.commodityOrder.forEach((o, i) => {
+							context.state.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + context.state.market.orderTemplist[o.commodityNo].ExchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + context.state.market.orderTemplist[o.commodityNo].MainContract +'"}}');
+						});
+					}
+				} else if(context.state.wsjsondata.Method == "OnRspSubscribe") { // 订阅成功信息
+					var key = JSON.parse(evt.data).Parameters.CommodityNo;
+					context.state.market.templateList[key] = JSON.parse(evt.data).Parameters;
+					var dealDetails = {CommodityNo: '', data: []}, _dealDetails = {};
+					context.state.market.markettemp.forEach(function(e) {
+						if(e.CommodityNo == key) {
+							e.LastQuotation = JSON.parse(evt.data).Parameters.LastQuotation;
+							context.state.market.Parameters.push(e);
+							//订阅成功  成交信息
+							_dealDetails['time'] = e.LastQuotation.DateTimeStamp.split(' ')[1];
+							_dealDetails['price'] = e.LastQuotation.LastPrice;
+							_dealDetails['volume'] = e.LastQuotation.LastVolume;
+							_dealDetails['_price'] = e.LastQuotation.PreSettlePrice;
+							_dealDetails['dotSize'] = e.DotSize;
+							dealDetails.CommodityNo = e.CommodityNo;
+							dealDetails.data.push(_dealDetails);
+							context.state.market.tradeParameters.push(dealDetails); 
+						}
+					});
+					//重新组装数据
+					context.state.market.Parameters.forEach(function(o, i){
+						context.state.market.commodityOrder.forEach(function(v){
+							if(o.CommodityNo == v.commodityNo){
+								o.isRecommend = v.isRecommend;
+								o.commodityType = v.commodityType;
+								o.contrast = v.contrast;
+								o.orderNum = v.orderNum;
+								o.id = v.id;
+								o.check = 0;
+							}
+							
+						});
+					});
+					context.state.market.quoteInitStep = true;
+//					if(context.state.market.subscribeIndex == 1){
+//						//初始化交易
+//						context.dispatch('initTrade');
+//					}
+					context.state.market.subscribeIndex++;
+				} else if(context.state.wsjsondata.Method == "OnRtnQuote") { // 最新行情
+					var val = JSON.parse(evt.data).Parameters;
+					var key = JSON.parse(evt.data).Parameters.CommodityNo;
+					context.state.market.Parameters.forEach(function(a, r) {
+						if(a.CommodityNo == key){
+							if(JSON.parse(evt.data).Parameters.LastPrice > a.LastQuotation.LastPrice){
+								context.state.market.quoteIndex = r;   //行情变颜色
+								context.state.market.quoteColor = 'red';
+							}else if(JSON.parse(evt.data).Parameters.LastPrice < a.LastQuotation.LastPrice){
+								context.state.market.quoteIndex = r;   //行情变颜色
+								context.state.market.quoteColor = 'green';
+							}
+						}
+					});
+					//合约成交明细
+					var _dealDetails00 = {};
+					context.state.market.tradeParameters.forEach(function(o, i){
+						if(key == o.CommodityNo){
+							_dealDetails00['time'] = val.DateTimeStamp.split(' ')[1];
+							_dealDetails00['price'] = val.LastPrice;
+							_dealDetails00['volume'] = val.LastVolume;
+							_dealDetails00['_price'] = val.PreSettlePrice;
+							_dealDetails00['dotSize'] = context.state.market.orderTemplist[key].DotSize;
+							if(o.data.length >= 12){
+								o.data.shift();
+							}
+							o.data.push(_dealDetails00);
+						}
+					});
+					//更新数据
+					context.state.market.templateList[key] = JSON.parse(evt.data).Parameters;
+					context.state.market.markettemp.forEach(function(e, i) {
+						//如果拿到的数据的CommodityNo与缓存的数据的CommodityNo相等
+						if(JSON.parse(evt.data).Parameters.CommodityNo == e.CommodityNo) {
+							//就把拿到数据存入缓存中
+							e.LastQuotation = JSON.parse(evt.data).Parameters;
+							context.state.market.orderTemplist[key] = e;
+							//将显示数据进行更新
+							context.state.market.Parameters.forEach(function(a, r) {
+								if(a.CommodityNo == e.CommodityNo) {
+									context.state.market.Parameters.splice(r, 1, e);
+								}
+							});
+							
+							
+							
+							if(context.state.market.currentNo == e.CommodityNo) {
+								context.state.market.CacheLastQuote.push(JSON.parse(evt.data).Parameters);
+								if(context.state.market.CacheLastQuote.length > 2){
+									context.state.market.CacheLastQuote.shift();
+								}
+								//更新分时图
+								if(context.state.isshow.isfensshow == true && context.state.isshow.isfens == true) {
+									var arr = [], arr1, arr2, arr3, arr4;
+									context.state.market.charttimetime = new Date();
+									context.state.market.charttimems = context.state.market.charttimetime.getTime();
+									context.state.market.charttime = context.state.market.charttimems - context.state.market.charttimems2;
+									if(context.state.market.charttime >= 1000 || context.state.market.charttimetemp >= 1000) {
+										arr = [];
+										arr[0] = JSON.parse(evt.data).Parameters.DateTimeStamp;
+										arr[1] = JSON.parse(evt.data).Parameters.LastPrice;
+										arr[2] = JSON.parse(evt.data).Parameters.OpenPrice;
+										arr[3] = JSON.parse(evt.data).Parameters.LowPrice;
+										arr[4] = JSON.parse(evt.data).Parameters.HighPrice;
+										arr[5] = JSON.parse(evt.data).Parameters.Position;
+										arr[6] = JSON.parse(evt.data).Parameters.LastVolume;
+										arr1 = JSON.parse(evt.data).Parameters.DateTimeStamp.split(' ');
+										arr2 = arr1[1].split(':'); //最新时间
+										arr3 = context.state.market.jsonData[context.state.market.currentNo].Parameters.Data[context.state.market.jsonData[context.state.market.currentNo].Parameters.Data.length - 1][0].split(' ');
+										arr4 = arr3[1].split(':'); //历史时间
+										if(arr2[1] == arr4[1]) {
+											var time = context.state.market.jsonData[context.state.market.currentNo].Parameters.Data[context.state.market.jsonData[context.state.market.currentNo].Parameters.Data.length - 1][0];
+											var vol = parseInt(context.state.market.jsonData[context.state.market.currentNo].Parameters.Data[context.state.market.jsonData[context.state.market.currentNo].Parameters.Data.length - 1][6]) + parseInt(arr[6]);
+											context.state.market.jsonData[context.state.market.currentNo].Parameters.Data[context.state.market.jsonData[context.state.market.currentNo].Parameters.Data.length - 1] = arr;
+											context.state.market.jsonData[context.state.market.currentNo].Parameters.Data[context.state.market.jsonData[context.state.market.currentNo].Parameters.Data.length - 1][0] = time;
+											context.state.market.jsonData[context.state.market.currentNo].Parameters.Data[context.state.market.jsonData[context.state.market.currentNo].Parameters.Data.length - 1][6] = vol;
+										}else{
+//											context.state.market.jsonData.Parameters.Data.shift();
+											context.state.market.jsonData[context.state.market.currentNo].Parameters.Data.push(arr);
+										}
+										context.commit('setfensoption', context.state.market.contrastData);
+										context.commit('drawfens', {
+											id1: 'fens',
+											id2: 'volume'
+										});
+										context.state.market.charttimetemp = 0;
+									} else {
+										context.state.market.charttimetemp += context.state.market.charttime;
+									}
+									context.state.market.charttimetime2 = new Date();
+									context.state.market.charttimems2 = context.state.market.charttimetime2.getTime();
+								}
+								//更新闪电图
+								if(context.state.isshow.islightshow == true && context.state.isshow.islight == true) {
+									context.state.market.jsonTow = JSON.parse(evt.data);
+									context.commit('setlightDate');
+									context.commit('drawlight', 'light');
+								}
+								//更新K线图
+								if(context.state.isshow.isklineshow == true && context.state.isshow.iskline == true) {
+									if(context.state.market.CacheLastQuote[1].TotalVolume <= context.state.market.CacheLastQuote[0].TotalVolume){
+										return;
+									}
+									var arr = [];
+									arr[0] = JSON.parse(evt.data).Parameters.DateTimeStamp;
+									arr[1] = JSON.parse(evt.data).Parameters.LastPrice;
+									arr[2] = JSON.parse(evt.data).Parameters.OpenPrice;
+									arr[3] = JSON.parse(evt.data).Parameters.LowPrice;
+									arr[4] = JSON.parse(evt.data).Parameters.HighPrice;
+									arr[5] = JSON.parse(evt.data).Parameters.Position;
+									context.state.market.volume+=JSON.parse(evt.data).Parameters.LastVolume;
+									arr[6] = context.state.market.volume;
+									
+									var arr1 = JSON.parse(evt.data).Parameters.DateTimeStamp.split(' '); //得到的时间
+									//["20", "47", "38"]
+									var arr2 = arr1[1].split(':'); //得到的数据
+									var arr3 = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][0].split(' ');
+									//["20", "48", "00"]
+									var arr4 = arr3[1].split(':'); //历史
+									var _arr1 = JSON.parse(evt.data).Parameters.DateTimeStamp;
+									_arr1 = _arr1.split(' ')[0].replace(/-/g, '/') + ' ' + _arr1.split(' ')[1].split('.')[0];
+									var _arr3 = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][0];
+									_arr3 = _arr3.replace(/-/g, '/');
+									if(context.state.market.selectTime == 1) {
+										if(arr2[1] == arr4[1]) {
+											arr[0] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][0];
+											if(arr[1] < context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][3]) {
+												arr[3] = arr[1];
+											} else {
+												arr[3] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][3]
+											}
+											if(arr[1] > context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][4]) {
+												arr[4] = arr[1];
+											} else {
+												arr[4] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][4]
+											}
+											arr[1] = arr[1];
+											arr[2] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][2];
+											arr[5] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][5];
+											arr[6] = context.state.market.volume;
+											var length = context.state.market.jsonDataKline.Parameters.Data.length;
+											context.state.market.jsonDataKline.Parameters.Data.splice(length-1,1,arr);
+										} else{
+											var arrTemp = [];
+											context.state.market.jsonDataKline.Parameters.Data.shift();
+											context.state.market.volume = 0;
+											arrTemp[0] = arr[0].substring(0, arr[0].length - 2) + '00';
+											arrTemp[1] = arr[1];
+											arrTemp[2] = arr[1];
+											arrTemp[3] = arr[1];
+											arrTemp[4] = arr[1];
+											arrTemp[5] = arr[5];
+											arrTemp[6] = arr[6];
+											arr = arrTemp;
+											context.state.market.jsonDataKline.Parameters.Data.push(arrTemp);
+										}
+									}else if(context.state.market.selectTime == 5){
+										if(arr2[1]%5 != 0) {
+											arr[0] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][0];
+											if(arr[1] < context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][3]) {
+												arr[3] = arr[1];
+											} else {
+												arr[3] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][3]
+											}
+											if(arr[1] > context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][4]) {
+												arr[4] = arr[1];
+											} else {
+												arr[4] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][4]
+											}
+											arr[1] = arr[1];
+											arr[2] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][2];
+											arr[5] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][5];
+											//arr[6] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][6];
+											arr[6] = context.state.market.volume;
+											var length = context.state.market.jsonDataKline.Parameters.Data.length;
+											context.state.market.jsonDataKline.Parameters.Data.splice(length-1,1,arr);
+											//context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1] = arr;
+										} else if(arr2[1]%5 == 0 && arr2[2]=='00'){
+											var arrTemp = [];
+											context.state.market.jsonDataKline.Parameters.Data.shift();
+											context.state.market.volume=0;
+											arrTemp[0] = arr[0].substring(0, arr[0].length - 2) + '00';
+											arrTemp[1] = arr[1];
+											arrTemp[2] = arr[1];
+											arrTemp[3] = arr[1];
+											arrTemp[4] = arr[1];
+											arrTemp[5] = arr[5];
+											arrTemp[6] = arr[6];
+											arr = arrTemp;
+											context.state.market.jsonDataKline.Parameters.Data.push(arr);
+										}
+									}else if(context.state.market.selectTime == 15){
+										if(arr2[1]%15 != 0) {
+											arr[0] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][0];
+											if(arr[1] < context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][3]) {
+												arr[3] = arr[1];
+											} else {
+												arr[3] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][3]
+											}
+											if(arr[1] > context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][4]) {
+												arr[4] = arr[1];
+											} else {
+												arr[4] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][4]
+											}
+											arr[1] = arr[1];
+											arr[2] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][2];
+											arr[5] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][5];
+											//arr[6] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][6];
+											//context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1] = arr;
+											arr[6] = context.state.market.volume;
+											var length = context.state.market.jsonDataKline.Parameters.Data.length;
+											context.state.market.jsonDataKline.Parameters.Data.splice(length-1,1,arr);
+										} else if(arr2[1]%15 == 0 && arr2[2]=='00'){
+											var arrTemp = [];
+											context.state.market.jsonDataKline.Parameters.Data.shift();
+											arrTemp[0] = arr[0].substring(0, arr[0].length - 2) + '00';
+											arrTemp[1] = arr[1];
+											arrTemp[2] = arr[1];
+											arrTemp[3] = arr[1];
+											arrTemp[4] = arr[1];
+											arrTemp[5] = arr[5];
+											arrTemp[6] = arr[6];
+											arr = arrTemp;
+											context.state.market.volume=0;
+											context.state.market.jsonDataKline.Parameters.Data.push(arr);
+										}
+									}else if(context.state.market.selectTime == 30){
+										if(arr2[1]%30 != 0) {
+											arr[0] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][0];
+											if(arr[1] < context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][3]) {
+												arr[3] = arr[1];
+											} else {
+												arr[3] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][3]
+											}
+											if(arr[1] > context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][4]) {
+												arr[4] = arr[1];
+											} else {
+												arr[4] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][4]
+											}
+											arr[1] = arr[1];
+											arr[2] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][2];
+											arr[5] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][5];
+											//arr[6] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][6];
+											//context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1] = arr;
+											arr[6] = context.state.market.volume;
+											var length = context.state.market.jsonDataKline.Parameters.Data.length;
+											context.state.market.jsonDataKline.Parameters.Data.splice(length-1,1,arr);
+										} else if(arr2[1]%30 == 0 && arr2[2]=='00'){
+											var arrTemp = [];
+											context.state.market.jsonDataKline.Parameters.Data.shift();
+											arrTemp[0] = arr[0].substring(0, arr[0].length - 2) + '00';
+											arrTemp[1] = arr[1];
+											arrTemp[2] = arr[1];
+											arrTemp[3] = arr[1];
+											arrTemp[4] = arr[1];
+											arrTemp[5] = arr[5];
+											arrTemp[6] = arr[6];
+											arr = arrTemp;
+											context.state.market.volume = 0;
+											context.state.market.jsonDataKline.Parameters.Data.push(arr);
+										}
+									}else if(context.state.market.selectTime == 60){
+										if(arr2[0] == arr4[0]) {
+											arr[0] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][0];
+											if(arr[1] < context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][3]) {
+												arr[3] = arr[1];
+											} else {
+												arr[3] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][3]
+											}
+											if(arr[1] > context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][4]) {
+												arr[4] = arr[1];
+											} else {
+												arr[4] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][4]
+											}
+											arr[1] = arr[1];
+											arr[2] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][2];
+											arr[5] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][5];
+											arr[6] = context.state.market.volume;
+											var length = context.state.market.jsonDataKline.Parameters.Data.length;
+											context.state.market.jsonDataKline.Parameters.Data.splice(length-1,1,arr);
+										} else{
+											var arrTemp = [];
+											context.state.market.jsonDataKline.Parameters.Data.shift();
+											context.state.market.volume = 0;
+											arrTemp[0] = arr[0].substring(0, arr[0].length - 2) + '00';
+											arrTemp[1] = arr[1];
+											arrTemp[2] = arr[1];
+											arrTemp[3] = arr[1];
+											arrTemp[4] = arr[1];
+											arrTemp[5] = arr[5];
+											arrTemp[6] = arr[6];
+											arr = arrTemp;
+											context.state.market.jsonDataKline.Parameters.Data.push(arrTemp);
+										}
+									}else if(context.state.market.selectTime == 120){
+										let t = 120 * 60 * 1000;
+										let startTime = Date.parse(_arr1);
+										let endTime = Date.parse(_arr3);
+										let _t = startTime - endTime;
+										if(t > _t) {
+											arr[0] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][0];
+											if(arr[1] < context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][3]) {
+												arr[3] = arr[1];
+											} else {
+												arr[3] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][3]
+											}
+											if(arr[1] > context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][4]) {
+												arr[4] = arr[1];
+											} else {
+												arr[4] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][4]
+											}
+											arr[1] = arr[1];
+											arr[2] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][2];
+											arr[5] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][5];
+											arr[6] = context.state.market.volume;
+											var length = context.state.market.jsonDataKline.Parameters.Data.length;
+											context.state.market.jsonDataKline.Parameters.Data.splice(length-1,1,arr);
+										}else{
+											var arrTemp = [];
+											context.state.market.jsonDataKline.Parameters.Data.shift();
+											context.state.market.volume = 0;
+											arrTemp[0] = arr[0].substring(0, arr[0].length - 2) + '00';
+											arrTemp[1] = arr[1];
+											arrTemp[2] = arr[1];
+											arrTemp[3] = arr[1];
+											arrTemp[4] = arr[1];
+											arrTemp[5] = arr[5];
+											arrTemp[6] = arr[6];
+											arr = arrTemp;
+											context.state.market.jsonDataKline.Parameters.Data.push(arrTemp);
+										}
+									}else if(context.state.market.selectTime == 240){
+										let t = 240 * 60 * 1000;
+										let startTime = Date.parse(_arr1);
+										let endTime = Date.parse(_arr3);
+										let _t = startTime - endTime;
+										if(t > _t) {
+											arr[0] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][0];
+											if(arr[1] < context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][3]) {
+												arr[3] = arr[1];
+											} else {
+												arr[3] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][3]
+											}
+											if(arr[1] > context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][4]) {
+												arr[4] = arr[1];
+											} else {
+												arr[4] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][4]
+											}
+											arr[1] = arr[1];
+											arr[2] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][2];
+											arr[5] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][5];
+											arr[6] = context.state.market.volume;
+											var length = context.state.market.jsonDataKline.Parameters.Data.length;
+											context.state.market.jsonDataKline.Parameters.Data.splice(length-1,1,arr);
+										} else{
+											var arrTemp = [];
+											context.state.market.jsonDataKline.Parameters.Data.shift();
+											context.state.market.volume = 0;
+											arrTemp[0] = arr[0].substring(0, arr[0].length - 2) + '00';
+											arrTemp[1] = arr[1];
+											arrTemp[2] = arr[1];
+											arrTemp[3] = arr[1];
+											arrTemp[4] = arr[1];
+											arrTemp[5] = arr[5];
+											arrTemp[6] = arr[6];
+											arr = arrTemp;
+											context.state.market.jsonDataKline.Parameters.Data.push(arrTemp);
+										}
+									}else if(context.state.market.selectTime == 720){
+										let t = 720 * 60 * 1000;
+										let startTime = Date.parse(_arr1);
+										let endTime = Date.parse(_arr3);
+										let _t = startTime - endTime;
+										if(t > _t) {
+											arr[0] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][0];
+											if(arr[1] < context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][3]) {
+												arr[3] = arr[1];
+											} else {
+												arr[3] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][3]
+											}
+											if(arr[1] > context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][4]) {
+												arr[4] = arr[1];
+											} else {
+												arr[4] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][4]
+											}
+											arr[1] = arr[1];
+											arr[2] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][2];
+											arr[5] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][5];
+											arr[6] = context.state.market.volume;
+											var length = context.state.market.jsonDataKline.Parameters.Data.length;
+											context.state.market.jsonDataKline.Parameters.Data.splice(length-1,1,arr);
+										} else{
+											var arrTemp = [];
+											context.state.market.jsonDataKline.Parameters.Data.shift();
+											context.state.market.volume = 0;
+											arrTemp[0] = arr[0].substring(0, arr[0].length - 2) + '00';
+											arrTemp[1] = arr[1];
+											arrTemp[2] = arr[1];
+											arrTemp[3] = arr[1];
+											arrTemp[4] = arr[1];
+											arrTemp[5] = arr[5];
+											arrTemp[6] = arr[6];
+											arr = arrTemp;
+											context.state.market.jsonDataKline.Parameters.Data.push(arrTemp);
+										}
+									}else if(context.state.market.selectTime == 1440){
+										if(arr2[1]=='00' && arr2[2]=='00') {
+											arr[0] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][0];
+											if(arr[1] < context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][3]) {
+												arr[3] = arr[1];
+											} else {
+												arr[3] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][3]
+											}
+											if(arr[1] > context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][4]) {
+												arr[4] = arr[1];
+											} else {
+												arr[4] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][4]
+											}
+											arr[1] = arr[1];
+											arr[2] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][2];
+											arr[5] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][5];
+											//arr[6] = context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1][6];
+											//context.state.market.jsonDataKline.Parameters.Data[context.state.market.jsonDataKline.Parameters.Data.length - 1] = arr;
+											arr[6] = context.state.market.volume;
+											var length = context.state.market.jsonDataKline.Parameters.Data.length;
+											context.state.market.jsonDataKline.Parameters.Data.splice(length-1,1,arr);
+										} else if(arr2[0]=='00' && arr2[1]=='00' && arr2[2]=='00'){
+											var arrTemp = [];
+											context.state.market.jsonDataKline.Parameters.Data.shift();
+											arrTemp[0] = arr[0].substring(0, arr[0].length - 2) + '00';
+											arrTemp[1] = arr[1];
+											arrTemp[2] = arr[1];
+											arrTemp[3] = arr[1];
+											arrTemp[4] = arr[1];
+											arrTemp[5] = arr[5];
+											arrTemp[6] = arr[6];
+											arr = arrTemp;
+											context.state.market.volume = 0;
+											context.state.market.jsonDataKline.Parameters.Data.push(arr);
+										}
+									}
+									context.commit('setklineoption',context.state.market.strategyData);
+									context.commit('drawkline', {
+										id1: 'kline',
+										id2: 'kline_volume'
+									});
+								}
+							}
+						}
+					});
+					//更新持仓盈亏
+					context.dispatch('UpdateHoldProfit',JSON.parse(evt.data).Parameters);
+				} else if(context.state.wsjsondata.Method == "OnRspQryHistory") { // 历史行情
+					let data = JSON.parse(evt.data);
+					if(data.Parameters.HisQuoteType == 0){
+						context.state.market.jsonData[data.Parameters.CommodityNo] = data;
+						if(context.state.isshow.isfensInit == true) return;
+						if(context.state.isshow.isfens == true){
+							context.commit('setfensoption');
+							context.commit('drawfens', {
+								id1: 'fens',
+								id2: 'volume'
+							});
+						}
+					}else{
+						context.state.market.jsonDataKline = data;
+						let len = context.state.market.jsonDataKline.Parameters.Data.length;
+						context.state.market.volume = context.state.market.jsonDataKline.Parameters.Data[len - 1][6];
+						if(context.state.isshow.iskline == true){
+							context.commit('setklineoption');
+							context.commit('drawkline', {
+								id1: 'kline',
+								id2: 'kline_volume'
+							});
+						}
+					}
+				}
+			}
+		},
 	}
 })
