@@ -84,8 +84,8 @@ var market = {
 	state: {
 		quoteConfig:{
 			version: '5.1.2',    //版本
-			url_real: "ws://192.168.0.232:19002",  //测试地址/
-//			url_real: "ws://quote.zhishutianxia.com:19002",   //正式地址
+//			url_real: "ws://192.168.0.232:19002",  //测试地址/
+			url_real: "ws://quote.zhishutianxia.com:19002",   //正式地址
 			userName: "13677622344",
 			passWord: "a123456"
 		},
@@ -865,8 +865,6 @@ actions: {
 							}
 						}
 					});
-					//更新持仓盈亏
-					context.dispatch('UpdateHoldProfit',JSON.parse(evt.data).Parameters);
 				} else if(context.state.wsjsondata.Method == "OnRspQryHistory") { // 历史行情
 					let data = JSON.parse(evt.data);
 					if(data.Parameters.HisQuoteType == 0){
@@ -893,6 +891,6 @@ actions: {
 					}
 				}
 			}
-		},
+		}
 	}
 })
