@@ -1,13 +1,21 @@
 .mint-header{
-    background-color: #e44f34;
+    background-color: #b3daff;
     height: 0.96rem;
     line-height: 0.96rem;
     width: 7.5rem;
     border-bottom: 1px solid #e6e6e6;
-    color: #333
+    color: #333;
+    .mint-button{
+        padding: 0 0.12rem;
+        height: 0.6rem;
+        background-color: #1482f0;
+        border-radius: 0.1rem;
+        color: #fff
+    }
 }
 .mint-header.is-fixed {
     z-index: 999;
+    top: 1.12rem;
 }
 .mint-header-title{
     font-size: 0.36rem
@@ -19,22 +27,26 @@
     z-index: 999;
     
 }	
+// bottom_tab
 #bottom_tab .mint-tab-item-label{
-	color: #c5cacc;
+	color: #333;
 }
 
 #bottom_tab .mint-tabbar {
     width: 7.5rem;
-    background-color: #e44f34;
+    background-color: #1482f0;
+    position: relative;
+    top: 0;
+
 }
 #bottom_tab .mint-tabbar > .mint-tab-item.is-selected {
-    background-color: #e44f34;
+    background-color: #1482f0;
     .mint-tab-item-label{
-        color: #1482f0;
+        color: #fff;
     }
 }
 .mint-navbar{
-    background-color: #e44f34; 
+    background-color: #b3daff; 
 }
 #help_docs .mint-tab-item .mint-tab-item-label {
     font-size: .28rem
@@ -66,6 +78,27 @@
 }
 #datas {
     .mint-navbar{
-        width: 4.6rem
+        width: 4.6rem;
+        background-color: rgb(202, 229, 255)
     }
 }
+.calendar_wrap{
+    .wh_content_all{
+        background: #b3daff;
+        li{
+            color: #222
+        }
+    }
+    .wh_content_item .wh_isToday{
+        background: red;
+    }
+    .wh_content_li{
+        color: #222;
+    }
+    .wh_content {
+        .wh_content_item, .wh_content_item_tag{
+            background-color: #b3daff;
+            color: #333
+        }
+    }
+} 

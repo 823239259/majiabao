@@ -1,12 +1,8 @@
 <template>
     <div id="home" :style="{height:clientHeight}">
         <mt-header fixed title="个人中心">           
-            <mt-button slot="left"  @click="goLast">
-              <span class="icon kefu_phone"></span>
-            </mt-button>
-            <mt-button slot="right" @click="goto('/information')">
-                <span class="icon kefu_icon"></span>
-            </mt-button>
+            <mt-button slot="left"  @click="goLast">电话客服</mt-button>
+            <mt-button slot="right" @click="goto('/information')">在线客服</mt-button>
         </mt-header>
         <div class="user_info">
             <img :src="accountInfo.wxHeadimgurl||require('../assets/images/account/no_login_icon.png')" alt="用户头像">
@@ -257,7 +253,8 @@ export default {
 @import "../assets/css/common.scss";
 #home {
   width: 7.5rem;
-  background-color: $bgPink;
+  background-color: $bg;
+  overflow: hidden;
 }
 .icon {
   display: inline-block;
@@ -274,10 +271,11 @@ export default {
   background-size: cover;
 }
 .user_info {
-  width: 7.5rem;
-  padding: 0.96rem 0 0 0;
-  background-color: $headColr;
-  border: #dbdee1 1px solid;
+  width: 6.9rem;
+  margin: 2.26rem auto 0.24rem;
+  background-color: $bgWhite;
+  box-shadow: 0 0 10px 2px #ccc;
+  overflow: hidden;
   img {
     display: block;
     width: 1.2rem;
@@ -312,13 +310,17 @@ export default {
 }
 
 .list_wrap {
-  width: 7.5rem;
-  background-color: $bgRed;
+  width: 6.9rem;
+  margin: 0 auto;
+  background-color: $bg;
   .item {
     position: relative;
     padding-left: 0.3rem;
+    background-color: $bgWhite;
     @include font($fs28,0.96rem,$blcakThin,left);
     border-bottom: 1px solid #e6e6e6;
+    margin-top: 0.16rem;
+     box-shadow: 0 0 5px 1px #ccc;
   }
   .icon {
     display: inline-block;

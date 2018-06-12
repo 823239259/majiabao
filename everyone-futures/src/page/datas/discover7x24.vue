@@ -148,7 +148,11 @@
 			padding: 0.25rem 0.3rem
 		}
 		.list{
-			padding: 0 0 0 0.25rem;
+			padding: 0.2rem 0 0 0.25rem;
+			background-color: #edf6ff;
+			border-radius: 0.1rem;
+			margin-top: 0.16rem; 
+			box-shadow: 0 0 5px 1px #ccc;
 			.time_text{
 				position: relative;
 			}
@@ -169,7 +173,7 @@
 			.box{
 				position: relative;
 				border-left: 1px solid #dbdee1;
-				padding: 0.3rem 0  0.3rem 0.2rem;
+				padding: 0.3rem 0.2rem;
 				margin: 0 0.05rem;
 				.textHeight{
 					height: 1.4rem;

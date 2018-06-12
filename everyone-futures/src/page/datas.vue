@@ -1,21 +1,19 @@
 <template>
 	<div id="datas" ref="viewBox"  :style="{height:clientHeight,overflow:'scroll'}">
-		<mt-header fixed title="金融数据">
-			<mt-button slot="left" @click="goto('/my')">
-				<span class="icon_account"></span>
-			</mt-button>
-			<mt-button slot="right">
-				<span class="icon_search" v-show="selected==1" @click="goto('/discoverSearch')"></span>
-		    	<span class="icon_calendar" v-show="selected==2" @click="toChooseDay('picker1')"></span>
-			</mt-button>
-		</mt-header>
+		<mt-header fixed title="个人中心">           
+            <mt-button slot="left"  @click="">知识</mt-button>
+            <mt-button slot="right" @click="">分享</mt-button>
+        </mt-header>
 		<!-- 选项卡 -->
 		<div class="tab_wrap">
-			<mt-navbar v-model="selected">
-				<mt-tab-item id="1">7x24</mt-tab-item>
-				<mt-tab-item id="2">金融事件日历</mt-tab-item>
-				<!-- <mt-tab-item id="3">要闻</mt-tab-item> -->
-			</mt-navbar>
+			<div style="background-color:#cae5ff">
+				<mt-navbar v-model="selected">
+					<mt-tab-item id="1">7x24</mt-tab-item>
+					<mt-tab-item id="2">金融事件日历</mt-tab-item>
+					<!-- <mt-tab-item id="3">要闻</mt-tab-item> -->
+				</mt-navbar>
+			</div>
+			
 
 			<!-- tab-container -->
 			<mt-tab-container v-model="selected">
@@ -119,7 +117,7 @@
 					//接受子组件的传值来进行定位
 					let calendar_date = document.getElementsByClassName('calendar_date')[0]
                     this.$nextTick(()=>{
-						calendar_date.scrollLeft = this.datePosition
+						//calendar_date.scrollLeft = this.datePosition
 					})
 				}
 			}
@@ -145,15 +143,16 @@
 	@import "../assets/css/common.scss";
 	#datas {
 		width: $w;
-		background-color: $bgRed;
+		background-color: $bg;
+		overflow: hidden;
 		.mint-navbar .mint-tab-item.is-selected {
 			margin: 0;
 			border-bottom: 0.03rem solid $tabBgColor;
-			color: $blcakThin;
+			color: $tabBgColor;
 		}
 		.mint-navbar .mint-tab-item{
 			padding: 0.27rem;
-			color: #aaa;
+			color: #333;
 		}
 		.mint-navbar .mint-tab-item:nth-child(1) {
 			flex: 1;
@@ -162,7 +161,6 @@
 			flex: 2;
 		}
 		.mint-navbar {
-			
 			padding: 0 0.3rem;
 		}
 		
@@ -188,7 +186,7 @@
 		background-size: cover;
 	}
 	.tab_wrap{
-		margin-top: 0.96rem;
+		margin-top: 2.08rem;
 		width: 7.5rem;
 		padding-bottom: 1.16rem;
 	}

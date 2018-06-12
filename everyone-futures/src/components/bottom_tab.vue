@@ -96,9 +96,9 @@
 	background: url('../assets/images/account/#{nth($img,$i)}_icon.png') center no-repeat;
 	background-size: cover;
   }
-//   .icon#{$i}.icon-checked{
-// 	background-image: url('../assets/images/account/#{nth($img,$i)}_icon_checked.png')
-//   }	
+  .icon#{$i}.icon-checked{
+	background-image: url('../assets/images/account/#{nth($img,$i)}_icon_choosed.png')
+  }	
 }
 	
 	

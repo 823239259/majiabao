@@ -1,6 +1,9 @@
 <template>
     <div id="tools" :style="{height:clientHeight}">
-        <mt-header fixed title="工具箱"></mt-header>
+         <mt-header fixed title="个人中心">           
+            <mt-button slot="left"  @click="goLast">客服</mt-button>
+            <mt-button slot="right" @click="goto('/information')">分享</mt-button>
+        </mt-header>
         <div class="tools_wrap">
             <div class="tools_item">
               <h3>币种计算</h3>
@@ -8,12 +11,12 @@
               <p>汇率计算</p>
             </div>
              <div class="tools_item">
-              <h3 class="pink">规则查询</h3>
+              <h3 class="wathet">规则查询</h3>
                <span class="icon icon2"></span>
               <p>期货合约查询</p>
             </div>
              <div class="tools_item">
-              <h3>价格计算</h3>
+              <h3 class="blue">价格计算</h3>
                <span class="icon icon3"></span>
               <p>期货价格计算</p>
             </div>
@@ -242,22 +245,26 @@ export default {
 #tools {
   width: 7.5rem;
   background-color: $bgPink;
+  overflow: hidden;
 }
 
 .tools_wrap {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 0.96rem;
+  margin-top: 2.08rem;
   .tools_item{
     flex: 1;
     height: 11.4rem;
     h3{
-      @include font($fs36,2.36rem,#b41b02);
+      @include font($fs36,2.36rem,#008aa6);
       font-weight: bold;
     }
-    .pink{
-      color: #f89a8a;
+    .wathet{
+      color: #006bbb;
+    }
+    .blue{
+      color: #003cb6;
     }
     .icon{
       display: block;

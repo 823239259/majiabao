@@ -1,18 +1,36 @@
 <template>
 	<div class="calendar_wrap">
-		<h2>{{showTime}}</h2>
-		<div class="calendar_date">
-			<ul class="date_list">
-				<li v-for="item in weekDayList" :class="{'selected':item.time == showTime}" @click="changeDate(item)">
-					<p class="date">{{item.day}}</p>
-					<p class="day">{{item.weekday}}</p>
-				</li>
-			</ul>
-		</div>
+		<!-- <h2>{{showTime}}</h2> -->
+		
+		<Calendar ref="Calendar" 
+			
+			
+			 
+			v-on:choseDay="clickDay" 
+			v-on:changeMonth="changeDate"></Calendar>
 		
 		<ul class="my_list">
 			<li class="item" v-for="item in list" :key="item.createdAt">
 				<div class="title_box">
+					<div class="left">
+						<span class="time">{{$pro.getDate(item.timestamp*1000, 'h:m')}}</span>
+						<img :src="item.flagUrl" alt="">
+						<div class="star_box">
+							<i v-for="t in Number(item.importance)" class='star_icon'  :class="item.importance==3?'star_red':'star_yellow'"></i>
+							<i v-for="t in (3-Number(item.importance))" class='star_icon' :class="item.importance==3?'star_red':''"></i>
+						</div>
+						
+					</div>
+					<div class="right">
+						<p class="text">{{item.title}}</p>
+						<div class="number_box">
+							<p>今值: <span>{{item.actual||'---'}}</span></p>
+							<p>预期: <span>{{item.forecast||'---'}}</span></p>
+							<p>前值: <span>{{item.previous||'---'}}</span></p>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="title_box">
 					<div class="left">
 						<span :class="['subscribe_icon_no',{'subscribe_icon':item.status==1}]" @click="subscription(item)"></span>
 						<span class="time">{{$pro.getDate(item.timestamp*1000, 'h:m')}}</span>
@@ -31,7 +49,7 @@
 					<p>今值: <span>{{item.actual||'---'}}</span></p>
 					<p>预期: <span>{{item.forecast||'---'}}</span></p>
 					<p>前值: <span>{{item.previous||'---'}}</span></p>
-				</div>
+				</div> -->
 			</li>
 		</ul>
 		<div class="noInfo" v-show="showNoInfo">
@@ -41,20 +59,25 @@
 </template>
 
 <script>
+ import Calendar from 'vue-calendar-component';
 	export default {
 		name: "calendarNews",
 		props: ['newDate'],
+		components: {
+			 Calendar
+		},
 		data() {
 			return {
-				tabSelected: 'discover',
+				tabSelected: 'datas',
 				selected: "1",
 				today: '',
-				weekday: [],
+				weekday: ['日', '一', '二', '三', '四', '五', '六'],
 				weekDayList: [],
 				showTime: '',
 				list: [],
                 showNoInfo: false,
-                datePosition: ''
+				datePosition: '',
+				
 			}
 		},
 		methods: {
@@ -121,20 +144,20 @@
 					 	
 				}
                 this.showTime = mouthDayList[date - 1].time
-                this.getPosition(date)
+                //this.getPosition(date)
 				return mouthDayList
             },
             //定位日历选中居中
-            getPosition (date) {
-                //定位当前天数在中间
-                const ratio = parseFloat(document.getElementsByTagName('html')[0].style.fontSize)
-                const liWidth =  ratio*1.07 //1.07是li的宽度 (340行)
-                let calendar_date = document.getElementsByClassName('calendar_date')[0]
-                this.datePosition = (date-4)*liWidth
-                calendar_date.scrollLeft = this.datePosition
-                //传值给父组件
-                this.$emit('datePosition',this.datePosition);
-            },
+            // getPosition (date) {
+            //     //定位当前天数在中间
+            //     const ratio = parseFloat(document.getElementsByTagName('html')[0].style.fontSize)
+            //     const liWidth =  ratio*1.07 //1.07是li的宽度 (340行)
+            //     let calendar_date = document.getElementsByClassName('calendar_date')[0]
+            //     this.datePosition = (date-4)*liWidth
+            //     calendar_date.scrollLeft = this.datePosition
+            //     //传值给父组件
+            //     this.$emit('datePosition',this.datePosition);
+            // },
 			getTomorrow (todayString) {
 				let todayList = todayString.split('-');
 				todayList[2] = todayList[2]*1 + 1;
@@ -147,7 +170,7 @@
 				this.showTime = item.time
 				let tomorrow = this.getTomorrow(this.showTime)				
 				this.getInfoList(item.time, tomorrow)
-                this.getPosition(item.day)
+                //this.getPosition(item.day)
 
 			},
 			getInfoList (startTime,endTime) {
@@ -275,18 +298,41 @@
 						this.$toast({message:data.message,duration: 1000});
 					}
 				}
-			}
+			},
+			clickDay(data) {
+				//处理格式
+				data = data.toString().replace(/\//g,'-');
+				if(data == this.showTime) return;
+				//console.log(item.time)
+				this.showTime = data
+				let tomorrow = this.getTomorrow(this.showTime)				
+				this.getInfoList(data, tomorrow)
+                //this.getPosition(item.day)
+			},
+			clickToday(data) {
+				
+				console.log('跳到了本月今天', data); //跳到了本月
+			},
+			changeDate(data) {
+				data = data.toString().replace(/\//g,'-');
+				if(data == this.showTime) return;
+				//console.log(item.time)
+				this.showTime = data
+				let tomorrow = this.getTomorrow(this.showTime)				
+				this.getInfoList(data, tomorrow)
+				//console.log('左右点击切换月份', data); //左右点击切换月份
+			},
 
 		},
 		watch: {
-			newDate (newValue, oldValue) {
-				if (newValue&&newValue !== oldValue) {
-					this.weekDayList = this.mouthList(newValue);
-					//console.log(Date(newValue))
-					let tomorrow = this.getTomorrow(newValue);
-					this.getInfoList(newValue, tomorrow)
-				}
-			}	
+			// newDate (newValue, oldValue) {
+			// 	if (newValue&&newValue !== oldValue) {
+			// 		this.weekDayList = this.mouthList(newValue);
+			// 		//console.log(Date(newValue))
+			// 		let tomorrow = this.getTomorrow(newValue);
+			// 		this.getInfoList(newValue, tomorrow)
+			// 	}
+			// }	
 		},
 		activated () {
 			const local = this.$pro.local;
@@ -310,49 +356,34 @@
 			overflow: scroll;
 			 -webkit-overflow-scrolling: touch;
 		}
-		.date_list{
-			@include flex(space-between);
-			width: auto;
-			// background-color: $bgGray;
-			// padding: 0.3rem 0.2rem;
-			li{
-				padding: 0.3rem 0.2rem;
-                flex: 0 0 1.07rem;
-                background-color: $bgGray;
-			}
-			.selected{
-				p {
-					color:$blueBall
-				}
-			}
-			.date{
-				@include font($fs40,0.5rem,$grayDeep);
-			}
-			.day{
-				@include font($fs26,0.5rem,$grayDeep);
-			}
-		}
 		.item{
+			width: 6.9rem;
+			margin:0.16rem auto 0;
+			background-color: $bgWhite;
 			padding: 0.3rem;
-			border-bottom: 1px solid $bgDeep;
+			box-shadow: 0 0 5px 1px #ccc;
+			border-radius: 0.1rem;
 			.title_box{
-				@include flex(space-between);
+				@include flex(center,flex-start);
 				font-size: 0
 			}
 			.left{
+				flex: 0 0 1.2rem;
 				.time,.country{
+					display: block;
 					@include font($fs24,0.3rem,$grayMiddle);
-					vertical-align: middle;
+					
+				}
+				.star_box{
+					text-align: center;
 				}
 				img{
+					display: block;
 					width: 0.45rem;
 					height: 0.3rem;
-					vertical-align: middle;
-					margin: 0 0.2rem;
+					margin: 0.16rem auto;
 
 				}
-			}
-			.right{
 				.star_icon{
 					display: inline-block;
 					width: 0.22rem;
@@ -369,6 +400,9 @@
 					background-size: 100%;
 				}
 			}
+			.right{
+				flex: 1
+			}
 		}
 		.noInfo{
 			color: #7a8599;
@@ -376,22 +410,10 @@
 			font-size: .36rem;
 			margin-top: 50%;
 		}
-		.subscribe_icon_no{
-			display: inline-block;
-			vertical-align: middle;
-			width: 0.3rem;
-			height: 0.3rem;
-			margin-right: 0.1rem;
-			background: url('../../assets/images/discover/subscribe_icon_no.png') center no-repeat;
-			background-size: 100%;
-			
-		}
-		.subscribe_icon {
-			background: url('../../assets/images/discover/subscribe_icon.png') center no-repeat;
-			background-size: 100%;
-		}
+		
 		.text{
-			@include font($fs30,0.8rem,$blcakThin,left);
+			@include font($fs30,0.3rem,#e44f34,left);
+			padding-bottom: 0.58rem;
 		}
 		.text_red{
 			color: $redDeep
@@ -405,5 +427,12 @@
 				}
 			}
 		}
+		.wh_content_all{
+			background: red ;
+		}
+		.wh_content_item .wh_isToday{
+			background: red;
+		}
 	}
+	
 </style>
