@@ -1,7 +1,10 @@
 <template>
+	<transition name="custom-classes-transition"
+    				enter-active-class="animated fadeInRight"
+    				leave-active-class="animated fadeOutRight">
+	
 	
 		<div class="wrap" ref="viewBox1">
-			
 			<ul class="discover_list">
 				<mt-loadmore :bottom-method="loadBottom"  :auto-fill="false" :top-method="loadTop" ref="loadmore">
 						<template >
@@ -11,7 +14,6 @@
 									<span class="time_day">{{startTime}} {{getWeekDay(today)}}</span>
 								</p>
 								<div class="box">
-									<!-- <p :class="{textHeight:k.zhankai}" :style="{color:k.importance!=1?'#fff':''}">{{k.liveTitle}}</p> -->
 									<p :class="{textHeight:k.zhankai}">{{k.liveTitle}}</p>
 									<div class="icon_box" v-if="k.liveTitle.length>70" @click="showAll1(k)">
 										<i class="display_icon"></i>	
@@ -24,6 +26,7 @@
 				<!-- <p @click="test1">加载跟多</p> -->
 			</ul>
 		</div>
+	</transition>	
 </template>
 
 <script>

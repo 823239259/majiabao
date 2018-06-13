@@ -39,6 +39,7 @@
                 :actions="actions"
                 v-model="sheetVisible">
                 </mt-actionsheet>
+        <tips-float></tips-float>        
     </div>
 </template>
 
@@ -46,6 +47,7 @@
 
 import {mapMutations} from 'vuex'
 import bottomTab from '../components/bottom_tab'
+import tipsFloat from '../components/tipsFloat'
 import pro from '../assets/js/common'
 const local = pro.local;
 
@@ -54,7 +56,8 @@ const local = pro.local;
 export default {
   name: "my",
   components: {
-    bottomTab
+    bottomTab,
+    tipsFloat
   },
   mixins:[pro.mixinsToCustomer],
   data() {

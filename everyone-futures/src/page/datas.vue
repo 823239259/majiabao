@@ -17,27 +17,19 @@
 
 			<!-- tab-container -->
 			<mt-tab-container v-model="selected">
-				<mt-tab-container-item id="1">
+				<!-- <transition-group name="custom-classes-transition"
+    				enter-active-class="animated fadeInRight"
+    				leave-active-class="animated fadeOutRight" 
+					> -->
+				<mt-tab-container-item id="1" :key="1">
 					<discover7x24></discover7x24>
 				</mt-tab-container-item>
-				<mt-tab-container-item id="2">
-					<calendar-news :newDate ="newsDate" @datePosition="getDatePosition"></calendar-news>
+				<mt-tab-container-item id="2" :key="2">
+					<calendar-news :newDate ="newsDate"></calendar-news>
 				</mt-tab-container-item>
-				<!-- <mt-tab-container-item id="3">
-					<focus-news></focus-news>
-				</mt-tab-container-item> -->
+		
+				<!-- </transition-group> -->
 			</mt-tab-container>
-			<mt-datetime-picker
-				ref="picker1"
-				type="date"
-				v-model="value1"
-				year-format="{value} 年"
-				month-format="{value} 月"
-				date-format="{value} 日"
-				:startDate="startDate"
-				:endDate="endDate"
-				@confirm="handleChange">
-			</mt-datetime-picker>
 
 
 		</div>

@@ -5,17 +5,29 @@
 				<div class="floatTips" @click="show('showMy')">
 					<span>+</span>
 				</div>
-				<ul v-show="showMy">
-					<li class="item" v-for="(item, index) in myList" :style="{'margin-left':marginLeft(index,myList,'0.16')}" @click="itemClick(item)">{{item.name}}</li>
-				</ul>
+				<transition name="custom-classes-transition"
+    				enter-active-class="animated fadeInRight"
+    				leave-active-class="animated fadeOutRight" 
+					
+					>	
+					<ul v-show="showMy">
+						<li class="item" v-for="(item, index) in myList" :key="item.name" :style="{'margin-left':marginLeft(index,myList,'0.16')}" @click="itemClick(item)">{{item.name}}</li>
+					</ul>
+				</transition>
+				
 			</div>
 			<div class="right_box">
 				<div class="floatTips" @click="show('showTools')">
 					<span>+</span>
 				</div>
-				<transition-group name="fadeInLeft" tag="ul"  v-show="showTools">
-					<li class="item" v-for="(item, index) in toolsList" :key="item.name" :style="{'margin-left':marginLeft(index,toolsList,'-0.16')}" @click="itemClick(item)">{{item.name}}</li>
-				</transition-group>
+				<transition name="custom-classes-transition"
+    				enter-active-class="animated fadeInLeft"
+    				leave-active-class="animated fadeOutLeft" 
+					>	
+					<ul v-show="showTools">
+						<li class="item" v-for="(item, index) in toolsList" :key="item.name" :style="{'margin-left':marginLeft(index,toolsList,'-0.16')}" @click="itemClick(item)">{{item.name}}</li>
+					</ul>
+				</transition>
 			</div>
 			
 		</div>
@@ -99,15 +111,15 @@ import pro from '../assets/js/common'
 	@import "../assets/css/common.scss";
 	.tips_wrap{
 		position: fixed;
-		bottom: 2.08rem;
-		
+		bottom: 0.28rem;
+		display: flex;
 		width: 7.5rem;
+		height: 3.6rem;
 		padding: 0 0.3rem;
-		
-
 	}
 	.flex{
 		display: flex;
+		width: 100%;
 		justify-content: space-between;
 		align-items: center;
 		

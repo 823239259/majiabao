@@ -11,7 +11,6 @@ import Mint from 'mint-ui';
 Vue.use(Mint);
 import 'mint-ui/lib/style.css';
 import "./assets/css/my-mint.scss";
-import 'vue2-animate/dist/vue2-animate.css'
 import router from './router'
 import store from './store'
 import pro from './assets/js/common'
