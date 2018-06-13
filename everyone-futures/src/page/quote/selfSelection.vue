@@ -1,7 +1,7 @@
 <template>
-	<div id="commodity">
+	<div id="selfSelection">
 		<div class="title">
-			商品期货
+			自选
 		</div>
 		<div class="container">
 			<div class="details" v-for="(v,index) in parameters" @click="toQuoteDetails(v.CommodityNo, v.MainContract, v.ExchangeNo, v.contrast)" >
@@ -16,7 +16,7 @@
 
 <script>
 	export default{
-		name:"commodity",
+		name:"selfSelection",	
 		data(){
 			return{
 				
@@ -44,9 +44,9 @@
 				return num.toFixed(dotsize);
 			}
 		},
-		
 	}
 </script>
+
 
 <style lang="scss" scoped>
 	@import "../../assets/css/common.scss";

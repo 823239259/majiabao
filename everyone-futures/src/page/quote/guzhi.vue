@@ -53,6 +53,7 @@
 	@import "../../assets/css/common.scss";
 	#guzhi{
 		width: 7.5rem;
+		background-color: #d3e9ff;
 	}
 	.title{
 		width: 100%;

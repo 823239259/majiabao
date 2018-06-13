@@ -19,10 +19,11 @@
 	import { Toast, Indicator } from 'mint-ui';
 	import guzhi from "./quote/guzhi.vue"
 	import commodity from "./quote/commodity.vue"
+	import selfSelection from "./quote/selfSelection.vue"
 	import pro from '../assets/js/common.js'
 	export default{
 		name:"",
-		components:{guzhi,commodity},
+		components:{guzhi,commodity,selfSelection},
 		data(){
 			return{
 				tabList:[
@@ -39,7 +40,8 @@
 				currentNM:1,
 				currentView:commodity,
 				guzhiList:[],
-				cmList:[]
+				cmList:[],
+				selectionList:[]
 			}
 		},
 		computed:{
@@ -52,6 +54,9 @@
 			quoteStatus(){
 				return this.$store.state.account.quoteStatus;
 			},
+			userInfo(){
+				if(localStorage.user) return JSON.parse(localStorage.user);
+			}
 		},
 		methods:{
 			...mapActions([
@@ -62,7 +67,12 @@
 				
 				switch (index){
 					case 0:
-						this.currentView = commodity;
+						this.currentView = selfSelection;
+						this.$store.state.market.Parameters = [];
+						this.$store.state.market.commodityOrder = this.selectionList;
+						this.selectionList.forEach((o, i) => {
+							this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
+						});
 						break;
 					case 1:
 						this.currentView = commodity;
@@ -107,14 +117,35 @@
 				}).catch((err) => {
 					Toast({message: err.data.message, position: 'bottom', duration: 2000});
 				});
+			},
+			//获取自选列表
+			getSelection:function(){
+				
+				var headers = {
+					token: this.userInfo.token,
+					secret: this.userInfo.secret
+				}
+				pro.fetch('post', '/quoteTrader/userGetCommodityList', '', headers).then((res) => {
+					if(res.success == true && res.code == 1){
+						this.selectionList = res.data;
+					}
+				}).catch((err) => {
+					Toast({message: err.data.message, position: 'bottom', duration: 2000});
+				});
 			}
 		},
 		mounted: function(){
+			console.log("88888")
 			this.initQuoteClient();
 			//获取所有合约
 			this.getCommodityAll();
 			//获取股指期货
 			this.getCommodityInfo();
+		},
+		activated:function(){
+			
+			//获取自选列表
+			this.getSelection();
 		}
 	}
 </script>
