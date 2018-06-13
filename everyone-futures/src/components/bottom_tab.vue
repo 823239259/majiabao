@@ -81,6 +81,9 @@
 		position: fixed;
 		top: 0;
 		z-index: 1;
+		height: 1.12rem;
+		min-height: 54px;
+		background-color: #1482f0;
 	}
 .icon{
   display: inline-block;

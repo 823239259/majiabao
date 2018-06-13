@@ -11,6 +11,7 @@
     .mint-header.is-fixed {
         z-index: 999;
         top: 1.12rem;
+        
     }
     .mint-button{
         padding: 0 0.12rem;
@@ -33,9 +34,16 @@
     
 }	
 // bottom_tab
-#bottom_tab .mint-tab-item-label{
-	color: #333;
-}
+#bottom_tab {
+    .mint-tab-item-label{
+        color: #333;
+    }
+    .mint-tab-item-icon{
+        width: 0.48rem;
+        height: 0.48rem
+    }
+} 
+
 
 #bottom_tab .mint-tabbar {
     width: 7.5rem;
@@ -50,6 +58,10 @@
         color: #fff;
     }
 }
+
+
+
+
 .mint-navbar{
     background-color: #b3daff; 
 }
