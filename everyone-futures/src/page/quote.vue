@@ -141,7 +141,6 @@
 			}
 		},
 		mounted: function(){
-			console.log("88888")
 			this.initQuoteClient();
 			//获取所有合约
 			this.getCommodityAll();
