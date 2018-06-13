@@ -1,5 +1,5 @@
 <template>
-    <div id="home">
+    <div id="news_info_details" :style="{'height':clientHeight}">
         <mt-header fixed title="公告详情">
             <mt-button slot="left" icon="back" @click="goBack"></mt-button>
         </mt-header>   
@@ -87,8 +87,9 @@ import pro from '../../../assets/js/common'
 
 <style lang="scss" scoped>
     @import "../../../assets/css/common.scss";
-    #home {
+    #news_info_details {
         width: 7.5rem;
+        overflow: auto;
         //background-color: $bgGray;
     }
     

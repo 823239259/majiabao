@@ -27,7 +27,7 @@ const idList1 = local.get('idList')||[];
         data() {
             return {
                 hasList: true,
-                //newsList: [],
+                newsList: [],
                 currentIndex: 0,
                 idList : idList1,
             }
@@ -36,9 +36,7 @@ const idList1 = local.get('idList')||[];
             clientHeight() {
                 return document.documentElement.clientHeight + 'px';
             },
-            newsList () {
-                return this.$store.state.newsList
-            }
+            
         },
         methods: {
             goBack() {
@@ -111,6 +109,9 @@ const idList1 = local.get('idList')||[];
             },
 
         },
+        activated () {
+            this.getNewList()
+        }
     }
 </script>
 

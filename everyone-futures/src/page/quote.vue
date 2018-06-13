@@ -1,16 +1,18 @@
 <template>
 	<div id="quote">
-		<mt-header title="行情"  style="background-color: #b3daff;height: 0.88rem;line-height: 0.88rem;">
-		 	<router-link to="/" slot="left">
+		<mt-header title="行情" fixed>
+		 	<router-link to="/news_info" slot="left">
 		 	   	<mt-button style="background-color: #1482f0;color: white;height: 0.4rem;width: 0.88rem;font-size: 0.24rem;">公告</mt-button>
 		 	</router-link>
-		 	<mt-button  slot="right" style="background-color: #1482f0;color: white;height: 0.4rem;width: 0.88rem;font-size: 0.24rem">分享</mt-button>
+		 	<mt-button  @click="shareSystem" slot="right" style="background-color: #1482f0;color: white;height: 0.4rem;width: 0.88rem;font-size: 0.24rem">分享</mt-button>
 		</mt-header>
 		<div class="tablist">
 			<span v-for="(k,index) in tabList" :class="{current:currentNM == index}" @click="changeTab(index)">{{k.id}}</span>
 			<mt-button type="primary" style="height: 0.56rem;line-height: 0.24rem;font-size: 0.24rem;margin-top: 0.12rem;background-color: #1482f0;">专业帮助</mt-button>
 		</div>
 		<components :is="currentView"></components>
+		<bottomTab :tabSelect="tabSelected"></bottomTab>
+		<tips-float></tips-float>        
 	</div>
 </template>
 
@@ -18,12 +20,15 @@
 	import { mapMutations,mapActions } from 'vuex'
 	import { Toast, Indicator } from 'mint-ui';
 	import guzhi from "./quote/guzhi.vue"
+	import bottomTab from '../components/bottom_tab'
+	import tipsFloat from '../components/tipsFloat'
 	import commodity from "./quote/commodity.vue"
 	import selfSelection from "./quote/selfSelection.vue"
 	import pro from '../assets/js/common.js'
 	export default{
 		name:"",
-		components:{guzhi,commodity,selfSelection},
+		components:{guzhi,commodity,selfSelection,bottomTab,tipsFloat},
+		mixins: [pro.mixinsToCustomer],
 		data(){
 			return{
 				tabList:[
@@ -41,7 +46,8 @@
 				currentView:commodity,
 				guzhiList:[],
 				cmList:[],
-				selectionList:[]
+				selectionList:[],
+				tabSelected:'quote'
 			}
 		},
 		computed:{
@@ -155,6 +161,7 @@
 	@import "../assets/css/common.scss";
 	#quote{
 		width: 7.5rem;
+		overflow: hidden;
 	}
 	.tablist{
 		padding: 0 0.3rem ;
