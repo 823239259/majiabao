@@ -9,7 +9,7 @@
 							<h1>{{currentNo | changName}}</h1>
 							<span>规则</span>
 						</li>
-						<li>star</li>
+						<li @click="addOptional">star</li>
 					</ul>
 				</header>
 				<div class="money">
@@ -155,6 +155,8 @@
 </template>
 
 <script>
+	import pro from '../../assets/js/common.js'
+	import { Toast } from 'mint-ui';
 	export default{
 		name:"quoteDetails",
 		data(){
@@ -162,7 +164,8 @@
 				title:"",
 				currentNo:'',
 				total:'',
-				total1:""
+				total1:"",
+				userInfo: localStorage.user ? JSON.parse(localStorage.user) : '',
 			}
 		},
 		computed:{
@@ -175,11 +178,55 @@
 				})
 				return this.$store.state.market.Parameters;
 			},
+			orderTemplist(){
+				return this.$store.state.market.orderTemplist;
+			},
 		},
 		methods:{
 			routerback:function(){
 				this.$router.push({path:"/quote"});
-			}
+			},
+			addOptional: function(){
+				let stateLogin = localStorage.user ? JSON.parse(localStorage.user) : '';
+				if(stateLogin == ''){
+					Toast({message: '请先登录平台账号', position: 'bottom', duration: 1500});
+				}else{
+					var headers = {
+						token: this.userInfo.token,
+						secret: this.userInfo.secret
+					}
+					if(this.optionalIconShow == true){   //删除自选
+						var _datas = {id: this.optionalId};
+						MessageBox.confirm("确定删除自选？","提示").then(action=>{
+							pro.fetch('post', '/quoteTrader/userRemoveCommodity', _datas, headers).then((res) => {
+								if(res.success == true && res.code == 1){
+									Toast({message: '自选删除成功', position: 'bottom', duration: 1000});
+									this.optionalName = '添加自选';
+									this.optionalIconShow = false;
+								}
+							}).catch((err) => {
+								Toast({message: err.data.message, position: 'bottom', duration: 1000});
+							});
+						}).catch(err=>{});
+					}else{   //添加自选
+						var datas = {
+							'exchangeNo': this.orderTemplist[this.currentNo].ExchangeNo,
+							'commodityNo': this.currentNo,
+							'contractNo': this.orderTemplist[this.currentNo].MainContract,
+						}
+						pro.fetch('post', '/quoteTrader/userAddCommodity', datas, headers).then((res) => {
+							if(res.success == true && res.code == 1){
+								this.optionalIconShow = true;
+								this.optionalName = '已添加自选';
+								Toast({message: '自选添加成功', position: 'bottom', duration: 1500});
+								this.optionalId = res.data.id;
+							}
+						}).catch((err) => {
+							Toast({message: err.data.message, position: 'bottom', duration: 1500});
+						});
+					}
+				}
+			},
 		},
 		mounted:function(){
 		},
