@@ -164,6 +164,7 @@
 		overflow: hidden;
 	}
 	.tablist{
+		margin-top: 2.08rem;
 		padding: 0 0.3rem ;
 		width:100%;
 		height:0.8rem;
