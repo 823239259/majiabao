@@ -17,7 +17,14 @@ module.exports = {
 				pathRewrite: {
 			      '^/api': '/'
 			    }
-			},
+      },
+      '/others':{
+        target: 'http://test.futures.duokongtai.cn',
+				changeOrigin: true,
+				pathRewrite: {
+			      '^/others': '/'
+			    }
+      }
     },
 
     // Various Dev Server settings

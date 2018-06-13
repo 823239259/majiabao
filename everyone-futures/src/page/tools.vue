@@ -1,27 +1,36 @@
 <template>
     <div id="tools" :style="{height:clientHeight}">
          <mt-header fixed title="个人中心">           
-            <mt-button slot="left"  @click="goLast">客服</mt-button>
-            <mt-button slot="right" @click="goto('/information')">分享</mt-button>
+            <mt-button slot="left"  @click="callCustomer">客服</mt-button>
+            <mt-button slot="right" @click="shareSystem">分享</mt-button>
         </mt-header>
         <div class="tools_wrap">
-            <div class="tools_item">
+             <!-- <div class="tools_item" v-for="(item, index) in toolsList" :key="item.id" @click="goto(item.path)">
+                <h3 :class="index ==">{{item.title}}</h3>
+                <span class="icon icon1"></span>
+                <p>{{item.name}}</p>
+              </div> -->
+            <div class="tools_item" @click="goto('/tools_item/1')">
               <h3>币种计算</h3>
               <span class="icon icon1"></span>
               <p>汇率计算</p>
             </div>
-             <div class="tools_item">
+             <div class="tools_item" @click="goto('/tools_item/2')">
               <h3 class="wathet">规则查询</h3>
                <span class="icon icon2"></span>
               <p>期货合约查询</p>
             </div>
-             <div class="tools_item">
+             <div class="tools_item" @click="goto('/tools_item/3')">
               <h3 class="blue">价格计算</h3>
                <span class="icon icon3"></span>
               <p>期货价格计算</p>
             </div>
         </div>
         <bottomTab :tabSelect="tabSelected"></bottomTab>
+         <mt-actionsheet
+                :actions="actions"
+                v-model="sheetVisible">
+                </mt-actionsheet>
     </div>
 </template>
 
@@ -36,37 +45,33 @@ export default {
   components: {
     bottomTab
   },
+  mixins:[pro.mixinsToCustomer],
   data() {
     return {
       tabSelected: 'tools',
       isLogin: false,
       isShow: false,
-      idList: [],
-      list: [
-        {
-          name: "新闻公告",
-          path: "/my_match"
-        },
-        {
-          name: "期货知识",
-          path: "/self_setting"
-        },
-        {
-          name: "意见反馈",
-          path: "/customer_server"
-        },
-        {
-          name: "删除缓存",
-          path: "/help_docs"
-        },
-        {
-          name: "分享应用",
-          path: "/news_info"
-        }
-      ],
       userInfo: {},
       lastPath: '/',
-      userList: []
+      userList: [],
+      toolsList: [{
+        title: '币种计算',
+        name: '汇率计算',
+        id: 1,
+        path: '/tools_item/1'
+      },
+      {
+        title: '规则查询',
+        name: '期货合约查询',
+        id: 2,
+        path: '/tools_item/2'
+      },
+      {
+        title: '价格计算',
+        name: '期货价格计算',
+        id: 3,
+        path: '/tools_item/3'
+      }]
     };
   },
   computed: {
@@ -112,117 +117,8 @@ export default {
          return  numString + '.00'
       }
     },
-    loginOut () {
-      this.userInfo = {}
-      this.clearUserInfo()
-      this.isLogin = false
-      this.$toast({message:"成功退出登录",duration: 1000})
-      local.remove('user')
-
-    },
-    //获取用户信息
-		getUserInfo () {     
-		  const headers = {
-					token : this.userInfo.token,
-					secret : this.userInfo.secret
-				}
-				pro.fetch("post","/account/getBasicMsg","",headers).then((res)=>{
-            //console.log(res);
-            if(res.code == '1'){
-              this.setAccountInfo(res.data);
-              this.isLogin = true; 
-            }
-                     
-        }).catch((err)=>{
-					var data = err.data;
-					if(data == undefined){
-						this.$toast({message:"网络不给力，请稍后再试",duration: 1000});
-					}else{
-						if(data.code == -9999){
-							this.$toast({message:"认证失败，请重新登录",duration: 1000});
-							//this.$router.push({path:"/login"});
-						}
-						else{
-							this.$toast({message:data.message,duration: 1000});
-						}
-					}
-				})
-    },  
-    //获取新闻列表
-     getNewList() {
-                const data = {
-                    pageNo: 1,
-                    pageSize: 20
-                }
-                pro.fetch("post", "/others/getNoticeList", data, "").then((res) => {
-                    //console.log(res)
-                   if(res.success == true){
-						if(res.code == 1){
-                            /* 
-                                本地存储新闻内容 
-                                 1.给返回的list 添加一个isread属性
-                                 2. 点击事件 改变所点击那个item的isread 
-                                    2.1 改变isread 
-                                    2.2 存储 item 的id
-                                 3. 重新渲染 对比本地存储的id,改变isread
-                                    3.1 二次循环 改变对应id 的 isread属性
-                                    3.2 赋值给渲染的 属性   
-                            */
-                            //console.log(res)
-                            if(res.data.list) {
-                                const newList  = res.data.list.reduce((arr,item) => {
-                                  //是否在idList中                                
-                                  item.isRead = this.idList.includes(item.id);
-                                  //考虑置顶
-                                  if(item.isTop == 1) {
-                                    arr.unshift(item)
-                                  }else{
-                                    arr.push(item)
-                                  }
-                                  return arr
-                              },[]);
-                              this.$store.state.newsList = newList
-                              }
-                        }
-                    }
-    
-                }).catch((err) => {
-                    var data = err.data;
-                    console.log(err)
-                    if (data == undefined) {
-                        this.$toast({
-                            message: "网络不给力，请稍后再试",
-                            duration: 1000
-                        });
-                    } else {
-                        if (data.code == -9999) {
-                            this.$toast({
-                                message: "认证失败，请重新登录",
-                                duration: 1000
-                            });
-                            this.$router.push({
-                                path: "/login"
-                            });
-                        } else {
-                            this.$toast({
-                                message: data.message,
-                                duration: 1000
-                            });
-                        }
-                    }
-                })
-            },    
-
-  },  
+  }, 
   activated () {   
-    
-    this.userInfo = local.get('user')
-    this.userList = local.get('userList')||[]
-    this.idList = local.get('idList')||[]
-    this.getNewList() //为了得到新闻中心信息是否更新
-    if(this.userInfo){
-      this.getUserInfo()  
-    }
     
   },
   beforeRouteEnter: (to, from, next) => {

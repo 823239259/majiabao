@@ -53,7 +53,7 @@ var account = {
 		commodityAll: [],    //所有市场合约
 		tradableCommodity: [],   //所有可交易合约
 		weixinLoginInfo:false,
-		backtestIndexArr:[]
+		backtestIndexArr:[],
 	}
 }
 const tradeName = {
@@ -325,6 +325,20 @@ export default new Vuex.Store({
 					return state.account.currentUrlHead + '//platform-trade.dktai.cn';
                 }
             }    
+		},
+		futurePath () {
+			if(state.setting == 'dev') {
+				//return 'http://192.168.0.132:8080/qiw-platform';
+					return '/other'
+				} else if(state.setting == 'build'){
+					if(state.environment == 'test'){
+						return state.account.currentUrlHead + '//test.futures.duokongtai.cn';
+					}else{
+						return state.account.currentUrlHead + '//futures.duokongtai.cn';
+					}
+				} else if(state.setting == 'nat') {
+					return '/nat';
+				}
 		}
 	},
     mutations: {

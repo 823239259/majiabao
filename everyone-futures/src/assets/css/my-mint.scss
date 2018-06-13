@@ -5,6 +5,13 @@
     width: 7.5rem;
     border-bottom: 1px solid #e6e6e6;
     color: #333;
+    
+}
+#home,#tools,#datas{
+    .mint-header.is-fixed {
+        z-index: 999;
+        top: 1.12rem;
+    }
     .mint-button{
         padding: 0 0.12rem;
         height: 0.6rem;
@@ -13,10 +20,8 @@
         color: #fff
     }
 }
-.mint-header.is-fixed {
-    z-index: 999;
-    top: 1.12rem;
-}
+
+
 .mint-header-title{
     font-size: 0.36rem
 }
@@ -73,9 +78,11 @@
      color: white;
      font-weight: normal;
 }
-#customer_services .mint-actionsheet-listitem:nth-child(1){
-    border: 0
-}
+#home,#tools{
+    .mint-actionsheet-listitem:nth-child(1){
+        border: 0
+    }
+} 
 #datas {
     .mint-navbar{
         width: 4.6rem;

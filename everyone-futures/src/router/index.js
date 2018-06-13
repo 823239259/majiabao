@@ -33,6 +33,71 @@ const router = new Router({
       name: 'datas',
    		component: load('datas')
     },
+    {
+      path: '/login',
+      name: 'login',
+   		component: load('account/login/login')
+    },
+    {
+      path: '/service_online',
+      name: 'service_online',
+      component: load('account/my/service_online')
+    },
+    {
+      path: '/feedback',
+      name: 'feedback',
+      component: load('account/my/feedback')
+    },
+    {
+      path: '/news_info',
+      name: 'news_info',
+      component: load('account/my/news_info')
+    },
+    {
+      path: '/news_info_details/:id',
+      component: load('account/my/news_info_details'),
+      props:true
+    },
+    {
+      path: '/help_docs',
+      component: load('account/my/help_docs'),
+    },
+    {
+      path: '/service_online',
+      name: 'service_online',
+      component: load('account/my/service_online')
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: load('account/login/register')
+    },{
+      path: '/WXregister',
+      name: 'WXregister',
+     component: load('account/login/WXregister')
+    },
+    {
+      path: '/forgetPassword',
+      name: 'forgetPassword',
+      component: load('account/login/forgetPassword')
+    },
+     {
+      path: '/resetPassword',
+      name: 'resetPassword',
+     component: load('account/login/resetPassword')
+    },
+    {
+      path: '/userRegistrationProtocol',
+      name: 'userRegistrationProtocol',
+     component: load('account/login/userRegistrationProtocol')
+    },
+    {
+      path: '/tools_item/:id',
+      name: 'toolsItem',
+      component: load('tools/tools_item'),
+      props: true
+    },
+   
   ],
 
 })

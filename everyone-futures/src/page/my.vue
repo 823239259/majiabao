@@ -1,17 +1,22 @@
 <template>
     <div id="home" :style="{height:clientHeight}">
         <mt-header fixed title="个人中心">           
-            <mt-button slot="left"  @click="goLast">电话客服</mt-button>
-            <mt-button slot="right" @click="goto('/information')">在线客服</mt-button>
+            <mt-button slot="left"  @click="callCustomer">电话客服</mt-button>
+            <mt-button slot="right" @click="goto('/service_online')">在线客服</mt-button>
         </mt-header>
         <div class="user_info">
-            <img :src="accountInfo.wxHeadimgurl||require('../assets/images/account/no_login_icon.png')" alt="用户头像">
-            <div class="btn_box" v-if="!isLogin" @click="goto('/login')">
-              <button>&lt&lt&lt 去登录</button>
-              <button>去注册 &gt&gt&gt</button>
-            </div>
-             <!-- <p class="login" @click="changeValue(true,'isShow')" v-else>{{accountInfo.wxNickname||mobileHidden(accountInfo.mobile)}}</p> -->
-            <p class="login"  v-else>18200295560</p>
+          <div v-if="!isLogin">
+              <img :src="accountInfo.wxHeadimgurl||require('../assets/images/account/no_login_icon.png')" alt="用户头像">
+              <div class="btn_box" @click="goto('/login')">
+                <button @click="goto('/login')">&lt&lt&lt 去登录</button>
+                <button @click="goto('/register')" >去注册 &gt&gt&gt</button>
+              </div>
+          </div>
+          <div v-else>
+              <img :src="accountInfo.wxHeadimgurl||require('../assets/images/account/login_icon.png')" alt="用户头像">
+              <p class="login">{{accountInfo.wxNickname||mobileHidden(accountInfo.mobile)}}</p>
+          </div>
+            
         </div>
         <!-- 列表 -->
         <div class="list_wrap">
@@ -21,6 +26,8 @@
                     {{item.name}}
                     <span class="right_icon"></span>
                 </li>
+                <li class="item" @click="deleteStore"><span class="icon"></span> 删除缓存<span class="right_icon"></span></li>
+                <li class="item" @click="shareSystem" ><span class="icon"></span> 分享应用<span class="right_icon"></span></li>
             </ul>
         </div>
         <!-- login_out -->
@@ -28,6 +35,10 @@
             <button v-if="isLogin" @click="loginOut" class="btn">退出登录</button>
         </div> -->
         <bottomTab :tabSelect="tabSelected"></bottomTab>
+        <mt-actionsheet
+                :actions="actions"
+                v-model="sheetVisible">
+                </mt-actionsheet>
     </div>
 </template>
 
@@ -45,6 +56,7 @@ export default {
   components: {
     bottomTab
   },
+  mixins:[pro.mixinsToCustomer],
   data() {
     return {
       tabSelected: 'my',
@@ -54,28 +66,21 @@ export default {
       list: [
         {
           name: "新闻公告",
-          path: "/my_match"
+          path: "/news_info"
         },
         {
           name: "期货知识",
-          path: "/self_setting"
-        },
-        {
-          name: "意见反馈",
-          path: "/customer_server"
-        },
-        {
-          name: "删除缓存",
           path: "/help_docs"
         },
         {
-          name: "分享应用",
-          path: "/news_info"
-        }
+          name: "意见反馈",
+          path: "/feedback"
+        },
       ],
       userInfo: {},
       lastPath: '/',
-      userList: []
+      userList: [],
+     
     };
   },
   computed: {
@@ -220,8 +225,16 @@ export default {
                         }
                     }
                 })
-            },    
-
+            },  
+            deleteStore () {
+              console.log(this.$messagebox)
+              this.$messagebox({
+                title: '提示',
+                message: '是否确认删除缓存?',
+                showCancelButton: true
+              });
+            },
+           
   },  
   activated () {   
     

@@ -116,3 +116,6 @@ input,textarea {
 *:not(input):not(textarea) {
   -webkit-user-select: none
 }
+iframe{
+	border: none
+}

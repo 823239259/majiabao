@@ -39,6 +39,18 @@ axios.interceptors.response.use((res) =>{
 });
 let ls = localStorage;
 var network = true;
+//自定义一个axios实例
+var axios1 = axios.create({
+	baseURL: store.getters.futurePath,
+	timeout: 5000,
+  });
+
+
+
+
+
+
+
 pro = {
 	//ajax请求
 	fetch: function (type, url, params, header) {
@@ -366,7 +378,53 @@ pro = {
 			});
 		})
 		return res
-	}
+	},
+	mixinsToCustomer : {
+		data () {
+			return {
+				actions:[{name: '400-852-8008 '},{name: '工作日08:00-24:00,周末09:00-17:00'},{name: '拨打',method: this.callPhone}],
+				sheetVisible:false
+			}
+		},
+		methods: {
+			callCustomer () {
+				this.sheetVisible = true
+			},
+			callPhone:function(){
+				window.location.href = 'tel://' + 4008528008;
+			},
+			shareSystem () {
+				//console.log(123)
+				var test1 = {
+				  content: '向你推荐一款好用的期货工具应用【人人期货】，随时随地看行情、算汇率、看资讯，请在AppStore搜索"人人期货"',
+				  //href: 'https://www.baidu.com'
+				}
+				pro.shareSystem(test1)
+			  }  
+		}
+
+	},
+	shareSystem (obj) {
+		mui.plusReady(function(){
+			//outSet('调用系统分享');
+			// var msg={content:sharecontent.value};
+			// if(pic&&pic.realUrl){
+			// 	msg.pictures=[pic.realUrl];
+			// }
+			if('iOS'!==plus.os.name){//iOS平台添加链接地址
+				obj.href='';
+			}
+			//outLine(JSON.stringify(msg));
+			plus.share.sendWithSystem?plus.share.sendWithSystem(obj, function(){
+				//outLine('Success');
+				console.log('Success');
+			}, function(e){
+				//outLine('Failed: '+JSON.stringify(e));
+				console.log('Failed: '+JSON.stringify(e));
+			}):shareSystemNativeJS();
+		})
+	},
+	axios1: axios1
 
 }
 export default pro
