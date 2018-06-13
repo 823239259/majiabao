@@ -16,8 +16,10 @@
 
 <script>
 	import { mapMutations,mapActions } from 'vuex'
+	import { Toast, Indicator } from 'mint-ui';
 	import guzhi from "./quote/guzhi.vue"
 	import commodity from "./quote/commodity.vue"
+	import pro from '../assets/js/common.js'
 	export default{
 		name:"",
 		components:{guzhi,commodity},
@@ -35,19 +37,84 @@
 					}
 				],
 				currentNM:1,
-				currentView:guzhi
+				currentView:commodity,
+				guzhiList:[],
+				cmList:[]
 			}
 		},
 		computed:{
-			
+			parameters(){
+				return this.$store.state.market.Parameters;
+			},
+			quoteSocket(){
+				return this.$store.state.quoteSocket;
+			},
+			quoteStatus(){
+				return this.$store.state.account.quoteStatus;
+			},
 		},
 		methods:{
 			...mapActions([
 				'initQuoteClient'
 			]),
 			changeTab:function(index){
-				this.currentNM = index ;
+				this.currentNM = index;
+				
+				switch (index){
+					case 0:
+						this.currentView = commodity;
+						break;
+					case 1:
+						this.currentView = commodity;
+						this.$store.state.market.Parameters = [];
+						this.$store.state.market.commodityOrder = this.cmList;
+						this.cmList.forEach((o, i) => {
+							this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
+						});
+						break;
+					case 2:
+						this.currentView = guzhi;
+						this.$store.state.market.Parameters = [];
+						this.$store.state.market.commodityOrder = this.guzhiList;
+						this.guzhiList.forEach((o, i) => {
+							this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
+						});
+						break;
+					default:
+						break;
+				}
+			},
+			//获取股指期货
+			getCommodityInfo: function(){
+				pro.fetch('post', '/quoteTrader/getCommodityInfo', '', '').then((res) => {
+					if(res.success == true && res.code == 1){
+						this.guzhiList = res.data[0].list;
+					}
+				}).catch((err) => {
+					Toast({message: err.data.message, position: 'bottom', duration: 2000});
+				});
+			},
+			//获取全部合约
+			getCommodityAll:function(){
+				this.$store.state.market.Parameters = [];
+				this.$store.state.market.commodityOrder = [];
+				//获取所有市场合约
+				pro.fetch('post', '/quoteTrader/getCommodityInfoNoType', '', '').then((res) => {
+					if(res.success == true && res.code == 1){
+						this.cmList = res.data;
+						this.$store.state.market.commodityOrder = this.cmList;
+					}
+				}).catch((err) => {
+					Toast({message: err.data.message, position: 'bottom', duration: 2000});
+				});
 			}
+		},
+		mounted: function(){
+			this.initQuoteClient();
+			//获取所有合约
+			this.getCommodityAll();
+			//获取股指期货
+			this.getCommodityInfo();
 		}
 	}
 </script>
