@@ -4,7 +4,7 @@
 			股指期货
 		</div>
 		<div class="container">
-			<div class="details" v-for="(v,index) in parameters">
+			<div class="details" v-for="(v,index) in parameters"  @click="toQuoteDetails(v.CommodityNo, v.MainContract, v.ExchangeNo, v.contrast)">
 				<p>{{v.CommodityName}}</p>
 				<p :class="{red: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.LastPrice | fixNum(v.DotSize)}}</p>
 				<p :class="{green: v.LastQuotation.ChangeRate < 0, red: v.LastQuotation.ChangeRate > 0}">{{v.LastQuotation.ChangeRate | fixNumTwo}}%</p>
@@ -30,6 +30,11 @@
 			quoteSocket(){
 				return this.$store.state.quoteSocket;
 			},
+		},
+		methods:{
+			toQuoteDetails: function(commodityNo, mainContract, exchangeNo, contrast){
+				this.$router.push({path: '/quoteDetails', query: {'commodityNo': commodityNo, 'mainContract': mainContract, 'exchangeNo': exchangeNo, 'contrast': contrast}});
+			}
 		},
 		filters:{
 			fixNumTwo: function(num){

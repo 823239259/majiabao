@@ -19,6 +19,11 @@ const router = new Router({
     	component:load('quote')
     },
     {
+    	path:'/quoteDetails',
+    	name:'quoteDetails',
+    	component:load('quote/quoteDetails')
+    },
+    {
       path: '/my',
       name: 'my',
    		component: load('my')
