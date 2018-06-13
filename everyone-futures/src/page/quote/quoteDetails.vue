@@ -4,12 +4,12 @@
 			<div v-if="v.CommodityNo == currentNo">
 				<header>
 					<ul>
-						<li @click="routerback"><</li>
+						<li @click="routerback"><i></i></li>
 						<li>
-							<h1>{{currentNo | changName}}</h1>
+							<h1>{{tradeName[currentNo]}}</h1>
 							<span>规则</span>
 						</li>
-						<li @click="addOptional">star</li>
+						<li @click="addOptional"><i></i></li>
 					</ul>
 				</header>
 				<div class="money">
@@ -181,6 +181,9 @@
 			orderTemplist(){
 				return this.$store.state.market.orderTemplist;
 			},
+			tradeName(){
+				return this.$store.state.tradeName;
+			}
 		},
 		methods:{
 			routerback:function(){
@@ -278,6 +281,13 @@
 				&:nth-child(1){
 					line-height: 0.88rem;
 					flex: 1;
+					i{
+						display:inline-block;
+						width: 0.24rem;
+						height: 0.3rem;
+						background: url(../../assets/images/quote/back_icon.png) no-repeat 0 100%;
+						background-size: 0.24rem 0.3rem;
+					}
 				}
 				&:nth-child(2){
 					flex: 6;
@@ -304,6 +314,13 @@
 					flex: 1;
 					line-height: 0.88rem;
 					text-align: right;
+					i{
+						display: inline-block;
+						width: 0.32rem;
+						height: 0.3rem;
+						background: url(../../assets/images/quote/star.png) no-repeat 0 100%;
+						background-size: 0.32rem 0.3rem;
+					}
 				}
 			}
 		}
