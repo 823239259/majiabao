@@ -1,18 +1,21 @@
 <template>
 	<div id="quote">
-		<mt-header title="行情" fixed>
-		 	<router-link to="/news_info" slot="left">
-		 	   	<mt-button style="background-color: #1482f0;color: white;height: 0.4rem;width: 0.88rem;font-size: 0.24rem;">公告</mt-button>
-		 	</router-link>
-		 	<mt-button  @click="shareSystem" slot="right" style="background-color: #1482f0;color: white;height: 0.4rem;width: 0.88rem;font-size: 0.24rem">分享</mt-button>
-		</mt-header>
-		<div class="tablist">
-			<span v-for="(k,index) in tabList" :class="{current:currentNM == index}" @click="changeTab(index)">{{k.id}}</span>
-			<mt-button type="primary" style="height: 0.56rem;line-height: 0.24rem;font-size: 0.24rem;margin-top: 0.12rem;background-color: #1482f0;">专业帮助</mt-button>
+		<div v-show="isShowGuide">
+			<mt-header title="行情" fixed>
+			 	<router-link to="/news_info" slot="left">
+			 	   	<mt-button style="background-color: #1482f0;color: white;height: 0.4rem;width: 0.88rem;font-size: 0.24rem;">公告</mt-button>
+			 	</router-link>
+			 	<mt-button  @click="shareSystem" slot="right" style="background-color: #1482f0;color: white;height: 0.4rem;width: 0.88rem;font-size: 0.24rem">分享</mt-button>
+			</mt-header>
+			<div class="tablist">
+				<span v-for="(k,index) in tabList" :class="{current:currentNM == index}" @click="changeTab(index)">{{k.id}}</span>
+				<mt-button type="primary" style="height: 0.56rem;line-height: 0.24rem;font-size: 0.24rem;margin-top: 0.12rem;background-color: #1482f0;">专业帮助</mt-button>
+			</div>
+			<components :is="currentView"></components>
+			<bottomTab :tabSelect="tabSelected"></bottomTab>
+			<tips-float></tips-float>   
 		</div>
-		<components :is="currentView"></components>
-		<bottomTab :tabSelect="tabSelected"></bottomTab>
-		<tips-float></tips-float>        
+		<firstGuide v-show="!isShowGuide"></firstGuide>
 	</div>
 </template>
 
@@ -24,10 +27,11 @@
 	import tipsFloat from '../components/tipsFloat'
 	import commodity from "./quote/commodity.vue"
 	import selfSelection from "./quote/selfSelection.vue"
+	import firstGuide from "./quote/firstGuide.vue"
 	import pro from '../assets/js/common.js'
 	export default{
 		name:"",
-		components:{guzhi,commodity,selfSelection,bottomTab,tipsFloat},
+		components:{guzhi,commodity,selfSelection,bottomTab,tipsFloat,firstGuide},
 		mixins: [pro.mixinsToCustomer],
 		data(){
 			return{
@@ -61,7 +65,10 @@
 				return this.$store.state.account.quoteStatus;
 			},
 			userInfo(){
-				if(localStorage.user) return JSON.parse(localStorage.user);
+				return localStorage.user ? JSON.parse(localStorage.user) : ""
+			},
+			isShowGuide(){
+				return this.$store.state.account.isShowGuide
 			}
 		},
 		methods:{

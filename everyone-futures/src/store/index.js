@@ -54,6 +54,7 @@ var account = {
 		tradableCommodity: [],   //所有可交易合约
 		weixinLoginInfo:false,
 		backtestIndexArr:[],
+		isShowGuide:localStorage.showGuide ? JSON.parse(localStorage.showGuide).id : false
 	}
 }
 const tradeName = {
