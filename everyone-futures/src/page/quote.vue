@@ -133,7 +133,7 @@
 						this.$store.state.market.commodityOrder = this.cmList;
 					}
 				}).catch((err) => {
-					Toast({message: err.data.message, position: 'bottom', duration: 2000});
+					//Toast({message: err.data.message, position: 'bottom', duration: 2000});
 				});
 			},
 			//获取自选列表

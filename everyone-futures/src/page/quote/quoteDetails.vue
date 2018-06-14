@@ -167,6 +167,7 @@
 	import { Toast } from 'mint-ui';
 	export default{
 		name:"quoteDetails",
+		mixins: [pro.mixinsToCustomer],
 		data(){
 			return{
 				title:"",

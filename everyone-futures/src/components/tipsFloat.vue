@@ -58,7 +58,7 @@ import pro from '../assets/js/common'
 				},
 				{
 					name: '工具箱',
-					path: '/datas'
+					path: '/tools'
 				},
 				{
 					name: '分享',
@@ -107,7 +107,8 @@ import pro from '../assets/js/common'
 					this.$router.push({path: item.path})
 				}
 				if(item.method){
-					this[item.method]
+					console.log(item.method)
+					this[item.method]()
 				}
 			},
 			show (key) {
