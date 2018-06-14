@@ -58,7 +58,7 @@
 		data() {
 			return {
 				tabSelected: 'datas',
-				selected: "1",
+				selected: "2",
 				navCheck: 0,
 				newsDate: '',
 				value: null,
