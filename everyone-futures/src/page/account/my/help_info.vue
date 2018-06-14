@@ -49,10 +49,9 @@ const idList1 = local.get('idList')||[];
             },
             getNewList() {
                 const data = {
-                    pageNo: 1,
-                    pageSize: 20
+                    category: '期货知识'
                 }
-                pro.fetch("post", "/others/getNoticeList", data, "").then((res) => {
+                pro.fetch("post", "/others/getNotice", data, "").then((res) => {
                     //console.log(res)
                    if(res.success == true){
 						if(res.code == 1){
