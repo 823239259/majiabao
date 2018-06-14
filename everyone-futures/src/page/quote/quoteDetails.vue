@@ -186,7 +186,6 @@
 					},
 
 				],
-				
 			}
 		},
 		components: {
@@ -271,6 +270,19 @@
 			},
 			alertRule () {
 				this.$toast({message: '规则补充中', position: 'bottom', duration: 1500});
+			},
+			getSelection () {
+				var headers = {
+					token: this.userInfo.token,
+					secret: this.userInfo.secret
+				}
+				pro.fetch('post', '/quoteTrader/userGetCommodityList', '', headers).then((res) => {
+					if(res.success == true && res.code == 1){
+						this.selectionList = res.data;
+					}
+				}).catch((err) => {
+					//Toast({message: err.data.message, position: 'bottom', duration: 2000});
+				});
 			}	
 		},
 		mounted:function(){
