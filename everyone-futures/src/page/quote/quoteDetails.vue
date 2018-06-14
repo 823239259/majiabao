@@ -186,6 +186,7 @@
 					},
 
 				],
+				
 			}
 		},
 		components: {
@@ -238,7 +239,7 @@
 					}
 					if(this.optionalIconShow == true){   //删除自选
 						var _datas = {id: this.optionalId};
-						MessageBox.confirm("确定删除自选？","提示").then(action=>{
+						this.$messageBox.confirm("确定删除自选？","提示").then(action=>{
 							pro.fetch('post', '/quoteTrader/userRemoveCommodity', _datas, headers).then((res) => {
 								if(res.success == true && res.code == 1){
 									Toast({message: '自选删除成功', position: 'bottom', duration: 1000});

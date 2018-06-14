@@ -85,10 +85,10 @@ const idList1 = local.get('idList')||[];
                 }).catch((err) => {
                     var data = err.data;
                     if (data == undefined) {
-                        this.$toast({
-                            message: "网络不给力，请稍后再试",
-                            duration: 1000
-                        });
+                        // this.$toast({
+                        //     message: "网络不给力，请稍后再试",
+                        //     duration: 1000
+                        // });
                     } else {
                         if (data.code == -9999) {
                             this.$toast({
