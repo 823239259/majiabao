@@ -22,7 +22,6 @@
 					var a = {id:true};
 					localStorage.setItem("showGuide",JSON.stringify(a));
 					this.$store.state.account.isShowGuide = true;
-					this.$router.push({path: '/my'});
 				}
 			}
 		},
