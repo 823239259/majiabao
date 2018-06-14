@@ -1,10 +1,13 @@
 <template>
   <div id="app">
+       <transition  :name="'vux-pop-' + (direction === 'forward' ? 'in' : 'out')">
+        <keep-alive>
+          <router-view  v-if="!$route.meta.notKeepAlive"></router-view>
+        </keep-alive>
+     </transition>
     <transition :name="'vux-pop-' + (direction === 'forward' ? 'in' : 'out')">
-      <keep-alive  class="router-view" >
-        <router-view></router-view>
-      </keep-alive>
-    </transition>    
+      <router-view  v-if="$route.meta.notKeepAlive"></router-view>
+    </transition>
   </div>
 </template>
 

@@ -1,14 +1,9 @@
 <template>
-	<transition name="custom-classes-transition"
-    				enter-active-class="animated fadeInRight"
-    				leave-active-class="animated fadeOutRight">
-	
-	
-		<div class="wrap" ref="viewBox1">
+		<div class="wrap animated fadeInLeft" ref="viewBox1">
 			<ul class="discover_list">
 				<mt-loadmore :bottom-method="loadBottom"  :auto-fill="false" :top-method="loadTop" ref="loadmore">
 						<template >
-							<li class="list" v-for="k in newsInfo" >
+							<li class="list" v-for="k in newsInfo" v-isShow="'#datas'">
 								<p class="time_text">
 									<span class="time">{{k.createdAt | changTime }}</span>
 									<span class="time_day">{{startTime}} {{getWeekDay(today)}}</span>
@@ -26,7 +21,6 @@
 				<!-- <p @click="test1">加载跟多</p> -->
 			</ul>
 		</div>
-	</transition>	
 </template>
 
 <script>
@@ -147,8 +141,10 @@
 <style lang="scss" scoped>
 	@import "../../assets/css/common.scss";
 	.wrap{
+
+
 		.discover_list{
-			padding: 0.25rem 0.3rem
+			padding: 0.25rem 0.3rem;
 		}
 		.list{
 			padding: 0.2rem 0 0 0.25rem;

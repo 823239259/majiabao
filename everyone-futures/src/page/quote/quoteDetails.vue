@@ -7,7 +7,7 @@
 						<li @click="routerback"><i></i></li>
 						<li>
 							<h1>{{tradeName[currentNo]}}</h1>
-							<span>规则</span>
+							<span @click="alertRule">规则</span>
 						</li>
 						<li @click="addOptional"><i></i></li>
 					</ul>
@@ -151,11 +151,19 @@
 				</div>
 			</div>
 		</template>
+		<tips-float :isBack="true"></tips-float>
+		<div class="bottomTab">
+			<ul class="bottomTab_list">
+				<li v-for="item in bottomList1" @click="itemClick(item)">{{item.name}}</li>
+			</ul>
+		</div>
+		
 	</div>
 </template>
 
 <script>
 	import pro from '../../assets/js/common.js'
+	import tipsFloat from '../../components/tipsFloat'
 	import { Toast } from 'mint-ui';
 	export default{
 		name:"quoteDetails",
@@ -166,7 +174,25 @@
 				total:'',
 				total1:"",
 				userInfo: localStorage.user ? JSON.parse(localStorage.user) : '',
+				bottomList1: [
+					{
+						name: '自选',
+						path: '/adv'
+					},
+					{
+						name: '工具箱',
+						path: '/tools'
+					},
+					{
+						name: '推荐给朋友',
+						method: 'shareSystem'
+					},
+
+				],
 			}
+		},
+		components: {
+			tipsFloat
 		},
 		computed:{
 			parameters(){
@@ -188,6 +214,14 @@
 		methods:{
 			routerback:function(){
 				this.$router.push({path:"/quote"});
+			},
+			itemClick (item) {
+				if(item.path) {
+					this.$router.push({path: item.path})
+				}
+				if(item.method){
+					this[item.method]
+				}
 			},
 			addOptional: function(){
 				let stateLogin = localStorage.user ? JSON.parse(localStorage.user) : '';
@@ -230,6 +264,9 @@
 					}
 				}
 			},
+			alertRule () {
+				this.$toast({message: '规则补充中', position: 'bottom', duration: 1500});
+			}	
 		},
 		mounted:function(){
 		},
@@ -426,5 +463,25 @@
 			
 		}
 	}
-	
+	.bottomTab{
+		position: absolute;
+		bottom: 0;
+		width: 7.5rem;
+		height: 0.98rem;
+		background-color: #b3daff
+
+	}
+	.bottomTab_list{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		@include font($fs30,0.98rem,#222);
+		li{
+			flex: 1;
+		}
+		li:nth-child(3){
+			color: #fff;
+			background-color: #1482f0;
+		}
+	}
 </style>

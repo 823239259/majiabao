@@ -1,6 +1,11 @@
 <template>
 	<div class="tips_wrap">
-		<div class="flex">
+		<div class="flex flexBack" v-if="isBack">
+			<div class="floatTips1" @click="goBack">
+				<span class="back_icon"></span>
+			</div>
+		</div>
+		<div class="flex" v-else>
 			<div class="left_box">
 				<div class="floatTips" @click="show('showMy')">
 					<span>+</span>
@@ -31,6 +36,7 @@
 			</div>
 			
 		</div>
+		
 	</div>
 </template>
 
@@ -38,7 +44,7 @@
 import pro from '../assets/js/common'
 	export default{
 		name:"tipsButton",
-		props:['title',"type","type1",'matchid'],
+		props:['isBack'],
 		mixins:[pro.mixinsToCustomer],
 		data(){
 			return{
@@ -76,10 +82,14 @@ import pro from '../assets/js/common'
 					},
 				],
 				showMy: false,
-				showTools: false
+				showTools: false,
+				
 			}
 		},
 		methods:{
+			goBack() {
+                window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
+            },
 			marginLeft (index,arr,spaceNum) {
 				let length = arr.length;
 				//得到平均数
@@ -124,6 +134,9 @@ import pro from '../assets/js/common'
 		align-items: center;
 		
 	}
+	.flexBack{
+		justify-content: flex-end;
+	}
 	.left_box,.right_box{
 		flex: 1;
 		display: flex;
@@ -140,7 +153,7 @@ import pro from '../assets/js/common'
 			background-color: #f06c14;
 		}
 	}
-	.floatTips{
+	.floatTips,.floatTips1{
 		position: relative;
 		display: block;
 		width: 0.8rem;
@@ -154,6 +167,15 @@ import pro from '../assets/js/common'
 			transform: translate3d(-50%,-50%,0);
 			@include font(0.6rem,0.6rem,#fff);
 		}
+		.back_icon{
+			width: 0.29rem;
+			height: 0.58rem;
+			background: url('../assets/images/tools/icon_go_back.png') center no-repeat;
+			background-size: 100%;
+		}
+	}
+	.floatTips1 {
+		background-color: #f06c14;	
 	}
 	ul{
 		padding-left: 0.24rem; 

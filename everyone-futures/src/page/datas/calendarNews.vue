@@ -1,16 +1,12 @@
 <template>
-	<div class="calendar_wrap">
+	<div class="calendar_wrap animated fadeInRight">
 		<!-- <h2>{{showTime}}</h2> -->
 		
 		<Calendar ref="Calendar" 
-			
-			
-			 
 			v-on:choseDay="clickDay" 
 			v-on:changeMonth="changeDate"></Calendar>
-		
 		<ul class="my_list">
-			<li class="item" v-for="item in list" :key="item.createdAt">
+			<li class="item" :class="{'show': showItem[index]}" v-for="(item,index) in list"  :key="item.createdAt"  v-isShow="'#datas'">
 				<div class="title_box">
 					<div class="left">
 						<span class="time">{{$pro.getDate(item.timestamp*1000, 'h:m')}}</span>
@@ -30,26 +26,6 @@
 						</div>
 					</div>
 				</div>
-				<!-- <div class="title_box">
-					<div class="left">
-						<span :class="['subscribe_icon_no',{'subscribe_icon':item.status==1}]" @click="subscription(item)"></span>
-						<span class="time">{{$pro.getDate(item.timestamp*1000, 'h:m')}}</span>
-						<img :src="item.flagUrl" alt="">
-						<span class="country">{{item.country}}</span>
-					</div>
-					<div class="right">
-					<i v-for="t in Number(item.importance)" class='star_icon'  :class="item.importance==3?'star_red':'star_yellow'"></i>
-					<i v-for="t in (3-Number(item.importance))" class='star_icon' :class="item.importance==3?'star_red':''"></i>
-					</div>
-				</div>
-				<div>
-					<p class="text">{{item.title}}</p>
-				</div>
-				<div class="number_box">
-					<p>今值: <span>{{item.actual||'---'}}</span></p>
-					<p>预期: <span>{{item.forecast||'---'}}</span></p>
-					<p>前值: <span>{{item.previous||'---'}}</span></p>
-				</div> -->
 			</li>
 		</ul>
 		<div class="noInfo" v-show="showNoInfo">
@@ -77,6 +53,7 @@
 				list: [],
                 showNoInfo: false,
 				datePosition: '',
+				showItem: [true,true,true],
 				
 			}
 		},
@@ -334,7 +311,7 @@
 			// 	}
 			// }	
 		},
-		activated () {
+		mounted () {
 			const local = this.$pro.local;
 			this.userInfo = local.get('user');
 			let today = new Date();
@@ -432,6 +409,9 @@
 		}
 		.wh_content_item .wh_isToday{
 			background: red;
+		}
+		.show{
+			opacity: 1 !important;
 		}
 	}
 	

@@ -1,5 +1,5 @@
 <template>
-	<div id="datas" ref="viewBox"  :style="{height:clientHeight,overflow:'scroll'}">
+	<div id="datas" ref="viewBox"  :style="{height:clientHeight,overflow:'scroll'}" >
 		<mt-header fixed title="个人中心">           
             <mt-button slot="left"  @click="goto('/help_docs')">知识</mt-button>
             <mt-button slot="right" @click="shareSystem">分享</mt-button>

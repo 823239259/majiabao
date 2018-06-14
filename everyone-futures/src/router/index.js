@@ -36,7 +36,10 @@ const router = new Router({
     {
       path: '/datas',
       name: 'datas',
-   		component: load('datas')
+       component: load('datas'),
+       meta: {
+          notKeepAlive: true
+       }
     },
     {
       path: '/login',

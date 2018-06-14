@@ -46,6 +46,50 @@ router.beforeEach(function (to, from, next) {
 });
 //const shouldUseTransition = !/transition=none/.test(location.href)
 FastClick.attach(document.body)
+Vue.directive('isShow', {
+  // 当被绑定的元素插入到 DOM 中时……
+  inserted: function (el,binding) {
+    // 聚焦元素
+    let offset = 0,
+    animateClass = ['animated', 'fadeInRight'];
+    var parent = document.querySelector(binding.value);
+
+
+    //console.log(binding.value)
+    //是否在屏幕上
+    var _inView = function(el) {
+        var coords = el.getBoundingClientRect();
+        if (coords.top == 0) return false;
+        return ((coords.top >= 0 && coords.top) <= (window.innerHeight || document.documentElement.clientHeight) + parseInt(offset));
+    }; 
+    // 监听函数
+    function isOnScreen(e) {
+      clearTimeout(timer);
+      var timer;
+      timer = setTimeout(function(){
+          if(_inView(el)){
+            el.classList.add(...animateClass)
+            el.style.opacity = 1;
+            parent.removeEventListener('scroll',isOnScreen)
+          }else{
+            return
+          }
+      }.bind(this),20)
+      
+    }
+    //未出现在屏幕上,加上监听
+    
+    if(!_inView(el)){
+      el.style.opacity = 0;
+      //console.log(123)
+      parent.addEventListener('scroll',isOnScreen)
+    }else{
+      //console.log(1232)
+    }
+    
+  }
+})
+
 
 Vue.config.productionTip = false
 /* eslint-disable no-new */
