@@ -29,7 +29,7 @@
 			},
 			toRight(){
 				if(this.type1 == "1"){
-					this.$router.push({path:"/customer_online"});
+					this.$router.push({path:"/service_online"});
 				}else{
 					this.$router.push({path:"/mineGt",query:{matchId:this.matchid}});
 				}

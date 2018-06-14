@@ -40,10 +40,10 @@
 						id:'自选'
 						},
 					{
-						id:'商品期货'
+						id:'股指期货'
 					},
 					{
-						id:'股指期货'
+						id:'商品期货'
 					}
 				],
 				currentNM:1,
@@ -119,7 +119,7 @@
 						this.guzhiList = res.data[0].list;
 					}
 				}).catch((err) => {
-					Toast({message: err.data.message, position: 'bottom', duration: 2000});
+					//Toast({message: err.data.message, position: 'bottom', duration: 2000});
 				});
 			},
 			//获取全部合约
@@ -148,7 +148,7 @@
 						this.selectionList = res.data;
 					}
 				}).catch((err) => {
-					Toast({message: err.data.message, position: 'bottom', duration: 2000});
+					//Toast({message: err.data.message, position: 'bottom', duration: 2000});
 				});
 			}
 		},

@@ -6,7 +6,7 @@
 		<div class="img img_two" @tap="tapEvent"><img src="../../assets/images/help_03.png"/></div>
 		<div class="img img_two" @tap="tapEvent"><img src="../../assets/images/help_04.png"/></div>
 		<div class="img img_two" @tap="tapEvent"><img src="../../assets/images/help_05.png"/></div>
-		<div class="img img_two" @tap="tapEvent"><img src="../../assets/images/help_06.png"/></div>
+		
 	</div>
 </template>
 
