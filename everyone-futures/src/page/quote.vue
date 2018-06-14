@@ -141,7 +141,6 @@
 			}
 		},
 		mounted: function(){
-			console.log("88888")
 			this.initQuoteClient();
 			//获取所有合约
 			this.getCommodityAll();
@@ -164,6 +163,7 @@
 		overflow: hidden;
 	}
 	.tablist{
+		margin-top: 2.08rem;
 		padding: 0 0.3rem ;
 		width:100%;
 		height:0.8rem;
