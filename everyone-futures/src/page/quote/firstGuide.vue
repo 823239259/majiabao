@@ -1,8 +1,12 @@
 <template>
 	<div id="firstGuide">
 		<div class="shade"></div>
-		<div class="img img_one current" @tap="tapEvent"><img src="../../assets/images/help_1.png"/></div>
-		<div class="img img_two" @tap="tapEvent"><img src="../../assets/images/help_2.png"/></div>
+		<div class="img img_one current" @tap="tapEvent"><img src="../../assets/images/help_01.png"/></div>
+		<div class="img img_two" @tap="tapEvent"><img src="../../assets/images/help_02.png"/></div>
+		<div class="img img_two" @tap="tapEvent"><img src="../../assets/images/help_03.png"/></div>
+		<div class="img img_two" @tap="tapEvent"><img src="../../assets/images/help_04.png"/></div>
+		<div class="img img_two" @tap="tapEvent"><img src="../../assets/images/help_05.png"/></div>
+		<div class="img img_two" @tap="tapEvent"><img src="../../assets/images/help_06.png"/></div>
 	</div>
 </template>
 
@@ -18,7 +22,7 @@
 			tapEvent: function(e){
 				var index = $(e.currentTarget).index();
 				$(e.currentTarget).removeClass('current').next().addClass('current');
-				if(index == 2){
+				if(index == 6){
 					var a = {id:true};
 					localStorage.setItem("showGuide",JSON.stringify(a));
 					this.$store.state.account.isShowGuide = true;
