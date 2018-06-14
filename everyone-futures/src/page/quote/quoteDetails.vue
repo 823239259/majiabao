@@ -472,7 +472,8 @@
 		bottom: 0;
 		width: 7.5rem;
 		height: 0.98rem;
-		background-color: #b3daff
+		background-color: #b3daff;
+		z-index: 100;
 
 	}
 	.bottomTab_list{
