@@ -139,7 +139,7 @@
 				}
 			},
 			getWechatId:function(){
-				pro.toweixin();
+				//pro.toweixin();
 			},
 			changepsd:function(){
 				this.showPsd=!this.showPsd;
