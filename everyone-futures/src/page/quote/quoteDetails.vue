@@ -176,10 +176,6 @@
 				userInfo: localStorage.user ? JSON.parse(localStorage.user) : '',
 				bottomList1: [
 					{
-						name: '自选',
-						path: '/adv'
-					},
-					{
 						name: '工具箱',
 						path: '/tools'
 					},
@@ -479,7 +475,7 @@
 		li{
 			flex: 1;
 		}
-		li:nth-child(3){
+		li:nth-child(2){
 			color: #fff;
 			background-color: #1482f0;
 		}

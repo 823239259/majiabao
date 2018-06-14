@@ -29,7 +29,7 @@
 			},
 			toRight(){
 				if(this.type1 == "1"){
-					this.$router.push({path:"/customer_server"});
+					this.$router.push({path:"/customer_online"});
 				}else{
 					this.$router.push({path:"/mineGt",query:{matchId:this.matchid}});
 				}
@@ -48,13 +48,13 @@
 	}
 	#container{
 		height: 0.96rem;
-		background-color: $blcakThin;
+		background-color: $headColr;
 		width: 100%;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		h1{
-			color: $bg;
+			color: $blcakThin;
 			font-size: 0.36rem;
 		}
 		.account{

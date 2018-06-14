@@ -1,5 +1,5 @@
 <template>
-    <div id="help_docs" :style="{'height': clientHeight}">
+    <div id="help_info" :style="{'height': clientHeight}">
         <mt-header fixed title="帮助文档" >
             <mt-button slot="left" icon="back" @click="goBack"></mt-button>
         </mt-header>
@@ -175,7 +175,7 @@ var axios1 = axios.create({
 
 
     export default {
-        name: "help_docs",
+        name: "help_info",
     
         data() {
             return {
@@ -230,7 +230,7 @@ var axios1 = axios.create({
 
 <style lang="scss" scoped>
     @import "../../../assets/css/common.scss";
-    #help_docs {
+    #help_info {
         width: 7.5rem;
         background-color: $bgGray;
     }
@@ -279,13 +279,13 @@ var axios1 = axios.create({
         }
     }
     
-    #help_docs .is-selected {
+    #help_info .is-selected {
         margin: 0;
         border-bottom: 0.03rem solid #e64552;
         color: #e64552;
     }
     
-    #help_docs .mint-navbar {
+    #help_info .mint-navbar {
         border-bottom: 1px solid #e6e6e6;
         padding: 0 0.3rem;
     }

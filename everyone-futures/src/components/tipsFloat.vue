@@ -54,7 +54,7 @@ import pro from '../assets/js/common'
 				},
 				{
 					name: '帮助',
-					path: '/help_docs'
+					path: '/help_info'
 				},
 				{
 					name: '工具箱',

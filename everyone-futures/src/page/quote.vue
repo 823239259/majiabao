@@ -8,7 +8,7 @@
 		</mt-header>
 		<div class="tablist">
 			<span v-for="(k,index) in tabList" :class="{current:currentNM == index}" @click="changeTab(index)">{{k.id}}</span>
-			<mt-button type="primary" style="height: 0.56rem;line-height: 0.24rem;font-size: 0.24rem;margin-top: 0.12rem;background-color: #1482f0;">专业帮助</mt-button>
+			<mt-button type="primary" @click="goto('/help_info')" style="height: 0.56rem;line-height: 0.24rem;font-size: 0.24rem;margin-top: 0.12rem;background-color: #1482f0;">专业帮助</mt-button>
 		</div>
 		<components :is="currentView"></components>
 		<bottomTab :tabSelect="tabSelected"></bottomTab>
@@ -68,6 +68,11 @@
 			...mapActions([
 				'initQuoteClient'
 			]),
+			goto(path) {
+				this.$router.push({
+				path: path
+				});
+			},
 			changeTab:function(index){
 				this.currentNM = index;
 				

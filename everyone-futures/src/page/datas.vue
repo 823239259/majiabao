@@ -1,7 +1,7 @@
 <template>
 	<div id="datas" ref="viewBox"  :style="{height:clientHeight,overflow:'scroll'}" >
 		<mt-header fixed title="个人中心">           
-            <mt-button slot="left"  @click="goto('/help_docs')">知识</mt-button>
+            <mt-button slot="left"  @click="goto('/help_info')">知识</mt-button>
             <mt-button slot="right" @click="shareSystem">分享</mt-button>
         </mt-header>
 		<!-- 选项卡 -->
@@ -140,7 +140,8 @@
 	#datas {
 		width: $w;
 		background-color: $bg;
-		overflow: hidden;
+		-webkit-overflow-scrolling: touch;
+		
 		.mint-navbar .mint-tab-item.is-selected {
 			margin: 0;
 			border-bottom: 0.03rem solid $tabBgColor;

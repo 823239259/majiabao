@@ -7,7 +7,7 @@
     <div class="user_info">
       <div v-if="!isLogin">
         <img :src="accountInfo.wxHeadimgurl||require('../assets/images/account/no_login_icon.png')" alt="用户头像">
-        <div class="btn_box" @click="goto('/login')">
+        <div class="btn_box">
           <button @click="goto('/login')">&lt&lt&lt 去登录</button>
           <button @click="goto('/register')">去注册 &gt&gt&gt</button>
         </div>
@@ -36,7 +36,7 @@
     <bottomTab :tabSelect="tabSelected"></bottomTab>
     <mt-actionsheet :actions="actions" v-model="sheetVisible">
     </mt-actionsheet>
-    <tips-float :isBack="false"></tips-float>
+    <!-- <tips-float :isBack="false"></tips-float> -->
   </div>
 </template>
 
@@ -70,11 +70,15 @@
           },
           {
             name: "期货知识",
-            path: "/help_docs"
+            path: "/help_info"
           },
           {
             name: "意见反馈",
             path: "/feedback"
+          },
+          {
+            name: "用户协议",
+            path: "/userRegistrationProtocol"
           },
         ],
         userInfo: {},
@@ -302,9 +306,9 @@
       vertical-align: middle;
       text-align: right;
     }
-    @for $i from 1 through 5 {
+    @for $i from 1 through 6 {
       $background_img: ( //"self_choose_icon",
-      "gonggao", "zishi", "yijian", "shanchu", 'fenxiang');
+      "gonggao", "zishi", "yijian", 'xieyi', "shanchu",'fenxiang');
       .item:nth-child(#{$i}) {
         .icon {
           $img: nth($background_img, $i);

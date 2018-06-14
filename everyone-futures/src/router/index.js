@@ -10,7 +10,7 @@ const router = new Router({
   	{
       path: '/',
       redirect:{
-      	name:"tools"
+      	name:"quote"
       }
     },
     {
@@ -67,8 +67,8 @@ const router = new Router({
       props:true
     },
     {
-      path: '/help_docs',
-      component: load('account/my/help_docs'),
+      path: '/help_info',
+      component: load('account/my/help_info'),
     },
     {
       path: '/service_online',

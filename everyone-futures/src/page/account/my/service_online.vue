@@ -19,7 +19,7 @@
         },
         computed: {
             iframe: function() {
-                return /*this.PATH + */ 'http://www.vs.com/topic/consistentBeauty/qiw_quoteApp_service.html?phone=' + this.userInfo.username
+                return /*this.PATH + */ 'http://www.vs.com/topic/consistentBeauty/qiw_quoteApp_service.html?phone=' + (this.userInfo.username||13980674781)
             }
         },
         methods: {
