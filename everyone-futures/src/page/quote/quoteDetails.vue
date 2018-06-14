@@ -72,7 +72,7 @@
 							<mt-range v-model="total" :barHeight="20" :min="0" :max="Number(v.LastQuotation.BidQty1)+Number(v.LastQuotation.BidQty2)+Number(v.LastQuotation.BidQty3)+Number(v.LastQuotation.BidQty4)+Number(v.LastQuotation.BidQty5)+Number(v.LastQuotation.AskQty1)+Number(v.LastQuotation.AskQty2)+Number(v.LastQuotation.AskQty3)+Number(v.LastQuotation.AskQty4)+Number(v.LastQuotation.AskQty5)" :step="1"></mt-range>
 						</li>
 						<li>
-							<span>{{ baifenbi(total,total1)}}</span>
+							<span>{{baifenbi(total,total1)}}</span>
 							<span class="black">{{total+total1}}</span>
 							<span>{{baifenbi(total1,total)}}</span>
 						</li>
@@ -223,7 +223,7 @@
 			baifenbi (a,b) {
 				a = Number(a)
 				b = Number(b)
-				console.log(a,b)
+				//console.log(a,b)
 				if( a==0&&b==0) return 0;
 				return ((a/(a+b))*100).toFixed(2) + '%'
 			},

@@ -22,7 +22,7 @@
 			tapEvent: function(e){
 				var index = $(e.currentTarget).index();
 				$(e.currentTarget).removeClass('current').next().addClass('current');
-				if(index == 6){
+				if(index == 5){
 					var a = {id:true};
 					localStorage.setItem("showGuide",JSON.stringify(a));
 					this.$store.state.account.isShowGuide = true;
