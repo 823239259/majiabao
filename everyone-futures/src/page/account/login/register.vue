@@ -17,9 +17,9 @@
 			</ul>
 			<mt-button :class="btnType ? 'btn' : 'btnred'" @click="regisiter"  type="danger">注册</mt-button>
 			<p @click="toLogin"><span class="color_gray">已有账户？</span>立即登录>></p>
-			<div class="showWX" v-show="showWhat">
+			<!-- <div class="showWX" v-show="showWhat">
 				<i class="toWX" @click="getWechatId"></i>
-			</div>
+			</div> -->
 			<p @click="toProtocol"><span class="color_gray">注册即代表阅读并同意</span>《指数天下用户协议》</p>
 		</div>
 		<codeDialog type="register" ref="codeDialog"></codeDialog>
@@ -183,22 +183,22 @@
 						code:this.code,
 						resource:this.packChannel
 					}
-					pro.fetch("post","/loginAndRegister/register",data,"").then((res)=>{
-						if(res.code == 1 && res.success == true){
-							this.show = false;
-							this.$toast({message:"注册成功",duration: 1000});
-							this.$router.push({path:"/login"});
-						}
-					}).catch((err)=>{
-						var data = err.data;
-						if(data == undefined){
-							this.$toast({message:"网络不给力，请稍后重试",duration: 1000});
-							this.show = false;
-						}else{
-							this.$toast({message:data.message,duration: 1000});
-							this.show = false;
-						}
-					})
+					// pro.fetch("post","/loginAndRegister/register",data,"").then((res)=>{
+					// 	if(res.code == 1 && res.success == true){
+					// 		this.show = false;
+					// 		this.$toast({message:"注册成功",duration: 1000});
+					// 		this.$router.push({path:"/login"});
+					// 	}
+					// }).catch((err)=>{
+					// 	var data = err.data;
+					// 	if(data == undefined){
+					// 		this.$toast({message:"网络不给力，请稍后重试",duration: 1000});
+					// 		this.show = false;
+					// 	}else{
+					// 		this.$toast({message:data.message,duration: 1000});
+					// 		this.show = false;
+					// 	}
+					// })
 					
 				}
 			},

@@ -11,14 +11,14 @@
 					<input type="password"  placeholder="请输入密码" class="input" v-model="password" id="password"/>
 				</li>
 			</ul>
-			<div>
+			<!-- <div>
 				<span class="forgetPsd" @click="toForgetPsd">忘记密码？</span>
-			</div>
+			</div> -->
 			<mt-button :class="btnType ? 'btn' : 'btnred'" @click="login" type="danger">登录</mt-button>
-			<p @click="toRegister">新用户注册>></p>
+			<!-- <p @click="toRegister">新用户注册>></p>
 			<div class="showWX" v-show="showWhat">
 				<i class="toWX" @click="getWechatId"></i>
-			</div>
+			</div> -->
 		</div>
 		<codeDialog ref="codeDialog" :objstr="sendMsg" type="login"></codeDialog>
 	</div>

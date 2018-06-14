@@ -1,28 +1,20 @@
 <template>
-    <div id="news_info" :style="{height:clientHeight}">
-        <mt-header fixed title="帮助中心">
+    <div id="news_info_details" :style="{'height':clientHeight}">
+        <mt-header fixed title="帮助详情">
             <mt-button slot="left" icon="back" @click="goBack"></mt-button>
-        </mt-header>
-    
+        </mt-header>   
         <!-- 列表 -->
-        <div class="news_wrap">
-            <ul class="news_list" v-if="newsList.length">
-                <li v-for="item in newsList" :key="item.id" @click="goto(item)">
-                    <h3>{{item.title}}</h3>
-                    <p>{{item.time}}</p>
-                </li>
-            </ul>
-            <p class="no_news" v-else>暂无内容</p>
+        <div class="article_wrap">
+            <h2>{{details.title}}</h2>
+            <span>{{details.time}}</span>
+            <p v-html="details.content"></p>
         </div>
     </div>
 </template>
 
 <script>
-    import pro from '../../../assets/js/common'
-    const local = pro.local;
-    const idList1 = local.get('idList') || [];
-    
-    const newsList = [{
+import pro from '../../../assets/js/common'
+const newsList = [{
 
         content: "期货投机交易，是指在期货市场上以获取价差收益为目的的期货交易行为。投机者根据自己对期货价格走势的判断，作出买进或卖出的决定，如果这种判断与市场价格走势相同，则投机者平仓出局后可获取投机利润；如果判断与价格走势相反，则投机者平仓出局后承担投机损失。由于投机的目的是赚取差价收益，所以，投机者一般只是平仓了结持有的期货合约，而不进行实物交割。投机交易分为两种：价差投机和套利交易。1、价差投机。价差投机是指投机者通过对价格的预期，在认为价格上升时买进、价格下跌时卖出，然后待有利时机再卖出或买进原期货合约，以获取利润的活动。进行价差投机的关键在于对期货市场价格变动趋势的分析预测是否准确，由于影响期货市场价格变动的因素很多，特别是投机心理等偶然性因素难以预测，因此，正确判断难度较大，所以这种投机的风险较大。套利交易是期货投机交易中的一种特殊方式，它利用期货市场中不同月份、不同市场、不同商品之间的相对价格差，同时买入和卖出不同种类的期货合约，来获取利润。正如一种商品的现货价格与期货价格经常存在差异，同种商品不同交割月份的合约价格变动也存在差异；同种商品在不同的期货交易所的价格变动也存在差异。由于这些价格差异的存在，使期货市场的套利交易成为可能。2、套利交易。套利交易丰富和发展了期货投机交易的内容，并使期货投机不仅仅局限于期货合约绝对价格水平变化，更多地转向期货合约相对价格水平变化。套利交易对期货市场的稳定发展有积极的意义，具体地讲，套利的作用主要表现在两个方面：一方面，套利提供了风险对冲的机会；另一方面，套利有助于合理价格水平的形成。",
         createDate: "2018-05-15 16:11:31",
@@ -63,63 +55,41 @@
     },
     
     ]
-    
-    
-    
-    
+
+
+
+
+
+
+
     export default {
-        name: 'news_info',
+        name: 'news_info_details',
+        props: ['id'],
         data() {
             return {
-                hasList: true,
-                newsList: [],
-                currentIndex: 0,
-                idList: idList1,
+                details: {}
             }
         },
         computed: {
             clientHeight() {
                 return document.documentElement.clientHeight + 'px';
-            },
-    
+            }
         },
         methods: {
             goBack() {
                 window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
             },
-            goto(item) {
-                this.$router.push({
-                    path: `help_info_details/${item.id}`
-                });
-    
-            },
-            getNewList() {
-                const data = {
-                    category: '期货知识'
+            getDetails() {
+                var data = {
+                    id: this.id
                 }
-                pro.fetch("post", "/others/getTNotice", data, "").then((res) => {
-                    //console.log(res)
-                    if (res.success == true) {
-                        if (res.code == 1) {
-                            /* 
-                                本地存储新闻内容 
-                                 1.给返回的list 添加一个isread属性
-                                 2. 点击事件 改变所点击那个item的isread 
-                                    2.1 改变isread 
-                                    2.2 存储 item 的id
-                                 3. 重新渲染 对比本地存储的id,改变isread
-                                    3.1 二次循环 改变对应id 的 isread属性
-                                    3.2 赋值给渲染的 属性   
-                            */
-                            res.data.forEach(item => {
-                                //是否在idList中                                
-                                item.isRead = this.idList.includes(item.id);
-                            });
-                            this.newsList = res.data
-                        }
+                pro.fetch("post", "/others/getNotice", data, "").then((res) => {
+                    console.log(res)
+                    if (res.code == 1 && res.success == true) {
+                        this.details = res.data
                     }
-    
                 }).catch((err) => {
+                    //console.log("err==="+JSON.stringify(err));
                     var data = err.data;
                     if (data == undefined) {
                         this.$toast({
@@ -143,55 +113,51 @@
                         }
                     }
                 })
-            },
-    
+            }
         },
-        activated() {
-            //this.getNewList()
-            this.newsList = newsList
-        }
+        watch: {
+            id (value, oldValue) {
+                // if(value !== oldValue){
+                //     this.getDetails()
+                // }
+            }
+        },
+        created () {
+            //this.getDetails() 
+            this.details = newsList.find((obj)=>{
+                return obj.id == this.id
+            })
+        },
+        // activated() {
+        //     console.log(1)
+        //     this.getDetails()
+        // }
     }
 </script>
 
 <style lang="scss" scoped>
     @import "../../../assets/css/common.scss";
-    #news_info {
+    #news_info_details {
         width: 7.5rem;
-        background-color: $bg;
+        overflow: auto;
+        //background-color: $bgGray;
     }
     
-    .news_wrap {
+    .article_wrap {
         width: 7.5rem;
-        padding: 0.96rem 0 0 0;
-        li {
-            position: relative;
-            padding: 0.1rem 0.3rem;
-            border-bottom: 1px solid $bgDeep;
-            h3 {
-                @include font($fs28, 0.46rem, $grayDeep, left);
-            }
-            p {
-                @include font($fs24, 0.46rem, $grayDeep, left);
-            }
-            .is_read {
-                position: absolute;
-                left: 0.1rem;
-                top: 0.28rem;
-                width: 0.12rem;
-                height: 0.12rem;
-                background-color: $redDeep;
-                border-radius: 50%;
-            }
-            .have_read {
-                color: $blcakThin
-            }
+        padding: 1.26rem 0.3rem 0;
+        background-color: $bg;
+        h2 {
+            @include font($fs36, 0.5rem, $blcakThin, left);
+            font-weight: 600;
         }
-        .no_news {
-            position: absolute;
-            top: 6rem;
-            left: 50%;
-            transform: translateX(-50%);
-            @include font($fs28, 0.46rem, $grayDeep);
+        span {
+            display: block;
+            @include font($fs24, 0.8rem, $graySimple, right);
+        }
+        p {
+            @include font($fs28, 0.4rem, $graySimple, left);
+            text-indent: 2em;
         }
     }
 </style>

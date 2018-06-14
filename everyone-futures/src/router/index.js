@@ -71,6 +71,11 @@ const router = new Router({
       component: load('account/my/help_info'),
     },
     {
+      path: '/help_info_details/:id',
+      component: load('account/my/help_info_details'),
+      props:true
+    },
+    {
       path: '/service_online',
       name: 'service_online',
       component: load('account/my/service_online')

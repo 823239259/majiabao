@@ -121,23 +121,24 @@
 							"type": 1,
 							"imageCode": this.code
 						};
-						pro.fetch('post', '/loginAndRegister/getSmsCode', data, "").then(function(res){
-							if(res.success == true){
-								if(res.code == 1){
-									this.ishow = false;
-									this.$toast({message: '发送成功',duration: 2000});
-								}
-							}
-						}.bind(this)).catch(function(err){
-							var data = err.data;
-							if(data == undefined){
-								this.$toast({message:"网络不给力，请稍后重试",duration: 2000});
-							}else{
-								this.code = '';
-								this.ishow = false;
-								this.$toast({message: data.message,duration: 2000});
-							}
-						}.bind(this));
+						this.ishow = false;
+						// pro.fetch('post', '/loginAndRegister/getSmsCode', data, "").then(function(res){
+						// 	if(res.success == true){
+						// 		if(res.code == 1){
+						// 			this.ishow = false;
+						// 			this.$toast({message: '发送成功',duration: 2000});
+						// 		}
+						// 	}
+						// }.bind(this)).catch(function(err){
+						// 	var data = err.data;
+						// 	if(data == undefined){
+						// 		this.$toast({message:"网络不给力，请稍后重试",duration: 2000});
+						// 	}else{
+						// 		this.code = '';
+						// 		this.ishow = false;
+						// 		this.$toast({message: data.message,duration: 2000});
+						// 	}
+						// }.bind(this));
 					}else if(this.type == 'findpwd'){
 						//请求发送验证码
 						var data={
