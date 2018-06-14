@@ -34,6 +34,11 @@ const router = new Router({
    		component: load('tools')
     },
     {
+      path: '/classRoom',
+      name: 'classRoom',
+   		component: load('classRoom')
+    },
+    {
       path: '/datas',
       name: 'datas',
        component: load('datas'),

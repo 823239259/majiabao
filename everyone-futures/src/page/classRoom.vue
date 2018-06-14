@@ -1,36 +1,41 @@
 <template>
-    <div id="tools" :style="{height:clientHeight}">
-         <mt-header fixed title="工具箱">           
+    <div id="classRoom" :style="{height:clientHeight}">
+         <mt-header fixed title="学堂">           
             <mt-button slot="left"  @click="callCustomer">客服</mt-button>
             <mt-button slot="right" @click="shareSystem">分享</mt-button>
         </mt-header>
-        <div class="tools_wrap">
-             <!-- <div class="tools_item" v-for="(item, index) in toolsList" :key="item.id" @click="goto(item.path)">
-                <h3 :class="index ==">{{item.title}}</h3>
-                <span class="icon icon1"></span>
-                <p>{{item.name}}</p>
-              </div> -->
-            <div class="tools_item" @click="goto('/tools_item/1')">
-              <h3>币种计算</h3>
-              <span class="icon icon1"></span>
-              <p>汇率计算</p>
+        <div class="warp1">
+            <div class="iframe1">
+                <iframe :class="{'inherit-height':!isIphone}" src='http://player.youku.com/embed/XMzY1NTAwMTE0OA==' frameborder="0" :scrolling="isIphone?'no':'yes'"></iframe>
             </div>
-             <div class="tools_item" @click="goto('/tools_item/2')">
-              <h3 class="wathet">规则查询</h3>
-               <span class="icon icon2"></span>
-              <p>期货合约查询</p>
+             <div class="iframe1">
+                <iframe :class="{'inherit-height':!isIphone}" src='http://player.youku.com/embed/XMzY2MjI1MjQ2NA==' frameborder="0" :scrolling="isIphone?'no':'yes'"></iframe>
             </div>
-             <div class="tools_item" @click="goto('/tools_item/3')">
-              <h3 class="blue">价格计算</h3>
-               <span class="icon icon3"></span>
-              <p>期货价格计算</p>
+             <div class="iframe1">
+                <iframe :class="{'inherit-height':!isIphone}" src='http://player.youku.com/embed/XMzY2MTc3NDAxMg==' frameborder="0" :scrolling="isIphone?'no':'yes'"></iframe>
+            </div>
+             <div class="iframe1">
+                <iframe :class="{'inherit-height':!isIphone}" src='http://player.youku.com/embed/XMzY2MTc5OTg2OA==' frameborder="0" :scrolling="isIphone?'no':'yes'"></iframe>
+            </div>
+             <div class="iframe1">
+                <iframe :class="{'inherit-height':!isIphone}" src='http://player.youku.com/embed/XMzY2MjA2MDkyMA==' frameborder="0" :scrolling="isIphone?'no':'yes'"></iframe>
+            </div>
+             <div class="iframe1">
+                <iframe :class="{'inherit-height':!isIphone}" src='http://player.youku.com/embed/XMzY2MjE0NTQ1Ng==' frameborder="0" :scrolling="isIphone?'no':'yes'"></iframe>
+            </div>
+             <div class="iframe1">
+                <iframe :class="{'inherit-height':!isIphone}" src='http://player.youku.com/embed/XMzY2MjE3ODA2MA==' frameborder="0" :scrolling="isIphone?'no':'yes'"></iframe>
             </div>
         </div>
-        <bottomTab :tabSelect="tabSelected"></bottomTab>
-         <mt-actionsheet
+
+        <bottom-tab :tabSelect='tabSelected'></bottom-tab>
+        
+<mt-actionsheet
                 :actions="actions"
                 v-model="sheetVisible">
                 </mt-actionsheet>
+       
+          
     </div>
 </template>
 
@@ -41,54 +46,30 @@ import bottomTab from '../components/bottom_tab'
 import pro from '../assets/js/common'
 const local = pro.local;
 export default {
-  name: "tools",
+  name: "classRoom",
   components: {
     bottomTab
   },
   mixins:[pro.mixinsToCustomer],
   data() {
     return {
-      tabSelected: 'tools',
+      tabSelected: 'classRoom',
       isLogin: false,
       isShow: false,
       userInfo: {},
       lastPath: '/',
       userList: [],
-      toolsList: [{
-        title: '币种计算',
-        name: '汇率计算',
-        id: 1,
-        path: '/tools_item/1'
-      },
-      {
-        title: '规则查询',
-        name: '期货合约查询',
-        id: 2,
-        path: '/tools_item/2'
-      },
-      {
-        title: '价格计算',
-        name: '期货价格计算',
-        id: 3,
-        path: '/tools_item/3'
-      }]
     };
   },
   computed: {
     clientHeight() {
       return document.documentElement.clientHeight + "px";
     },
-    allMoney () {
-      if(this.accountInfo.balance &&this.accountInfo.freeze) {
-       return (this.accountInfo.balance*1 + this.accountInfo.freeze*1).toString();
-      }
+    isIphone () {
+      const isIphone = window.navigator.userAgent.toLowerCase().indexOf('iphone');
+      console.log(window.navigator.userAgent.toLowerCase())
+      return isIphone>-1
     },
-    accountInfo () {
-      return this.$store.state.accountInfo;
-    },
-    isNew () {
-        return this.$store.state.newsList.some(item => item.isRead == false)
-    }
   },
   methods: {
     ...mapMutations({
@@ -191,5 +172,19 @@ export default {
       
     }
   }
+}
+.iframe1{
+  width: 100%;
+  padding-top: 0.2rem;
+  //overflow: scroll;
+  //-webkit-overflow-scrolling: touch;
+  iframe{
+    width: 1px;
+    min-width: 100%;
+    
+  }
+}  
+.warp1{
+  margin-top: 1.08rem;
 }
 </style>

@@ -29,6 +29,10 @@
 						path: 'datas'
 					},
 					{
+						name: '学堂',
+						path: 'classRoom'
+					},
+					{
 						name: '工具箱',
 						path: 'tools'
 					},
@@ -92,9 +96,9 @@
   //background: url('../assets/img/icon_colour.png') top center no-repeat;
   background-size: cover;
 }
-@for $i from 1 through 4 {
+@for $i from 1 through 5 {
  	//  $img: ("index", "quotation", "trade", "match", "discover");
-	 $img: ("hangqing", "data", "gongju", "my");
+	 $img: ("hangqing", "data", "xuetang","gongju", "my");
   .icon#{$i}{
 	background: url('../assets/images/account/#{nth($img,$i)}_icon.png') center no-repeat;
 	background-size: cover;

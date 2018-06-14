@@ -1,6 +1,6 @@
 <template>
 	<div id="datas" ref="viewBox"  :style="{height:clientHeight,overflow:'scroll'}" >
-		<mt-header fixed title="个人中心">           
+		<mt-header fixed title="数据">           
             <mt-button slot="left"  @click="goto('/help_info')">知识</mt-button>
             <mt-button slot="right" @click="shareSystem">分享</mt-button>
         </mt-header>
@@ -98,14 +98,6 @@
             getDatePosition (value) {
                 this.datePosition = value
 			},
-			// forTest () {
-			// 	clearTimeout(timer)
-			// 	var timer = setTimeout(() => {
-            //         //console.log(this)
-            //         this.scrollY = this.$refs.viewBox.scrollTop
-			// 		console.log(this.$refs.viewBox.scrollTop)
-			// 	}, 100);
-			// }
 		},
 		watch: {
 			selected (value) {
@@ -118,20 +110,6 @@
 				}
 			}
         },
-        //定位回到离开时的位置
-		// activated () {        
-        //     let _this = this
-        //     this.$refs.viewBox.scrollTop = this.scrollY
-        //     //this.$refs.viewBox.addEventListener('scroll',_this.forTest)
-        // },
-		// deactivated () {
-        //     let _this = this
-        //     this.scrollY = this.$refs.viewBox.scrollTop
-		// 	//window.removeEventListener('scroll', _this.forTest);
-				
-		// }
-
-
 	}
 </script>
 
@@ -140,7 +118,7 @@
 	#datas {
 		width: $w;
 		background-color: $bg;
-		-webkit-overflow-scrolling: touch;
+		//-webkit-overflow-scrolling: touch;
 		
 		.mint-navbar .mint-tab-item.is-selected {
 			margin: 0;
