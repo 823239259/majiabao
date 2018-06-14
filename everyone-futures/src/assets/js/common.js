@@ -254,59 +254,59 @@ pro = {
 		}
 		return flag;
 	},	
-	isOpenMessage: function(){
-		var obj = pro.isSysterm();
-		if(obj.isiOS == true){
-			if(window.plus){
-				var UIApplication = plus.ios.import("UIApplication");
-				var app = UIApplication.sharedApplication();
-				var enabledTypes  = 0;
-				if (app.currentUserNotificationSettings) {
-					var settings = app.currentUserNotificationSettings();
-					enabledTypes = settings.plusGetAttribute("types");
-				} else {
-						//针对低版本ios系统
-					enabledTypes = app.enabledRemoteNotificationTypes();
-				}
-				//console.log("enabledTypes:"+enabledTypes);
-				if (enabledTypes == 0) {
-					mui.alert( "消息推送已关闭，无法接收通知，请在【设置】-【通知中心】-【应用名称】中开启");
-				}
-				plus.ios.deleteObject(app);
-			}
-		}
-	},
+	// isOpenMessage: function(){
+	// 	var obj = pro.isSysterm();
+	// 	if(obj.isiOS == true){
+	// 		if(window.plus){
+	// 			var UIApplication = plus.ios.import("UIApplication");
+	// 			var app = UIApplication.sharedApplication();
+	// 			var enabledTypes  = 0;
+	// 			if (app.currentUserNotificationSettings) {
+	// 				var settings = app.currentUserNotificationSettings();
+	// 				enabledTypes = settings.plusGetAttribute("types");
+	// 			} else {
+	// 					//针对低版本ios系统
+	// 				enabledTypes = app.enabledRemoteNotificationTypes();
+	// 			}
+	// 			//console.log("enabledTypes:"+enabledTypes);
+	// 			if (enabledTypes == 0) {
+	// 				mui.alert( "消息推送已关闭，无法接收通知，请在【设置】-【通知中心】-【应用名称】中开启");
+	// 			}
+	// 			plus.ios.deleteObject(app);
+	// 		}
+	// 	}
+	// },
 	
-	isOpenMessages: function(){
-		if(window.plus){
-			var pp = plus.navigator.checkPermission('NOTIFITION');
-			if(pp != 'authorized'){
-				mui.alert( "消息推送已关闭，无法接收通知，请在【设置】-【通知中心】-【应用名称】中开启");
-			}
-		}
-	},
-	openMessages: function(){
-		var obj = pro.isSysterm();
-		if(obj.isiOS == true){
-			if(window.plus){
-				var UIApplication = plus.ios.import("UIApplication");
-				var app = UIApplication.sharedApplication();
-				var enabledTypes  = 0;
-				if (app.currentUserNotificationSettings) {
-					var settings = app.currentUserNotificationSettings();
-					enabledTypes = settings.plusGetAttribute("types");
-				} else {
-					//针对低版本ios系统
-					enabledTypes = app.enabledRemoteNotificationTypes();
-				}
-				return enabledTypes;
-			}else{
-				return false;
-			}
-		}else{
-			return '';
-		}
-	},
+	// isOpenMessages: function(){
+	// 	if(window.plus){
+	// 		var pp = plus.navigator.checkPermission('NOTIFITION');
+	// 		if(pp != 'authorized'){
+	// 			mui.alert( "消息推送已关闭，无法接收通知，请在【设置】-【通知中心】-【应用名称】中开启");
+	// 		}
+	// 	}
+	// },
+	// openMessages: function(){
+	// 	var obj = pro.isSysterm();
+	// 	if(obj.isiOS == true){
+	// 		if(window.plus){
+	// 			var UIApplication = plus.ios.import("UIApplication");
+	// 			var app = UIApplication.sharedApplication();
+	// 			var enabledTypes  = 0;
+	// 			if (app.currentUserNotificationSettings) {
+	// 				var settings = app.currentUserNotificationSettings();
+	// 				enabledTypes = settings.plusGetAttribute("types");
+	// 			} else {
+	// 				//针对低版本ios系统
+	// 				enabledTypes = app.enabledRemoteNotificationTypes();
+	// 			}
+	// 			return enabledTypes;
+	// 		}else{
+	// 			return false;
+	// 		}
+	// 	}else{
+	// 		return '';
+	// 	}
+	//},
 	/**
 	 * 判断网络是否已连接
 	 * @param {} 
