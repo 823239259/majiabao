@@ -3,7 +3,7 @@
 			<ul class="discover_list">
 				<mt-loadmore :bottom-method="loadBottom"  :auto-fill="false" :top-method="loadTop" ref="loadmore">
 						<template >
-							<li class="list" v-for="k in newsInfo" v-isShow="'#datas'">
+							<li class="list" :class="{'show': showItem[index]}" v-for="(k,index) in newsInfo" v-isShow="'#datas'">
 								<p class="time_text">
 									<span class="time">{{k.createdAt | changTime }}</span>
 									<span class="time_day">{{startTime}} {{getWeekDay(today)}}</span>
@@ -36,6 +36,7 @@
 				newsInfo: [],
 				zhankai: false,
 				today: null,
+				showItem: [true,true,true,true],
 			}
 		},
 		computed: {
@@ -209,5 +210,8 @@
 			}
 		}
 	}
+	.show{
+			opacity: 1 !important;
+		}
 	
 </style>
