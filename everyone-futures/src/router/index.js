@@ -1,7 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import VueQuillEditor from 'vue-quill-editor'
-Vue.use(Router)
+//Vue.use(Router)
+if (process.env.NODE_ENV === 'development') {
+  Vue.use(Router)
+}
+
+
 Vue.use(VueQuillEditor)
 const load = (...p)=>resolve => require([`@/${p[1]||'page'}/${p[0]}.vue`], resolve);
 const router = new Router({

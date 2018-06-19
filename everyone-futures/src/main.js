@@ -2,21 +2,47 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import FastClick from 'fastclick'
-import VueRouter from 'vue-router'
 import App from './App'
 import axios from 'axios'
 import 'babel-polyfill'
 Vue.prototype.$http = axios
 import Mint from 'mint-ui';
-Vue.use(Mint);
 import 'mint-ui/lib/style.css';
 import "./assets/css/my-mint.scss";
 import router from './router'
 import store from './store'
 import pro from './assets/js/common'
-// /*引入移动端手势库*/
-// import directives from './directives/touch'
-//directives(Vue);
+
+/* 
+  用于区分打包 及开发时的依赖 begin
+
+*/
+if (process.env.NODE_ENV === 'development') {
+  Vue.use(Mint);
+  require('mint-ui/lib/style.css')
+}
+/* 
+  用于区分打包 及开发时的依赖 end
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Vue.prototype.$pro = pro;
 const history = window.sessionStorage;
 let historyCount = history.getItem('count') * 1;

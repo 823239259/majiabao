@@ -60,9 +60,10 @@ const webpackConfig = merge(baseWebpackConfig, {
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
+    //用于webpack打包优化 开发环境能够使用vuetool
     new HtmlWebpackPlugin({
       filename: config.build.index,
-      template: 'index.html',
+      template: 'index.prod.html',
       inject: true,
       minify: {
         removeComments: true,
@@ -115,8 +116,17 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ])
-  ]
+    ]),
+    
+  ],
+    externals: {   //用于打包减小体积
+      'vue': 'Vue',
+      'vuex': 'Vuex',
+      'axios': 'axios',
+      'mint-ui': 'MINT',
+      'vue-router': 'VueRouter',
+
+  }
 })
 
 if (config.build.productionGzip) {
