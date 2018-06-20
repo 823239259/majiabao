@@ -227,6 +227,7 @@ export default {
 							}
 						}.bind(this),
 						error:function(err){
+              this.$indicator.close()
 							this.$toast({message:"网络不给力，请稍后再试",duration: 1000});
 						}.bind(this)
 					})
