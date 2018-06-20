@@ -176,7 +176,7 @@
 		<tips-float :isBack="true"></tips-float>
 		<div class="bottomTab">
 			<ul class="bottomTab_list">
-				<li v-for="item in bottomList1" @click="itemClick(item)">{{item.name}}</li>
+				<li v-for="item in bottomList1" @click="itemClick(item)" :class="{current:dian}"><i></i>{{item.name}}</li>
 			</ul>
 		</div>
 		
@@ -205,6 +205,10 @@
 				userInfo: localStorage.user ? JSON.parse(localStorage.user) : '',
 				bottomList1: [
 					{
+						name:'点赞',
+						method:'dianzan'
+					},
+					{
 						name: '工具箱',
 						path: '/tools'
 					},
@@ -212,7 +216,7 @@
 						name: '推荐给朋友',
 						method: 'shareSystem'
 					},
-
+					
 				],
 				chartsList: ['闪电图','1分','5分','30分','1小时','日K'],
 				currentChartsNum: 1,
@@ -220,7 +224,8 @@
 				chartsShow: false,
 				chartsHight: 5.4,
 				strategyList:'',
-				ContractNo:''
+				ContractNo:'',
+				dian:''
 			}
 		},
 		components: {
@@ -423,18 +428,33 @@
 					
 				})
 			},
+			dianzan:function(){
+				if(localStorage.user){
+					if(this.dian == true){
+					Toast({message: "您已点赞", position: 'bottom', duration: 1500});
+					}else{
+						var a = {dianzan:true}
+						localStorage.dianzan = JSON.stringify(a);
+						this.dian = true;
+					}
+				}else{
+					Toast({message: "请先登录", position: 'bottom', duration: 1500});
+				}
+				
+			}
 		},
 		mounted:function(){
 		},
 		activated:function(){
 			this.currentNo = this.$route.query.commodityNo;
-//			this.$store.state.isshow.isfensshow = false;
-//			this.$store.state.isshow.islightshow = false;
-//			this.$store.state.isshow.isklineshow = false;
+			this.$store.state.isshow.isfensshow = false;
+			this.$store.state.isshow.islightshow = false;
+			this.$store.state.isshow.isklineshow = false;
 			//重组数据
 			this.operateData();
 			//获取策略
 			this.getStrategy();
+			this.dian = localStorage.dianzan ? JSON.parse(localStorage.dianzan).dianzan : false;
 		},
 		filters:{
 			changName:function(e){
@@ -714,9 +734,25 @@
 		li{
 			flex: 1;
 		}
-		li:nth-child(2){
+		li:nth-child(3){
 			color: #fff;
 			background-color: #1482f0;
+		}
+		li:nth-child(1){
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			i{
+				display: block;
+				width: 0.4rem;
+				height: 0.38rem;
+				background: url(../../assets/images/account/dianzhan_icon.png) no-repeat ;
+				background-size: 0.4rem 0.38rem;
+				margin-right: 0.1rem;
+			}
+			&.current{
+				color: red;
+			}
 		}
 	}
 </style>
