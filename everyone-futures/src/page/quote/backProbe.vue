@@ -1,9 +1,7 @@
 <template>
 	<div id="backProbe">
 		<mt-header :title="strategyName" fixed style="background-color:#b3daff;font-size: 0.32rem;height: 0.96rem;line-height: 0.96rem;">
-		 	<router-link to="" slot="left">
-			    <i id="back" @tap.stop="backRounter"></i>
-			</router-link>
+			 <mt-button slot="left" icon="back" @click="backRounter"></mt-button>
 		</mt-header>
 		<div id="container" v-show="showConatiner">
 			<div class="info">
@@ -263,7 +261,7 @@
 		height: 1rem;
 		background: url(../../assets/images/quote/back_icon.png) no-repeat 0.15rem 0.34rem;
 		background-size: 0.24rem 0.32rem;
-		margin-top: 0.34rem;
+		
 	}
 	#container{
 		width: 100%;

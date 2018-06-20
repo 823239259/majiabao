@@ -115,6 +115,9 @@ export default {
         name: '金肯特纳策略',
         strategy: 'Jintena' 
       },
+      {
+        
+      }
       ],
       varietiesInit: ['CL', 'HSI', 'GC', 'SI', 'HG', 'CN'],
 
