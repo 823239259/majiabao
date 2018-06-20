@@ -116,7 +116,7 @@ const router = new Router({
       props: true
     },
     /* 
-      v1.20 Âä†ÂÖ•
+      v1.20 º”»Î
     */
    {
       path: '/classRoom',
@@ -128,6 +128,16 @@ const router = new Router({
       name: 'strategy',
       component: load('strategy')
     },
+	{
+   	path:"/backProbe",
+   	name:"backProbe",
+   	component:load('quote/backProbe')
+   },
+   {
+   	path:'/backPresentation',
+   	name:'backPresentation',
+   	component:load('quote/backPresentation')
+   }
   ],
 
 })

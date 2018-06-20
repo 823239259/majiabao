@@ -82,12 +82,10 @@
 			},
 			changeTab:function(index){
 				this.currentNM = index;
-				
 				switch (index){
 					case 0:
 						this.currentView = selfSelection;
 						this.$store.state.market.Parameters = [];
-						this.$store.state.market.commodityOrder = this.selectionList;
 						this.selectionList.forEach((o, i) => {
 							this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
 						});
@@ -95,7 +93,6 @@
 					case 1:
 						this.currentView = commodity;
 						this.$store.state.market.Parameters = [];
-						this.$store.state.market.commodityOrder = this.cmList;
 						this.cmList.forEach((o, i) => {
 							this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
 						});
@@ -103,7 +100,6 @@
 					case 2:
 						this.currentView = guzhi;
 						this.$store.state.market.Parameters = [];
-						this.$store.state.market.commodityOrder = this.guzhiList;
 						this.guzhiList.forEach((o, i) => {
 							this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
 						});
@@ -124,7 +120,6 @@
 			},
 			//获取全部合约
 			getCommodityAll:function(){
-				this.$store.state.market.Parameters = [];
 				this.$store.state.market.commodityOrder = [];
 				//获取所有市场合约
 				pro.fetch('post', '/quoteTrader/getCommodityInfoNoType', '', '').then((res) => {
@@ -154,13 +149,13 @@
 		},
 		mounted: function(){
 			this.initQuoteClient();
+		},
+		activated:function(){
+			this.currentNM = 1;
 			//获取所有合约
 			this.getCommodityAll();
 			//获取股指期货
 			this.getCommodityInfo();
-		},
-		activated:function(){
-			
 			//获取自选列表
 			this.getSelection();
 		}

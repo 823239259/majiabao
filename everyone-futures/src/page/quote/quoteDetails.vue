@@ -12,10 +12,32 @@
 						<li @click="addOptional"><i></i></li>
 					</ul>
 				</header>
+				<div class="nameTitle">
+					<span>{{tradeName[currentNo]}}</span>
+					<span class="price" :class="{red: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.LastPrice | fixNum(v.DotSize)}}</span>
+				</div>
+				<div class="strategy">
+					<template>
+						<div class="strategy_1">
+							<span v-for="(val,k) in strategyList" @click="toBackProbe(val,k)">{{val}}</span>
+						</div>
+					</template>
+					
+				</div>
+				<div class="charts">
+					<div class="charts_title">
+						<template v-for="(key,index) in chartsList">
+							<span :class="{current: currentChartsNum == index}" @tap="menuEvent(index)">{{key}}</span>
+						</template>
+					</div>
+					<div class="charts_container">
+						<components :is="currentChartsView" v-if="chartsShow"></components>
+					</div>
+				</div>
 				<div class="money">
 					<div class="moneyDet">
-						<p>最新价</p>
-						<p class="price" :class="{red: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.LastPrice | fixNum(v.DotSize)}}</p>
+						<p>现手</p>
+						<p>{{v.LastQuotation.LastVolume}}</p>
 					</div>
 					<div class="moneyDet">
 						<p>成交量</p>
@@ -165,6 +187,12 @@
 	import pro from '../../assets/js/common.js'
 	import tipsFloat from '../../components/tipsFloat'
 	import { Toast } from 'mint-ui';
+	import light from './light.vue'
+	import klineOne from './klineOne.vue'
+	import klineFive from './klineFive.vue'
+	import klineThirty from './klineThirty.vue'
+	import klineDay from './klineDay.vue'
+	import klineOneHour from './klineOneHour.vue'
 	export default{
 		name:"quoteDetails",
 		mixins: [pro.mixinsToCustomer],
@@ -186,15 +214,24 @@
 					},
 
 				],
+				chartsList: ['闪电图','1分','5分','30分','1小时','日K'],
+				currentChartsNum: 1,
+				currentChartsView: 'klineOne',
+				chartsShow: false,
+				chartsHight: 5.4,
+				strategyList:'',
+				ContractNo:''
 			}
 		},
 		components: {
-			tipsFloat
+			tipsFloat,light,klineOne,klineFive,klineThirty,klineDay,klineOneHour
 		},
 		computed:{
 			parameters(){
 				this.$store.state.market.Parameters.forEach((a,i)=>{
 					if(a.CommodityNo == this.currentNo){
+						this.$store.state.market.currentdetail = a;
+						this.ContractNo = a.MainContract
 						this.total = Number(a.LastQuotation.BidQty1)+Number(a.LastQuotation.BidQty2)+Number(a.LastQuotation.BidQty3)+Number(a.LastQuotation.BidQty4)+Number(a.LastQuotation.BidQty5)
 						this.total1 = Number(a.LastQuotation.AskQty1)+Number(a.LastQuotation.AskQty2)+Number(a.LastQuotation.AskQty3)+Number(a.LastQuotation.AskQty4)+Number(a.LastQuotation.AskQty5)
 					}
@@ -206,9 +243,99 @@
 			},
 			tradeName(){
 				return this.$store.state.tradeName;
-			}
+			},
+			quoteSocket(){
+				return this.$store.state.quoteSocket;
+			},
 		},
 		methods:{
+			toBackProbe:function(val,k){
+				this.$store.state.isshow.isfensshow = false;
+				this.$store.state.isshow.isklineshow = false;
+				this.$store.state.isshow.islightshow = false;
+				this.$router.push({path:"/backProbe",query:{strategyName:val,strategyK:k,CommodityNoK:this.currentNo,ContractNo:this.ContractNo}});
+			},
+			operateData: function(val){
+				//允许画图
+				this.$store.state.isshow.isfensInit = false;
+				//清空对比合约数据
+				this.$store.state.market.contrastData = [];
+				//渲染画图
+				this.chartsShow = true;
+				this.currentChartsNum = 1;
+				this.currentChartsView = 'klineOne';
+				//重组数据
+				let arr = [];
+				let obj;
+				if(val){
+					obj = val;
+				}else{
+					obj = this.$route.query;
+				}
+				arr.push(obj);
+				this.currentNo = obj.commodityNo;    //当前合约
+				this.$store.state.market.currentNo = obj.commodityNo;
+				//对比合约
+				let contrast = obj.contrast;
+				if(contrast == '' || contrast == undefined){
+					this.noContrast = true;
+				}else{
+					this.noContrast = false;
+					contrast = contrast.split(',');
+					contrast.forEach((o, i) => {
+						if(o == obj.commodityNo) return;
+						if(o != ''){
+							let a = {
+								commodityNo: o,
+								exchangeNo: this.orderTemplist[o].ExchangeNo,
+								mainContract: this.orderTemplist[o].MainContract
+							}
+							arr.push(a);
+						}
+					});
+				}
+//				this.$store.state.market.Parameters = [];
+//				this.$store.state.market.tradeParameters = [];
+//				this.$store.state.market.commodityOrder = [];
+//				this.$store.state.market.commodityOrder = arr;
+//				arr.forEach((o, i) => {
+//					this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.mainContract +'"}}');
+//				});
+				this.isClick = true;
+			},
+			//选择画图类型
+			menuEvent: function(index){
+				//允许画图
+				this.$store.state.isshow.isfensInit = false;
+				this.currentChartsNum = index;
+				switch(index){
+					case 0:
+						this.currentChartsView = 'light';
+						break;
+					case 1:
+						this.currentChartsView = 'klineOne';
+						this.$store.state.market.contd
+						break;
+					case 2:
+						this.currentChartsView = 'klineFive';
+						break;
+					case 3:
+						this.currentChartsView = 'klineThirty';
+						break;
+					case 4:
+						this.currentChartsView = 'klineOneHour';
+						break;
+					case 5:
+						this.currentChartsView = 'klineDay';
+						break;
+				}
+				this.$store.state.isshow.isfensshow = false;
+				this.$store.state.isshow.isklineshow = false;
+				this.$store.state.isshow.islightshow = false;
+				this.parameters.forEach((o, i) => {
+					o.check = 0;
+				});
+			},
 			routerback:function(){
 				this.$router.push({path:"/quote"});
 			},
@@ -283,12 +410,29 @@
 				}).catch((err) => {
 					//Toast({message: err.data.message, position: 'bottom', duration: 2000});
 				});
-			}	
+			}	,
+			//获取可用策略信息
+			getStrategy:function(){
+				pro.fetch("post","/others/getStrategys","","").then((res)=>{
+					if(res.code == 1 && res.success == true){
+						this.strategyList = res.data;
+					}
+				}).catch((err)=>{
+					
+				})
+			},
 		},
 		mounted:function(){
 		},
 		activated:function(){
 			this.currentNo = this.$route.query.commodityNo;
+//			this.$store.state.isshow.isfensshow = false;
+//			this.$store.state.isshow.islightshow = false;
+//			this.$store.state.isshow.isklineshow = false;
+			//重组数据
+			this.operateData();
+			//获取策略
+			this.getStrategy();
 		},
 		filters:{
 			changName:function(e){
@@ -303,9 +447,17 @@
 			}
 		},
 		watch:{
-			parameters:function(n,o){
-//				console.log(n)
-			}
+			parameters: function(n, o){
+				if(n && n.length == 1){
+					this.parameters.forEach((o, i) => {
+						if(o.CommodityNo == this.currentNo){
+							this.$store.state.market.currentdetail = o;
+							this.$store.state.market.currentNo = o.CommodityNo;
+							return;
+						}
+					});
+				}
+			},
 		}
 	}
 </script>
@@ -379,6 +531,68 @@
 			}
 		}
 	}
+	.strategy{
+		background-color: #cae5ff;
+		width: 7.5rem;
+		height: 0.8rem;
+		padding: 0 0.3rem;
+		overflow-x: scroll;
+		.strategy_1{
+			text-align: center;
+			line-height: 0.8rem;
+			width: 10.5rem;
+			span{
+				display: block;
+				float: left;
+				height: 0.8rem;
+				width: 1.5rem;
+				font-size: 0.28rem;
+				
+			}
+		}
+	}
+	.nameTitle{
+		border-top: 0.01rem solid white;
+		background-color: #b3daff;
+		height: 1rem;
+		padding: 0 0.3rem;
+		width: 7.5rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		span{
+			font-size: 0.36rem;
+			color: black;
+				&.red{
+					font-size:0.32rem ;
+					color: #e44f34;
+				}
+				&.green{font-size:0.32rem ;
+					color: #16b887;
+				}
+		}
+	}
+	.charts{
+		width: 7.5rem;
+		.charts_title{
+			width: 100%;
+			height: 0.8rem;
+			padding: 0 0.3rem;
+			line-height: 0.8rem;
+			span{
+				font-size: 0.28rem;
+				margin-right: 0.3rem;
+				&.current{
+					color: #1482f0;
+				}
+			}
+		}
+		.charts_container{
+			background-color: white;
+			width: 7.5rem;
+			height: 5.7rem;
+		}
+	}
 	.money{
 		margin: 0.3rem;
 		width: 6.9rem;
@@ -447,6 +661,7 @@
 		}
 	}
 	.buyFive{
+		margin-bottom: 1rem;
 		width: 100%;
 		height: 3.2rem;
 		.left{
@@ -481,7 +696,7 @@
 		}
 	}
 	.bottomTab{
-		position: absolute;
+		position: fixed;
 		bottom: 0;
 		width: 7.5rem;
 		height: 0.98rem;
