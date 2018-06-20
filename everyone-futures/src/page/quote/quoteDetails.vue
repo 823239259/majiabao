@@ -176,7 +176,7 @@
 		<tips-float :isBack="true"></tips-float>
 		<div class="bottomTab">
 			<ul class="bottomTab_list">
-				<li v-for="item in bottomList1" @click="itemClick(item)" :class="{current:dian}"><i></i>{{item.name}}</li>
+				<li v-for="item in bottomList1" @click="itemClick(item)" :class="{current:dian}"><i :class="{dianzan1 : dian  , dianzan : !dian}"></i>{{item.name}}</li>
 			</ul>
 		</div>
 		
@@ -743,7 +743,10 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			i{
+			&.current{
+				color: #1482f0;
+			}
+			.dianzan{
 				display: block;
 				width: 0.4rem;
 				height: 0.38rem;
@@ -751,9 +754,15 @@
 				background-size: 0.4rem 0.38rem;
 				margin-right: 0.1rem;
 			}
-			&.current{
-				color: red;
+			.dianzan1{
+				display: block;
+				width: 0.4rem;
+				height: 0.38rem;
+				background: url(../../assets/images/account/dianzhan1.png) no-repeat ;
+				background-size: 0.4rem 0.38rem;
+				margin-right: 0.1rem;
 			}
 		}
+		
 	}
 </style>
