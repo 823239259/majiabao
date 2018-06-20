@@ -19,7 +19,7 @@
 				<div class="strategy">
 					<template>
 						<div class="strategy_1">
-							<span v-for="(k,val) in strategyList" @click="toBackProbe(val,k)">{{k}}</span>
+							<span v-for="(val,k) in strategyList" @click="toBackProbe(val,k)">{{val}}</span>
 						</div>
 					</template>
 					
@@ -219,7 +219,8 @@
 				currentChartsView: 'klineOne',
 				chartsShow: false,
 				chartsHight: 5.4,
-				strategyList:''
+				strategyList:'',
+				ContractNo:''
 			}
 		},
 		components: {
@@ -230,6 +231,7 @@
 				this.$store.state.market.Parameters.forEach((a,i)=>{
 					if(a.CommodityNo == this.currentNo){
 						this.$store.state.market.currentdetail = a;
+						this.ContractNo = a.MainContract
 						this.total = Number(a.LastQuotation.BidQty1)+Number(a.LastQuotation.BidQty2)+Number(a.LastQuotation.BidQty3)+Number(a.LastQuotation.BidQty4)+Number(a.LastQuotation.BidQty5)
 						this.total1 = Number(a.LastQuotation.AskQty1)+Number(a.LastQuotation.AskQty2)+Number(a.LastQuotation.AskQty3)+Number(a.LastQuotation.AskQty4)+Number(a.LastQuotation.AskQty5)
 					}
@@ -248,15 +250,10 @@
 		},
 		methods:{
 			toBackProbe:function(val,k){
-				this.setklineoption("");
-				this.$store.state.market.strategyData= "";
-				this.drawkline(this.id1);
-				this.chooseKline = "分时";
-				this.strategyK = "";
 				this.$store.state.isshow.isfensshow = false;
 				this.$store.state.isshow.isklineshow = false;
 				this.$store.state.isshow.islightshow = false;
-				this.$router.push({path:"/backProbe",query:{strategyName:val,strategyK:k,currentNo:this.currentNo}});
+				this.$router.push({path:"/backProbe",query:{strategyName:val,strategyK:k,CommodityNoK:this.currentNo,ContractNo:this.ContractNo}});
 			},
 			operateData: function(val){
 				//允许画图

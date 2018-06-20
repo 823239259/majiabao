@@ -106,8 +106,8 @@ var market = {
 			password:''
 		},
 		physhon:{
-//			url:"http://139.224.6.183:8989", //physhon生产环境，
-			url:"http://192.168.0.223:8989" //physhon测试环境
+			url:"http://139.224.6.183:8989", //physhon生产环境，
+//			url:"http://192.168.0.223:8989" //physhon测试环境
 		},
 		//心跳信息
 		HeartBeatTiming: null,   //心跳定时器

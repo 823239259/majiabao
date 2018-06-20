@@ -120,7 +120,16 @@ const router = new Router({
       component: load('tools/tools_item'),
       props: true
     },
-   
+   {
+   	path:"/backProbe",
+   	name:"backProbe",
+   	component:load('quote/backProbe')
+   },
+   {
+   	path:'/backPresentation',
+   	name:'backPresentation',
+   	component:load('quote/backPresentation')
+   }
   ],
 
 })
