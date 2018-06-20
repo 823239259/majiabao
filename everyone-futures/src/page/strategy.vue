@@ -43,7 +43,7 @@
         <div class="varieties_wrap strategy_wrap">
           <h2>品种选择</h2>
           <ul class="strategy_list">
-            <li :class="['item',{'checked':varietiesChecked == index}]" v-for="(item,index) in varietiesList" @click="changeItem(index,'varietiesChecked')" :key="item.name">{{item.commodityName}}</li>
+            <li :class="['item',{'checked':varietiesChecked == index}]" v-for="(item,index) in varietiesList" @click="changeItem(index,'varietiesChecked')" :key="item.name">{{item.CommodityName}}</li>
           </ul>
         </div>
         <div class="btn_box">
@@ -91,10 +91,10 @@ export default {
       money: '',
 
       strategyList: [
-      {
-        name: '海龟交易策略',
-        strategy: 'Turtle' 
-      },
+      // {
+      //   name: '海龟交易策略',
+      //   strategy: 'Turtle' 
+      // },
        {
         name: '移动平均策略',
         strategy: 'SMA' 
@@ -126,8 +126,8 @@ export default {
     },
     varietiesList () {
       //console.log(this.$store.state.market.commodityOrder)
-      return this.$store.state.market.commodityOrder.filter(item =>{
-        return this.varietiesInit.includes(item.commodityNo)
+      return this.$store.state.market.Parameters.filter(item =>{
+        return this.varietiesInit.includes(item.CommodityNo)
       })
     },
     physhonUrl(){
@@ -199,12 +199,12 @@ export default {
          
 					let obj = {
 						"strategy":this.strategyList[this.strategyChecked].strategy,
-						"commodity":this.varietiesList[this.varietiesChecked].commodityNo,
+						"commodity":this.varietiesList[this.varietiesChecked].CommodityNo,
 						"frequency":this.getFrequency(this.type),
 						"timeStart":timeStart,
 						"timeEnd": timeEnd,
 						"initialAccount":Number(this.money),
-						"commodityNumber":this.varietiesList[this.varietiesChecked].contractNo
+						"commodityNumber":this.varietiesList[this.varietiesChecked].MainContract
           }
           this.$indicator.open({
             text: '回测中...',
@@ -218,6 +218,7 @@ export default {
 						dataType:"json",
 						success:function(res){
 							if(res.tradeInfo.length == 0){
+                this.$indicator.close()
 								this.$toast({message:"无回测数据，请重新选择",duration: 1000});
 								this.$router.back(-1);
 							}else{

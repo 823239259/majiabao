@@ -87,8 +87,8 @@ var market = {
 	state: {
 		quoteConfig:{
 			version: '5.1.2',    //版本
-			url_real: "ws://192.168.0.232:19002",  //测试地址/
-//			url_real: "ws://quote.zhishutianxia.com:19002",   //正式地址
+			//url_real: "ws://192.168.0.232:19002",  //测试地址/
+			url_real: "ws://quote.zhishutianxia.com:19002",   //正式地址
 			userName: "13677622344",
 			passWord: "a123456"
 		},
@@ -299,7 +299,7 @@ export default new Vuex.Store({
 		//交易websocket
 		tradeSocket: {},
 		//test 测试环境，online 正式环境
-		environment: 'test',
+		environment: 'online',
 		//打包的时候，值为 build ，开发的时候，值为 dev
 		setting: 'dev',
 	},

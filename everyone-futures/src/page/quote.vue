@@ -9,6 +9,7 @@
 			</mt-header>
 			<div class="tablist">
 				<span v-for="(k,index) in tabList" :class="{current:currentNM == index}" @click="changeTab(index)">{{k.id}}</span>
+				<span class="scanNumbers">浏览量: {{scanNumbers}}</span>
 				<mt-button @click="goto('/help_info')" type="primary" style="height: 0.56rem;line-height: 0.24rem;font-size: 0.24rem;margin-top: 0.12rem;background-color: #1482f0;">专业帮助</mt-button>
 			</div>
 			<components :is="currentView"></components>
@@ -51,7 +52,8 @@
 				guzhiList:[],
 				cmList:[],
 				selectionList:[],
-				tabSelected:'quote'
+				tabSelected:'quote',
+				scanNumbers: 3323
 			}
 		},
 		computed:{
@@ -148,6 +150,14 @@
 				}).catch((err) => {
 					//Toast({message: err.data.message, position: 'bottom', duration: 2000});
 				});
+			},
+			setScanNumber () {
+				const  local = pro.local;
+				const scanNumbers = local.get('scanNumber')?local.get('scanNumber'):'3323';
+				const addNumber =  Math.ceil(Math.random()*3);
+				let newNumbers =  Number(scanNumbers) + addNumber;
+				this.scanNumbers = newNumbers;
+				local.set('scanNumber',this.scanNumbers)
 			}
 		},
 		mounted: function(){
@@ -162,6 +172,9 @@
 			this.getCommodityInfo();
 			//获取自选列表
 			this.getSelection();
+		},
+		created () {
+			this.setScanNumber()
 		}
 	}
 </script>
@@ -189,6 +202,10 @@
 				color: #1482f0;
 				border-bottom: 0.04rem solid #1482f0;
 			}
+
 		}
+	}
+	.scanNumbers{
+		@include font($fs24,0.8rem,$grayDeep)
 	}
 </style>
