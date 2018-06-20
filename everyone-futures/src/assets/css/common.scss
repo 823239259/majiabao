@@ -34,6 +34,8 @@ $bgPink:#fab7ac;
 $tabBgColor:#1482f0;
 $aaa: #aaaaaa;
 $bgWhite: #edf6ff;
+$black222: #222;
+$whitefff: #FFF;
 
 /*字体大小*/
 $fs24: 0.24rem;
@@ -118,4 +120,10 @@ $w: 7.5rem;
     width:100%;
     height: 1.1rem;
     background-color:$bg;
+}
+.scroll_x{
+    overflow-x: scroll;
+}
+.flex{
+    @include flex()
 }

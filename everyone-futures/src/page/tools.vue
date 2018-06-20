@@ -4,27 +4,35 @@
             <mt-button slot="left"  @click="callCustomer">客服</mt-button>
             <mt-button slot="right" @click="shareSystem">分享</mt-button>
         </mt-header>
-        <div class="tools_wrap">
+        <div class="scroll_x">
              <!-- <div class="tools_item" v-for="(item, index) in toolsList" :key="item.id" @click="goto(item.path)">
                 <h3 :class="index ==">{{item.title}}</h3>
                 <span class="icon icon1"></span>
                 <p>{{item.name}}</p>
               </div> -->
-            <div class="tools_item" @click="goto('/tools_item/1')">
-              <h3>币种计算</h3>
-              <span class="icon icon1"></span>
-              <p>汇率计算</p>
-            </div>
-             <div class="tools_item" @click="goto('/tools_item/2')">
-              <h3 class="wathet">规则查询</h3>
-               <span class="icon icon2"></span>
-              <p>期货合约查询</p>
-            </div>
-             <div class="tools_item" @click="goto('/tools_item/3')">
-              <h3 class="blue">价格计算</h3>
-               <span class="icon icon3"></span>
-              <p>期货价格计算</p>
-            </div>
+            <ul class="tools_wrap">
+                <li class="tools_item" @click="goto('/tools_item/1')">
+                <h3>币种计算</h3>
+                <span class="icon icon1"></span>
+                <p>汇率计算</p>
+              </li>
+              <li class="tools_item" @click="goto('/tools_item/2')">
+                <h3 class="wathet">规则查询</h3>
+                <span class="icon icon2"></span>
+                <p>期货合约查询</p>
+              </li>
+              <li class="tools_item" @click="goto('/tools_item/3')">
+                <h3 class="blue">价格计算</h3>
+                <span class="icon icon3"></span>
+                <p>期货价格计算</p>
+              </li>
+              <li class="tools_item" @click="goto('/classRoom')">
+                <h3 class="cyan">教学视频</h3>
+                <span class="icon icon3"></span>
+                <p>期货视频</p>
+              </li>
+            </ul>
+            
         </div>
         <bottomTab :tabSelect="tabSelected"></bottomTab>
          <mt-actionsheet
@@ -95,27 +103,12 @@ export default {
       setAccountInfo: 'ACCOUNT_INFO',
       clearUserInfo: 'INFO_CLEAR',
     }),
+    
     goLast() {
       this.$router.push(this.lastPath);
     },
     goto(path) {
       this.$router.push({ path: path });
-    },
-    changeValue (msg, key) {
-      //console.log(msg)
-      this[key] = msg
-    },
-    mobileHidden (phoneNumber) {
-        return pro.mobileHidden(phoneNumber)
-    },
-    buwei (numString) {     
-      if(numString === undefined||null) {
-          return  numString
-      }else if(numString&&numString.toString().indexOf('.')>-1){
-         return  numString
-      }else{  
-         return  numString + '.00'
-      }
     },
   }, 
   activated () {   
@@ -149,6 +142,7 @@ export default {
   justify-content: center;
   align-items: center;
   margin-top: 2.08rem;
+  width: 133%;
   .tools_item{
     flex: 1;
     height: 11.4rem;
@@ -162,6 +156,9 @@ export default {
     .blue{
       color: #003cb6;
     }
+    .cyan{
+      color: #0091b5
+    }
     .icon{
       display: block;
       margin: 1rem auto 0;
@@ -174,11 +171,12 @@ export default {
     }
 
   }
-  @for $i from 1 through 3 {
+  @for $i from 1 through 4 {
     $background_img: (
       "jisuanqi",
       "heyuechaxun",
       "jiagejisuan",
+      "shipin"
     );
     .tools_item:nth-child(#{$i}) {
         $img: nth($background_img, $i);

@@ -29,8 +29,8 @@
 						path: 'datas'
 					},
 					{
-						name: '学堂',
-						path: 'classRoom'
+						name: '策略',
+						path: 'strategy'
 					},
 					{
 						name: '工具箱',
@@ -98,7 +98,7 @@
 }
 @for $i from 1 through 5 {
  	//  $img: ("index", "quotation", "trade", "match", "discover");
-	 $img: ("hangqing", "data", "xuetang","gongju", "my");
+	 $img: ("hangqing", "data", "celue","gongju", "my");
   .icon#{$i}{
 	background: url('../assets/images/account/#{nth($img,$i)}_icon.png') center no-repeat;
 	background-size: cover;

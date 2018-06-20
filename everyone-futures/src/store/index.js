@@ -301,7 +301,7 @@ export default new Vuex.Store({
 		//test 测试环境，online 正式环境
 		environment: 'test',
 		//打包的时候，值为 build ，开发的时候，值为 dev
-		setting: 'build',
+		setting: 'dev',
 	},
 	getters: {  
 		PATH: function(state) {
@@ -375,6 +375,7 @@ actions: {
 			};
 			context.state.quoteSocket.onmessage = function(evt) {
 //				console.log('message');
+				//console.log(evt.data)
 				context.state.wsjsondata = JSON.parse(evt.data);
 				if(context.state.wsjsondata.Method == "OnRspLogin") { // 登录行情服务器
 					Toast({message: '行情服务器连接成功', position: 'bottom', duration: 2000});

@@ -39,11 +39,6 @@ const router = new Router({
    		component: load('tools')
     },
     {
-      path: '/classRoom',
-      name: 'classRoom',
-   		component: load('classRoom')
-    },
-    {
       path: '/datas',
       name: 'datas',
        component: load('datas'),
@@ -120,7 +115,19 @@ const router = new Router({
       component: load('tools/tools_item'),
       props: true
     },
-   
+    /* 
+      v1.20 加入
+    */
+   {
+      path: '/classRoom',
+      name: 'classRoom',
+      component: load('tools/classRoom')
+    },
+    {
+      path: '/strategy',
+      name: 'strategy',
+      component: load('strategy')
+    },
   ],
 
 })

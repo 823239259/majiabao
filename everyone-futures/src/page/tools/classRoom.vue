@@ -1,7 +1,7 @@
 <template>
     <div id="classRoom" :style="{height:clientHeight}">
          <mt-header fixed title="学堂">           
-            <mt-button slot="left"  @click="callCustomer">客服</mt-button>
+            <mt-button slot="left" icon="back" @click="goBack"></mt-button>
             <mt-button slot="right" @click="shareSystem">分享</mt-button>
         </mt-header>
         <div class="warp1">
@@ -27,23 +27,14 @@
                 <iframe :class="{'inherit-height':!isIphone}" src='http://player.youku.com/embed/XMzY2MjE3ODA2MA==' frameborder="0" :scrolling="isIphone?'no':'yes'"></iframe>
             </div>
         </div>
-
-        <bottom-tab :tabSelect='tabSelected'></bottom-tab>
-        
-<mt-actionsheet
-                :actions="actions"
-                v-model="sheetVisible">
-                </mt-actionsheet>
-       
-          
     </div>
 </template>
 
 <script>
 
 import {mapMutations} from 'vuex'
-import bottomTab from '../components/bottom_tab'
-import pro from '../assets/js/common'
+import bottomTab from '../../components/bottom_tab'
+import pro from '../../assets/js/common'
 const local = pro.local;
 export default {
   name: "classRoom",
@@ -76,27 +67,13 @@ export default {
       setAccountInfo: 'ACCOUNT_INFO',
       clearUserInfo: 'INFO_CLEAR',
     }),
-    goLast() {
-      this.$router.push(this.lastPath);
+    goBack() {
+      this.$router.replace('/tools')
+      //window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
+      //history.go(-1);
     },
     goto(path) {
       this.$router.push({ path: path });
-    },
-    changeValue (msg, key) {
-      //console.log(msg)
-      this[key] = msg
-    },
-    mobileHidden (phoneNumber) {
-        return pro.mobileHidden(phoneNumber)
-    },
-    buwei (numString) {     
-      if(numString === undefined||null) {
-          return  numString
-      }else if(numString&&numString.toString().indexOf('.')>-1){
-         return  numString
-      }else{  
-         return  numString + '.00'
-      }
     },
   }, 
   activated () {   
@@ -118,7 +95,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/css/common.scss";
+@import "../../assets/css/common.scss";
 #tools {
   width: 7.5rem;
   background-color: $bgPink;
@@ -163,10 +140,10 @@ export default {
     );
     .tools_item:nth-child(#{$i}) {
         $img: nth($background_img, $i);
-        background: url("../assets/images/tools/#{$img}_bg.jpg") center no-repeat;
+        background: url("../../assets/images/tools/#{$img}_bg.jpg") center no-repeat;
         background-size: cover;
         .icon{
-          background: url("../assets/images/tools/#{$img}_icon.png") center no-repeat;
+          background: url("../../assets/images/tools/#{$img}_icon.png") center no-repeat;
           background-size: cover;
         }
       
