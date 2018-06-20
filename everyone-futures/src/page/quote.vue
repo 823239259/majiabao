@@ -91,14 +91,14 @@
 						});
 						break;
 					case 1:
-						this.currentView = commodity;
+						this.currentView = guzhi;
 						this.$store.state.market.Parameters = [];
 						this.cmList.forEach((o, i) => {
 							this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
 						});
 						break;
 					case 2:
-						this.currentView = guzhi;
+						this.currentView = commodity;
 						this.$store.state.market.Parameters = [];
 						this.guzhiList.forEach((o, i) => {
 							this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
@@ -126,6 +126,9 @@
 					if(res.success == true && res.code == 1){
 						this.cmList = res.data;
 						this.$store.state.market.commodityOrder = this.cmList;
+						this.cmList.forEach((o, i) => {
+							this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
+						});
 					}
 				}).catch((err) => {
 					//Toast({message: err.data.message, position: 'bottom', duration: 2000});
@@ -151,6 +154,7 @@
 			this.initQuoteClient();
 		},
 		activated:function(){
+			this.$store.state.market.Parameters = [];
 			this.currentNM = 1;
 			//获取所有合约
 			this.getCommodityAll();
