@@ -116,7 +116,7 @@ export default {
         strategy: 'Jintena' 
       },
       {
-        
+
       }
       ],
       varietiesInit: ['CL', 'HSI', 'GC', 'SI', 'HG', 'CN'],
@@ -226,7 +226,7 @@ export default {
 								this.$router.back(-1);
 							}else{
                 this.$indicator.close()
-								this.$router.replace({path:"/backPresentation",query:{strategyName:this.strategyList[this.strategyChecked].name}});
+								this.$router.push({path:"/backPresentation",query:{strategyName:this.strategyList[this.strategyChecked].name}});
 								this.$store._modules.root.state.account.backtestIndexArr = res;
 							}
 						}.bind(this),
