@@ -345,6 +345,9 @@
 			},
 			routerback:function(){
 				this.$router.push({path:"/quote"});
+				this.$store.state.isshow.isfensshow = false;
+				this.$store.state.isshow.isklineshow = false;
+				this.$store.state.isshow.islightshow = false;
 			},
 			itemClick (item) {
 				if(item.path) {
@@ -362,13 +365,13 @@
 				return ((a/(a+b))*100).toFixed(2) + '%'
 			},
 			addOptional: function(){
-				let stateLogin = localStorage.user ? JSON.parse(localStorage.user) : '';
+				var stateLogin = localStorage.user ? JSON.parse(localStorage.user) : '';
 				if(stateLogin == ''){
 					Toast({message: '请先登录平台账号', position: 'bottom', duration: 1500});
 				}else{
 					var headers = {
-						token: this.userInfo.token,
-						secret: this.userInfo.secret
+						token: stateLogin.token,
+						secret: stateLogin.secret
 					}
 					if(this.optionalIconShow == true){   //删除自选
 						var _datas = {id: this.optionalId};
@@ -452,16 +455,6 @@
 								method: 'shareSystem'
 							}
 						]
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
 					}
 				}else{
 					Toast({message: "请先登录", position: 'bottom', duration: 1500});
