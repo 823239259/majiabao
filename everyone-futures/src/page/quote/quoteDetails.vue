@@ -205,7 +205,7 @@
 				userInfo: localStorage.user ? JSON.parse(localStorage.user) : '',
 				bottomList1: [
 					{
-						name:'点赞',
+						name:'101',
 						method:'dianzan'
 					},
 					{
@@ -437,6 +437,31 @@
 						localStorage.dianzan = JSON.stringify(a);
 						this.dian = true;
 						Toast({message: "点赞成功", position: 'bottom', duration: 1500});
+						
+						this.bottomList1= [
+							{
+								name:'102',
+								method:'dianzan'
+							},
+							{
+								name: '工具箱',
+								path: '/tools'
+							},
+							{
+								name: '推荐给朋友',
+								method: 'shareSystem'
+							}
+						]
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 					}
 				}else{
 					Toast({message: "请先登录", position: 'bottom', duration: 1500});
@@ -456,6 +481,22 @@
 			//获取策略
 			this.getStrategy();
 			this.dian = localStorage.dianzan ? JSON.parse(localStorage.dianzan).dianzan : false;
+			if(this.dian){
+				this.bottomList1= [
+					{
+						name:'102',
+						method:'dianzan'
+					},
+					{
+						name: '工具箱',
+						path: '/tools'
+					},
+					{
+						name: '推荐给朋友',
+						method: 'shareSystem'
+					}
+				]
+			}
 		},
 		filters:{
 			changName:function(e){
