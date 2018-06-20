@@ -186,7 +186,7 @@
 <script>
 	import pro from '../../assets/js/common.js'
 	import tipsFloat from '../../components/tipsFloat'
-	import { Toast } from 'mint-ui';
+	import { Toast ,MessageBox} from 'mint-ui';
 	import light from './light.vue'
 	import klineOne from './klineOne.vue'
 	import klineFive from './klineFive.vue'
@@ -250,10 +250,12 @@
 		},
 		methods:{
 			toBackProbe:function(val,k){
-				this.$store.state.isshow.isfensshow = false;
-				this.$store.state.isshow.isklineshow = false;
-				this.$store.state.isshow.islightshow = false;
-				this.$router.push({path:"/backProbe",query:{strategyName:val,strategyK:k,CommodityNoK:this.currentNo,ContractNo:this.ContractNo}});
+				MessageBox.confirm("是否使用策略进行回测？").then(action => {
+					this.$store.state.isshow.isfensshow = false;
+					this.$store.state.isshow.isklineshow = false;
+					this.$store.state.isshow.islightshow = false;
+					this.$router.push({path:"/backProbe",query:{strategyName:val,strategyK:k,CommodityNoK:this.currentNo,ContractNo:this.ContractNo}});
+				});
 			},
 			operateData: function(val){
 				//允许画图
@@ -540,12 +542,12 @@
 		.strategy_1{
 			text-align: center;
 			line-height: 0.8rem;
-			width: 10.5rem;
+			width: 14.6rem;
 			span{
 				display: block;
 				float: left;
 				height: 0.8rem;
-				width: 1.5rem;
+				width: 2rem;
 				font-size: 0.28rem;
 				
 			}
