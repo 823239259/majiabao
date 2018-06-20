@@ -436,6 +436,7 @@
 						var a = {dianzan:true}
 						localStorage.dianzan = JSON.stringify(a);
 						this.dian = true;
+						Toast({message: "点赞成功", position: 'bottom', duration: 1500});
 					}
 				}else{
 					Toast({message: "请先登录", position: 'bottom', duration: 1500});
