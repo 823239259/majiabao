@@ -253,6 +253,7 @@ export default {
 @import "../assets/css/common.scss";
 #strategy {
   width: 7.5rem;
+  overflow: scroll;
   //background-color: $bgPink;
  
 }
