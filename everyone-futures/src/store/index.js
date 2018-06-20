@@ -87,8 +87,8 @@ var market = {
 	state: {
 		quoteConfig:{
 			version: '5.1.2',    //版本
-//			url_real: "ws://192.168.0.232:19002",  //测试地址/
-			url_real: "ws://quote.zhishutianxia.com:19002",   //正式地址
+			url_real: "ws://192.168.0.232:19002",  //测试地址/
+//			url_real: "ws://quote.zhishutianxia.com:19002",   //正式地址
 			userName: "13677622344",
 			passWord: "a123456"
 		},
@@ -301,7 +301,7 @@ export default new Vuex.Store({
 		//test 测试环境，online 正式环境
 		environment: 'test',
 		//打包的时候，值为 build ，开发的时候，值为 dev
-		setting: 'build',
+		setting: 'dev',
 	},
 	getters: {  
 		PATH: function(state) {
@@ -355,6 +355,501 @@ export default new Vuex.Store({
 			state.userInfo = {}
 			state.accountInfo = {}
 		},
+		//画闪电图
+		drawlight: function(state, e) {
+			// 引入 ECharts 主模块
+			var echarts = require('echarts/lib/echarts');
+			// 引入柱状图
+			require('echarts/lib/chart/bar');
+			// 基于准备好的dom，初始化echarts图表
+			var lightChart;
+			if(state.isshow.islightshow == false) {
+				lightChart = echarts.init(document.getElementById(e));
+				state.isshow.islightshow = true;
+			} else {
+				if(document.getElementById(e) != null){
+					lightChart = echarts.getInstanceByDom(document.getElementById(e));
+				}
+			}
+			
+			lightChart.setOption(state.market.option5);
+		},
+		//设置闪电图数据
+		setlightDate: function(state) {
+			state.market.jsonTow.Parameters = state.market.currentdetail.LastQuotation;
+			var TimeLength = state.market.lightChartTime.time.length;
+			state.market.lightChartTime.price.push(state.market.jsonTow.Parameters.LastPrice.toFixed(state.market.currentdetail.DotSize));
+			state.market.lightChartTime.time.push((state.market.jsonTow.Parameters.DateTimeStamp).split(" ")[1]);
+			state.market.lightChartTime.time = state.market.lightChartTime.time.slice(-50);
+			state.market.lightChartTime.price = state.market.lightChartTime.price.slice(-50);
+			state.market.option5 = {
+				"tooltip": {
+					"show": false,
+				},
+				animation: false,
+				grid: {
+					x: 50,
+					y: 40,
+					x2: 46,
+					y2: 20
+				},
+//				backgroundColor: '#2d3040',
+				xAxis: [{
+					type: 'category',
+					show: true,
+					data: state.market.lightChartTime.time,
+					axisLine: {
+						lineStyle: {
+							color: '#8392A5'
+						}
+					},
+					boundaryGap: true
+				}],
+				yAxis: [{
+					type: 'value',
+					scale: true,
+					position: "left",
+					axisTick: {
+						show: false,
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#8392A5'
+						}
+					},
+					splitArea: {
+						show: false
+					},
+					axisLabel: {
+						inside: false,
+						margin: 3,
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							color: "#8392A5"
+						}
+					}
+				}],
+				"series": [{
+					"name": "总数",
+					"type": "line",
+					"stack": "总量",
+					symbolSize: 10,
+					symbol: 'circle',
+					"itemStyle": {
+						"normal": {
+							"color": "#8392A5",
+							"barBorderRadius": 0,
+							"label": {
+								"show": true,
+								"position": "top",
+								formatter: function(p) {
+									return p.value > 0 ? (p.value) : '';
+								}
+							}
+						}
+					},
+					"data": state.market.lightChartTime.price
+				}]
+			}
+		},
+		//设置K线图数据
+		setklineoption: function(state,strategyData) {
+			// 引入 ECharts 主模块
+			var echarts = require('echarts/lib/echarts');
+			// 引入柱状图
+			require('echarts/lib/chart/bar');
+			require('echarts/lib/chart/line');
+			require('echarts/lib/component/tooltip');
+			require('echarts/lib/chart/candlestick');
+			require('echarts/lib/component/markpoint');
+			var dosizeL = state.market.currentdetail.DotSize;
+			var rawData = [];
+			var parameters = state.market.jsonDataKline.Parameters.Data;
+			var Len = parameters.length;
+			var lent = rawData.length;
+			if(state.market.jsonDataKline.Parameters.HisQuoteType == 1440) {
+				for(var i = 0; i < Len; i++) {
+					var timeStr = parameters[i][0].split(" ")[0];
+					var openPrice = parseFloat(parameters[i][2]).toFixed(dosizeL);
+					var closePrice = parseFloat(parameters[i][1]).toFixed(dosizeL);
+					var sgData = [timeStr, openPrice, closePrice, parseFloat(parameters[i][3]).toFixed(dosizeL), parseFloat(parameters[i][4]).toFixed(dosizeL), parameters[i][0].substring(0,10)];
+					rawData[lent + i] = sgData;
+				};
+				
+			} else {
+				for(var i = 0; i < Len; i++) {
+					var time2 = parameters[i][0].split(" ");
+					var str1 = time2[1].split(":");
+					var str2 = str1[0] + ":" + str1[1];
+					var openPrice = parseFloat(parameters[i][2]).toFixed(dosizeL);
+					var closePrice = parseFloat(parameters[i][1]).toFixed(dosizeL);
+					var sgData = [str2, openPrice, closePrice, parseFloat(parameters[i][3]).toFixed(dosizeL),parseFloat(parameters[i][4]).toFixed(dosizeL), parameters[i][0]];
+					rawData[lent + i] = sgData;
+				};
+			}
+			
+			var categoryData = [];
+			var values = [];
+			var time = [];
+			for(var i = 0; i < rawData.slice(-40).length; i++) {
+				categoryData.push(rawData.slice(-40)[i][0]);
+				values.push([rawData.slice(-40)[i][1], rawData.slice(-40)[i][2], rawData.slice(-40)[i][3], rawData.slice(-40)[i][4]]);
+				time.push(rawData.slice(-40)[i][5])
+			}
+			var chartDataC = {
+				categoryData: categoryData,
+				values: values,
+				time: time
+			};
+			/*MA5 10 20 30*/
+			function calculateMA(dayCount) {
+				var result = [];
+				for(var i = 0, len = chartDataC.values.length; i < len; i++) {
+					if(i < dayCount) {
+						result.push('-');
+						continue;
+					}
+					var sum = 0;
+					for(var j = 0; j < dayCount; j++) {
+						sum += Number(chartDataC.values[i - j][1]);
+					}
+					result.push(Number(sum / dayCount).toFixed(dosizeL));
+				}
+				return result;
+			}
+			state.market.option3 = {
+				grid: {
+					x: 43,
+					y: 40,
+					x2: 30,
+					y2: 5
+				},
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						type: 'line',
+						animation: false,
+						lineStyle: {
+							color: '#8585a6',
+							width: 1,
+							opacity: 1
+						}
+					},
+					formatter: function(params) {
+						var time = params[0].name;
+						if(time == null || time == "") {
+							return
+						}
+						var kd = params[0].data;
+						var ma5 = params[1].data;
+						var ma10 = params[2].data;
+						var ma20 = params[3].data;
+						var ma30 = params[4].data;
+						var rate = (kd[2] - kd[1]) / kd[1] * 100;
+						rate = parseFloat(rate).toFixed(2);
+						var res = "时间:" + params[0].name + '  涨跌幅: ' + rate+'%';
+						res += '<br/>  开盘 : ' + parseFloat(kd[1]).toFixed(dosizeL) + '  最高 : ' + parseFloat(kd[4]).toFixed(dosizeL);
+						res += '<br/>  收盘 : ' + parseFloat(kd[2]).toFixed(dosizeL) + ' 最低 : ' + parseFloat(kd[3]).toFixed(dosizeL);
+						res += '<br/> <span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:#3689B3"></span> MA5 : ' + ma5 + '  <span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:#B236B3"></span> MA10 : ' + ma10;
+						res += '<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:#B37436"></span> MA20 : ' + ma20 + '  <span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:#B2B336"></span> MA30 : ' + ma30;
+						return res;
+					},
+					textStyle: {fontSize: 10}
+				},
+				xAxis: {
+					type: 'category',
+					data: chartDataC.time,
+					show: true,
+					axisLine: {
+						show:true,
+						lineStyle: {
+							color: '#8392A5'
+						}
+					},
+					 splitLine: {
+                        show: true, 
+                        //  改变轴线颜色
+                        interval : 8,
+                        lineStyle: {
+                        	type:'dotted',
+                            // 使用深浅的间隔色
+                            color: ['gray']
+                        }                            
+                    },
+				},
+				yAxis: {
+					scale: true,
+					axisLine: {
+						lineStyle: {
+							color: '#8392A5'
+						}
+					},
+					axisTick: {
+						show: false,
+					},
+					splitArea: {
+						show: false
+					},
+					axisLabel: {
+						inside: false,
+						margin: 3,
+						fontSize: 10,
+					},
+					splitLine: {
+						show: true,
+						interval : 8,
+						lineStyle: {
+							type:'dotted',
+							color: ['gray']
+						}
+					}
+				},
+				animation: false,
+				series: [{
+						type: 'candlestick',
+						name: '',
+						data: chartDataC.values,
+						markPoint: {
+							label: {
+			                    normal: {
+			                        formatter: function (param) {
+			                            return " "
+			                        }
+			                    }
+			                },
+							data:strategyData
+			            },
+						markLine: {
+							symbol: ['none', 'none'],
+							clickable: false,
+							lineStyle: {
+								normal: {
+									width: 1,
+									color: "#ffffff"
+								}
+							},
+							data: [{
+									name: '标线2起点',
+									value: 0,
+									xAxis: "1",
+									yAxis: 0
+								}, // 当xAxis或yAxis为数值轴时，不管传入是什么，都被理解为数值后做空间位置换算
+								{
+									name: '标线2终点',
+									xAxis: "2",
+									yAxis: 0
+								}
+							]
+						},
+						itemStyle: {
+							normal: {
+								color: '#e64552',
+								color0: '#3aa643',
+								borderColor: '#e64552',
+								borderColor0: '#3aa643'
+							}
+						}
+					},
+					{
+						name: 'MA5',
+						type: 'line',
+						data: calculateMA(5),
+						smooth: true,
+						showSymbol: false,
+						lineStyle: {
+							normal: {
+								color: '#3689B3',
+								width: 1,
+							}
+						}
+					},
+					{
+						name: 'MA10',
+						type: 'line',
+						showSymbol: false,
+						data: calculateMA(10),
+						smooth: true,
+						lineStyle: {
+							normal: {
+								color: '#B236B3',
+								width: 1,
+							}
+						}
+					},
+					{
+						name: 'MA20',
+						type: 'line',
+						showSymbol: false,
+						data: calculateMA(20),
+						smooth: true,
+						lineStyle: {
+							normal: {
+								color: '#B37436',
+								width: 1,
+							}
+						}
+					},
+					{
+						name: 'MA30',
+						type: 'line',
+						showSymbol: false,
+						data: calculateMA(30),
+						smooth: true,
+						lineStyle: {
+							normal: {
+								color: '#B2B336',
+								width: 1,
+							}
+						}
+					},
+				]
+			}
+			var vol = [],
+				price = [],
+				time = [];
+			var Ktime;
+			state.market.jsonDataKline.Parameters.Data.slice(-40).forEach(function(e) {
+				vol.push(e[6]);
+				Ktime = e[0].split(' ')[1].split(':')[0] + ':' + e[0].split(' ')[1].split(':')[1];
+				if(Ktime == '00:00'){
+					time.push(e[0].split(' ')[0]);
+				}else{
+					time.push(e[0].split(' ')[1].split(':')[0] + ':' + e[0].split(' ')[1].split(':')[1]);
+				}
+				price.push(e[1]);
+			});
+			//成交量设置
+			state.market.option4 = {
+				grid: {
+					x: 43,
+					y: 30,
+					x2: 30,
+					y2: 20
+				},
+				tooltip: {},
+				xAxis: [{
+					type: 'category',
+					position: 'bottom',
+					boundaryGap: true,
+					axisTick: {
+						onGap: false
+					},
+					splitLine: {
+						show: true,
+						interval : 8,
+						lineStyle: {
+							type:'dotted',
+							color: ['gray']
+						}
+					},
+					axisLabel: {
+						textStyle: {
+							fontSize: 10,
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#8392A5'
+						}
+					},
+					data: time
+				}],
+				yAxis: [{
+					type: 'value',
+					name: '成交量(万)',
+					axisLine: {
+						lineStyle: {
+							color: '#8392A5'
+						}
+					},
+					axisTick: {
+						show: false,
+					},
+					scale: true,
+					splitNumber:2,
+					axisLabel: {
+						margin: 3,
+						formatter: function(a) {
+							a = +a;
+							return isFinite(a) ? echarts.format.addCommas(+a / 10000) : '';
+						},
+						textStyle: {
+							fontSize: 10
+						},
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							type:'dotted',
+							color: ['gray']
+						}
+					}
+				}],
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						type: 'line',
+						animation: false,
+						lineStyle: {
+							color: '#8585a6',
+							width: 1,
+							opacity: 1
+						}
+					},
+					triggerOn: 'mousemove|click'
+				},
+				series: [{
+					name: '成交量',
+					type: 'bar',
+					data: vol,
+					itemStyle: {
+                    normal: {
+                        color: function(params) {
+                            var colorList = ['#e64552','#3aa643'];
+                            return  (params.dataIndex % 2 == 0 ) ? colorList[0] : colorList[1]
+                        },
+　　　　　　　　　　　　　
+                    }
+                },
+				}]
+			};
+			var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+			if(h < 950){
+				state.market.option4.yAxis[0].axisLabel.show = false
+			}
+		},
+		//画K线图
+		drawkline: function(state, x) {
+			// 引入 ECharts 主模块
+			var echarts = require('echarts/lib/echarts');
+			// 引入柱状图
+			require('echarts/lib/chart/bar');
+			require('echarts/lib/chart/line');
+			require('echarts/lib/component/tooltip');
+			require('echarts/lib/chart/candlestick');
+			var kline, volume;
+			if(state.isshow.isklineshow == false) {
+				kline = echarts.init(document.getElementById(x.id1));
+				volume = echarts.init(document.getElementById(x.id2));
+				volume.group = 'group2';
+				kline.group = 'group2';
+				// 基于准备好的dom，初始化echarts实例
+				echarts.connect("group2");
+				state.isshow.isklineshow = true;
+			} else {
+				if(document.getElementById(x.id1) != null){
+					kline = echarts.getInstanceByDom(document.getElementById(x.id1));
+				}
+				if(document.getElementById(x.id2) != null){
+					volume = echarts.getInstanceByDom(document.getElementById(x.id2));
+				}
+			}
+			kline.setOption(state.market.option3);
+			volume.setOption(state.market.option4);
+		},
+		
     },
 actions: {
 				//初始化行情
@@ -897,6 +1392,7 @@ actions: {
 					}else{
 						context.state.market.jsonDataKline = data;
 						let len = context.state.market.jsonDataKline.Parameters.Data.length;
+//						console.log(context.state.market.jsonDataKline.Parameters)
 						context.state.market.volume = context.state.market.jsonDataKline.Parameters.Data[len - 1][6];
 						if(context.state.isshow.iskline == true){
 							context.commit('setklineoption');
