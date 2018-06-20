@@ -8,6 +8,7 @@
 				<p>{{v.CommodityName}}</p>
 				<p :class="{red: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.LastPrice | fixNum(v.DotSize)}}</p>
 				<p :class="{green: v.LastQuotation.ChangeRate < 0, red: v.LastQuotation.ChangeRate > 0}">{{v.LastQuotation.ChangeRate | fixNumTwo}}%</p>
+				<p class="come-in">点击进入</p>
 			</div>
 			<div class="deep"></div>
 		</div>
@@ -100,6 +101,9 @@
 			width:100%;
 			height: 0.3rem;
 		}
+	}
+	.come-in{
+		@include font($fs24,0.24rem,#aaa)
 	}
 	
 </style>

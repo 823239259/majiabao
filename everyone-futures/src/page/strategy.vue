@@ -254,8 +254,6 @@ export default {
 #strategy {
   width: 7.5rem;
   overflow: scroll;
-  //background-color: $bgPink;
- 
 }
 .use_wrap{
   width: 100%;
