@@ -193,16 +193,23 @@ export default {
 					this.$toast({message:"初始资金不能低于1000000",duration: 1000});
 				}else{
 					// this.showConatiner = false;
-					// this.showSubmit = true;
+          // this.showSubmit = true;
+          let timeStart = pro.getDate(this.endTime.getTime(),'y-m-d h:i:s')
+          let timeEnd = pro.getDate(this.startTime.getTime(),'y-m-d h:i:s')
+         
 					let obj = {
 						"strategy":this.strategyList[this.strategyChecked].strategy,
 						"commodity":this.varietiesList[this.varietiesChecked].commodityNo,
 						"frequency":this.getFrequency(this.type),
-						"timeStart":pro.getDate(this.TimeEnd,'y-m-d h:i:s'),
-						"timeEnd": pro.getDate(this.TimeStart,'y-m-d h:i:s'),
+						"timeStart":timeStart,
+						"timeEnd": timeEnd,
 						"initialAccount":Number(this.money),
-						"commodityNumber":this.varietiesList[varietiesChecked].contractNo
-					}
+						"commodityNumber":this.varietiesList[this.varietiesChecked].contractNo
+          }
+          this.$indicator.open({
+            text: '回测中...',
+            spinnerType: 'fading-circle'
+          });
 					$.ajax({
 						type:"POST",
 						url:this.physhonUrl+"/back_test",
@@ -214,6 +221,7 @@ export default {
 								this.$toast({message:"无回测数据，请重新选择",duration: 1000});
 								this.$router.back(-1);
 							}else{
+                this.$indicator.close()
 								this.$router.replace({path:"/backPresentation",query:{strategyName:this.strategyList[this.strategyChecked].name}});
 								this.$store._modules.root.state.account.backtestIndexArr = res;
 							}
