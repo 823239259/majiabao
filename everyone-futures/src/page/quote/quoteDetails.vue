@@ -345,6 +345,9 @@
 			},
 			routerback:function(){
 				this.$router.push({path:"/quote"});
+				this.$store.state.isshow.isfensshow = false;
+				this.$store.state.isshow.isklineshow = false;
+				this.$store.state.isshow.islightshow = false;
 			},
 			itemClick (item) {
 				if(item.path) {
