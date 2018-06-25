@@ -3,10 +3,10 @@
         <div class="contain" @touchmove="moveCube" @touchstart="setCoordinate">
             <div class="box">
                 <div class="face one">one</div> <!-- 上面 -->
-                <div class="face two" @click="goto('/recommend')">{{cubeList[0]}} </div><!-- 正面 -->
-                <div class="face three">{{cubeList[1]}} </div> <!-- 右边 -->
-                <div class="face four">{{cubeList[2]}}</div><!-- 后面 -->
-                <div class="face five">{{cubeList[3]}} </div><!-- 左边 -->
+                <div class="face two" @click="goto('/recommend/recommend')">{{cubeList[0]}} </div><!-- 正面 -->
+                <div class="face three" @click="goto('/recommend/crude-oil')">{{cubeList[1]}} </div> <!-- 右边 -->
+                <div class="face four" @click="goto('/recommend/stock-index')">{{cubeList[2]}}</div><!-- 后面 -->
+                <div class="face five" @click="goto('/recommend/noble-metal')">{{cubeList[3]}} </div><!-- 左边 -->
                 <div class="face six">six </div> <!-- 下面 -->
             </div>
         </div>
@@ -26,6 +26,9 @@
             }
         },
         methods: {
+            goto (path) {
+                this.$router.push({path: path})
+            },
             dianwo (times) {
                 let cube = document.getElementsByClassName('box')[0];
                 let newRotateY = 20 + 90*times;

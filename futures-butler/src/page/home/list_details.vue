@@ -5,8 +5,8 @@
     </mt-header>
     <div class="wrap">
        <ul class="list">
-         <li class="item" v-for="(item, index) in list" :key="index" @click="goto(item.id)">
-            <h2>{{item.title}}</h2>
+         <li class="item" v-for="(item, index) in 4" :key="index" @click="goto(item.id)">
+            <h2>国务院：深化多层次资本市场改革</h2>
               <p>推荐: <span>管家小助手</span></p>
               <!-- <p v-html="abc"></p> -->
            
@@ -22,6 +22,8 @@
   import pro from '../../assets/js/common'
   
   const local = pro.local;
+  
+  
   export default {
     name: "recommend",
     props: ['id'],
@@ -34,7 +36,11 @@
         isLogin: false,
         isShow: false,
         idList: [],
-        list: []
+        contentText: contentText,
+        aboutContent: aboutContent,
+        aboutContent2: aboutContent2,
+        aboutContent3: aboutContent3,
+        abc: ''
   
       };
     },
@@ -70,37 +76,42 @@
       },
       goto(path) {
         this.$router.push({
-          path: `list_details/${path}`
+          path: path
         });
       },
        getNewList() {
                 const data = {
-                    category: this.title,
-                    //id: 'bc96b9dd5fdd43eeb5a9e8fa376a3205'
+                    category: '期货知识'
                 }
                 pro.fetch("post", "/others/getTNoticeList", data, "").then((res) => {
                     //console.log(res)
                     if (res.success == true) {
                         if (res.code == 1) {
                             console.log(res.data[0].content)
-                            this.list = res.data
-                            // res.data.forEach(item => {
-                            //     //是否在idList中                                
-                            //     item.isRead = this.idList.includes(item.id);
-                            // });
-                            // this.newsList = res.data
+                            this.abc = res.data[0].content
+                            res.data.forEach(item => {
+                                //是否在idList中                                
+                                item.isRead = this.idList.includes(item.id);
+                            });
+                            this.newsList = res.data
                         }
                     }
     
                 }).catch((err) => {
                     var data = err.data;
                     if (data == undefined) {
-                       
+                        this.$toast({
+                            message: "网络不给力，请稍后再试",
+                            duration: 1000
+                        });
                     } else {
                         if (data.code == -9999) {
                             this.$toast({
                                 message: "认证失败，请重新登录",
                                 duration: 1000
+                            });
+                            this.$router.push({
+                                path: "/login"
                             });
                         } else {
                             this.$toast({

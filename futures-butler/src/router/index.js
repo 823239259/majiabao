@@ -59,7 +59,14 @@ const router = new Router({
     {
     	path:"/recommend/:id",
     	name:"recommend",
-    	component:load('home/recommend')
+      component:load('home/recommend'),
+      props: true
+    },
+    {
+    	path:"/list_details/:id",
+    	name:"list_details",
+      component:load('home/list_details'),
+      props: true
     },
 
 

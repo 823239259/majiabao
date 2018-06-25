@@ -92,7 +92,7 @@
         userInfo: {},
         lastPath: '/',
         userList: [],
-        cubeList: ['推荐','股指','贵金属','原油'],
+        cubeList: ['推荐','原油','股指','贵金属'],
   
       };
     },
