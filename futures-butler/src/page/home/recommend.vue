@@ -1,5 +1,5 @@
 <template>
-  <div id="recommend">
+  <div id="list_details">
     <mt-header fixed :title="title" >
         <mt-button slot="left" icon="back" @click="goBack"></mt-button>
     </mt-header>
@@ -23,7 +23,7 @@
   
   const local = pro.local;
   export default {
-    name: "recommend",
+    name: "list_details",
     props: ['id'],
     components: {
      

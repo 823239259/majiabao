@@ -25,7 +25,7 @@
   
   
   export default {
-    name: "recommend",
+    name: "list_details",
     props: ['id'],
     components: {
      
