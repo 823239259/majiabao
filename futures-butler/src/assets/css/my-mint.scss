@@ -1,0 +1,130 @@
+.mint-header{
+    background-color: #169781;
+    height: 0.96rem;
+    line-height: 0.96rem;
+    width: 7.5rem;
+    border-bottom: 1px solid #e6e6e6;
+    color: #fff;
+    
+}
+.mint-header-title{
+    font-size: 0.36rem
+}
+.mint-tabbar{
+	position: fixed;
+    bottom: 0;
+    border-top:1px solid #e6e6e6; 
+    z-index: 999;
+    
+}	
+// bottom_tab
+#bottom_tab {
+    .mint-tab-item-label{
+        color: #333;
+    }
+    .mint-tab-item-icon{
+        width: 0.48rem;
+        height: 0.48rem
+    }
+    .mint-tabbar {
+        width: 7.5rem;
+        background-color: #169781;
+        position: relative;
+        top: 0;
+
+    }
+    .mint-tabbar > .mint-tab-item.is-selected {
+        background-color: #24b79e;
+        .mint-tab-item-label{
+            color: #fff;
+        }
+    }
+
+} 
+.mint-swipe-indicator{
+    opacity: 0.5;
+    background-color: #fff
+}
+.mint-swipe-indicator.is-active {
+    opacity: 1;
+}
+
+
+
+
+
+
+.mint-navbar{
+    background-color: #b3daff; 
+}
+#help_info .mint-tab-item .mint-tab-item-label {
+    font-size: .28rem
+}
+#datas .mint-tab-item-label ,#my_match .mint-tab-item-label {
+    font-size: .28rem
+}
+
+.mint-msgbox-btn{
+    background-color: #1482f0;
+}
+.mint-msgbox-confirm{
+    color: white;   
+    font-size: 0.28rem;
+}
+.mint-msgbox-message{
+    color: black;
+}
+.mint-msgbox-header{
+    padding: 0.2rem 0rem;
+    background-color: #1482f0;
+}
+.mint-msgbox-title{
+     color: white;
+     font-weight: normal;
+}
+#home,#tools{
+    .mint-actionsheet-listitem:nth-child(1){
+        border: 0
+    }
+} 
+#datas {
+    .mint-navbar{
+        width: 4.6rem;
+        background-color: rgb(202, 229, 255)
+    }
+}
+.calendar_wrap{
+    .wh_content_all{
+        background: #b3daff;
+        li{
+            color: #222
+        }
+    }
+    .wh_content_item .wh_isToday{
+        background: red;
+    }
+    .wh_content_li{
+        color: #222;
+    }
+    .wh_content {
+        .wh_content_item, .wh_content_item_tag{
+            background-color: #b3daff;
+            color: #333
+        }
+    }
+} 
+
+.mt-range-thumb{
+    opacity: 0;
+}
+.mt-range-progress{
+    background-color: #E44F34;
+    border-radius: 0.2rem 0 0 0.2rem;
+}
+.mt-range-runway{
+    border-top-color: #16b887;
+    border-radius: 0.2rem;
+}
+.mt-range-content{
+    width: 6.3rem;
+}

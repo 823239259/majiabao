@@ -1,0 +1,121 @@
+/*  
+ * @description: 清除默认样式
+ * @author: name  
+ * @update: 2018-01-08
+ */
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, 
+strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, 
+tfoot, thead, tr, th, td ,textarea {
+	margin: 0;
+  	padding: 0;
+}
+article, aside, details, figcaption, figure, footer, header, menu, nav, section {
+ 	display: block;
+}
+h1, h2, h3, h4, h5, h6{ 
+	font-size: 100%; 
+	font-weight: normal; 
+}
+table {
+ 	border-collapse: collapse;
+ 	border-spacing: 0;
+}
+ul, ol, li {
+ 	list-style: none;
+}
+input, button, select {
+    font-family: "\5FAE\8F6F\96C5\9ED1", Arial, Helvetica, sans-serif; 
+    vertical-align: middle;
+    outline: none;
+	-webkit-appearance: none;
+	border-radius: 0
+	
+}
+input:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0px 1000px white inset; /*利用阴影来填充掉input自动填充色*/
+}
+button{
+	border: none;
+	outline: none;
+	padding: 0;
+}
+input{
+	background: none;
+	border: none;
+    -webkit-user-select:auto; 
+}
+img{ 
+	display: inline-block; 
+	max-width: 100%; 
+	vertical-align: middle; 
+	outline: none; 
+	-webkit-appearance: none;
+}
+em, i{ 
+	font-style: normal;
+}
+div, p, ul, li, h1, h2, h3, h4, h5, h6, nav, ul, li, span, em, input, button{
+	box-sizing: border-box;
+}
+html{
+	font-size: 625%; 
+	-webkit-tap-highlight-color: rgba(0,0,0,0); /*清除点击时出现的背景*/
+	-webkit-text-size-adjust: none;
+}
+html, body {
+	font-family: "\5FAE\8F6F\96C5\9ED1","\5B8B\4F53","arial";
+	/*background: #242933;*/
+	background: white;
+ 	color: #a3b1cc;
+ 	line-height: 1;
+}
+body{
+	font-size: 0.24rem;
+}
+.clearfix:before, .clearfix:after{
+	 clear: both; 
+	 content: ""; 
+	 display: block; 
+	 overflow: hidden 
+}
+a {
+	color: #333;
+ 	text-decoration: none;
+ 	-webkit-backface-visibility: hidden;
+}
+a:link, a:visited{	
+	text-decoration: none;
+}
+/**{
+	-webkit-touch-callout:none; /*系统默认菜单被禁用*/
+	/*-webkit-user-select:none; webkit浏览器*/
+	/*-khtml-user-select:none; 早期浏览器*/
+	/*-moz-user-select:none;火狐*/
+	/*-ms-user-select:none; IE10*/
+	/*user-select:none;*/
+}
+/**:not(input,textarea) {*/ 
+	/*-webkit-touch-callout: none;*/ 
+	/*-webkit-user-select: none;*/ 
+/*}*/
+*{
+    -webkit-touch-callout:none;  /*系统默认菜单被禁用*/
+    -webkit-user-select:none; /*webkit浏览器*/
+    -khtml-user-select:none; /*早期浏览器*/
+    -moz-user-select:none;/*火狐*/
+    -ms-user-select:none; /*IE10*/
+    user-select:none;
+}
+input,textarea {
+    /*-webkit-user-select:none; webkit浏览器*/
+    margin: 0px;
+    padding: 0px;
+    outline: none;
+}
+*:not(input):not(textarea) {
+  -webkit-user-select: none
+}
+iframe{
+	border: none
+}
