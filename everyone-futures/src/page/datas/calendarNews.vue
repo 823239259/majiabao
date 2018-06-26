@@ -6,7 +6,7 @@
 			v-on:choseDay="clickDay" 
 			v-on:changeMonth="changeDate"></Calendar>
 		<ul class="my_list">
-			<li class="item" :class="{'show': showItem[index]}" v-for="(item,index) in list"  :key="item.createdAt"  v-isShow="'#datas'">
+			<li class="item" :class="{'show': showItem[index]}" v-for="(item,index) in list"  :key="item.createdAt"  >
 				<div class="title_box">
 					<div class="left">
 						<span class="time">{{$pro.getDate(item.timestamp*1000, 'h:m')}}</span>
