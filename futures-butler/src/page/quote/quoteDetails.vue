@@ -173,7 +173,7 @@
 				</div>
 			</div>
 		</template>
-		<tips-float :isBack="true"></tips-float>
+		
 		<div class="bottomTab">
 			<ul class="bottomTab_list">
 				<li v-for="item in bottomList1" @click="itemClick(item)" :class="{current:dian}"><i :class="{dianzan1 : dian  , dianzan : !dian}"></i>{{item.name}}</li>
@@ -185,7 +185,7 @@
 
 <script>
 	import pro from '../../assets/js/common.js'
-	import tipsFloat from '../../components/tipsFloat'
+	
 	import { Toast ,MessageBox} from 'mint-ui';
 	import light from './light.vue'
 	import klineOne from './klineOne.vue'
@@ -229,7 +229,7 @@
 			}
 		},
 		components: {
-			tipsFloat,light,klineOne,klineFive,klineThirty,klineDay,klineOneHour
+			light,klineOne,klineFive,klineThirty,klineDay,klineOneHour
 		},
 		computed:{
 			parameters(){

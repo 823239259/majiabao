@@ -1,9 +1,13 @@
 <template>
-		<div class="wrap animated fadeInLeft" ref="viewBox1">
-			<ul class="discover_list">
+	<div id="discover7x24">
+		 <mt-header fixed title="资讯" >
+			<mt-button slot="left" icon="back" @click="goBack"></mt-button>
+		</mt-header>
+		<div class="wrap animated fadeInLeft" ref="viewBox1" >
+			<ul class="discover_list" id="list_box">
 				<mt-loadmore :bottom-method="loadBottom"  :auto-fill="false" :top-method="loadTop" ref="loadmore">
 						<template >
-							<li class="list" :class="{'show': showItem[index]}" v-for="(k,index) in newsInfo" v-isShow="'#datas'">
+							<li class="list" :class="{'show': showItem[index]}" v-for="(k,index) in newsInfo" v-isShow="'#list_box'" >
 								<p class="time_text">
 									<span class="time">{{k.createdAt | changTime }}</span>
 									<span class="time_day">{{startTime}} {{getWeekDay(today)}}</span>
@@ -21,6 +25,8 @@
 				<!-- <p @click="test1">加载跟多</p> -->
 			</ul>
 		</div>
+	</div>
+		
 </template>
 
 <script>
@@ -29,7 +35,6 @@
 		name: "discover7x24",
 		data() {
 			return {
-				tabSelected: 'discover',
 				startTime: '',
 				endTime: '',
 				pageNum:0,
@@ -43,6 +48,10 @@
 			
 		},
 		methods: {
+			goBack() {
+				window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
+				//history.go(-1);
+			},
 			getWeekDay (time) {
 				const weekList = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
 				return weekList[time.getDay()]
@@ -122,6 +131,7 @@
 		},
 		filters:{
 			changTime:function(e){
+				//console.log(e)
 				return  pro.getDate(e*1000,"h:m");
 				
 			},
@@ -141,18 +151,25 @@
 
 <style lang="scss" scoped>
 	@import "../../assets/css/common.scss";
+	#discover7x24 {
+		width: 7.5rem;
+		padding-top: 0.96rem;
+		background-color: $bgButler;
+	}
 	.wrap{
 
 
 		.discover_list{
 			padding: 0.25rem 0.3rem;
+			overflow-y: scroll;
+			height: calc(100vh - 0.96rem)
 		}
 		.list{
 			padding: 0.2rem 0 0 0.25rem;
-			background-color: #edf6ff;
+			//background-color: #edf6ff;
 			border-radius: 0.1rem;
 			margin-top: 0.16rem; 
-			box-shadow: 0 0 5px 1px #ccc;
+			//box-shadow: 0 0 5px 1px #ccc;
 			.time_text{
 				position: relative;
 			}

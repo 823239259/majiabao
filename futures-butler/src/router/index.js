@@ -68,8 +68,39 @@ const router = new Router({
       component:load('home/list_details'),
       props: true
     },
-
-
+    /* butler 内页 */
+    {
+    	path:"/rumen_list/:id",
+    	name:"rumen_list",
+      component:load('butler/rumen_list'),
+      props: true
+    },
+    {
+    	path:"/rumen_details/:id",
+    	name:"rumen_details",
+      component:load('butler/rumen_details'),
+      props: true
+    },
+    {
+    	path:"/knowledge/:id",
+    	name:"knowledge",
+      component:load('butler/knowledge'),
+      props: true
+    },
+    {
+    	path:"/tools_item/:id",
+    	name:"tools_item",
+      component:load('butler/tools_item'),
+      props: true
+    },
+    {
+    	path:"/discover7x24",
+      name:"discover7x24",
+      meta: {
+        notKeepAlive: true
+      },
+    	component:load('butler/discover7x24')
+    },
 
 
 
@@ -94,19 +125,8 @@ const router = new Router({
       name: 'my',
    		component: load('my')
     },
-    {
-      path: '/tools',
-      name: 'tools',
-   		component: load('tools')
-    },
-    {
-      path: '/datas',
-      name: 'datas',
-       component: load('datas'),
-       meta: {
-          notKeepAlive: true
-       }
-    },
+  
+    
     {
       path: '/login',
       name: 'login',

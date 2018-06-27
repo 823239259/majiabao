@@ -90,9 +90,11 @@ Vue.directive('isShow', {
     }; 
     // 监听函数
     function isOnScreen(e) {
+      //console.log(123)
       clearTimeout(timer);
       var timer;
       timer = setTimeout(function(){
+        //console.log(123)
           if(_inView(el)){
             el.classList.add(...animateClass)
             el.style.opacity = 1;
@@ -108,6 +110,7 @@ Vue.directive('isShow', {
     if(!_inView(el)){
       el.style.opacity = 0;
       //console.log(123)
+      //console.log(parent)
       parent.addEventListener('scroll',isOnScreen)
     }else{
       //console.log(1232)

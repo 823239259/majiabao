@@ -106,11 +106,6 @@
           window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
           //history.go(-1);
       },
-      goto(path) {
-        this.$router.push({
-          path: `/welfare_details/${path}`
-        });
-      },
       addNews (type) {
           if (!this.text) return this.$toast({message:"发送内容不能为空",duration: 1000});
           let nowTime = pro.getDate(new Date().getTime(),'y/m/d h:i');

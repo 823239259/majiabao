@@ -26,25 +26,14 @@
     <div class="cube_wrap">
       <Cube :cubeList = 'cubeList'></Cube>
     </div>
-    <div class="message_box"></div>    
-
-
-
-
-
-
-   
+    <div class="message_box" @click="goto('/butler_community')"></div>    
     <bottomTab :tabSelect="tabSelected"></bottomTab>
-    <mt-actionsheet :actions="actions" v-model="sheetVisible">
-    </mt-actionsheet>
-    <!-- <tips-float :isBack="false"></tips-float> -->
   </div>
 </template>
 
 <script>
   import { mapMutations } from 'vuex'
   import bottomTab from '../components/bottom_tab'
-  import tipsFloat from '../components/tipsFloat'
   import scrollMsg from '../components/scrollMsg'
   import Cube from '../components/Cube'
   import pro from '../assets/js/common'
@@ -57,7 +46,6 @@
     name: "home",
     components: {
       bottomTab,
-      tipsFloat,
       scrollMsg,
       Cube
     },

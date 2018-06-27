@@ -3,31 +3,50 @@
     <mt-header fixed title="管家"></mt-header>
     <div class="butler_wrap">
       <ul class="butler_list">
-        <li class="item" v-for="(item, index) in butlerList" :key="item.leftName">
-          <div class="left" :class="{'two_times':index%2===0}">{{item.leftName}}</div>
-          <div class="right" :class="{'two_times':index%2!==0}">{{item.rightName}}</div>
+        <li class="item" v-for="(item, index) in butlerList" :key="index + 'abcde'">
+          <div class="left" :class="{'two_times':index%2===0,'all_times':item.leftShow}"  @touchmove="moveTab(item,index,'left')" @touchstart="setCoordinate">
+             <template v-if="!item.leftShow">
+                  {{item.leftName}}
+             </template>          
+             <template v-else>
+               <div class="show_after">
+                 {{item.leftName}}
+               </div>
+                <div class="show_after">
+                  <span :class="{'margin1':item.marginShow}" @click="btnback(item,index,'left')">返回</span>
+                  <span :class="{'margin1':item.marginShow}" @click="goto(item.leftPath)">解锁</span>
+                </div>
+              
+                 
+             </template>
+          </div>
+          <div class="right" :class="{'two_times':index%2!==0,'all_times':item.rightShow}" @touchmove="moveTab(item,index,'right')" @touchstart="setCoordinate">
+            <template v-if="!item.rightShow">
+                  {{item.rightName}}
+             </template>          
+             <template v-else>
+                <div class="show_after">
+                 {{item.rightName}}
+               </div>
+               <div class="show_after">
+                  <span :class="{'margin1':item.marginShow}" @click="goto(item.rightPath)">解锁</span>
+                 <span :class="{'margin1':item.marginShow}" @click="btnback(item,index,'right')">返回</span>
+                </div>
+                  
+             </template>
+          </div>
         </li>
       </ul>
     </div>
-     
-
-
-
-
-
-
-   
     <bottomTab :tabSelect="tabSelected"></bottomTab>
-    <mt-actionsheet :actions="actions" v-model="sheetVisible">
-    </mt-actionsheet>
-    <!-- <tips-float :isBack="false"></tips-float> -->
+    
+   
   </div>
 </template>
 
 <script>
   import { mapMutations } from 'vuex'
   import bottomTab from '../components/bottom_tab'
-  import tipsFloat from '../components/tipsFloat'
   import scrollMsg from '../components/scrollMsg'
   import Cube from '../components/Cube'
   import pro from '../assets/js/common'
@@ -40,7 +59,6 @@
     name: "butler",
     components: {
       bottomTab,
-      tipsFloat,
       scrollMsg,
       Cube
     },
@@ -54,38 +72,55 @@
         butlerList: [{
             leftName: "新手入门",
             rightName: "高手进阶",
-            leftPath: 'sss',
-            rightPath: "/news_info"
+            leftPath: '/rumen_list/0',
+            rightPath: '/rumen_list/1',
+            leftShow: false,
+            rightShow: false,
+            marginShow: false
           },
           {
             leftName: "基础知识",
             rightName: "期货学堂",
-            leftPath: 'sss',
-            rightPath: "/news_info"
+            leftPath: '/knowledge/0',
+            rightPath: '/knowledge/1',
+            leftShow: false,
+            rightShow: false,
+            marginShow: false
           },
           {
             leftName: "新闻公告",
             rightName: "汇率计算",
-            leftPath: 'sss',
-            rightPath: "/news_info"
+            leftPath: '/rumen_list/2',
+            rightPath: '/tools_item/1',
+            leftShow: false,
+            rightShow: false,
+            marginShow: false
           },
           {
             leftName: "期货计算",
             rightName: "合约查询",
-            leftPath: 'sss',
-            rightPath: "/news_info"
+            leftPath: '/tools_item/2',
+            rightPath: '/tools_item/3',
+            leftShow: false,
+            rightShow: false,
+            marginShow: false
           },
           {
             leftName: "资讯直播",
             rightName: "系统公告",
-            leftPath: 'sss',
-            rightPath: "/news_info"
+            leftPath: '/discover7x24',
+            rightPath: '/rumen_list/3',
+            leftShow: false,
+            rightShow: false,
+            marginShow: false
           }
         ],
         userInfo: {},
         lastPath: '/',
         userList: [],
-  
+        startCoordinate: {},
+        moveFlag: false,
+        moveData: {}
       };
     },
     computed: {
@@ -105,10 +140,6 @@
       }
     },
     methods: {
-      ...mapMutations({
-        setAccountInfo: 'ACCOUNT_INFO',
-        clearUserInfo: 'INFO_CLEAR',
-      }),
       goLast() {
         this.$router.push(this.lastPath);
       },
@@ -117,79 +148,75 @@
           path: path
         });
       },
-      changeValue(msg, key) {
-        //console.log(msg)
-        this[key] = msg
-      },
-      mobileHidden(phoneNumber) {
-        return pro.mobileHidden(phoneNumber)
-      },
-      buwei(numString) {
-        if (numString === undefined || null) {
-          return numString
-        } else if (numString && numString.toString().indexOf('.') > -1) {
-          return numString
-        } else {
-          return numString + '.00'
-        }
-      },
-      loginOut() {
-        this.userInfo = {}
-        this.clearUserInfo()
-        this.isLogin = false
-        this.$toast({
-          message: "成功退出登录",
-          duration: 1000
-        })
-        local.remove('user')
-  
-      },
-      //获取用户信息
-      getUserInfo() {
-        const headers = {
-          token: this.userInfo.token,
-          secret: this.userInfo.secret
-        }
-        pro.fetch("post", "/account/getBasicMsg", "", headers).then((res) => {
-          //console.log(res);
-          if (res.code == '1') {
-            this.setAccountInfo(res.data);
-            this.isLogin = true;
+      moveTab (item,index,type) {
+          //console.log(event.touches[0])
+          if (!this.moveFlag) return;
+          let currentPoint = event.touches[0];
+          if (type === 'left') {
+            if (currentPoint.pageX - this.startCoordinate.startX > 20) {
+                  //console.log('向右滑动了')
+                  if (!item.rightName) return; 
+                  this.moveFlag = false;
+                  this.moveData['right'+index] = item.rightName
+                  item.rightName = ''
+                  
+                  setTimeout(() => {
+                  item.leftShow = true
+                }, 10);
+                setTimeout(() => {
+                  item.marginShow = true
+                }, 100);
+
+              }  
           }
-  
-        }).catch((err) => {
-          var data = err.data;
-          if (data == undefined) {
-            this.$toast({
-              message: "网络不给力，请稍后再试",
-              duration: 1000
-            });
-          } else {
-            if (data.code == -9999) {
-              this.$toast({
-                message: "认证失败，请重新登录",
-                duration: 1000
-              });
-              //this.$router.push({path:"/login"});
-            } else {
-              this.$toast({
-                message: data.message,
-                duration: 1000
-              });
+          if (type === 'right') {
+            if (currentPoint.pageX - this.startCoordinate.startX < -20) {
+                if (!item.leftName) return; 
+                //console.log('向左滑动了')
+                this.moveFlag = false;
+                this.moveData['left'+index] = item.leftName
+                item.leftName = ''
+                setTimeout(() => {
+                  item.rightShow = true
+                }, 10); //显示相对慢一点
+                setTimeout(() => {
+                  item.marginShow = true
+                }, 100); //最后执行btn分离
+                
             }
           }
-        })
       },
-  
-      deleteStore() {
-        
-        this.$messagebox({
-          title: '提示',
-          message: '是否确认删除缓存?',
-          showCancelButton: true
-        });
+      setCoordinate () {
+          let startPoint = event.touches[0]; //触摸点
+          this.moveFlag = true;
+          this.startCoordinate = {
+              startX: startPoint.pageX,
+              startY: startPoint.pageY,
+          }
       },
-  
+      btnback (item,index,type) {
+          
+          if(type === 'left') {
+            item.leftShow = false;
+             setTimeout(() => {
+              item.rightName = this.moveData['right'+index]
+            }, 190);
+            setTimeout(() => {
+                  item.marginShow = false
+                }, 100);
+          }
+          if (type === 'right') {
+            item.rightShow = false;
+              setTimeout(() => {
+                item.leftName = this.moveData['left'+index]
+              }, 190)
+              setTimeout(() => {
+                  item.marginShow = false
+                }, 100);
+          }
+         
+
+      },
     },
     activated() {
   
@@ -218,19 +245,56 @@
     
     .item{
       @include flex();
+      height: 2rem;
       padding: 0.16rem 0 0 0;
       text-align: center;
       @include font($fs36,2rem,$white);
+      overflow: hidden;
       .left{
         flex: 1;
+        height: 2rem;
         margin-right: 0.1rem;
+        transition: all 0.5s;
+        @include flex();
+        flex-direction: column;
+        span:nth-child(1){
+          border-right: 1px solid #fff;
+        }
       }
       .right{
         flex: 1;
-        
+        height: 2rem;
+        transition: all 0.5s;
+        @include flex();
+        flex-direction: column;
+         span:nth-child(1){
+          border-right: 1px solid #fff;
+        }
       }
+      .show_after{
+          //flex: 1;
+          //width: 7.5rem;
+          transition: all 0.5s;
+          @include flex(space-around);
+          line-height: 0.8rem;
+         
+        }
       .two_times{
         flex: 2
+      }
+      span{
+        width: 1.6rem;
+        border-radius: 0.1rem;
+        @include font($fs36,0.8rem,$white);
+        transition: all 0.5s;
+        border: solid 0.02rem #ffffff;
+        
+      }
+      .margin1{
+        margin: 0 1rem;
+      }
+      .all_times{
+        flex: 0 0 7.5rem
       }
       
      
@@ -279,126 +343,5 @@
 
 
 
-  // .icon {
-  //   display: inline-block;
-  //   width: 0.4rem;
-  //   height: 0.36rem;
-  // }
   
-  // .kefu_phone {
-  //   background: url("../assets/images/account/kefu_icon_ihone.png") center no-repeat;
-  //   background-size: cover;
-  // }
-  
-  // .kefu_icon {
-  //   background: url("../assets/images/account/kefu_icon.png") center no-repeat;
-  //   background-size: cover;
-  // }
-  
-  // .user_info {
-  //   width: 6.9rem;
-  //   margin: 2.26rem auto 0.24rem;
-  //   background-color: $bgWhite;
-  //   box-shadow: 0 0 10px 2px #ccc;
-  //   overflow: hidden;
-  //   img {
-  //     display: block;
-  //     width: 1.2rem;
-  //     height: 1.2rem;
-  //     margin: 0.2rem auto;
-  //     border-radius: 50%;
-  //   }
-  //   p {
-  //     @include font($fs32,
-  //     0.44rem,
-  //     #333);
-  //     padding-bottom: 0.2rem;
-  //   }
-  //   .login {
-  //     position: relative;
-  //     padding-bottom: 0.2rem;
-  //   }
-  //   .btn_box {
-  //     display: flex;
-  //     justify-content: space-around;
-  //     align-items: center;
-  //     margin-top: -0.6rem;
-  //     padding-bottom: 0.24rem;
-  //     button {
-  //       width: 2rem;
-  //       height: 0.8rem;
-  //       background-color: inherit;
-  //       border-radius: 0.1rem;
-  //       border: solid 0.02rem #1482f0;
-  //       @include font($fs28,
-  //       0.8rem,
-  //       #1482f0)
-  //     }
-  //   }
-  // }
-  
-  // .list_wrap {
-  //   width: 6.9rem;
-  //   margin: 0 auto;
-  //   background-color: $bg;
-  //   .item {
-  //     position: relative;
-  //     padding-left: 0.3rem;
-  //     background-color: $bgWhite;
-  //     @include font($fs28,
-  //     0.96rem,
-  //     $blcakThin,
-  //     left);
-  //     border-bottom: 1px solid #e6e6e6;
-  //     margin-top: 0.16rem;
-  //     box-shadow: 0 0 5px 1px #ccc;
-  //   }
-  //   .icon {
-  //     display: inline-block;
-  //     width: 0.4rem;
-  //     height: 0.4rem;
-  //     margin-right: 0.1rem;
-  //     margin-top: -2px;
-  //     vertical-align: middle;
-  //   }
-  //   .right_icon {
-  //     position: absolute;
-  //     right: 0.3rem;
-  //     top: 50%;
-  //     transform: translateY(-50%);
-  //     display: inline-block;
-  //     width: 0.14rem;
-  //     height: 0.22rem;
-  //     background: url("../assets/images/account/right_jiantou.png") center no-repeat;
-  //     background-size: cover;
-  //     vertical-align: middle;
-  //     text-align: right;
-  //   }
-  //   @for $i from 1 through 6 {
-  //     $background_img: ( //"self_choose_icon",
-  //     "gonggao", "zishi", "yijian", 'xieyi', "shanchu",'fenxiang');
-  //     .item:nth-child(#{$i}) {
-  //       .icon {
-  //         $img: nth($background_img, $i);
-  //         background: url("../assets/images/account/#{$img}.png") center no-repeat;
-  //         background-size: 100%;
-  //       }
-  //     }
-  //   }
-  // }
-  
-  // .btn_wrap {
-  //   width: 7.5rem;
-  //   text-align: center;
-  //   background-color: $bgGray;
-  //   .btn {
-  //     width: 7rem;
-  //     margin: 0.6rem 0;
-  //     @include font($fs36,
-  //     0.88rem,
-  //     $bg);
-  //     background-color: $redDeep;
-  //     border-radius: 0.44rem;
-  //   }
-  // }
 </style>

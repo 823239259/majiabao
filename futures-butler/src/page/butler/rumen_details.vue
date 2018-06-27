@@ -1,17 +1,11 @@
 <template>
-  <div id="recommend">
+  <div id="list_details">
     <mt-header fixed :title="title" >
         <mt-button slot="left" icon="back" @click="goBack"></mt-button>
     </mt-header>
     <div class="wrap">
-       <ul class="list">
-         <li class="item" v-for="(item, index) in list" :key="index" @click="goto(item.id)">
-            <h2>{{item.title}}</h2>
-              <p>推荐: <span>管家小助手</span></p>
-              <!-- <p v-html="abc"></p> -->
-           
-         </li>
-       </ul>
+        <h2>{{details.title}}</h2>
+        <p v-html="details.content"></p>
     </div>
     
     
@@ -23,19 +17,18 @@
   
   const local = pro.local;
   export default {
-    name: "recommend",
+    name: "list_details",
     props: ['id'],
     components: {
-     
     },
-    mixins: [pro.mixinsToCustomer],
     data() {
       return {
         isLogin: false,
         isShow: false,
-        idList: [],
-        list: []
-  
+        idList: ['新手入门','高手进阶'],
+        details: {},
+        text: '',
+        communityList: {},
       };
     },
     computed: {
@@ -43,23 +36,9 @@
         return document.documentElement.clientHeight + "px";
       },
       title () {
-        switch (this.id) {
-          case 'recommend':
-            return '推荐'
-            break;
-          case 'crude-oil':
-            return '原油'
-            break;
-          case 'stock-index':
-            return '股指'
-            break;
-          case 'noble-metal':
-            return '贵金属'
-            break;      
-          default:
-            break;
-        }
-      }
+        return this.details.categoryText + '详情'
+      },
+     
       
     },
     methods: {
@@ -70,26 +49,25 @@
       },
       goto(path) {
         this.$router.push({
-          path: `/list_details/${path}`
+          path: `/path`
         });
       },
-       getNewList() {
+       getNewDetails() {
                 const data = {
-                    category: this.title,
+                    id: this.id,
                 }
-                pro.fetch("post", "/others/getTNoticeList", data, "").then((res) => {
+                pro.fetch("post", "/others/getTNotice", data, "").then((res) => {
                     //console.log(res)
                     if (res.success == true) {
                         if (res.code == 1) {
-                            //console.log(res.data[0].content)
-                            this.list = res.data
+                            //console.log(res.data)
+                            this.details = res.data
                         }
                     }
     
                 }).catch((err) => {
                     var data = err.data;
                     if (data == undefined) {
-                       
                     } else {
                         if (data.code == -9999) {
                             this.$toast({
@@ -107,41 +85,35 @@
             },
     },
     activated() {
-      this.getNewList()
-  
+        this.getNewDetails();
+        
     },
   };
 </script>
 
 <style lang="scss" scoped>
   @import "../../assets/css/common.scss";
-  #recommend {
+  #list_details {
     width: 7.5rem;
     padding-top: 0.96rem;
     //background-color: $bg;
   }
-  .wrap{
-   
-    .list{
-      padding: 0.2rem 0 0 0;
-      @include font($fs28,0.48rem,$blackNormal,left);
-      .item{
-        border-bottom: 1px solid #bbf6ec;
-      }
+   .wrap{
+    padding-bottom: 0.2rem;
+    border-bottom: 0.16rem solid #e5f9f6;
       h2{
         width: 7.5rem;
         padding-left: 0.3rem;
         @include font($fs32,0.8rem,$blackNormal,left);
+        font-weight: bold;
       }
       p{
-        padding-left: 0.3rem;
+        padding: 0 0.3rem;
+        @include font($fs28,0.46rem,$blackNormal,left);
       }
-      span{
-        color: #788b87
-      }
-    }
+    
   }
-
+ 
 
 
 </style>
