@@ -40,6 +40,7 @@ axios.interceptors.response.use((res) =>{
 let ls = localStorage;
 var network = true;
 //自定义一个axios实例
+
 var axios1 = axios.create({
 	baseURL: store.getters.futurePath,
 	timeout: 5000,

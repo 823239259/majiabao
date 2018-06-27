@@ -307,7 +307,7 @@ export default new Vuex.Store({
 		PATH: function(state) {
 			if(state.setting == 'dev') {
 //				return 'http://192.168.0.132:8080/qiw-platform';
-				return 'http://platform-trade.dktai.cn'
+				return '/api'
 			} else if(state.setting == 'build'){
 				if(state.environment == 'test'){
 					return state.account.currentUrlHead + '//test.platform-trade.dktai.cn';
@@ -331,8 +331,8 @@ export default new Vuex.Store({
 		},
 		futurePath () {
 			if(state.setting == 'dev') {
-				//return 'http://192.168.0.132:8080/qiw-platform';
-					return '/other'
+				return state.account.currentUrlHead + '//futures.duokongtai.cn';
+					//return '/others'
 				} else if(state.setting == 'build'){
 					if(state.environment == 'test'){
 						return state.account.currentUrlHead + '//test.futures.duokongtai.cn';

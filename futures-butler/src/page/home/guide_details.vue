@@ -1,9 +1,9 @@
 <template>
   <div id="guide_details">
-    <mt-header fixed title="风险提示" >
+    <mt-header fixed :title="title" >
         <mt-button slot="left" icon="back" @click="goBack"></mt-button>
     </mt-header>
-    <div class="wrap">
+    <div class="wrap"  v-if="!list.title">
        <h2>温馨提示</h2>
        <ul class="list">
          <li class="item" v-for="(item, index) in contentText">
@@ -12,7 +12,7 @@
           </li>
        </ul>
     </div>
-    <div class="wrap">
+    <div class="wrap" v-if="!list.title">
        <h2>相关的风险提示</h2>
        <ul class="list">
          <li class="item" v-for="(item, index) in aboutContent">
@@ -21,7 +21,7 @@
          </li>
        </ul>
     </div>
-    <div class="wrap">
+    <div class="wrap" v-if="!list.title">
        <h2>相关的风险提示</h2>
        <ul class="list">
          <li class="item" v-for="(item, index) in aboutContent2">
@@ -30,7 +30,7 @@
          </li>
        </ul>
     </div>
-    <div class="wrap">
+    <div class="wrap" v-if="!list.title">
        <h2>特别提示</h2>
        <ul class="list">
          <li class="item" v-for="(item, index) in aboutContent3">
@@ -39,7 +39,9 @@
          </li>
        </ul>
     </div>
-    
+    <div class="wrap" v-else>
+        <p class="normal" v-html="list.content"></p>
+    </div>
   </div>
 </template>
 
@@ -118,6 +120,7 @@
     components: {
      
     },
+    props: ['id'],
     mixins: [pro.mixinsToCustomer],
     data() {
       return {
@@ -127,13 +130,17 @@
         contentText: contentText,
         aboutContent: aboutContent,
         aboutContent2: aboutContent2,
-        aboutContent3: aboutContent3
+        aboutContent3: aboutContent3,
+        list: {}
   
       };
     },
     computed: {
       clientHeight() {
         return document.documentElement.clientHeight + "px";
+      },
+      title () {
+        return this.list.title 
       },
       
     },
@@ -148,10 +155,42 @@
           path: path
         });
       },
+      getNewDetails() {
+                const data = {
+                    id: this.id
+                }
+                pro.fetch("post", "/others/getTNotice", data, "").then((res) => {
+                    //console.log(res)
+                    if (res.success == true) {
+                        if (res.code == 1) {
+                            //console.log(res.data)
+                            this.list = res.data
+                        }
+                    }
+                }).catch((err) => {
+                    var data = err.data;
+                    if (data == undefined) {
+                    } else {
+                        if (data.code == -9999) {
+                            this.$toast({
+                                message: "认证失败，请重新登录",
+                                duration: 1000
+                            });
+                        } else {
+                            this.$toast({
+                                message: data.message,
+                                duration: 1000
+                            });
+                        }
+                    }
+                })
+            },
     },
     activated() {
-  
-      
+        if (this.id!=0) {
+          this.getNewDetails()
+        }
+       
   
     },
   };
@@ -175,6 +214,10 @@
     }
     .list{
       padding: 0.2rem 0.3rem 0;
+      @include font($fs28,0.48rem,$blackNormal,left);
+    }
+    .normal{
+      padding: 0.3rem;
       @include font($fs28,0.48rem,$blackNormal,left);
     }
   }

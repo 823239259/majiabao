@@ -100,7 +100,7 @@
             leftName: "期货计算",
             rightName: "合约查询",
             leftPath: '/tools_item/2',
-            rightPath: '/tools_item/3',
+            rightPath: '/contract_search',
             leftShow: false,
             rightShow: false,
             marginShow: false
@@ -218,16 +218,7 @@
 
       },
     },
-    activated() {
-  
-      this.userInfo = local.get('user')
-      this.userList = local.get('userList') || []
-      this.idList = local.get('idList') || []
-      if (this.userInfo) {
-        this.getUserInfo()
-      }
-  
-    },
+    
   };
 </script>
 

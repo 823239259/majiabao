@@ -11,16 +11,16 @@
                     <p>管家小助手</p>
                     <p>为您排忧解难</p>
                 </div>
-                <div class="left_top" @click="goto('guide_details/1')">
+                <div class="left_top" @click="goItem(0)">
                   <span>1</span>
                 </div>
-                <div class="right_top">
+                <div class="right_top" @click="goItem(1)">
                   <span>2</span>
                 </div>
-                <div class="left_bottom">
+                <div class="left_bottom" @click="goItem(2)">
                     <span>3</span>
                 </div>
-                <div class="right_bottom">
+                <div class="right_bottom" @click="goItem(3)">
                   <span>4</span>
                 </div>
                 
@@ -38,11 +38,9 @@ export default {
   name: "novice_guide",
   data() {
     return {
-      isLogin: false,
-      isShow: false,
       userInfo: {},
-      lastPath: '/',
       userList: [],
+      list: [],
       
     };
   },
@@ -51,11 +49,7 @@ export default {
     clientHeight() {
       return document.documentElement.clientHeight + "px";
     },
-    iframe () {
-        
-    },
-   
-       
+    
   },
    methods: {
       goBack() {
@@ -67,11 +61,47 @@ export default {
           path: path
         });
       },
+      goItem (index) {
+        let path = 'guide_details/' + this.list[index].id;
+        this.goto(path)
+      },
+      getNewList() {
+                const data = {
+                    category: '新手指南',
+                }
+                pro.fetch("post", "/others/getTNoticeList", data, "").then((res) => {
+                    //console.log(res)
+                    if (res.success == true) {
+                        if (res.code == 1) {
+                            //console.log(res.data[0].content)
+                            this.list = res.data
+                        }
+                    }
+    
+                }).catch((err) => {
+                    var data = err.data;
+                    if (data == undefined) {
+                       
+                    } else {
+                        if (data.code == -9999) {
+                            this.$toast({
+                                message: "认证失败，请重新登录",
+                                duration: 1000
+                            });
+                        } else {
+                            this.$toast({
+                                message: data.message,
+                                duration: 1000
+                            });
+                        }
+                    }
+                })
+            },
       
     },
 
   activated () {   
-    
+    this.getNewList()
   },
 };
 </script>
@@ -98,7 +128,8 @@ export default {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%,-50%)
+  transform: translate(-50%,-50%);
+  z-index: 100;
   
   
 }

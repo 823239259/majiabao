@@ -38,7 +38,8 @@ const router = new Router({
     {
     	path:"/guide_details/:id",
     	name:"guide_details",
-    	component:load('home/guide_details')
+      component:load('home/guide_details'),
+      props: true
     },
      {
     	path:"/butler_welfare",
@@ -117,8 +118,17 @@ const router = new Router({
     	name:"my_collection",
     	component:load('account/my/my_collection')
     },
-
-
+    /* contract_search */
+    {
+    	path:"/search_item/:id",
+    	name:"search_item",
+    	component:load('contract_search/search_item')
+    },
+    {
+    	path:"/contract_search",
+    	name:"contract_search",
+    	component:load('contract_search/search')
+    },
 
 
 

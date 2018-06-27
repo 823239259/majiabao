@@ -13,7 +13,7 @@
                 <div class="title_box">
                     <div class="left">
                         <img :src="item.img" alt="03">
-                        <p>{{item.name}}</p>
+                        <p>{{nameList[userInfo.username]||item.name}}</p>
                     </div>
                     <div class="right">
                         <span :class="['dianzan_icon',{'dianzan_sure':item.isGood}]" @click="dianzan(item)"></span>
@@ -61,7 +61,9 @@
             img: require('../../assets/images/home/person02_icon.png'),
             goodNumbers: 123,
             contentText: '搞定了感觉到了分管局领导国家劳动法攻击力的房价高的浪费了较高的老公的浪费国家了'
-        }]
+        }],
+        userInfo: {},
+        nameList: {}
   
       };
     },
@@ -118,7 +120,7 @@
               contentText: this.text,
               img: require('../../assets/images/home/person02_icon.png'),
               goodNumbers: 0,
-              name: 'kelelle',
+              name: this.userInfo.username,
               isGood: false
           }
           this.community.push(newsObj);
@@ -169,8 +171,8 @@
            this.communityList = local.get('communityList')?local.get('communityList'):{};
            this.community = this.communityList[this.id]||[];
        }
-      
-  
+        this.userInfo = local.get('user')||{}
+        this.nameList = local.get('nameList')|| {}
     },
   };
 </script>

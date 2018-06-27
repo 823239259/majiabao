@@ -19,7 +19,7 @@ module.exports = {
 			    }
       },
       '/others':{
-        target: 'http://test.futures.duokongtai.cn',
+        target: 'http://futures.duokongtai.cn',
 				changeOrigin: true,
 				pathRewrite: {
 			      '^/others': '/'

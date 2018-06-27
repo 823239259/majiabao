@@ -105,14 +105,6 @@
       },
     },
     activated() {
-  
-      this.userInfo = local.get('user')
-      this.userList = local.get('userList') || []
-      this.idList = local.get('idList') || []
-      if (this.userInfo) {
-        this.getUserInfo()
-      }
-  
     },
   };
 </script>

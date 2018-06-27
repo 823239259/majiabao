@@ -308,6 +308,7 @@
                 }
             }).then(({value,action}) => {
                 //console.log(11)
+                this.$toast({message: '修改成功',duration: 1000})
                 this.setName(mobile,value)
                 
             }).catch(({value,action}) => {
