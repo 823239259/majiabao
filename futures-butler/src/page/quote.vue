@@ -42,9 +42,6 @@
 			}
 		},
 		methods:{
-			...mapActions([
-				'initQuoteClient'
-			]),
 			draw:function(){
 				let myChart = echarts.init(document.getElementById('drawPie'));
 				var option = {
@@ -114,7 +111,6 @@
 			},
 		},
 		mounted: function(){
-			this.initQuoteClient();
 		},
 		activated:function(){
 			this.$store.state.market.Parameters = [];

@@ -57,6 +57,7 @@
 		},
 		methods:{
 			subscribe(){
+				this.$store.state.market.Parameters = [];
 				this.commodityOrder.forEach((o, i) => {
 					this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
 				});
