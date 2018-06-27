@@ -307,7 +307,7 @@ export default new Vuex.Store({
 		PATH: function(state) {
 			if(state.setting == 'dev') {
 //				return 'http://192.168.0.132:8080/qiw-platform';
-				return '/api'
+				return 'http://platform-trade.dktai.cn'
 			} else if(state.setting == 'build'){
 				if(state.environment == 'test'){
 					return state.account.currentUrlHead + '//test.platform-trade.dktai.cn';
@@ -464,6 +464,7 @@ export default new Vuex.Store({
 			require('echarts/lib/component/tooltip');
 			require('echarts/lib/chart/candlestick');
 			require('echarts/lib/component/markpoint');
+			require("echarts/lib/component/legend");
 			var dosizeL = state.market.currentdetail.DotSize;
 			var rawData = [];
 			var parameters = state.market.jsonDataKline.Parameters.Data;
@@ -526,7 +527,27 @@ export default new Vuex.Store({
 					x2: 30,
 					y2: 5
 				},
+				legend:{
+			        show:true,
+			        zlevel:0,
+			        orient:'horizontal',
+			        itemWidth :7,
+			        itemGap:0,
+			        padding : 0,
+			        top:10,
+			        left:10,
+					data:[
+						{name:"开空",textStyle:{color:"#283835"},icon:'image://static/lib/images/BP.png'},
+						{name:"开多",textStyle:{color:"#283835"},icon:'image://static/lib/images/BK.png'},
+						{name:"平空",textStyle:{color:"#283835"},icon:'image://static/lib/images/SP.png'},
+						{name:"平多",textStyle:{color:"#283835"},icon:'image://static/lib/images/SK.png'},
+						{name:"反卖",textStyle:{color:"#283835"},icon:'image://static/lib/images/BF.png'},
+						{name:"反买",textStyle:{color:"#283835"},icon:'image://static/lib/images/SF.png'},
+					],
+			        selectedMode:false,
+			   },
 				tooltip: {
+					backgroundColor:"#169781",
 					trigger: 'axis',
 					axisPointer: {
 						type: 'line',
@@ -556,7 +577,8 @@ export default new Vuex.Store({
 						res += '<br/><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:#B37436"></span> MA20 : ' + ma20 + '  <span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:#B2B336"></span> MA30 : ' + ma30;
 						return res;
 					},
-					textStyle: {fontSize: 10}
+					textStyle: {fontSize: 10},
+				
 				},
 				xAxis: {
 					type: 'category',
@@ -568,16 +590,16 @@ export default new Vuex.Store({
 							color: '#8392A5'
 						}
 					},
-					 splitLine: {
-                        show: true, 
-                        //  改变轴线颜色
-                        interval : 8,
-                        lineStyle: {
-                        	type:'dotted',
-                            // 使用深浅的间隔色
-                            color: ['gray']
-                        }                            
-                    },
+//					 splitLine: {
+//                      show: true, 
+//                      //  改变轴线颜色
+//                      interval : 8,
+//                      lineStyle: {
+//                      	type:'dotted',
+//                          // 使用深浅的间隔色
+//                          color: ['gray']
+//                      }                            
+//                  },
 				},
 				yAxis: {
 					scale: true,
@@ -599,10 +621,9 @@ export default new Vuex.Store({
 					},
 					splitLine: {
 						show: true,
-						interval : 8,
 						lineStyle: {
-							type:'dotted',
-							color: ['gray']
+							type:'solid',
+							color: ['#bbf6ec']
 						}
 					}
 				},
@@ -617,7 +638,7 @@ export default new Vuex.Store({
 			                        formatter: function (param) {
 			                            return " "
 			                        }
-			                    }
+			                    },
 			                },
 							data:strategyData
 			            },
@@ -645,10 +666,10 @@ export default new Vuex.Store({
 						},
 						itemStyle: {
 							normal: {
-								color: '#e64552',
-								color0: '#3aa643',
-								borderColor: '#e64552',
-								borderColor0: '#3aa643'
+								color: '#f4663a',
+								color0: '#19d961',
+								borderColor: '#f4663a',
+								borderColor0: '#19d961'
 							}
 						}
 					},
@@ -704,6 +725,30 @@ export default new Vuex.Store({
 							}
 						}
 					},
+					{
+						name:"开空",
+						type:"line",
+					},
+					{
+						name:"开多",
+						type:"line",
+					},
+					{
+						name:"平空",
+						type:"line",
+					},
+					{
+						name:"平多",
+						type:"line",
+					},
+					{
+						name:"反卖",
+						type:"line",
+					},
+					{
+						name:"反买",
+						type:"line",
+					},
 				]
 			}
 			var vol = [],
@@ -728,7 +773,9 @@ export default new Vuex.Store({
 					x2: 30,
 					y2: 20
 				},
-				tooltip: {},
+				tooltip: {
+					
+				},
 				xAxis: [{
 					type: 'category',
 					position: 'bottom',
@@ -736,14 +783,14 @@ export default new Vuex.Store({
 					axisTick: {
 						onGap: false
 					},
-					splitLine: {
-						show: true,
-						interval : 8,
-						lineStyle: {
-							type:'dotted',
-							color: ['gray']
-						}
-					},
+//					splitLine: {
+//						show: true,
+//						interval : 8,
+//						lineStyle: {
+//							type:'dotted',
+//							color: ['gray']
+//						}
+//					},
 					axisLabel: {
 						textStyle: {
 							fontSize: 10,
@@ -782,12 +829,13 @@ export default new Vuex.Store({
 					splitLine: {
 						show: true,
 						lineStyle: {
-							type:'dotted',
-							color: ['gray']
+							type:'solid',
+							color: ['#bbf6ec']
 						}
 					}
 				}],
 				tooltip: {
+					backgroundColor:"#169781",
 					trigger: 'axis',
 					axisPointer: {
 						type: 'line',
@@ -806,10 +854,7 @@ export default new Vuex.Store({
 					data: vol,
 					itemStyle: {
                     normal: {
-                        color: function(params) {
-                            var colorList = ['#e64552','#3aa643'];
-                            return  (params.dataIndex % 2 == 0 ) ? colorList[0] : colorList[1]
-                        },
+                        color: "#f79646"
 　　　　　　　　　　　　　
                     }
                 },
@@ -1028,9 +1073,9 @@ actions: {
 								}
 								//更新K线图
 								if(context.state.isshow.isklineshow == true && context.state.isshow.iskline == true) {
-									if(context.state.market.CacheLastQuote[1].TotalVolume <= context.state.market.CacheLastQuote[0].TotalVolume){
-										return;
-									}
+//									if(context.state.market.CacheLastQuote[1].TotalVolume <= context.state.market.CacheLastQuote[0].TotalVolume){
+//										return;
+//									}
 									var arr = [];
 									arr[0] = JSON.parse(evt.data).Parameters.DateTimeStamp;
 									arr[1] = JSON.parse(evt.data).Parameters.LastPrice;

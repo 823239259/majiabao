@@ -23,6 +23,7 @@
 	import bottomTab from '../components/bottom_tab'
 	import firstGuide from "./quote/firstGuide.vue"
 	import pro from '../assets/js/common.js'
+	import { mapMutations,mapActions } from 'vuex'
 	
 	export default{
 		name:"",
@@ -41,6 +42,9 @@
 			}
 		},
 		methods:{
+			...mapActions([
+				'initQuoteClient'
+			]),
 			draw:function(){
 				let myChart = echarts.init(document.getElementById('drawPie'));
 				var option = {
@@ -83,13 +87,13 @@
 				};
 				myChart.setOption(option);
 				myChart.on('click', function (params) {  
-					console.log(this.startAngle)
 					this.startAngle = 90;
 				    var value = params.name;  
 //				    document.getElementById("drawPie").style.transform = 'rotate(60deg)' ;
 //				     document.getElementById("drawPie").style.transition = '2s' ;
-//				    console.log(this)
-				    this.$router.push({path:"/type",query:{type:this.allType[0].name}})
+				    this.$store.state.market.commodityOrder = this.allType[1].list;
+				    this.$router.push({path:"/type",query:{type:this.allType[1].name}});
+
 				}.bind(this)); 
 			},
 			changRote:function(){
@@ -99,7 +103,6 @@
 			getCommodityInfo: function(){
 				pro.fetch('post', '/quoteTrader/getCommodityInfo', '', '').then((res) => {
 					if(res.success == true && res.code == 1){
-						console.log(res.data)
 						if(res.data!=undefined || res.data!=null){
 							this.allType = res.data;
 							this.currentType = res.data[0];
@@ -111,8 +114,10 @@
 			},
 		},
 		mounted: function(){
+			this.initQuoteClient();
 		},
 		activated:function(){
+			this.$store.state.market.Parameters = [];
 			this.draw();
 			this.getCommodityInfo()
 		},
