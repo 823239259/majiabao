@@ -1,17 +1,18 @@
 <template>
-  <div id="recommend">
+  <div id="list_details">
     <mt-header fixed :title="title" >
         <mt-button slot="left" icon="back" @click="goBack"></mt-button>
     </mt-header>
     <div class="wrap">
-       <ul class="list">
-         <li class="item" v-for="(item, index) in list" :key="index" @click="goto(item.id)">
-            <h2>{{item.title}}</h2>
-              <p>推荐: <span>管家小助手</span></p>
-              <!-- <p v-html="abc"></p> -->
-           
-         </li>
-       </ul>
+        <ul>
+            <li class="item" v-for="(item,index) in newsList" >
+                <h2>{{indexList[index]}}、{{item.title}}</h2>
+                <p :class="{textHeight:item.zhankai}" v-html="item.content"></p>
+                <div class="icon_box" v-if="item.content.length>70" @click="showAll1(item)">
+                    <i class="display_icon"></i>	
+                </div>
+            </li>
+        </ul>
     </div>
     
     
@@ -23,19 +24,19 @@
   
   const local = pro.local;
   export default {
-    name: "recommend",
+    name: "list_details",
     props: ['id'],
     components: {
-     
     },
-    mixins: [pro.mixinsToCustomer],
     data() {
       return {
         isLogin: false,
         isShow: false,
-        idList: [],
-        list: []
-  
+        idList: ['基础知识','期货学堂'],
+        newsList: [],
+        text: '',
+        communityList: {},
+        indexList: ['一','二','三','四','五','六','七','八','九','十']
       };
     },
     computed: {
@@ -43,23 +44,9 @@
         return document.documentElement.clientHeight + "px";
       },
       title () {
-        switch (this.id) {
-          case 'recommend':
-            return '推荐'
-            break;
-          case 'crude-oil':
-            return '原油'
-            break;
-          case 'stock-index':
-            return '股指'
-            break;
-          case 'noble-metal':
-            return '贵金属'
-            break;      
-          default:
-            break;
-        }
-      }
+        return this.idList[this.id]
+      }  
+     
       
     },
     methods: {
@@ -70,7 +57,7 @@
       },
       goto(path) {
         this.$router.push({
-          path: `/list_details/${path}`
+          path: `/rumen_details/${path}`
         });
       },
        getNewList() {
@@ -81,15 +68,21 @@
                     //console.log(res)
                     if (res.success == true) {
                         if (res.code == 1) {
-                            //console.log(res.data[0].content)
-                            this.list = res.data
+                            //console.log(res.data)
+                            res.data.forEach((k) => {
+                                
+								if(k.content.length&&k.content.length>70){
+									//console.log(k.liveTitle.length)
+									k.zhankai = true
+								}							
+							})
+                            this.newsList = res.data
                         }
                     }
     
                 }).catch((err) => {
                     var data = err.data;
                     if (data == undefined) {
-                       
                     } else {
                         if (data.code == -9999) {
                             this.$toast({
@@ -105,43 +98,64 @@
                     }
                 })
             },
+        showAll1 (item) {
+            item.zhankai = !item.zhankai
+        }
+    
+    
     },
+
+
     activated() {
-      this.getNewList()
-  
+        this.getNewList();
+        
     },
   };
 </script>
 
 <style lang="scss" scoped>
   @import "../../assets/css/common.scss";
-  #recommend {
+  #list_details {
     width: 7.5rem;
     padding-top: 0.96rem;
     //background-color: $bg;
   }
   .wrap{
-   
-    .list{
-      padding: 0.2rem 0 0 0;
-      @include font($fs28,0.48rem,$blackNormal,left);
-      .item{
+    padding-bottom: 0.2rem;
+    
+    .item{
+       
+        margin: 0.3rem 0 0 0;
+        padding: 0 0.3rem;
+        background-color: #ffffff;
+        @include font($fs28,1.2rem,#169781);
         border-bottom: 1px solid #bbf6ec;
-      }
-      h2{
-        width: 7.5rem;
-        padding-left: 0.3rem;
-        @include font($fs32,0.8rem,$blackNormal,left);
-      }
-      p{
-        padding-left: 0.3rem;
-      }
-      span{
-        color: #788b87
-      }
+        h2{
+            @include font($fs28,0.8rem,#169781,left);
+            font-weight: bold;
+        }   
+        p{
+            text-align: left
+        }
+       
     }
-  }
+    .textHeight{
+        height: 1.4rem;
+        overflow: hidden;
+        transition: all 0.5s;
+        
+    }
+    .display_icon{
+        display: inline-block;
+        width: 0.32rem;
+        height: 0.32rem;
+        background: url('../../assets/images/discover/display_icon_up.png') center no-repeat;
+        background-size: cover;
 
+    }
+    
+  }
+ 
 
 
 </style>

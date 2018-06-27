@@ -1,17 +1,15 @@
 <template>
-  <div id="recommend">
+  <div id="list_details">
     <mt-header fixed :title="title" >
         <mt-button slot="left" icon="back" @click="goBack"></mt-button>
     </mt-header>
     <div class="wrap">
-       <ul class="list">
-         <li class="item" v-for="(item, index) in list" :key="index" @click="goto(item.id)">
-            <h2>{{item.title}}</h2>
-              <p>推荐: <span>管家小助手</span></p>
-              <!-- <p v-html="abc"></p> -->
-           
-         </li>
-       </ul>
+        <ul>
+            <li class="item" :class="{'item_xitong':id == 3}" v-for="item in newsList" @click="goto(item.id)">
+                {{item.title}}
+                <p>{{item.time}}</p>
+            </li>
+        </ul>
     </div>
     
     
@@ -23,19 +21,21 @@
   
   const local = pro.local;
   export default {
-    name: "recommend",
+    name: "list_details",
     props: ['id'],
     components: {
-     
     },
-    mixins: [pro.mixinsToCustomer],
     data() {
       return {
         isLogin: false,
         isShow: false,
-        idList: [],
-        list: []
-  
+        idList: ['新手入门','高手进阶','新闻公告','系统公告'],
+        newsList: [{
+            title: '亲爱的用户，如果您有什么宝贵的意见可以前往个人中心进行反馈哦。',
+            time: '2018年06月26日'
+        }],
+        text: '',
+        communityList: {},
       };
     },
     computed: {
@@ -43,23 +43,9 @@
         return document.documentElement.clientHeight + "px";
       },
       title () {
-        switch (this.id) {
-          case 'recommend':
-            return '推荐'
-            break;
-          case 'crude-oil':
-            return '原油'
-            break;
-          case 'stock-index':
-            return '股指'
-            break;
-          case 'noble-metal':
-            return '贵金属'
-            break;      
-          default:
-            break;
-        }
-      }
+        return this.idList[this.id]
+      }  
+     
       
     },
     methods: {
@@ -70,26 +56,27 @@
       },
       goto(path) {
         this.$router.push({
-          path: `/list_details/${path}`
+          path: `/rumen_details/${path}`
         });
       },
        getNewList() {
+                if (this.title === '系统公告') return;
                 const data = {
                     category: this.title,
                 }
+                
                 pro.fetch("post", "/others/getTNoticeList", data, "").then((res) => {
                     //console.log(res)
                     if (res.success == true) {
                         if (res.code == 1) {
-                            //console.log(res.data[0].content)
-                            this.list = res.data
+                            //console.log(res.data)
+                            this.newsList = res.data
                         }
                     }
     
                 }).catch((err) => {
                     var data = err.data;
                     if (data == undefined) {
-                       
                     } else {
                         if (data.code == -9999) {
                             this.$toast({
@@ -107,41 +94,42 @@
             },
     },
     activated() {
-      this.getNewList()
-  
+        this.getNewList();
+        
     },
   };
 </script>
 
 <style lang="scss" scoped>
   @import "../../assets/css/common.scss";
-  #recommend {
+  #list_details {
     width: 7.5rem;
     padding-top: 0.96rem;
     //background-color: $bg;
   }
   .wrap{
-   
-    .list{
-      padding: 0.2rem 0 0 0;
-      @include font($fs28,0.48rem,$blackNormal,left);
-      .item{
-        border-bottom: 1px solid #bbf6ec;
-      }
-      h2{
-        width: 7.5rem;
-        padding-left: 0.3rem;
-        @include font($fs32,0.8rem,$blackNormal,left);
-      }
-      p{
-        padding-left: 0.3rem;
-      }
-      span{
-        color: #788b87
-      }
+    padding-bottom: 0.2rem;
+    
+    .item{
+        width: 6.9rem;
+        margin: 0.3rem auto 0;
+        padding: 0.3rem;
+        background-color: #ffffff;
+        @include font($fs28,0.4rem,#169781);
+        box-shadow: 0 0 15px rgba(1, 1, 1, 0.2);
+        border-radius: 0.1rem;
     }
+    .item_xitong {
+        @include font($fs28,0.4rem,#333,left);
+        p{
+            padding-top: 0.3rem;
+            @include font($fs24,0.4rem,#788b87,left);
+            
+        }
+    }
+    
   }
-
+ 
 
 
 </style>

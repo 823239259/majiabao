@@ -115,11 +115,14 @@ pro = {
 				return d2;
 				break;
 			case 'y-m-d h:i:s':
-				return d3;
+				return d1;
 				break;	
 			case 'h:i:s':
-				return d4;
+				return d3;
 				break;
+			case 'h:m':
+				return d4;
+				break;	
 			case 'yy-mm-dd':
 				return d5;
 				break;

@@ -19,7 +19,6 @@ export default {
   name: "tools",
   data() {
     return {
-      tabSelected: 'tools',
       isLogin: false,
       isShow: false,
       userInfo: {},
@@ -64,7 +63,7 @@ export default {
   },
    methods: {
       goBack() {
-          this.$router.replace('/tools')
+          this.$router.replace('/butler')
           //window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
           //history.go(-1);
       },

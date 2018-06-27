@@ -41,10 +41,8 @@ const router = new Router({
     {
       path: '/datas',
       name: 'datas',
-       component: load('datas'),
-       meta: {
-          notKeepAlive: true
-       }
+      component: load('datas'),
+    
     },
     {
       path: '/login',
@@ -82,7 +80,6 @@ const router = new Router({
     },
     {
       path: '/service_online',
-      name: 'service_online',
       component: load('account/my/service_online')
     },
     {
@@ -116,7 +113,7 @@ const router = new Router({
       props: true
     },
     /* 
-      v1.20 ¼ÓÈë
+      v1.20 ï¿½ï¿½ï¿½ï¿½
     */
    {
       path: '/classRoom',

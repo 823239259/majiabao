@@ -45,7 +45,6 @@
     mapMutations
   } from 'vuex'
   import bottomTab from '../components/bottom_tab'
-  import tipsFloat from '../components/tipsFloat'
   import pro from '../assets/js/common'
   const local = pro.local;
   
@@ -55,7 +54,7 @@
     name: "my",
     components: {
       bottomTab,
-      tipsFloat
+      
     },
     mixins: [pro.mixinsToCustomer],
     data() {
