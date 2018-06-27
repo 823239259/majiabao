@@ -172,50 +172,10 @@
 			operateData: function(val){
 				//允许画图
 				this.$store.state.isshow.isfensInit = false;
-				//清空对比合约数据
-				this.$store.state.market.contrastData = [];
 				//渲染画图
 				this.chartsShow = true;
 				this.currentChartsNum = 1;
 				this.currentChartsView = 'klineOne';
-				//重组数据
-				let arr = [];
-				let obj;
-				if(val){
-					obj = val;
-				}else{
-					obj = this.$route.query;
-				}
-				arr.push(obj);
-				this.currentNo = obj.commodityNo;    //当前合约
-				this.$store.state.market.currentNo = obj.commodityNo;
-				//对比合约
-				let contrast = obj.contrast;
-				if(contrast == '' || contrast == undefined){
-					this.noContrast = true;
-				}else{
-					this.noContrast = false;
-					contrast = contrast.split(',');
-					contrast.forEach((o, i) => {
-						if(o == obj.commodityNo) return;
-						if(o != ''){
-							let a = {
-								commodityNo: o,
-								exchangeNo: this.orderTemplist[o].ExchangeNo,
-								mainContract: this.orderTemplist[o].MainContract
-							}
-							arr.push(a);
-						}
-					});
-				}
-//				this.$store.state.market.Parameters = [];
-//				this.$store.state.market.tradeParameters = [];
-//				this.$store.state.market.commodityOrder = [];
-//				this.$store.state.market.commodityOrder = arr;
-//				arr.forEach((o, i) => {
-//					this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.mainContract +'"}}');
-//				});
-				this.isClick = true;
 			},
 			//选择画图类型
 			menuEvent: function(index){
@@ -252,122 +212,11 @@
 			},
 			routerback:function(){
 				this.$router.go(-1);
+				this.chartsShow = false;
 				this.$store.state.isshow.isfensshow = false;
 				this.$store.state.isshow.isklineshow = false;
 				this.$store.state.isshow.islightshow = false;
 			},
-			itemClick (item) {
-				if(item.path) {
-					this.$router.push({path: item.path})
-				}
-				if(item.method){
-					this[item.method]()
-				}
-			},
-			baifenbi (a,b) {
-				a = Number(a)
-				b = Number(b)
-				//console.log(a,b)
-				if( a==0&&b==0) return 0;
-				return ((a/(a+b))*100).toFixed(2) + '%'
-			},
-			addOptional: function(){
-				var stateLogin = localStorage.user ? JSON.parse(localStorage.user) : '';
-				if(stateLogin == ''){
-					Toast({message: '请先登录平台账号', position: 'bottom', duration: 1500});
-				}else{
-					var headers = {
-						token: stateLogin.token,
-						secret: stateLogin.secret
-					}
-					if(this.optionalIconShow == true){   //删除自选
-						var _datas = {id: this.optionalId};
-						this.$messageBox.confirm("确定删除自选？","提示").then(action=>{
-							pro.fetch('post', '/quoteTrader/userRemoveCommodity', _datas, headers).then((res) => {
-								if(res.success == true && res.code == 1){
-									Toast({message: '自选删除成功', position: 'bottom', duration: 1000});
-									this.optionalName = '添加自选';
-									this.optionalIconShow = false;
-								}
-							}).catch((err) => {
-								Toast({message: err.data.message, position: 'bottom', duration: 1000});
-							});
-						}).catch(err=>{});
-					}else{   //添加自选
-						var datas = {
-							'exchangeNo': this.orderTemplist[this.currentNo].ExchangeNo,
-							'commodityNo': this.currentNo,
-							'contractNo': this.orderTemplist[this.currentNo].MainContract,
-						}
-						pro.fetch('post', '/quoteTrader/userAddCommodity', datas, headers).then((res) => {
-							if(res.success == true && res.code == 1){
-								this.optionalIconShow = true;
-								this.optionalName = '已添加自选';
-								Toast({message: '自选添加成功', position: 'bottom', duration: 1500});
-								this.optionalId = res.data.id;
-							}
-						}).catch((err) => {
-							Toast({message: err.data.message, position: 'bottom', duration: 1500});
-						});
-					}
-				}
-			},
-			alertRule () {
-				this.$toast({message: '规则补充中', position: 'bottom', duration: 1500});
-			},
-			getSelection () {
-				var headers = {
-					token: this.userInfo.token,
-					secret: this.userInfo.secret
-				}
-				pro.fetch('post', '/quoteTrader/userGetCommodityList', '', headers).then((res) => {
-					if(res.success == true && res.code == 1){
-						this.selectionList = res.data;
-					}
-				}).catch((err) => {
-					//Toast({message: err.data.message, position: 'bottom', duration: 2000});
-				});
-			}	,
-			//获取可用策略信息
-			getStrategy:function(){
-				pro.fetch("post","/others/getStrategys","","").then((res)=>{
-					if(res.code == 1 && res.success == true){
-						this.strategyList = res.data;
-					}
-				}).catch((err)=>{
-					
-				})
-			},
-			dianzan:function(){
-				if(localStorage.user){
-					if(this.dian == true){
-					Toast({message: "您已点赞", position: 'bottom', duration: 1500});
-					}else{
-						var a = {dianzan:true}
-						localStorage.dianzan = JSON.stringify(a);
-						this.dian = true;
-						Toast({message: "点赞成功", position: 'bottom', duration: 1500});
-						
-						this.bottomList1= [
-							{
-								name:'102',
-								method:'dianzan'
-							},
-							{
-								name: '工具箱',
-								path: '/tools'
-							},
-							{
-								name: '推荐给朋友',
-								method: 'shareSystem'
-							}
-						]
-					}
-				}else{
-					Toast({message: "请先登录", position: 'bottom', duration: 1500});
-				}
-				
-			}
 		},
 		mounted:function(){
 		},
@@ -378,25 +227,6 @@
 			this.$store.state.isshow.isklineshow = false;
 			//重组数据
 			this.operateData();
-			//获取策略
-			this.getStrategy();
-			this.dian = localStorage.dianzan ? JSON.parse(localStorage.dianzan).dianzan : false;
-			if(this.dian){
-				this.bottomList1= [
-					{
-						name:'102',
-						method:'dianzan'
-					},
-					{
-						name: '工具箱',
-						path: '/tools'
-					},
-					{
-						name: '推荐给朋友',
-						method: 'shareSystem'
-					}
-				]
-			}
 		},
 		filters:{
 			changName:function(e){

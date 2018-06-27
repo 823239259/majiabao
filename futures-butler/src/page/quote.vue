@@ -2,7 +2,7 @@
 	<div id="quote">
 		<div v-show="isShowGuide">
 			<mt-header title="行情" fixed>
-			 	<router-link to="/news_info" slot="right">
+			 	<router-link to="/search" slot="right">
 			 	   	<mt-button icon="search" ></mt-button>
 			 	</router-link>
 			</mt-header>
