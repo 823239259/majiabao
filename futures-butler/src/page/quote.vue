@@ -2,179 +2,121 @@
 	<div id="quote">
 		<div v-show="isShowGuide">
 			<mt-header title="行情" fixed>
-			 	<router-link to="/news_info" slot="left">
-			 	   	<mt-button style="background-color: #1482f0;color: white;height: 0.4rem;width: 0.88rem;font-size: 0.24rem;">公告</mt-button>
+			 	<router-link to="/news_info" slot="right">
+			 	   	<mt-button icon="search" ></mt-button>
 			 	</router-link>
-			 	<mt-button  @click="shareSystem" slot="right" style="background-color: #1482f0;color: white;height: 0.4rem;width: 0.88rem;font-size: 0.24rem">分享</mt-button>
 			</mt-header>
-			<div class="tablist">
-				<span v-for="(k,index) in tabList" :class="{current:currentNM == index}" @click="changeTab(index)">{{k.id}}</span>
-				<span class="scanNumbers">浏览量: {{scanNumbers}}</span>
-				<mt-button @click="goto('/help_info')" type="primary" style="height: 0.56rem;line-height: 0.24rem;font-size: 0.24rem;margin-top: 0.12rem;background-color: #1482f0;">专业帮助</mt-button>
-			</div>
-			<components :is="currentView"></components>
 			<bottomTab :tabSelect="tabSelected"></bottomTab>
-			<tips-float></tips-float>   
+		</div>
+		<div class="container">
+			<div id="drawPie"></div>
 		</div>
 		<firstGuide v-show="!isShowGuide"></firstGuide>
 	</div>
 </template>
 
 <script>
-	import { mapMutations,mapActions } from 'vuex'
-	import { Toast, Indicator } from 'mint-ui';
-	import guzhi from "./quote/guzhi.vue"
+	// 引入基本模板
+	let echarts = require('echarts/lib/echarts');
+	require('echarts/lib/chart/pie');
+	// 引入提示框和title组件
 	import bottomTab from '../components/bottom_tab'
-	import tipsFloat from '../components/tipsFloat'
-	import commodity from "./quote/commodity.vue"
-	import selfSelection from "./quote/selfSelection.vue"
 	import firstGuide from "./quote/firstGuide.vue"
 	import pro from '../assets/js/common.js'
+	
 	export default{
 		name:"",
-		components:{guzhi,commodity,selfSelection,bottomTab,tipsFloat,firstGuide},
-		mixins: [pro.mixinsToCustomer],
+		components:{bottomTab,firstGuide},
 		data(){
 			return{
-				tabList:[
-					{
-						id:'自选'
-						},
-					{
-						id:'股指期货'
-					},
-					{
-						id:'商品期货'
-					}
-				],
-				currentNM:1,
-				currentView:commodity,
-				guzhiList:[],
-				cmList:[],
-				selectionList:[],
 				tabSelected:'quote',
-				scanNumbers: 3323
+				startAngle:0,
+				currentType:[],
+				allType:[]
 			}
 		},
 		computed:{
-			parameters(){
-				return this.$store.state.market.Parameters;
-			},
-			quoteSocket(){
-				return this.$store.state.quoteSocket;
-			},
-			quoteStatus(){
-				return this.$store.state.account.quoteStatus;
-			},
-			userInfo(){
-				return localStorage.user ? JSON.parse(localStorage.user) : ""
-			},
 			isShowGuide(){
 				return this.$store.state.account.isShowGuide
 			}
 		},
 		methods:{
-			...mapActions([
-				'initQuoteClient'
-			]),
-			goto(path) {
-				this.$router.push({
-				path: path
-				});
+			draw:function(){
+				let myChart = echarts.init(document.getElementById('drawPie'));
+				var option = {
+				    legend: {
+				        orient: 'vertical',
+				        left: 'left',
+				        data: ['外汇','商品','LME金属','利率期货','数字货币','股指期货']
+				    },
+				    series : [
+				        {
+				            name: '点击进入',
+				            type: 'pie',
+				            radius : '90%',
+				            center: ['50%', '50%'],
+				            startAngle:this.startAngle,
+				            data:[
+				                {value:100, name:'外汇'},
+				                {value:100, name:'商品'},
+				                {value:100, name:'LME金属'},
+				                {value:100, name:'利率期货'},
+				                {value:100, name:'数字货币'},
+				                {value:100, name:'股指期货'},
+				            ],
+				            itemStyle: {
+				                emphasis: {
+				                    shadowBlur: 10,
+				                    shadowOffsetX: 0,
+				                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+				                }
+				            },
+				            label:{
+								normal:{
+									position:'inner',
+									fontSize :12
+								}
+							}
+				        }
+				    ],
+				    color:['#9bbb58','#94cdde', '#f44234', '#a43b38', '#03a2dc','#e18683']
+				};
+				myChart.setOption(option);
+				myChart.on('click', function (params) {  
+					console.log(this.startAngle)
+					this.startAngle = 90;
+				    var value = params.name;  
+//				    document.getElementById("drawPie").style.transform = 'rotate(60deg)' ;
+//				     document.getElementById("drawPie").style.transition = '2s' ;
+//				    console.log(this)
+				    this.$router.push({path:"/type",query:{type:this.allType[0].name}})
+				}.bind(this)); 
 			},
-			changeTab:function(index){
-				this.currentNM = index;
-				switch (index){
-					case 0:
-						this.currentView = selfSelection;
-						this.$store.state.market.Parameters = [];
-						this.selectionList.forEach((o, i) => {
-							this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
-						});
-						break;
-					case 1:
-						this.currentView = guzhi;
-						this.$store.state.market.Parameters = [];
-						this.cmList.forEach((o, i) => {
-							this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
-						});
-						break;
-					case 2:
-						this.currentView = commodity;
-						this.$store.state.market.Parameters = [];
-						this.guzhiList.forEach((o, i) => {
-							this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
-						});
-						break;
-					default:
-						break;
-				}
+			changRote:function(){
+				this.startAngle = 90;
 			},
-			//获取股指期货
+			//获取分类
 			getCommodityInfo: function(){
 				pro.fetch('post', '/quoteTrader/getCommodityInfo', '', '').then((res) => {
 					if(res.success == true && res.code == 1){
-						this.guzhiList = res.data[0].list;
+						console.log(res.data)
+						if(res.data!=undefined || res.data!=null){
+							this.allType = res.data;
+							this.currentType = res.data[0];
+						}
 					}
 				}).catch((err) => {
 					//Toast({message: err.data.message, position: 'bottom', duration: 2000});
 				});
 			},
-			//获取全部合约
-			getCommodityAll:function(){
-				this.$store.state.market.commodityOrder = [];
-				//获取所有市场合约
-				pro.fetch('post', '/quoteTrader/getCommodityInfoNoType', '', '').then((res) => {
-					if(res.success == true && res.code == 1){
-						this.cmList = res.data;
-						this.$store.state.market.commodityOrder = this.cmList;
-						this.cmList.forEach((o, i) => {
-							this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
-						});
-					}
-				}).catch((err) => {
-					//Toast({message: err.data.message, position: 'bottom', duration: 2000});
-				});
-			},
-			//获取自选列表
-			getSelection:function(){
-				
-				var headers = {
-					token: this.userInfo.token,
-					secret: this.userInfo.secret
-				}
-				pro.fetch('post', '/quoteTrader/userGetCommodityList', '', headers).then((res) => {
-					if(res.success == true && res.code == 1){
-						this.selectionList = res.data;
-					}
-				}).catch((err) => {
-					//Toast({message: err.data.message, position: 'bottom', duration: 2000});
-				});
-			},
-			setScanNumber () {
-				const  local = pro.local;
-				const scanNumbers = local.get('scanNumber')?local.get('scanNumber'):'3323';
-				const addNumber =  Math.ceil(Math.random()*3);
-				let newNumbers =  Number(scanNumbers) + addNumber;
-				this.scanNumbers = newNumbers;
-				local.set('scanNumber',this.scanNumbers)
-			}
 		},
 		mounted: function(){
-			this.initQuoteClient();
 		},
 		activated:function(){
-			this.$store.state.market.Parameters = [];
-			this.currentNM = 1;
-			//获取所有合约
-			this.getCommodityAll();
-			//获取股指期货
-			this.getCommodityInfo();
-			//获取自选列表
-			this.getSelection();
+			this.draw();
+			this.getCommodityInfo()
 		},
 		created () {
-			this.setScanNumber()
 		}
 	}
 </script>
@@ -186,26 +128,12 @@
 		width: 7.5rem;
 		overflow: hidden;
 	}
-	.tablist{
-		margin-top: 2.08rem;
-		padding: 0 0.3rem ;
-		width:100%;
-		height:0.8rem;
-		background-color: #cae5ff;
-		display: flex;
-		justify-content: space-between;
-		span{
-			line-height: 0.8rem;
-			font-size: 0.28rem;
-			margin-right: 0.3rem;
-			&.current{
-				color: #1482f0;
-				border-bottom: 0.04rem solid #1482f0;
-			}
-
-		}
+	.container{
+		margin-top: 1rem;
 	}
-	.scanNumbers{
-		@include font($fs24,0.8rem,$grayDeep)
+	#drawPie{
+		width: 6.02rem;
+		height: 6.02rem;
 	}
+	
 </style>

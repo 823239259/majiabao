@@ -185,20 +185,10 @@ const router = new Router({
       component: load('tools/classRoom')
     },
     {
-      path: '/strategy',
-      name: 'strategy',
-      component: load('strategy')
-    },
-	{
-   	path:"/backProbe",
-   	name:"backProbe",
-   	component:load('quote/backProbe')
-   },
-   {
-   	path:'/backPresentation',
-   	name:'backPresentation',
-   	component:load('quote/backPresentation')
-   }
+    	path:'/type',
+    	name:'type',
+    	component:load('quote/type')
+    }
   ],
 
 })
