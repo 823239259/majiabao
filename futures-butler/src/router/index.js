@@ -101,8 +101,22 @@ const router = new Router({
       },
     	component:load('butler/discover7x24')
     },
-
-
+    /* my 内页 */
+    {
+    	path:"/about_us",
+    	name:"about_us",
+    	component:load('account/my/about_us')
+    },
+    {
+    	path:"/tell_us",
+    	name:"tell_us",
+    	component:load('account/my/tell_us')
+    },
+    {
+    	path:"/my_collection",
+    	name:"my_collection",
+    	component:load('account/my/my_collection')
+    },
 
 
 
