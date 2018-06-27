@@ -11,8 +11,11 @@
 				<input type="text" placeholder="搜索" v-model="searchVal" :class="{input_2:showCancel,input_1:!showCancel}"/>
 				<span v-show="showCancel" @click="cancel">取消</span>
 			</div>
-			<div class="recomind">
-				<li v-for="(k,index) in recommendList" :style="{backgroundColor:nameColor[index]}" @click="toQuoteDetails(k.CommodityNo, k.MainContract, k.ExchangeNo, k.contrast)">{{k.label}}</li>
+			<div class="recomind" v-show="showRemind">
+				<li v-for="(k,index) in recommendList" :style="{backgroundColor:nameColor[index]}" @click="chooseType(k.label)">{{k.label}}</li>
+			</div>
+			<div class="recomind" v-show="showResult">
+				<li v-for="(k,index) in resultList" :style="{backgroundColor:nameColor[index]}" @tap="toQuoteDetails(k.CommodityNo, k.MainContract, k.ExchangeNo, k.contrast)">{{k.CommodityName}}</li>
 			</div>
 		</div>
 		
@@ -26,12 +29,19 @@
 	export default {
 		name: 'search',
 		components: {
+			quoteSocket(){
+				return this.$store.state.quoteSocket;
+			},
 		},
 		data(){
 			return{
 				recommendList:[],
 				searchVal:'',
 				showCancel:false,
+				totalList: [],
+				resultList:[],
+				showRemind:true,
+				showResult:false,
 				nameColor:["#9bbb58","#f44234","#94cdde","#03a2dc","#e18683","#9bbb58","#f44234","#94cdde","#03a2dc","#e18683","#9bbb58","#f44234","#94cdde","#03a2dc","#e18683","#9bbb58","#f44234","#94cdde","#03a2dc","#9bbb58"]
 			}
 		},
@@ -39,13 +49,28 @@
 		},
 		watch: {
 			searchVal:function(n,o){
-				if (n!=undefined || n!='') {
-					this.showCancel = true
+				if(!n) return this.showCancel = false;
+				this.showCancel = true;
+				this.totalList.forEach((o, i) => {
+					if(o.match(this.searchVal) != null){
+						let obj = {};
+						let arr = o.split(',');
+						obj.CommodityName = arr[0];
+						obj.CommodityNo = arr[1];
+						obj.MainContract = arr[2];
+						obj.ExchangeNo = arr[3];
+						obj.isOptional = 0;
+						this.resultList.push(obj);
+					}
+				});
+				if(this.resultList.length>0){
+					this.showRemind = false;
+					this.showResult = true;
 				}else{
-					this.showCancel = false
+					this.showRemind = false;
+					this.showResult = false;
 				}
 			}
-			
 		},
 		methods: {
 			getRecommend: function(){
@@ -58,16 +83,26 @@
 				});
 			},
 			toQuoteDetails: function(commodityNo, mainContract, exchangeNo, contrast){
-				console.log(commodityNo,mainContract,exchangeNo,contrast)
+				this.$store.state.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + exchangeNo + '","CommodityNo":"' + commodityNo + '","ContractNo":"' + contrast +'"}}');
 				this.$router.push({path: '/quoteDetails', query: {'commodityNo': commodityNo, 'mainContract': mainContract, 'exchangeNo': exchangeNo, 'contrast': contrast}});
 			},
 			cancel:function(){
-				this.showCancel = false
+				this.searchVal = "";
+				this.showRemind = true;
+				this.showResult = false;
+			},
+			chooseType:function(label){
+				this.searchVal = label;
 			}
 		},
 		mounted: function(){
 			//获取推荐
 			this.getRecommend();
+			//所有合约
+			this.$store.state.market.markettemp.forEach((o,i) => {
+				let str = o.CommodityName + ',' + o.CommodityNo + ',' + o.MainContract + ',' + o.ExchangeNo;
+				this.totalList.push(str);
+			});
 		},
 		activated: function(){
 		}
