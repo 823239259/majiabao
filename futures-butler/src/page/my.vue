@@ -33,7 +33,7 @@
     <!-- 列表 -->
     <div class="list_wrap">
       <ul class="list">
-        <li class="item" :style="item.style" v-for="(item, index) in list" :key="item.path" @click="itemClick(item)">
+        <li class="item" :class="{'animate1': listIndex === index}" :style="item.style" v-for="(item, index) in list" :key="item.path" @click="itemClick(item)">
           {{item.name}}
         </li>
         <!-- <li class="item" @click="deleteStore"><span class="icon"></span> 删除缓存<span class="right_icon"></span></li>
@@ -151,7 +151,8 @@
         },
         
         ],
-        nameList: {}
+        nameList: {},
+        listIndex: 0
   
       };
     },
@@ -253,24 +254,6 @@
           showCancelButton: true
         });
       },
-      //运动函数
-      moveCircle (item) {
-        const style = item.style;
-        let left = parseFloat(style.left,10);
-        let top = parseFloat(style.top,10);
-        
-        //速度
-        let speedBase = 0.01;
-        setInterval(()=>{
-          let random = Math.random()>0.5?Math.random():-Math.random();
-          let speed = speedBase*10*random;
-          left += speed*10;
-          top += speed*5;
-          style.left = left + 'rem'
-          style.top = top + 'rem'
-        },200)
-        
-      },
       itemClick (item) {
 				if(item.path) {
 					this.$router.push({path: item.path})
@@ -324,7 +307,24 @@
       toCollection () {
           if(!this.isLogin) return this.$toast({message: '请先登录才能使用收藏功能',duration: 1000});
           this.goto('/my_collection')
-      }
+      },
+      //运动函数
+      moveCircle () {
+        // itemList.forEach(item => {
+            
+           
+            setInterval(()=>{
+              if (this.listIndex == 4) {
+                this.listIndex = 0
+              }else{
+                this.listIndex++;
+              }
+              
+            },2000)
+        // });
+        
+        
+     },
   
     },
     activated() {
@@ -335,7 +335,7 @@
       if (this.userInfo) {
         this.getUserInfo()
       }
-      //this.moveCircle(this.list[0])
+      this.moveCircle()
   
     },
   };
@@ -343,6 +343,11 @@
 
 <style lang="scss" scoped>
   @import "../assets/css/common.scss";
+  @keyframes big {
+    0%   {transform: rotate(0)}
+    100% {transform: rotate(360deg)}
+  }
+
   #home {
     width: 7.5rem;
     background-color: $white;
@@ -355,22 +360,10 @@
     width: 0.4rem;
     height: 0.36rem;
   }
-  
-  .kefu_phone {
-    background: url("../assets/images/account/kefu_icon_ihone.png") center no-repeat;
-    background-size: cover;
-  }
-  
-  .kefu_icon {
-    background: url("../assets/images/account/kefu_icon.png") center no-repeat;
-    background-size: cover;
-  }
-  
   .user_info {
     margin: 0 auto 0.24rem;
     background-color: $bgWhite;
     border-bottom: #e5f9f6 0.16rem solid;
-    
     overflow: hidden;
     img {
       display: block;
@@ -444,14 +437,17 @@
         box-shadow: 0 0 10px #ccc;
         @include font($fs36,1.65rem,$white);
         border-radius: 50%; 
+        // animation:big 2s infinite;
+      }
+      .animate1 {
+        animation:big 2s;
       }
       @for $i from 1 through 5 {
       $bgcolor: (#e46c0b, #94cdde, #e18683, #9bbb58, #03a2dc); 
-      
       .item:nth-child(#{$i}) {
-        
           $color: nth($bgcolor, $i);
           background-color: $color;
+          //animation:big 2s infinite #{$i * 2}s;
         
       }
     }

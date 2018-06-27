@@ -1,8 +1,8 @@
 <template>
-<div>
-  <div class="header">
-    <h2>合约信息查询</h2>
-  </div>
+<div id="contract_search">
+  <mt-header fixed title="合约查询" >
+      <mt-button slot="left" icon="back" @click="goBack"></mt-button>
+  </mt-header>
   <div class="search-wrap">
 	<form action="">
 		<input id="keyword" placeholder="搜索"  type="search" v-model="searchValue" :class="searchValue?'search-input':''">
@@ -36,7 +36,10 @@ export default {
   methods: {  
 	cleanValue () {
 		this.searchValue = ''
-	}
+  },
+  goBack () {
+    window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
+  }
   },
   computed:{
 	 componentId () {
@@ -51,6 +54,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "../../assets/css/common";
+#contract_search{
+  width: 7.5rem;
+  padding-top: 0.96rem;
+}
 .header{
   h2{
     @include font(0.36rem,0.88rem,#fff);
@@ -60,17 +67,18 @@ export default {
 .search-wrap{
   position: relative;
   height: 1.3rem;
-  background-color: #333340;
+  background-color: $white;
+  text-align: center;
   input{
     width: 6.9rem;
     height: 0.7rem;
-    background-color: #474759;
+    background-color: $white;
     border-radius: 0.35rem;
     text-indent: 0.66rem;
     vertical-align: middle;
     margin-top: 0.3rem;
-    border: #474759 1px solid;
-    color: #fff;
+    border: #85d1c4 1px solid;
+    color: #333;
     background: url('../../assets/images/contract_search/search_bg.png') 0.3rem center no-repeat;
     background-size: 0.26rem 0.26rem;
   }
@@ -93,7 +101,7 @@ export default {
     background-image: none;
   }
   input::-webkit-input-placeholder{
-    color:#fff;
+    color:#333;
   }
 }
 </style>

@@ -120,17 +120,55 @@ const router = new Router({
     },
     /* contract_search */
     {
-    	path:"/search_item/:id",
-    	name:"search_item",
-    	component:load('contract_search/search_item')
+    	path:"/contract_item/:id",
+    	name:"contract_item",
+      component:load('contract_search/contract_item'),
+      props: true
     },
     {
     	path:"/contract_search",
     	name:"contract_search",
     	component:load('contract_search/search')
     },
-
-
+    /* exchange_calculator */
+    {
+    	path:"/exchange_calc",
+    	name:"exchange_calc",
+    	component:load('exchange_calculator/exchange_calc')
+    },
+    /* futures_calculator */
+    {
+    	path:"/futures_calc",
+    	name:"futures_calc",
+    	component:load('futures_calculator/futures_calc')
+    },
+    {
+    	path:"/pta",
+    	name:"PTA",
+    	component:load('futures_calculator/PTA')
+    },
+    {
+    	path:"/corn",
+    	name:"corn",
+    	component:load('futures_calculator/corn')
+    },
+    {
+    	path:"/wheat",
+    	name:"wheat",
+    	component:load('futures_calculator/corn')
+    },
+    {
+    	path:"/other",
+    	name:"other",
+    	component:load('futures_calculator/other')
+    },
+    { 
+      path: '/gold/:id', 
+      name: 'silver',
+      component: load('futures_calculator/gold'),
+      props: true
+    },
+    
 
 
 

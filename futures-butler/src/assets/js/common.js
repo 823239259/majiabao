@@ -39,19 +39,6 @@ axios.interceptors.response.use((res) =>{
 });
 let ls = localStorage;
 var network = true;
-//自定义一个axios实例
-
-var axios1 = axios.create({
-	baseURL: store.getters.futurePath,
-	timeout: 5000,
-  });
-
-
-
-
-
-
-
 pro = {
 	//ajax请求
 	fetch: function (type, url, params, header) {
@@ -442,7 +429,22 @@ pro = {
 			}):shareSystemNativeJS();
 		})
 	},
-	axios1: axios1
+	axios1 () {
+		let axios1 =  axios.create({
+				baseURL: store.getters.futurePath,
+				timeout: 5000,
+			})
+			axios1.interceptors.request.use((config) => {
+			if(config.method  === 'post'){
+				config.data = qs.stringify(config.data);
+			}
+			return config;
+		},(error) =>{
+			return Promise.reject(error);
+		});
+		return axios1;
+	}
+	
 
 }
 export default pro

@@ -1,9 +1,8 @@
 <template>
   <div>
-   <div class="header">
-     <span class="back" @click="goBack"></span>
-     <h2>合约详情</h2>
-   </div>
+   <mt-header fixed title="合约详情" >
+      <mt-button slot="left" icon="back" @click="goBack"></mt-button>
+  </mt-header>
    <ul class="details-list">
      <li v-for="(value, key) in items" :key=key>
        <p class="title">{{ getTitle(key) }}</p>
@@ -14,12 +13,12 @@
 </template>
 
 <script>
+import pro from '../../assets/js/common'
 export default {
   name: 'contractDetails',
   props:['id'],
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
       items:{},
     }  
   },
@@ -72,10 +71,11 @@ export default {
       }
     }
   },
-  created () {
-     this.$axios.post('ContractDetails', {
+  activated() {
+    let data = {
         id : this.id
-    })
+    }
+    pro.axios1().post('/ContractDetails',data)
     .then( (response) => {
       //console.log(response.data);
       let {isNewRecord, ...mytest} = response.data.contract;
@@ -85,7 +85,8 @@ export default {
     .catch( (error) => {
       console.log(error);
     });
-  }
+  }, 
+  
 }
 </script>
 

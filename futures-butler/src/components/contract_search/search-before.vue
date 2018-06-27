@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrap">
     <h2>快速查看</h2>
     <ul class="fast-list">
       <li v-for="item in contractList" @click="ToItem(item.id)" >{{ item.contractName }} {{ item.code }}</li>
@@ -9,11 +9,13 @@
 
 <script>
 import pro from '../../assets/js/common'
-import axios from 'axios'
+
 
 const local = pro.local;
-const axios1 = axios;
-console.log(axios1)
+// const axios1 = axios.create({
+//   baseURL:'http://futures.duokongtai.cn'
+// })
+
 export default {
   name: 'searchBefore',
   data () {
@@ -25,15 +27,15 @@ export default {
   },
   methods: {
     ToItem (id) {
-      this.$router.push({path: `/contract-item/${id}`})
+      this.$router.push({path: `/contract_item/${id}`})
     }
   },
   created () {
-    axios1.post('/ContractInformationList', {
+    pro.axios1().post('/ContractInformationList', {
       
     })
     .then((response) => {
-      console.log(response)
+      //console.log(response)
       if(response.data.msg === 'success'){
         local.set('contractList',response.data.contract);
         //提取搜索字符串
@@ -61,8 +63,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "../../assets/css/common";
+.wrap{
+  background-color: $bgButler;
+}
 h2{
-  @include font(0.28rem,0.88rem,#fff,left);
+  @include font(0.28rem,0.88rem,#333,left);
   padding-left: 0.3rem;
 }
 .fast-list{
@@ -70,11 +75,12 @@ h2{
   margin: 0 auto;
   li{
     @include font(0.32rem,1rem,#666,left);
+    
     padding-left: 0.31rem;
     border-radius: 0.08rem;
     border: solid 1px #ebf0f2;
     margin-bottom: 0.3rem;
-    background: url('../../assets/images/contract_search/youjiantou.png') 6.48rem center no-repeat;
+    background: $white url('../../assets/images/contract_search/youjiantou.png') 6.48rem center no-repeat;
     background-size: 0.12rem 0.2rem; 
   }
   .checked{

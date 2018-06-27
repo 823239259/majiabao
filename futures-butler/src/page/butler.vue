@@ -91,7 +91,7 @@
             leftName: "新闻公告",
             rightName: "汇率计算",
             leftPath: '/rumen_list/2',
-            rightPath: '/tools_item/1',
+            rightPath: '/exchange_calc',
             leftShow: false,
             rightShow: false,
             marginShow: false
@@ -99,7 +99,7 @@
           {
             leftName: "期货计算",
             rightName: "合约查询",
-            leftPath: '/tools_item/2',
+            leftPath: '/futures_calc',
             rightPath: '/contract_search',
             leftShow: false,
             rightShow: false,

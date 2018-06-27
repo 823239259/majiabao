@@ -329,10 +329,10 @@ export default new Vuex.Store({
                 }
             }    
 		},
-		futurePath () {
+		futurePath (state) {
 			if(state.setting == 'dev') {
-				return state.account.currentUrlHead + '//futures.duokongtai.cn';
-					//return '/others'
+				//return state.account.currentUrlHead + '//futures.duokongtai.cn';
+					return '/others'
 				} else if(state.setting == 'build'){
 					if(state.environment == 'test'){
 						return state.account.currentUrlHead + '//test.futures.duokongtai.cn';

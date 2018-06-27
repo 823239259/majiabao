@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     ToItem (id) {
-      this.$router.push({path: `/contract-item/${id}`})
+      this.$router.push({path: `/contract_item/${id}`})
     }
   },
 }
@@ -58,6 +58,7 @@ export default {
 .result-list{
   width: 6.9rem;
   margin: 0 auto;
+  background-color: $bgButler;
   li{
     @include font(0.32rem,1rem,#333,left);
     border-bottom: solid 1px #ebf0f2;
