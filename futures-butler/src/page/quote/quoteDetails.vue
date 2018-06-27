@@ -7,23 +7,49 @@
 						<li @click="routerback"><i></i></li>
 						<li>
 							<h1>{{tradeName[currentNo]}}</h1>
-							<span @click="alertRule">规则</span>
+							<span >cl</span>
 						</li>
-						<li @click="addOptional"><i></i></li>
+						<li><i></i></li>
 					</ul>
 				</header>
-				<div class="nameTitle">
-					<span>{{tradeName[currentNo]}}</span>
-					<span class="price" :class="{red: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.LastPrice | fixNum(v.DotSize)}}</span>
+				<div class="money">
+					<div class="money_width">
+						<p>{{v.LastQuotation.LastPrice | fixNum(v.DotSize)}}</p>
+						<p>
+							<span :class="{green: v.LastQuotation.ChangeRate < 0, red: v.LastQuotation.ChangeRate > 0}">{{v.LastQuotation.ChangeValue | fixNum(v.DotSize)}}</span>
+							<span :class="{green: v.LastQuotation.ChangeRate < 0, red: v.LastQuotation.ChangeRate > 0}">{{v.LastQuotation.ChangeRate | fixNumTwo}}%</span>
+						</p>
+					</div>
+					<div class="money_width1">
+						<ul>
+							<li>卖价</li>
+							<li :class="{red: v.LastQuotation.AskPrice1 > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.AskPrice1 < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.AskPrice1 | fixNum(v.DotSize)}}</li>
+						</ul>
+						<ul>
+							<li>买价</li>
+							<li :class="{red: v.LastQuotation.BidPrice1 > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.BidPrice1 < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.BidPrice1 | fixNum(v.DotSize)}}</li>
+						</ul>
+						<ul>
+							<li>持仓</li>
+							<li>{{v.LastQuotation.Position}}</li>
+						</ul>
+					</div>
+					<div class="money_width1">
+						<ul>
+							<li>卖量</li>
+							<li>{{v.LastQuotation.AskQty1}}</li>
+						</ul>
+						<ul>
+							<li>买量</li>
+							<li>{{v.LastQuotation.BidQty1}}</li>
+						</ul>
+						<ul>
+							<li>成交</li>
+							<li>{{v.LastQuotation.TotalVolume}}</li>
+						</ul>
+					</div>
 				</div>
-				<div class="strategy">
-					<template>
-						<div class="strategy_1">
-							<span v-for="(val,k) in strategyList" @click="toBackProbe(val,k)">{{val}}</span>
-						</div>
-					</template>
-					
-				</div>
+				<div class="color_green"></div>
 				<div class="charts">
 					<div class="charts_title">
 						<template v-for="(key,index) in chartsList">
@@ -34,151 +60,32 @@
 						<components :is="currentChartsView" v-if="chartsShow"></components>
 					</div>
 				</div>
-				<div class="money">
-					<div class="moneyDet">
-						<p>现手</p>
-						<p>{{v.LastQuotation.LastVolume}}</p>
-					</div>
-					<div class="moneyDet">
-						<p>成交量</p>
-						<p>{{v.LastQuotation.TotalVolume}}</p>
-					</div>
-					<div class="moneyDet">
-						<p>持仓量</p>
-						<p>{{v.LastQuotation.Position}}</p>
-					</div>
-					<div class="moneyDet">
-						<p>昨结</p>
-						<p>{{v.LastQuotation.PreSettlePrice | fixNum(v.DotSize)}}</p>
-					</div>
-					<div class="moneyDet">
-						<p>涨跌情况</p>
-						<p class="change" :class="{green: v.LastQuotation.ChangeRate < 0, red: v.LastQuotation.ChangeRate > 0}"><em v-show="v.LastQuotation.ChangeRate > 0">+</em>{{v.LastQuotation.ChangeValue | fixNum(v.DotSize)}}&nbsp;&nbsp;<em v-show="v.LastQuotation.ChangeRate > 0">+</em>{{v.LastQuotation.ChangeRate | fixNumTwo}}%</p>
-					</div>
-					<div class="moneyDet">
-						<p>开盘价</p>
-						<p class="default" :class="{red: v.LastQuotation.OpenPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.OpenPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.OpenPrice | fixNum(v.DotSize)}}</p>
-					</div>
-					<div class="moneyDet">
-						<p>最高价</p>
-						<p class="default" :class="{red: v.LastQuotation.HighPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.HighPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.HighPrice | fixNum(v.DotSize)}}</p>
-					</div>
-					<div class="moneyDet">
-						<p>最低价</p>
-						<p class="default" :class="{red: v.LastQuotation.LowPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LowPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.LowPrice | fixNum(v.DotSize)}}</p>
-					</div>
+				<div class="color_green"></div>
+				<div class="guanjia_title">
+					<i></i>
+					<p>管家今日提示</p>
 				</div>
-				<div class="bugOne">
+				<div class="guanjia">
 					<ul>
-						<li>
-							<span>买一</span>
-							<span>卖一</span>
-						</li>
-						<li>
-							<mt-range v-model="v.LastQuotation.BidQty1" :barHeight="20" :min="0" :max="Number(v.LastQuotation.BidQty1)+Number(v.LastQuotation.AskQty1)" :step="1"></mt-range>
-						</li>
-						<li>
-							<span>{{baifenbi(v.LastQuotation.BidQty1,v.LastQuotation.AskQty1)}}</span>
-							<span class="black">{{Number(v.LastQuotation.BidQty1)+Number(v.LastQuotation.AskQty1)}}</span>
-							<span>{{baifenbi(v.LastQuotation.AskQty1,v.LastQuotation.BidQty1)}}</span>
-						</li>
+						<li>今开</li>
+						<li>{{v.LastQuotation.OpenPrice | fixNum(v.DotSize)}}</li>
 					</ul>
-				</div>
-				<div class="bugOne">
 					<ul>
-						<li>
-							<span>买</span>
-							<span>卖</span>
-						</li>
-						<li>
-							<mt-range v-model="total" :barHeight="20" :min="0" :max="Number(v.LastQuotation.BidQty1)+Number(v.LastQuotation.BidQty2)+Number(v.LastQuotation.BidQty3)+Number(v.LastQuotation.BidQty4)+Number(v.LastQuotation.BidQty5)+Number(v.LastQuotation.AskQty1)+Number(v.LastQuotation.AskQty2)+Number(v.LastQuotation.AskQty3)+Number(v.LastQuotation.AskQty4)+Number(v.LastQuotation.AskQty5)" :step="1"></mt-range>
-						</li>
-						<li>
-							<span>{{baifenbi(total,total1)}}</span>
-							<span class="black">{{total+total1}}</span>
-							<span>{{baifenbi(total1,total)}}</span>
-						</li>
+						<li>作结</li>
+						<li>{{v.LastQuotation.PreSettlePrice | fixNum(v.DotSize)}}</li>
 					</ul>
-				
-				</div>
-				<div class="buyFive">
-					<div class="left">
-						<ul>
-							<li>
-								<span>买一：</span>
-								<span :class="{red: v.LastQuotation.BidPrice1 > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.BidPrice1 < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.BidPrice1 | fixNum(v.DotSize)}}</span>
-								<span>{{v.LastQuotation.BidQty1}}</span>
-								<span>{{v.LastQuotation.BidQty1}}</span>
-							</li>
-							<li>
-								<span>买二：</span>
-								<span :class="{red: v.LastQuotation.BidPrice2 > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.BidPrice2 < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.BidPrice2 | fixNum(v.DotSize)}}</span>
-								<span>{{v.LastQuotation.BidQty2}}</span>
-								<span>{{Number(v.LastQuotation.BidQty1)+Number(v.LastQuotation.BidQty2)}}</span>
-							</li>
-							<li>
-								<span>买三：</span>
-								<span :class="{red: v.LastQuotation.BidPrice3 > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.BidPrice3 < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.BidPrice3 | fixNum(v.DotSize)}}</span>
-								<span>{{v.LastQuotation.BidQty3}}</span>
-								<span>{{Number(v.LastQuotation.BidQty1)+Number(v.LastQuotation.BidQty2)+Number(v.LastQuotation.BidQty3)}}</span>
-							</li>
-							<li>
-								<span>买四：</span>
-								<span :class="{red: v.LastQuotation.BidPrice4 > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.BidPrice4 < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.BidPrice4 | fixNum(v.DotSize)}}</span>
-								<span>{{v.LastQuotation.BidQty4}}</span>
-								<span>{{Number(v.LastQuotation.BidQty1)+Number(v.LastQuotation.BidQty2)+Number(v.LastQuotation.BidQty3)+Number(v.LastQuotation.BidQty4)}}</span>
-							</li>
-							<li>
-								<span>买五：</span>
-								<span :class="{red: v.LastQuotation.BidPrice5 > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.BidPrice5 < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.BidPrice5 | fixNum(v.DotSize)}}</span>
-								<span>{{v.LastQuotation.BidQty5}}</span>
-								<span>{{(Number(v.LastQuotation.BidQty1)+Number(v.LastQuotation.BidQty2)+Number(v.LastQuotation.BidQty3)+Number(v.LastQuotation.BidQty4)+Number(v.LastQuotation.BidQty5))}}</span>
-							</li>
-						</ul>
-					</div>
-					<div class="left">
-						<ul>
-							<li>
-								<span>卖一：</span>
-								<span :class="{red: v.LastQuotation.AskPrice1 > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.AskPrice1 < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.AskPrice1 | fixNum(v.DotSize)}}</span>
-								<span>{{v.LastQuotation.AskQty1}}</span>
-								<span>{{v.LastQuotation.AskQty1}}</span>
-							</li>
-							<li>
-								<span>卖二：</span>
-								<span :class="{red: v.LastQuotation.AskPrice2 > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.AskPrice2 < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.AskPrice2 | fixNum(v.DotSize)}}</span>
-								<span>{{v.LastQuotation.AskQty2}}</span>
-								<span>{{Number(v.LastQuotation.AskQty1)+Number(v.LastQuotation.AskQty2)}}</span>
-							</li>
-							<li>
-								<span>卖三：</span>
-								<span :class="{red: v.LastQuotation.AskPrice3 > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.AskPrice3 < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.AskPrice3 | fixNum(v.DotSize)}}</span>
-								<span>{{v.LastQuotation.AskQty3}}</span>
-								<span>{{Number(v.LastQuotation.AskQty1)+Number(v.LastQuotation.AskQty2)+Number(v.LastQuotation.AskQty3)}}</span>
-							</li>
-							<li>
-								<span>卖四：</span>
-								<span :class="{red: v.LastQuotation.AskPrice4 > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.AskPrice4 < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.AskPrice4 | fixNum(v.DotSize)}}</span>
-								<span>{{v.LastQuotation.AskQty4}}</span>
-								<span>{{Number(v.LastQuotation.AskQty1)+Number(v.LastQuotation.AskQty2)+Number(v.LastQuotation.AskQty3)+Number(v.LastQuotation.AskQty4)}}</span>
-							</li>
-							<li>
-								<span>卖五：</span>
-								<span :class="{red: v.LastQuotation.AskPrice5 > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.AskPrice5 < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.AskPrice5 | fixNum(v.DotSize)}}</span>
-								<span>{{v.LastQuotation.AskQty5}}</span>
-								<span>{{Number(v.LastQuotation.AskQty1)+Number(v.LastQuotation.AskQty2)+Number(v.LastQuotation.AskQty3)+Number(v.LastQuotation.AskQty4)+Number(v.LastQuotation.AskQty5)}}</span>
-							</li>
-						</ul>
-					</div>
+					<ul>
+						<li>今最高价</li>
+						<li :class="{red: v.LastQuotation.HighPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.HighPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.HighPrice | fixNum(v.DotSize)}}</li>
+					</ul>
+					<ul>
+						<li >今最低价</li>
+						<li :class="{red: v.LastQuotation.LowPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LowPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.LowPrice | fixNum(v.DotSize)}}</li>
+					</ul>
 				</div>
 			</div>
 		</template>
 		
-		<div class="bottomTab">
-			<ul class="bottomTab_list">
-				<li v-for="item in bottomList1" @click="itemClick(item)" :class="{current:dian}"><i :class="{dianzan1 : dian  , dianzan : !dian}"></i>{{item.name}}</li>
-			</ul>
-		</div>
 		
 	</div>
 </template>
@@ -344,7 +251,7 @@
 				});
 			},
 			routerback:function(){
-				this.$router.push({path:"/quote"});
+				this.$router.go(-1);
 				this.$store.state.isshow.isfensshow = false;
 				this.$store.state.isshow.isklineshow = false;
 				this.$store.state.isshow.islightshow = false;
@@ -524,13 +431,10 @@
 	
 	#quoteDetails{
 		width: 7.5rem;
-		background-color: #D3E9FF;
-		#range1{
-		    background-color: none;
-		}
+		background-color: #e5f9f6;
 	}
 	header{
-		background-color: #b3daff;
+		background-color: #169781;
 		width: 100%;
 		height: 0.88rem;
 		ul{
@@ -555,22 +459,16 @@
 				&:nth-child(2){
 					flex: 6;
 					display: inline-flex;
+					flex-direction: column;
 					justify-content: center;
 					align-items: center;
 					h1{
-						padding-right: 0.3rem;
-						font-size: 0.36rem;
-						color: #222222;
+						font-size: 0.32rem;
+						color: white;
 					}
 					span{
-						width: 0.8rem;
-						height: 0.4rem;
-						line-height: 0.4rem;
-						background-color: #1482f0;
-						border-radius: 0.06rem;
 						font-size: 0.24rem;
-						color: white;
-						text-align: center;
+						color: #6fdcc9;
 					}
 				}
 				&:nth-child(3){
@@ -581,52 +479,9 @@
 						display: inline-block;
 						width: 0.32rem;
 						height: 0.3rem;
-						background: url(../../assets/images/quote/star.png) no-repeat 0 100%;
-						background-size: 0.32rem 0.3rem;
 					}
 				}
 			}
-		}
-	}
-	.strategy{
-		background-color: #cae5ff;
-		width: 7.5rem;
-		height: 0.8rem;
-		padding: 0 0.3rem;
-		overflow-x: scroll;
-		.strategy_1{
-			text-align: center;
-			line-height: 0.8rem;
-			width: 14.6rem;
-			span{
-				display: block;
-				float: left;
-				height: 0.8rem;
-				width: 2rem;
-				font-size: 0.28rem;
-				
-			}
-		}
-	}
-	.nameTitle{
-		border-top: 0.01rem solid white;
-		background-color: #b3daff;
-		height: 1rem;
-		padding: 0 0.3rem;
-		width: 7.5rem;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		span{
-			font-size: 0.36rem;
-			color: black;
-				&.red{
-					font-size:0.32rem ;
-					color: #e44f34;
-				}
-				&.green{font-size:0.32rem ;
-					color: #16b887;
-				}
 		}
 	}
 	.charts{
@@ -651,152 +506,144 @@
 		}
 	}
 	.money{
-		margin: 0.3rem;
-		width: 6.9rem;
-		height: 2.4rem;
-		background-color: #edf6ff;
+		width: 7.5rem;
+		height: 1.92rem;
 		display: flex;
-		flex-wrap: wrap;
-		.moneyDet{
-			width: 25%;
-			height: 50%;
-			text-align: center;
-			&:nth-child(2){
-				border-right: 0.01rem solid #dbdee1;
-				border-left: 0.01rem solid #dbdee1;
-			}
-			&:nth-child(6){
-				border-right: 0.01rem solid #dbdee1;
-				border-left: 0.01rem solid #dbdee1;
-			}
-			&:nth-child(3){
-				border-right: 0.01rem solid #dbdee1;
-			}
-			&:nth-child(7){
-				border-right: 0.01rem solid #dbdee1;
-			}
+		justify-content: space-between;
+		
+		.money_width{
+			background-color: white;
+			width: 2.5rem;
+			height: 1.92rem;
+			border-right: 0.01rem solid #BBF6EC;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
 			p{
-				line-height: 0.5rem;
-				color: #aaaaaa;
-				&.red{
-					color: #e44f34;
+				
+				&:nth-child(1){
+					font-size: 0.36rem;
+					color: #283835;
 				}
-				&.green{
-					color: #16b887;
-				}
-			}
-		}
-	}
-	.bugOne{
-		width: 6.9rem;
-		height: 1.54rem;
-		background-color: #edf6ff;
-		margin: 0 0.3rem 0.3rem 0.3rem;
-		padding: 0.3rem;
-		ul{
-			li{
-				width: 100%;
-				float: left;
-				span{
-					text-align: left;
-					width: 33%;
-					float: left;
-					color: #e44f34;
-					font-size: 0.24rem;
-					&:last-child{
-						color: #16b887;
-						float: right;
-						text-align: right;
-					}
-					&.black{
-						float: left;
-						color: #222222;
-						text-align: center;
-					}
-				}
-			}
-		}
-	}
-	.buyFive{
-		margin-bottom: 1rem;
-		width: 100%;
-		height: 3.2rem;
-		.left{
-			float: left;
-			width: 50%;
-			height: 100%;
-			background-color: #fff5f3;
-			padding:0 0.3rem;
-			li{
-				display: flex;
-				justify-content: space-between;
-				height: 0.64rem;
-				line-height: 0.64rem;
-				border-bottom: 0.01rem solid #dbdee1;
-				span{
-					&:nth-child(2){
-						color: #e44f34;
-					}
-				}
-			}
-			&:nth-child(2){
-				background-color: #ebfff9;
-				li{
+				&:nth-child(2){
+					font-size: 0.28rem;
 					span{
-						&:nth-child(2){
-							color: #16b887;
+						&:nth-child(1){
+							margin-right: 0.05rem;
+						}
+						&.red{
+							color: #F4663A;
+						}
+						&.green{
+							color: #19d961;
 						}
 					}
 				}
 			}
-			
+		}
+		.money_width1{
+			background-color: white;
+			width: 2.5rem;
+			height: 1.92rem;
+			ul{
+				width: 100%;
+				height: 0.64rem;
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+				li{
+					color:black;
+					font-size:0.28rem;  
+					&:nth-child(1){
+						color: #788b87;
+					}
+					&.red{
+						color: #F4663A;
+					}
+					&.green{
+						color: #19d961;
+					}
+				}
+			}
 		}
 	}
-	.bottomTab{
-		position: fixed;
-		bottom: 0;
+	.color_green{
 		width: 7.5rem;
-		height: 0.98rem;
-		background-color: #b3daff;
-		z-index: 100;
-
+		height: 0.3rem;
+		background-color: #e5f9f6;
+		border-top: #bbf6ec;
 	}
-	.bottomTab_list{
+	.charts{
+		width: 7.5rem;
+		.charts_title{
+			background-color: white;
+			border-bottom: 0.01rem solid #BBF6EC;
+			width: 100%;
+			height: 0.8rem;
+			padding: 0 0.3rem;
+			line-height: 0.8rem;
+			span{
+				font-size: 0.28rem;
+				margin-right: 0.3rem;
+				&.current{
+					color: #169781;
+				}
+			}
+		}
+		.charts_container{
+			background-color: white;
+			width: 7.5rem;
+			height: 5.7rem;
+		}
+	}
+	.guanjia_title{
+		padding-left: 0.3rem;
+		background-color: white;
+		height: 0.8rem;
+		width: 100%;
 		display: flex;
-		justify-content: center;
+		justify-content: flex-start;
 		align-items: center;
-		@include font($fs30,0.98rem,#222);
-		li{
-			flex: 1;
+		i{
+			display: block;
+			width: 0.4rem;
+			height: 0.4rem;
+			background: url(../../assets/images/quote/guanjia.png) no-repeat;
+			background-size: 0.4rem 0.4rem;
+			margin-right: 0.3rem;
 		}
-		li:nth-child(3){
-			color: #fff;
-			background-color: #1482f0;
+		p{
+			font-size: 0.28rem;
+			color: black;
 		}
-		li:nth-child(1){
-			display: flex;
+	}
+	.guanjia{
+		background-color: white;
+		width: 100%;
+		height: 1rem;
+		padding: 0 0.3rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		ul{
+			width: 100%;
+			display:flex; 
+			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-			&.current{
-				color: #1482f0;
-			}
-			.dianzan{
-				display: block;
-				width: 0.4rem;
-				height: 0.38rem;
-				background: url(../../assets/images/account/dianzhan_icon.png) no-repeat ;
-				background-size: 0.4rem 0.38rem;
-				margin-right: 0.1rem;
-			}
-			.dianzan1{
-				display: block;
-				width: 0.4rem;
-				height: 0.38rem;
-				background: url(../../assets/images/account/dianzhan1.png) no-repeat ;
-				background-size: 0.4rem 0.38rem;
-				margin-right: 0.1rem;
+			li{
+				&.red{
+					color: #F4663A;
+				}
+				&.green{
+					color: #19d961;
+				}
+				&:first-child{
+					color: #788b87;
+					padding-bottom: 0.05rem;
+				}
 			}
 		}
-		
 	}
 </style>
