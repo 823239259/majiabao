@@ -32,7 +32,7 @@
 </template>
 
 <script>
-  import { mapMutations } from 'vuex'
+  import { mapMutations,mapActions } from 'vuex'
   import bottomTab from '../components/bottom_tab'
   import scrollMsg from '../components/scrollMsg'
   import Cube from '../components/Cube'
@@ -95,6 +95,9 @@
         setAccountInfo: 'ACCOUNT_INFO',
         clearUserInfo: 'INFO_CLEAR',
       }),
+			...mapActions([
+				'initQuoteClient'
+			]),
       goLast() {
         this.$router.push(this.lastPath);
       },
@@ -106,6 +109,9 @@
     },
     activated() {
     },
+    mounted(){
+    	this.initQuoteClient();
+    }
   };
 </script>
 

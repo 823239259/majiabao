@@ -307,7 +307,7 @@ export default new Vuex.Store({
 		PATH: function(state) {
 			if(state.setting == 'dev') {
 //				return 'http://192.168.0.132:8080/qiw-platform';
-				return '/api'
+				return 'http://platform-trade.dktai.cn'
 			} else if(state.setting == 'build'){
 				if(state.environment == 'test'){
 					return state.account.currentUrlHead + '//test.platform-trade.dktai.cn';

@@ -7,7 +7,7 @@
 						<li @click="routerback"><i></i></li>
 						<li>
 							<h1>{{tradeName[currentNo]}}</h1>
-							<span >cl</span>
+							<span >{{v.CommodityNo}}</span>
 						</li>
 						<li><i></i></li>
 					</ul>
@@ -176,6 +176,36 @@
 				this.chartsShow = true;
 				this.currentChartsNum = 1;
 				this.currentChartsView = 'klineOne';
+				//重组数据
+				let arr = [];
+				let obj;
+				if(val){
+					obj = val;
+				}else{
+					obj = this.$route.query;
+				}
+				arr.push(obj);
+				this.currentNo = obj.commodityNo;    //当前合约
+				this.$store.state.market.currentNo = obj.commodityNo;
+				//对比合约
+				let contrast = obj.contrast;
+				if(contrast == '' || contrast == undefined){
+					this.noContrast = true;
+				}else{
+					this.noContrast = false;
+					contrast = contrast.split(',');
+					contrast.forEach((o, i) => {
+						if(o == obj.commodityNo) return;
+						if(o != ''){
+							let a = {
+								commodityNo: o,
+								exchangeNo: this.orderTemplist[o].ExchangeNo,
+								mainContract: this.orderTemplist[o].MainContract
+							}
+							arr.push(a);
+						}
+					});
+				}
 			},
 			//选择画图类型
 			menuEvent: function(index){
@@ -221,7 +251,7 @@
 		mounted:function(){
 		},
 		activated:function(){
-			this.currentNo = this.$route.query.commodityNo;
+//			this.currentNo = this.$route.query.commodityNo;
 			this.$store.state.isshow.isfensshow = false;
 			this.$store.state.isshow.islightshow = false;
 			this.$store.state.isshow.isklineshow = false;
