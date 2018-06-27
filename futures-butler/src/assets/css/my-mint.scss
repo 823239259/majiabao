@@ -64,24 +64,34 @@
     font-size: .28rem
 }
 
-.mint-msgbox-btn{
-    background-color: #1482f0;
-}
+// .mint-msgbox-btn{
+//     background-color: #1482f0;
+// }
 .mint-msgbox-confirm{
-    color: white;   
+    color: #169781;   
     font-size: 0.28rem;
 }
-.mint-msgbox-message{
-    color: black;
+// .mint-msgbox-message{
+//     color: black;
+// }
+// .mint-msgbox-header{
+//     padding: 0.2rem 0rem;
+//     background-color: #1482f0;
+// }
+// .mint-msgbox-title{
+//      color: white;
+//      font-weight: normal;
+// }
+.mint-msgbox-input{
+    input{
+        border:0;
+        border-bottom: 1px solid #000;
+        font-size: 0.28rem;
+        line-height: 0.4rem;
+        border-radius: 0;
+    }
 }
-.mint-msgbox-header{
-    padding: 0.2rem 0rem;
-    background-color: #1482f0;
-}
-.mint-msgbox-title{
-     color: white;
-     font-weight: normal;
-}
+
 #home,#tools{
     .mint-actionsheet-listitem:nth-child(1){
         border: 0
@@ -127,4 +137,7 @@
 }
 .mt-range-content{
     width: 6.3rem;
+}
+#my {
+
 }

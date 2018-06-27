@@ -413,7 +413,7 @@ pro = {
 			shareSystem () {
 				//console.log(123)
 				var test1 = {
-				  content: '向你推荐一款好用的期货工具应用【人人期货】，随时随地看行情、算汇率、看资讯，请在AppStore搜索"人人期货"',
+				  content: '给您分享一款专业的期货行情资讯工具应用，为您提供专业的期货行情资讯、期货小工具、以及专业的期货管家助手，您可以直接用App Store搜索下载【期货管家】即可',
 				  //href: 'https://www.baidu.com'
 				}
 				pro.shareSystem(test1)

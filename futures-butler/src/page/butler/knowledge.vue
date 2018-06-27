@@ -149,7 +149,7 @@
         display: inline-block;
         width: 0.32rem;
         height: 0.32rem;
-        background: url('../../assets/images/discover/display_icon_up.png') center no-repeat;
+        background: url('../../assets/images/butlers/display_icon_up.png') center no-repeat;
         background-size: cover;
 
     }

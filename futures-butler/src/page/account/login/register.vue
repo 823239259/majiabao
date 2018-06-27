@@ -1,6 +1,8 @@
 <template>
 	<div id="register">
-		<topTitle title="注册" type="1" type1="1"></topTitle>
+		<mt-header fixed title="注册">
+			<mt-button icon="back" slot="left" @click="goBack"></mt-button>
+		</mt-header>
 		<div id="container">
 			<ul>
 				<li>
@@ -122,6 +124,12 @@
 		    }
 		},
 		methods:{
+			goBack () {       
+			window.history.length > 1
+				? this.$router.go(-1)
+				: this.$router.push('/')
+			
+			}, 
 			getWechatId:function(){
 				pro.toweixin();
 			},
@@ -240,12 +248,10 @@
 	#register{
 		width: $w;
 		overflow: hidden;
-		position: fixed;
-		top: 0;
-		left: 0;
+		padding-top: 0.96rem;
 	}
 	#container{
-		margin-top: 0.96rem;
+		text-align: center;
 		width: 7.5rem;
 		display: flex;
 		flex-direction: column;
@@ -294,24 +300,24 @@
 			color: $grayMiddle;
 		}
 		.btnred{
-			width: 100%;
+			width: 4rem;
 			height: 0.9rem;
 			font-size: 0.36rem;
 			line-height: 0.9rem;
 			background-color: $redDeep;
 			color: $bg;
 			border-radius: 0.45rem;
-			margin-top: 0.6rem;
+			margin: 0.6rem auto 0;
 		}
 		.btn{
-			width: 100%;
+			width: 4rem;
 			height: 0.9rem;
 			font-size: 0.36rem;
 			line-height: 0.9rem;
 			background-color: #c2c2cc;
 			color: $bg;
 			border-radius: 0.45rem;
-			margin-top: 0.6rem;
+			margin: 0.6rem auto 0;
 		}
 		p{
 			text-align: center;

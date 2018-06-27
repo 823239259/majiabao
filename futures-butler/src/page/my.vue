@@ -1,32 +1,43 @@
 <template>
   <div id="home" :style="{height:clientHeight}">
-    <mt-header fixed title="个人中心">
-      <mt-button slot="left" @click="callCustomer">电话客服</mt-button>
-      <mt-button slot="right" @click="goto('/service_online')">在线客服</mt-button>
+    <mt-header fixed title="我的">
+      <!-- <mt-button slot="left" @click="callCustomer">电话客服</mt-button>
+      <mt-button slot="right" @click="goto('/service_online')">在线客服</mt-button> -->
     </mt-header>
     <div class="user_info">
-      <div v-if="!isLogin">
-        <img :src="accountInfo.wxHeadimgurl||require('../assets/images/account/no_login_icon.png')" alt="用户头像">
+      <div>
+        <img :src="accountInfo.wxHeadimgurl||require('../assets/images/account/user_header.png')" alt="用户头像">
         <div class="btn_box">
-          <button @click="goto('/login')">&lt&lt&lt 去登录</button>
-          <button @click="goto('/register')">去注册 &gt&gt&gt</button>
+          <button @click="goto('/login')">登录</button>
+          <div class="center">
+            <template v-if="!isLogin">
+                <p class="name">用户名</p>
+                <p>管家小助手</p>
+            </template>
+            <template v-else>
+                <p class="login" @click="changeName(accountInfo.mobile)">{{nameList[accountInfo.mobile]||mobileHidden(accountInfo.mobile)}}</p>
+              </template>
+          </div>
+          <button @click="goto('/register')">注册</button>
         </div>
       </div>
-      <div v-else>
-        <img :src="accountInfo.wxHeadimgurl||require('../assets/images/account/login_icon.png')" alt="用户头像">
-        <p class="login">{{accountInfo.wxNickname||mobileHidden(accountInfo.mobile)}}</p>
-      </div>
-  
+    </div>
+    <!-- 列表项 -->
+    <div class="servers_box">
+        <div class="servers_item" v-for="(item,index) in serversList" @click="itemClick(item)">
+            <img :class="{'img': index ===1}" :src="item.img" alt="item.name">
+            <p>{{item.name}}</p>
+        </div>
+        
     </div>
     <!-- 列表 -->
     <div class="list_wrap">
       <ul class="list">
-        <li class="item" v-for="(item, index) in list" :key="item.path" @click="goto(item.path)">
-          <span class="icon"></span> {{item.name}}
-          <span class="right_icon"></span>
+        <li class="item" :style="item.style" v-for="(item, index) in list" :key="item.path" @click="itemClick(item)">
+          {{item.name}}
         </li>
-        <li class="item" @click="deleteStore"><span class="icon"></span> 删除缓存<span class="right_icon"></span></li>
-        <li class="item" @click="shareSystem"><span class="icon"></span> 分享应用<span class="right_icon"></span></li>
+        <!-- <li class="item" @click="deleteStore"><span class="icon"></span> 删除缓存<span class="right_icon"></span></li>
+        <li class="item" @click="shareSystem"><span class="icon"></span> 分享应用<span class="right_icon"></span></li> -->
       </ul>
     </div>
     <!-- login_out -->
@@ -64,25 +75,83 @@
         isShow: false,
         idList: [],
         list: [{
-            name: "新闻公告",
-            path: "/news_info"
+            name: "分享",
+            method: "shareSystem",
+            style: {
+              'width':'2rem',
+              'height': '2rem',
+              'line-height': '2rem',
+              'font-size': '0.36rem',
+              'left': '0.7rem',
+              'top': '0.7rem'
+            }
           },
           {
-            name: "期货知识",
-            path: "/help_info"
+            name: "帮助中心",
+            path: "/help_info",
+            style: {
+              'width':'2rem',
+              'height': '2rem',
+              'line-height': '2rem',
+              'font-size': '0.36rem',
+              'right': '0.7rem',
+              'top': '0.24rem'
+            }
           },
           {
-            name: "意见反馈",
-            path: "/feedback"
+            name: "清理缓存",
+            method: "deleteStore",
+            style: {
+              'width':'1.65rem',
+              'height': '1.65rem',
+              'line-height': '1.65rem',
+              'font-size': '0.28rem',
+              'left': '3.35rem',
+              'top': '2.24rem'
+            }
           },
           {
-            name: "用户协议",
-            path: "/userRegistrationProtocol"
+            name: "关于我们",
+            path: "/about_us",
+             style: {
+              'width':'2.4rem',
+              'height': '2.4rem',
+              'line-height': '2.4rem',
+              'font-size': '0.4rem',
+              'left': '1.15rem',
+              'bottom': '1.04rem'
+              
+            }
+          },
+          {
+            name: "用户反馈",
+            path: "/tell_us",
+            style: {
+              'width':'1.65rem',
+              'height': '1.65rem',
+              'line-height': '1.65rem',
+              'font-size': '0.28rem',
+              'right': '1.07rem',
+              'bottom': '0.75rem'
+            }
           },
         ],
         userInfo: {},
         lastPath: '/',
         userList: [],
+        serversList: [{
+          name: '收藏',
+          img: require('../assets/images/account/heart_icon.png'),
+          method: 'toCollection'
+        },
+        {
+          name: '客服',
+          img: require('../assets/images/account/customer_icon.png'),
+          method: 'callCostumer'
+        },
+        
+        ],
+        nameList: {}
   
       };
     },
@@ -158,10 +227,7 @@
         }).catch((err) => {
           var data = err.data;
           if (data == undefined) {
-            this.$toast({
-              message: "网络不给力，请稍后再试",
-              duration: 1000
-            });
+            
           } else {
             if (data.code == -9999) {
               this.$toast({
@@ -187,16 +253,88 @@
           showCancelButton: true
         });
       },
+      //运动函数
+      moveCircle (item) {
+        const style = item.style;
+        let left = parseFloat(style.left,10);
+        let top = parseFloat(style.top,10);
+        
+        //速度
+        let speedBase = 0.01;
+        setInterval(()=>{
+          let random = Math.random()>0.5?Math.random():-Math.random();
+          let speed = speedBase*10*random;
+          left += speed*10;
+          top += speed*5;
+          style.left = left + 'rem'
+          style.top = top + 'rem'
+        },200)
+        
+      },
+      itemClick (item) {
+				if(item.path) {
+					this.$router.push({path: item.path})
+				}
+				if(item.method){
+					console.log(item.method)
+					this[item.method]()
+				}
+      },
+      callCostumer () {
+
+        //第二项如果是对象就是配置项,否者是第三项才是配置选项
+        this.$messagebox.confirm('400-852-8008',{
+          title: '客服热线',
+          confirmButtonText: '呼叫'
+
+        }).then(action => {
+          console.log(action)
+            window.location.href = 'tel://' + 4008528008;
+        }).catch(action => {
+           console.log(123)
+        })
+      },
+      
+      changeName (mobile) {
+          if (!mobile) return;
+            this.$messagebox.prompt('您的昵称',{
+                inputPlaceholder: '请输入您的昵称',
+                inputErrorMessage: '昵称1-8个字',
+                inputValidator (value) {
+                   if (value === null) {  
+                        return true;//初始化的值为null，不做处理的话，刚打开MessageBox就会校验出错，影响用户体验  
+                    }  
+                   return (value.length < 8 || value.length > 1)
+                }
+            }).then(({value,action}) => {
+                //console.log(11)
+                this.setName(mobile,value)
+                
+            }).catch(({value,action}) => {
+                //console.log(123)
+            })
+      },
+      setName (mobile, name) {
+          this.$set(this.nameList, mobile, name)
+          //this.nameList[mobile] = name;
+          local.set('nameList',this.nameList)
+          
+      },
+      toCollection () {
+          if(!this.isLogin) return this.$toast({message: '请先登录才能使用收藏功能',duration: 1000});
+          this.goto('/my_collection')
+      }
   
     },
     activated() {
-  
       this.userInfo = local.get('user')
       this.userList = local.get('userList') || []
       this.idList = local.get('idList') || []
+      this.nameList = local.get('nameList')|| {}
       if (this.userInfo) {
         this.getUserInfo()
       }
+      //this.moveCircle(this.list[0])
   
     },
   };
@@ -206,7 +344,8 @@
   @import "../assets/css/common.scss";
   #home {
     width: 7.5rem;
-    background-color: $bg;
+    background-color: $white;
+    padding-top: 0.96rem;
     overflow: hidden;
   }
   
@@ -227,23 +366,21 @@
   }
   
   .user_info {
-    width: 6.9rem;
-    margin: 2.26rem auto 0.24rem;
+    margin: 0 auto 0.24rem;
     background-color: $bgWhite;
-    box-shadow: 0 0 10px 2px #ccc;
+    border-bottom: #e5f9f6 0.16rem solid;
+    
     overflow: hidden;
     img {
       display: block;
-      width: 1.2rem;
-      height: 1.2rem;
+      width: 1rem;
+      height: 1rem;
       margin: 0.2rem auto;
       border-radius: 50%;
+      
     }
     p {
-      @include font($fs32,
-      0.44rem,
-      #333);
-      padding-bottom: 0.2rem;
+      @include font($fs32,0.44rem,#333);
     }
     .login {
       position: relative;
@@ -251,71 +388,76 @@
     }
     .btn_box {
       display: flex;
-      justify-content: space-around;
+      justify-content: center;
       align-items: center;
-      margin-top: -0.6rem;
+      
       padding-bottom: 0.24rem;
       button {
-        width: 2rem;
+        width: 1.6rem;
         height: 0.8rem;
         background-color: inherit;
         border-radius: 0.1rem;
-        border: solid 0.02rem #1482f0;
-        @include font($fs28,
-        0.8rem,
-        #1482f0)
+        border: solid 0.02rem #169781;
+        @include font($fs28,0.8rem, #169781)
+      }
+      .center{
+          @include font($fs32,0.4rem,#333);
+          padding: 0 .8rem;
+          .name{
+            @include font($fs28,0.4rem,#283835);
+          }
       }
     }
   }
-  
-  .list_wrap {
-    width: 6.9rem;
-    margin: 0 auto;
-    background-color: $bg;
-    .item {
-      position: relative;
-      padding-left: 0.3rem;
-      background-color: $bgWhite;
-      @include font($fs28,
-      0.96rem,
-      $blcakThin,
-      left);
-      border-bottom: 1px solid #e6e6e6;
-      margin-top: 0.16rem;
-      box-shadow: 0 0 5px 1px #ccc;
-    }
-    .icon {
-      display: inline-block;
-      width: 0.4rem;
-      height: 0.4rem;
-      margin-right: 0.1rem;
-      margin-top: -2px;
-      vertical-align: middle;
-    }
-    .right_icon {
-      position: absolute;
-      right: 0.3rem;
-      top: 50%;
-      transform: translateY(-50%);
-      display: inline-block;
-      width: 0.14rem;
-      height: 0.22rem;
-      background: url("../assets/images/account/right_jiantou.png") center no-repeat;
-      background-size: cover;
-      vertical-align: middle;
-      text-align: right;
-    }
-    @for $i from 1 through 6 {
-      $background_img: ( //"self_choose_icon",
-      "gonggao", "zishi", "yijian", 'xieyi', "shanchu",'fenxiang');
-      .item:nth-child(#{$i}) {
-        .icon {
-          $img: nth($background_img, $i);
-          background: url("../assets/images/account/#{$img}.png") center no-repeat;
-          background-size: 100%;
-        }
+  .servers_box{
+    width: 7.5rem;
+    @include flex();
+    border-bottom: #e5f9f6 0.16rem solid;
+    .servers_item{
+      flex: 1;
+      img{
+        display: block;
+        margin: 0.1rem auto;
+        width: 0.4rem;
+        height: 0.4rem;
+      }
+      .img{
+        width: 0.32rem;
+        height: 0.4rem;
+      }
+      p{
+        @include font($fs24,0.4rem,$blackNormal)
       }
     }
+  }
+  .list_wrap {
+    width: 7.5rem;
+    .list{
+      position: relative;
+      width: 7.5rem;
+      height: 7rem;
+      .item{
+        position: absolute;
+        width: 1.65rem;
+        height: 1.65rem;
+        box-shadow: 0 0 10px #ccc;
+        @include font($fs36,1.65rem,$white);
+        border-radius: 50%; 
+      }
+      @for $i from 1 through 5 {
+      $bgcolor: (#e46c0b, #94cdde, #e18683, #9bbb58, #03a2dc); 
+      
+      .item:nth-child(#{$i}) {
+        
+          $color: nth($bgcolor, $i);
+          background-color: $color;
+        
+      }
+    }
+      
+    }
+    
+    
   }
   
   .btn_wrap {
