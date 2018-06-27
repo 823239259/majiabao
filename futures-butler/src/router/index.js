@@ -208,6 +208,11 @@ const router = new Router({
     	path:'/type',
     	name:'type',
     	component:load('quote/type')
+    },
+    {
+    	path:'/search',
+    	name:'search',
+    	component:load('quote/search')
     }
   ],
 
