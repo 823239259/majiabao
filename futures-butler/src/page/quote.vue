@@ -22,6 +22,9 @@
 		    <span @click="choose('数字货币',2)">数字货币</span>
 		    <span @click="choose('股指期货',1)">股指期货</span>
 		</ul> 
+		<p class="note">
+			管家提示：点击转盘转动分类到指针位置，再点击指针所指可打开行情。
+		</p>
 		 <i></i>
 	</div>
 </template>
@@ -73,7 +76,10 @@
 					var rotate = "rotate("+index*60+"deg)";
 					document.getElementById('pie').style.transform = rotate;
 					document.getElementById('pie').style.transition = '2s';
-					this.beginValue = value;
+					setTimeout(function(){
+						this.beginValue = value;
+					}.bind(this),1500)
+//					this.beginValue = value;
 				}
 			}
 		},
@@ -187,5 +193,10 @@
 			transform: rotate(300deg);
 		}
 	}
-	
+	.note{
+	  @include font($fs24,0.8rem,#788b87);
+	  span{
+	    color: #c6c5cc
+	  }
+	}
 </style>
