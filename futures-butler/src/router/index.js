@@ -195,16 +195,6 @@ const router = new Router({
    		component: load('account/login/login')
     },
     {
-      path: '/service_online',
-      name: 'service_online',
-      component: load('account/my/service_online')
-    },
-    {
-      path: '/feedback',
-      name: 'feedback',
-      component: load('account/my/feedback')
-    },
-    {
       path: '/news_info',
       name: 'news_info',
       component: load('account/my/news_info')
@@ -223,11 +213,7 @@ const router = new Router({
       component: load('account/my/help_info_details'),
       props:true
     },
-    {
-      path: '/service_online',
-      name: 'service_online',
-      component: load('account/my/service_online')
-    },
+    
     {
       path: '/register',
       name: 'register',
@@ -257,14 +243,6 @@ const router = new Router({
       name: 'toolsItem',
       component: load('tools/tools_item'),
       props: true
-    },
-    /* 
-      v1.20 ����
-    */
-   {
-      path: '/classRoom',
-      name: 'classRoom',
-      component: load('tools/classRoom')
     },
     {
     	path:'/type',
