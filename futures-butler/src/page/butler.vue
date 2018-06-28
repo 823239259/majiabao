@@ -16,8 +16,6 @@
                   <span :class="{'margin1':item.marginShow}" @click="btnback(item,index,'left')">返回</span>
                   <span :class="{'margin1':item.marginShow}" @click="goto(item.leftPath)">解锁</span>
                 </div>
-              
-                 
              </template>
           </div>
           <div class="right" :class="{'two_times':index%2!==0,'all_times':item.rightShow}" @touchmove="moveTab(item,index,'right')" @touchstart="setCoordinate">
@@ -37,6 +35,7 @@
           </div>
         </li>
       </ul>
+      <p class="note"><span>管家提示：</span>左右滑动弹出按钮，解锁后可用。</p>
     </div>
     <bottomTab :tabSelect="tabSelected"></bottomTab>
     
@@ -319,7 +318,12 @@
     background: url('../assets/images/home/msg_icon.png') center no-repeat;
     background-size: 100%;
   }
-
+.note{
+  @include font($fs24,0.8rem,#788b87);
+  span{
+    color: #c6c5cc
+  }
+}
 
 
 
