@@ -8,7 +8,7 @@
       <div>
         <img :src="accountInfo.wxHeadimgurl||require('../assets/images/account/user_header.png')" alt="用户头像">
         <div class="btn_box">
-          <button @click="goto('/login')">登录</button>
+          <button @click="goto('/login')" v-if="!isLogin">登录</button>
           <div class="center">
             <template v-if="!isLogin">
                 <p class="name">用户名</p>
@@ -18,7 +18,7 @@
                 <p class="login" @click="changeName(accountInfo.mobile)">{{nameList[accountInfo.mobile]||mobileHidden(accountInfo.mobile)}}</p>
               </template>
           </div>
-          <button @click="goto('/register')">注册</button>
+          <button @click="goto('/register')" v-if="!isLogin">注册</button>
         </div>
       </div>
     </div>
@@ -266,13 +266,13 @@
       callCostumer () {
 
         //第二项如果是对象就是配置项,否者是第三项才是配置选项
-        this.$messagebox.confirm('400-852-8008',{
+        this.$messagebox.confirm('17313119220',{
           title: '客服热线',
           confirmButtonText: '呼叫'
 
         }).then(action => {
           
-            window.location.href = 'tel://' + 4008528008;
+            window.location.href = 'tel://' + 17313119220;
         }).catch(action => {
            
         })
