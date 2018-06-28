@@ -1,6 +1,6 @@
 <template>
 	<div id="quote">
-		<div v-show="isShowGuide">
+		<div>
 			<mt-header title="行情" fixed>
 			 	<router-link to="/search" slot="right">
 			 	   	<mt-button icon="search" ></mt-button>
@@ -23,19 +23,17 @@
 		    <span>股指期货</span>
 		</ul> 
 		 <i></i>
-		<!-- <firstGuide v-show="!isShowGuide"></firstGuide> -->
 	</div>
 </template>
 
 <script>
 	import bottomTab from '../components/bottom_tab'
-	import firstGuide from "./quote/firstGuide.vue"
 	import pro from '../assets/js/common.js'
 	import { mapMutations,mapActions } from 'vuex'
 	
 	export default{
 		name:"",
-		components:{bottomTab,firstGuide},
+		components:{bottomTab},
 		data(){
 			return{
 				tabSelected:'quote',
