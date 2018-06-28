@@ -15,12 +15,12 @@
 		    <li class='slice-four slice' @click="choose('数字货币',2)"> </li>  
 		    <li class='slice-five slice' @click="choose('利率期货',3)"> </li>  
 		    <li class='slice-six slice' @click="choose('LME金属',4)"> </li>  
-		    <span>外汇</span> 
-		    <span>商品</span>
-		    <span>LME金属</span>
-		    <span>利率期货</span>
-		    <span>数字货币</span>
-		    <span>股指期货</span>
+		    <span @click="choose('外汇',0)">外汇</span> 
+		    <span @click="choose('商品',5)">商品</span>
+		    <span @click="choose('LME金属',4)">LME金属</span>
+		    <span @click="choose('利率期货',3)">利率期货</span>
+		    <span @click="choose('数字货币',2)">数字货币</span>
+		    <span @click="choose('股指期货',1)">股指期货</span>
 		</ul> 
 		 <i></i>
 	</div>
