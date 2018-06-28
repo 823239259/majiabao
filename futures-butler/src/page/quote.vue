@@ -23,7 +23,7 @@
 		    <span>股指期货</span>
 		</ul> 
 		 <i></i>
-		<firstGuide v-show="!isShowGuide"></firstGuide>
+		<!-- <firstGuide v-show="!isShowGuide"></firstGuide> -->
 	</div>
 </template>
 
