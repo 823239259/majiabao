@@ -51,7 +51,6 @@
 				return this.$store.state.quoteSocket;
 			},
 			orderTemplist(){
-				console.log(this.$store.state.market.orderTemplist)
 				return this.$store.state.market.orderTemplist;
 			},
 		},
@@ -79,7 +78,6 @@
 						'commodityNo': commodityNo,
 						'contractNo': contrastNo,
 					}
-					console.log(datas)
 					pro.fetch('post', '/quoteTrader/userAddCommodity', datas, headers).then((res) => {
 						if(res.success == true && res.code == 1){
 							this.shouc1 = false;

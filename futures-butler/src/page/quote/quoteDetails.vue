@@ -251,7 +251,7 @@
 		mounted:function(){
 		},
 		activated:function(){
-//			this.currentNo = this.$route.query.commodityNo;
+			this.currentNo = this.$route.query.commodityNo;
 			this.$store.state.isshow.isfensshow = false;
 			this.$store.state.isshow.islightshow = false;
 			this.$store.state.isshow.isklineshow = false;

@@ -9,8 +9,17 @@
 			<bottomTab :tabSelect="tabSelected"></bottomTab>
 		</div>
 		<div class="container">
-			<div id="drawPie"></div>
+			<!--<div id="drawPie"></div>-->
 		</div>
+		<ul class='pie'>  
+		    <li class='slice-one slice' @click="aaa"><span>外汇</span> </li>   
+		    <li class='slice-two slice'><span>商品</span> </li>  
+		    <li class='slice-three slice'><span>LME金属</span> </li>  
+		    <li class='slice-four slice'> <span>利率期货</span></li>  
+		    <li class='slice-five slice'><span>数字货币</span> </li>  
+		    <li class='slice-six slice'><span>股指期货</span> </li>  
+		 </ul>  
+		
 		<firstGuide v-show="!isShowGuide"></firstGuide>
 	</div>
 </template>
@@ -74,7 +83,7 @@
 				            },
 				            label:{
 								normal:{
-									position:'inner',
+									position:'outside',
 									fontSize :12
 								}
 							}
@@ -86,10 +95,10 @@
 				myChart.on('click', function (params) {  
 					this.startAngle = 90;
 				    var value = params.name;  
-//				    document.getElementById("drawPie").style.transform = 'rotate(60deg)' ;
-//				     document.getElementById("drawPie").style.transition = '2s' ;
-				    this.$store.state.market.commodityOrder = this.allType[1].list;
-				    this.$router.push({path:"/type",query:{type:this.allType[1].name}});
+				    document.getElementById("drawPie").style.transform = 'rotate(60deg)' ;
+				     document.getElementById("drawPie").style.transition = '2s' ;
+//				    this.$store.state.market.commodityOrder = this.allType[1].list;
+//				    this.$router.push({path:"/type",query:{type:this.allType[1].name}});
 
 				}.bind(this)); 
 			},
@@ -109,10 +118,14 @@
 					//Toast({message: err.data.message, position: 'bottom', duration: 2000});
 				});
 			},
+			aaa:function(){
+				console.log("11111")
+			}
 		},
 		mounted: function(){
 		},
 		activated:function(){
+			console.log("1111")
 			this.$store.state.market.Parameters = [];
 			this.draw();
 			this.getCommodityInfo()
@@ -136,5 +149,54 @@
 		width: 6.02rem;
 		height: 6.02rem;
 	}
-	
+	.pie {  
+	    position: relative;  
+	    padding: 0;  
+	    width: 6rem;  
+	  	height: 6rem;  
+	    border-radius: 50%;  
+	    list-style: none;  
+		overflow: hidden;  
+		/*transform: rotate(-60deg);*/
+	}  
+	.slice {  
+	    overflow: hidden;  
+	    position: absolute;  
+	    top: 0;   
+	 	right: 0;  
+	    width: 50%;  
+	 	height: 50%;  
+	    transform-origin: 0% 100%;   
+	}  
+	.slice-one {  
+	  transform: rotate(30deg) skewY(-30deg);  
+	  background: #e18683;  
+	  span{
+	  	position: absolute;
+	  	top: 1.6rem;
+	  	left: 0.9rem;
+	  	color: white;
+	  	transform: rotate(50deg);
+	  }
+	}  
+	.slice-two {  
+	  transform: rotate(-30deg) skewY(-30deg);  
+	  background: #03a2dc;  
+	}  
+	.slice-three {  
+	  transform: rotate(-90deg) skewY(-30deg);  
+	  background: #a43b38;  
+	}  
+	.slice-four {  
+	  transform: rotate(-150deg) skewY(-30deg);  
+	  background: #f44234;  
+	}  
+	.slice-five {  
+	  transform: rotate(-210deg) skewY(-30deg);  
+	  background: #94cdde;  
+	}  
+	.slice-six {  
+	  transform: rotate(-270deg) skewY(-30deg);  
+	  background: #9bbb58;  
+	}  
 </style>
