@@ -51,6 +51,7 @@
 			searchVal:function(n,o){
 				if(!n) return this.showCancel = false;
 				this.showCancel = true;
+				this.resultList = [];
 				this.totalList.forEach((o, i) => {
 					if(o.match(this.searchVal) != null){
 						let obj = {};
