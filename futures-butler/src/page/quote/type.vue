@@ -35,6 +35,7 @@
 			return{
 				shouc1:true,
 				type:'',
+				selectionList:'',
 				nameColor:["#9bbb58","#f44234","#94cdde","#03a2dc","#e18683","#9bbb58","#f44234","#94cdde","#03a2dc","#e18683","#9bbb58","#f44234","#94cdde","#03a2dc","#e18683","#9bbb58","#f44234","#94cdde","#03a2dc","#9bbb58"]
 			}
 		},
@@ -52,6 +53,9 @@
 			},
 			orderTemplist(){
 				return this.$store.state.market.orderTemplist;
+			},
+			userInfo(){
+				return localStorage.user ? JSON.parse(localStorage.user) : ""
 			},
 		},
 		methods:{
@@ -87,7 +91,21 @@
 						Toast({message: err.data.message, position: 'bottom', duration: 1500});
 					});
 				}
-			}
+			},
+			//获取自选列表
+			getSelection:function(){
+				var headers = {
+					token: this.userInfo.token,
+					secret: this.userInfo.secret
+				}
+				pro.fetch('post', '/quoteTrader/userGetCommodityList', '', headers).then((res) => {
+					if(res.success == true && res.code == 1){
+						this.selectionList = res.data;
+					}
+				}).catch((err) => {
+					//Toast({message: err.data.message, position: 'bottom', duration: 2000});
+				});
+			},
 		},
 		mounted: function(){
 		},
@@ -95,6 +113,7 @@
 			this.type = this.$route.query.type;
 			//订阅
 			this.subscribe();
+			this.getSelection();
 		},
 		created () {
 		},
