@@ -73,7 +73,10 @@
 					var rotate = "rotate("+index*60+"deg)";
 					document.getElementById('pie').style.transform = rotate;
 					document.getElementById('pie').style.transition = '2s';
-					this.beginValue = value;
+					setTimeout(function(){
+						this.beginValue = value;
+					}.bind(this),1500)
+//					this.beginValue = value;
 				}
 			}
 		},
