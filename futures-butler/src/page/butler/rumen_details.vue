@@ -103,7 +103,7 @@
     border-bottom: 0.16rem solid #e5f9f6;
       h2{
         width: 7.5rem;
-        padding-left: 0.3rem;
+        padding: 0 0.3rem;
         @include font($fs32,0.8rem,$blackNormal,left);
         font-weight: bold;
       }

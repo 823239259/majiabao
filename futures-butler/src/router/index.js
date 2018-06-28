@@ -187,8 +187,6 @@ const router = new Router({
       name: 'my',
    		component: load('my')
     },
-  
-    
     {
       path: '/login',
       name: 'login',

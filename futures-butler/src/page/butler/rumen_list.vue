@@ -55,6 +55,7 @@
           //history.go(-1);
       },
       goto(path) {
+        if (this.title === '系统公告') return;
         this.$router.push({
           path: `/rumen_details/${path}`
         });

@@ -12,15 +12,21 @@
 			<!--<div id="drawPie"></div>-->
 		</div>
 		<ul class='pie'>  
-		    <li class='slice-one slice' @click="aaa"><span>外汇</span> </li>   
-		    <li class='slice-two slice'><span>商品</span> </li>  
-		    <li class='slice-three slice'><span>LME金属</span> </li>  
-		    <li class='slice-four slice'> <span>利率期货</span></li>  
-		    <li class='slice-five slice'><span>数字货币</span> </li>  
-		    <li class='slice-six slice'><span>股指期货</span> </li>  
+		    <li class='slice-one slice' @click="aaa"></li>   
+		    <li class='slice-two slice'> </li>  
+		    <li class='slice-three slice'> </li>  
+		    <li class='slice-four slice'> </li>  
+		    <li class='slice-five slice'> </li>  
+		    <li class='slice-six slice'> </li>  
+			<span class="span1">外汇</span>
+			<span>商品</span>
+			<span>LME金属</span>
+			<span>利率期货</span>
+			<span>数字货币</span>
+			<span>股指期货</span>
 		 </ul>  
 		
-		<firstGuide v-show="!isShowGuide"></firstGuide>
+		<!-- <firstGuide v-show="!isShowGuide"></firstGuide> -->
 	</div>
 </template>
 
@@ -199,4 +205,10 @@
 	  transform: rotate(-270deg) skewY(-30deg);  
 	  background: #9bbb58;  
 	}  
+	.span1{
+		position: absolute;
+    left: 4.4rem;
+    top: 2rem;
+    transform: rotate(60deg);
+	}
 </style>

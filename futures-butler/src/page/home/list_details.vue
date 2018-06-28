@@ -1,34 +1,37 @@
 <template>
   <div id="list_details">
-    <mt-header fixed :title="title" >
+    <mt-header :title="title" >
         <mt-button slot="left" icon="back" @click="goBack"></mt-button>
     </mt-header>
-    <div class="wrap">
-        <h2>{{details.title}}</h2>
-        <p v-html="details.content"></p>
-    </div>
-    <div class="comment_wrap">
-        <ul class="comment_list">
-            <li class="comment_item" v-for="(item, index) in community" :key="index">
-                <div class="title_box">
-                    <div class="left">
-                        <img :src="item.img" alt="03">
-                        <p>{{nameList[userInfo.username]||item.name}}</p>
+    <div class="scroll_wrap" ref="scrollWrap">
+        <div class="wrap">
+            <h2>{{details.title}}</h2>
+            <p v-html="details.content"></p>
+        </div>
+        <div class="comment_wrap">
+            <ul class="comment_list">
+                <li class="comment_item" v-for="(item, index) in community" :key="index">
+                    <div class="title_box">
+                        <div class="left">
+                            <img :src="item.img" alt="03">
+                            <p>{{nameList[userInfo.username]||item.name}}</p>
+                        </div>
+                        <div class="right">
+                            <span :class="['dianzan_icon',{'dianzan_sure':item.isGood}]" @click="dianzan(item)"></span>
+                            <p class="dianzan_text">点赞数：<span>{{item.goodNumbers}}</span></p>
+                        </div>
                     </div>
-                    <div class="right">
-                        <span :class="['dianzan_icon',{'dianzan_sure':item.isGood}]" @click="dianzan(item)"></span>
-                        <p class="dianzan_text">点赞数：<span>{{item.goodNumbers}}</span></p>
+                    <div class="comment_text">
+                        <p>{{item.contentText}}</p>
                     </div>
-                </div>
-                <div class="comment_text">
-                    <p>{{item.contentText}}</p>
-                </div>
-                <div class="time"> {{item.time}} </div>
-            </li>
-        </ul>
+                    <div class="time"> {{item.time}} </div>
+                </li>
+            </ul>
+        </div>
     </div>
+    
     <div class="input_wrap">
-        <textarea class="input" v-model="text" rows="1"  :class="{'lh36': rows>1}"></textarea>
+        <textarea class="input" v-model="text" rows="1"  :class="{'lh36': rows>1}" @focus="focus1" @blur="blur1"></textarea>
         <button class="btn" @click="addNews">发送</button>
     </div>
     
@@ -39,7 +42,7 @@
   import pro from '../../assets/js/common'
   
   const local = pro.local;
-  
+  let interval;
   
   export default {
     name: "list_details",
@@ -125,7 +128,11 @@
           }
           this.community.push(newsObj);
           this.setCommunicationList();
-          this.text = ''
+          this.text = '';
+          this.$nextTick(()=>{
+              this.$refs.scrollWrap.scrollTop = 100000;
+          })
+          
       },
       setCommunicationList () {
           this.communityList[this.id] = this.community;
@@ -162,6 +169,16 @@
                     }
                 })
             },
+            focus1(event){
+                
+
+                interval = setInterval(function(){//设置一个计时器，时间设置与软键盘弹出所需时间相近
+                    document.body.scrollTop = document.body.scrollHeight;//获取焦点后将浏览器内所有内容高度赋给浏览器滚动部分高度
+                },100)
+            },
+            blur1 () {
+                clearInterval(interval)
+            }
     },
     activated() {
         this.getNewDetails();
@@ -181,8 +198,15 @@
   @import "../../assets/css/common.scss";
   #list_details {
     width: 7.5rem;
-    padding-top: 0.96rem;
+    //padding-top: 0.96rem;
     //background-color: $bg;
+  }
+  .scroll_wrap{
+    height: calc(100vh - 1rem - 0.96rem);
+	box-sizing: border-box;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch
+
   }
   .wrap{
     padding-bottom: 0.2rem;

@@ -145,6 +145,9 @@
         transition: all 0.5s;
         
     }
+    .icon_box{
+        text-align: right;
+    }
     .display_icon{
         display: inline-block;
         width: 0.32rem;

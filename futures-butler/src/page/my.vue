@@ -36,18 +36,12 @@
         <li class="item" :class="{'animate1': listIndex === index}" :style="item.style" v-for="(item, index) in list" :key="item.path" @click="itemClick(item)">
           {{item.name}}
         </li>
-        <!-- <li class="item" @click="deleteStore"><span class="icon"></span> 删除缓存<span class="right_icon"></span></li>
-        <li class="item" @click="shareSystem"><span class="icon"></span> 分享应用<span class="right_icon"></span></li> -->
+        
       </ul>
     </div>
-    <!-- login_out -->
-    <!-- <div class="btn_wrap">
-              <button v-if="isLogin" @click="loginOut" class="btn">退出登录</button>
-          </div> -->
     <bottomTab :tabSelect="tabSelected"></bottomTab>
     <mt-actionsheet :actions="actions" v-model="sheetVisible">
     </mt-actionsheet>
-    <!-- <tips-float :isBack="false"></tips-float> -->
   </div>
 </template>
 
@@ -247,12 +241,18 @@
       },
   
       deleteStore() {
-        
-        this.$messagebox({
+        this.$messagebox.confirm('是否确认删除缓存?',{
           title: '提示',
-          message: '是否确认删除缓存?',
-          showCancelButton: true
-        });
+
+        }).then(action => {
+          
+           this.$toast({
+                message: '缓存删除成功',
+                duration: 1000
+              })
+        }).catch(action => {
+           
+        })
       },
       itemClick (item) {
 				if(item.path) {
@@ -271,10 +271,10 @@
           confirmButtonText: '呼叫'
 
         }).then(action => {
-          console.log(action)
+          
             window.location.href = 'tel://' + 4008528008;
         }).catch(action => {
-           console.log(123)
+           
         })
       },
       

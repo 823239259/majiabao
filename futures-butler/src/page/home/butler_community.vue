@@ -1,38 +1,40 @@
 <template>
   <div id="butler_community" >
-    <mt-header fixed title="管家社区" >
+    <mt-header title="管家社区" >
         <mt-button slot="left" icon="back" @click="goBack"></mt-button>
     </mt-header>
-    <div class="community_wrap">
-        <div class="Communication_box">
-            <div class="note_box">
-                <div class="title_box">
-                    <span class="butler_icon"></span>
-                    <p class="title">管家小助手</p>
-                </div>
-                <p class="note">温馨提示：大家可以在这里学习交流哦</p>
-            </div>
-        </div>
-        <div class="msg_wrap">
-            <div class="msg_box clearfix" v-for="(n, index) in communicationList">
-                <div class="msg" :class="n.type === 'others'?'others':'my'">
-                    <img :src="personImg[n.type]" alt="01"> 
-                    <div  class="msg_s_box">
-                        <div class="msg_s">
-                            <p class="msgs">{{n.content}}</p>
-                        </div>
-                        <span class="time">{{n.time}}</span>
+    <div class="scroll_wrap" ref="scrollWrap">
+         <div class="community_wrap">
+            <div class="Communication_box">
+                <div class="note_box">
+                    <div class="title_box">
+                        <span class="butler_icon"></span>
+                        <p class="title">管家小助手</p>
                     </div>
+                    <p class="note">温馨提示：大家可以在这里学习交流哦</p>
                 </div>
-                 
-                
             </div>
-        </div>
+            <div class="msg_wrap">
+                <div class="msg_box clearfix" v-for="(n, index) in communicationList">
+                    <div class="msg" :class="n.type === 'others'?'others':'my'">
+                        <img :src="personImg[n.type]" alt="01"> 
+                        <div  class="msg_s_box">
+                            <div class="msg_s">
+                                <p class="msgs">{{n.content}}</p>
+                            </div>
+                            <span class="time">{{n.time}}</span>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
 
     </div>
+    </div>
+   
     <div class="input_wrap">
-        <textarea class="input" v-model="text" rows="1"  :class="{'lh36': rows>1}"></textarea>
-        
+        <textarea class="input" v-model="text" rows="1"  :class="{'lh36': rows>1}" @focus="focus1" @blur="blur1"></textarea>
         <button class="btn" @click="addNews('my')">发送</button>
     </div>
   </div>
@@ -42,7 +44,7 @@
   import pro from '../../assets/js/common'
   
   const local = pro.local;
-  
+  let interval;
   export default {
     name: "butler_community",
     components: {
@@ -97,7 +99,8 @@
       rows () {
           //console.log(Math.ceil(this.text.length/19))
           return Math.ceil(this.text.length/19)
-      }
+      },
+     
       
     },
     methods: {
@@ -116,12 +119,24 @@
           }
           this.communicationList.push(newsObj);
           this.setCommunicationList();
-          this.text = ''
+          this.text = '';
+          this.$nextTick(()=>{
+              this.$refs.scrollWrap.scrollTop = 100000;
+          })
 
       },
+       focus1(event){
+                interval = setInterval(function(){//设置一个计时器，时间设置与软键盘弹出所需时间相近
+                    document.body.scrollTop = document.body.scrollHeight;//获取焦点后将浏览器内所有内容高度赋给浏览器滚动部分高度
+                },100)
+            },
+        blur1 () {
+            clearInterval(interval)
+        },
       setCommunicationList () {
           local.set('communicationList',this.communicationList)
-      }
+      },
+      
     },
     activated() {
        if(JSON.stringify(this.communicationList) === JSON.stringify(local.get('communicationList'))){
@@ -140,7 +155,6 @@
   @import "../../assets/css/common.scss";
   #butler_community {
     width: 7.5rem;
-    padding-top: 0.96rem;
     background-color: $bgButler;
   }
   .note_box{
@@ -277,6 +291,12 @@
         line-height: 0.36rem;
     }
 }
+.scroll_wrap{
+    height: calc(100vh - 1rem - 0.96rem);
+	box-sizing: border-box;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch
 
+  }
 
 </style>

@@ -22,7 +22,7 @@
 			<!-- <div class="showWX" v-show="showWhat">
 				<i class="toWX" @click="getWechatId"></i>
 			</div> -->
-			<p @click="toProtocol"><span class="color_gray">注册即代表阅读并同意</span>《指数天下用户协议》</p>
+			<!-- <p @click="toProtocol"><span class="color_gray">注册即代表阅读并同意</span>《指数天下用户协议》</p> -->
 		</div>
 		<codeDialog type="register" ref="codeDialog"></codeDialog>
 	</div>
