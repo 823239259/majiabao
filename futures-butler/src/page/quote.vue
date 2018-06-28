@@ -68,13 +68,12 @@
 				if(value == this.beginValue){
 					var currentNum = this.type.indexOf(value);
 					this.$store.state.market.commodityOrder = this.allType[currentNum].list;
-//					console.log(this.allType[currentNum].list)
 				    this.$router.push({path:"/type",query:{type:this.allType[currentNum].name}});
 				}else{
 					var rotate = "rotate("+index*60+"deg)";
-					this.beginValue = value;
 					document.getElementById('pie').style.transform = rotate;
-					document.getElementById('pie').style.transition = '2s'
+					document.getElementById('pie').style.transition = '2s';
+					this.beginValue = value;
 				}
 			}
 		},
