@@ -88,9 +88,11 @@ export default {
  
   @for $i from 1 through 6 {
       $background: ('huangjin', 'baiyin', 'xiaomai', 'yumi', 'TIA', 'other');
+      $bgColor: (#e3c608, #94cdde, #f79647, #e18683,#9bbb58,#f44234);
       li:nth-child(#{$i}) {
-        $test: nth($background,$i);
-        background: url('../../assets/images/futures_calculator/#{$test}.jpg') center center no-repeat;
+        $test: nth($bgColor,$i);
+        background: $test;
+        
       
       }
     }
