@@ -4,7 +4,7 @@
       <mt-button icon="back" slot="left" @click="goBack"></mt-button>
     </mt-header>
     <div class="wrap">
-        <ul class="collection" v-if="showNone"  v-for="(v,index) in parameters">
+        <ul class="collection" v-if="showNone"  v-for="(v,index) in parameters" @click="toQuoteDetails(v.CommodityNo, v.MainContract, v.ExchangeNo, v.contrast)">
           <li class="item">
               <div class="box left">{{v.CommodityName}}</div>
               <div class="box center">价格：{{v.LastQuotation.LastPrice | fixNum(v.DotSize)}}</div>
@@ -52,7 +52,6 @@
 	    },  
 	   //获取自选列表
 			getSelection:function(){
-				
 				var headers = {
 					token: this.userInfo.token,
 					secret: this.userInfo.secret
@@ -61,6 +60,7 @@
 					if(res.success == true && res.code == 1){
 						this.selectionList = res.data;
 						if(!this.selectionList) return this.showNone = false;
+						this.$store.state.market.Parameters = [];
 						this.selectionList.forEach((o, i) => {
 							this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
 						});
@@ -68,6 +68,9 @@
 				}).catch((err) => {
 					//Toast({message: err.data.message, position: 'bottom', duration: 2000});
 				});
+			},
+			toQuoteDetails: function(commodityNo, mainContract, exchangeNo, contrast){
+				this.$router.push({path: '/quoteDetails', query: {'commodityNo': commodityNo, 'mainContract': mainContract, 'exchangeNo': exchangeNo, 'contrast': contrast}});
 			},
 	  },
 	  activated:function(){
