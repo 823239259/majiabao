@@ -71,7 +71,7 @@
 						<li>{{v.LastQuotation.OpenPrice | fixNum(v.DotSize)}}</li>
 					</ul>
 					<ul>
-						<li>作结</li>
+						<li>昨结</li>
 						<li>{{v.LastQuotation.PreSettlePrice | fixNum(v.DotSize)}}</li>
 					</ul>
 					<ul>

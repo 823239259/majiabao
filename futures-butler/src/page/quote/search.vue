@@ -84,6 +84,7 @@
 				});
 			},
 			toQuoteDetails: function(commodityNo, mainContract, exchangeNo, contrast){
+				this.$store.state.market.Parameters = [];
 				this.$store.state.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + exchangeNo + '","CommodityNo":"' + commodityNo + '","ContractNo":"' + contrast +'"}}');
 				this.$router.push({path: '/quoteDetails', query: {'commodityNo': commodityNo, 'mainContract': mainContract, 'exchangeNo': exchangeNo, 'contrast': contrast}});
 			},
