@@ -33,25 +33,26 @@ import pro from '../assets/js/common'
 		mixins:[pro.mixinsToCustomer],
 		data(){
 			return{
-				toolsList: [{
-					name: '首页',
-					path: '/tools_item/3'
+				toolsList: [
+					{
+						name: '首页',
+						path: '/home'
 					},
 					{
 						name: '行情',
-						path: '/tools_item/2'
+						path: '/quote'
 					},
 					{
 						name: '工具',
-						path: '/tools_item/1'
+						path: '/discover'
 					},
 					{
 						name: '资讯',
-						path: '/tools_item/1'
+						path: '/news_details/1'
 					},
 					{
 						name: '客服',
-						path: '/tools_item/1'
+						path: '/service_online'
 					},
 				],
 				showMy: false,

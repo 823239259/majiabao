@@ -46,6 +46,29 @@ const router = new Router({
     	name:"home_search",
     	component:load('home/home_search')
     },
+    {
+    	path:"/list/:id",
+    	name:"list",
+      component:load('home/list'),
+      props: true
+    },
+    {
+    	path:"/list_details/:id",
+    	name:"list_details",
+      component:load('home/list_details'),
+      props: true
+    },
+    {
+    	path:"/activity_list",
+    	name:"activity_list",
+      component:load('home/activity_list'),
+    },
+    {
+    	path:"/activity_details/:id",
+    	name:"activity_details",
+      component:load('home/activity_details'),
+      props: true
+    },
     /* discover 内页 */
     {
     	path:"/tools_item/:id",
@@ -59,41 +82,6 @@ const router = new Router({
       component:load('discover/classRoom'),
       props: true
     },
-
-
-    /* butler 内页 */
-    {
-    	path:"/rumen_list/:id",
-    	name:"rumen_list",
-      component:load('butler/rumen_list'),
-      props: true
-    },
-    {
-    	path:"/rumen_details/:id",
-    	name:"rumen_details",
-      component:load('butler/rumen_details'),
-      props: true
-    },
-    {
-    	path:"/knowledge/:id",
-    	name:"knowledge",
-      component:load('butler/knowledge'),
-      props: true
-    },
-    {
-    	path:"/tools_item/:id",
-    	name:"tools_item",
-      component:load('butler/tools_item'),
-      props: true
-    },
-    {
-    	path:"/discover7x24",
-      name:"discover7x24",
-      meta: {
-        notKeepAlive: true
-      },
-    	component:load('butler/discover7x24')
-    },
     /* my 内页 */
     {
     	path:"/about_us",
@@ -106,10 +94,11 @@ const router = new Router({
     	component:load('account/my/tell_us')
     },
     {
-    	path:"/my_collection",
-    	name:"my_collection",
-    	component:load('account/my/my_collection')
+    	path:"/service_online",
+    	name:"service_online",
+    	component:load('account/my/service_online')
     },
+    
     /* contract_search */
     {
     	path:"/contract_item/:id",

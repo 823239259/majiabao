@@ -54,10 +54,8 @@
 .mint-swipe-indicator.is-active {
     opacity: 1;
 }
-#home,#message,#my,#discover,#quote{
-    .mint-button{
-        height: auto;
-    }
+.mint-button{
+    height: auto;
 }
 .header_icon{
     display: inline-block;
@@ -119,7 +117,7 @@
     }
 }
 
-#home,#tools{
+#home,#tools,#recommend{
     .mint-actionsheet-listitem:nth-child(1){
         border: 0
     }

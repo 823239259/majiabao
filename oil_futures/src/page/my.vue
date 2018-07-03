@@ -27,37 +27,9 @@
                 <p class="green">0.55 / 0.25%</p>
               </div>
           </div>
-          
-          <!-- <div class="center">
-            <template v-if="!isLogin">
-                <p class="name">用户名</p>
-                <p>管家小助手</p>
-            </template>
-            <template v-else>
-                <p class="login" @click="changeName(accountInfo.mobile)">{{nameList[accountInfo.mobile]||mobileHidden(accountInfo.mobile)}}</p>
-            </template>
-          </div> -->
-          
         </div>
-      
     </div>
-    <!-- 列表项 -->
-    <!-- <div class="servers_box">
-        <div class="servers_item" v-for="(item,index) in serversList" @click="itemClick(item)">
-            <img :class="{'img': index ===1}" :src="item.img" alt="item.name">
-            <p>{{item.name}}</p>
-        </div>
-        
-    </div> -->
-    <!-- 列表 -->
-    <div class="list_wrap">
-      <ul class="list">
-        <li class="item" :class="{'animate1': listIndex === index}" :style="item.style" v-for="(item, index) in list" :key="item.path" @click="itemClick(item)">
-          {{item.name}}
-        </li>
-        
-      </ul>
-    </div>
+    <cloud :cloudList='list'></cloud>
     <bottomTab :tabSelect="tabSelected" v-show="tabShow" @show-tab="showTab($event,'tabShow')"></bottomTab>
     <mt-actionsheet :actions="actions" v-model="sheetVisible">
     </mt-actionsheet>
@@ -69,7 +41,9 @@
     mapMutations
   } from 'vuex'
   import bottomTab from '../components/bottom_tab'
+  import cloud from '../components/cloud'
   import pro from '../assets/js/common'
+
   const local = pro.local;
   
   
@@ -78,6 +52,7 @@
     name: "my",
     components: {
       bottomTab,
+      cloud
       
     },
     mixins: [pro.mixinsToCustomer],
@@ -88,67 +63,79 @@
         isShow: false,
         tabShow: false,
         idList: [],
-        list: [{
-            name: "分享",
-            method: "shareSystem",
-            style: {
-              'width':'2rem',
-              'height': '2rem',
-              'line-height': '2rem',
-              'font-size': '0.36rem',
-              'left': '0.7rem',
-              'top': '0.7rem'
-            }
+        list: [
+          {
+            name: '消息中心',
+            path: "/list/messages"
           },
           {
-            name: "帮助中心",
-            path: "/help_info",
-            style: {
-              'width':'2rem',
-              'height': '2rem',
-              'line-height': '2rem',
-              'font-size': '0.36rem',
-              'right': '0.7rem',
-              'top': '0.24rem'
-            }
+            name: '近期热门',
+            path: '/news_details/1'
           },
           {
-            name: "清理缓存",
-            method: "deleteStore",
-            style: {
-              'width':'1.65rem',
-              'height': '1.65rem',
-              'line-height': '1.65rem',
-              'font-size': '0.28rem',
-              'left': '3.35rem',
-              'top': '2.24rem'
-            }
+            name: '活动中心',
+            path: "/activity_list"
           },
           {
-            name: "关于我们",
-            path: "/about_us",
-             style: {
-              'width':'2.4rem',
-              'height': '2.4rem',
-              'line-height': '2.4rem',
-              'font-size': '0.4rem',
-              'left': '1.15rem',
-              'bottom': '1.04rem'
-              
-            }
+            name: '在线客服',
+            path: '/service_online'
           },
           {
-            name: "用户反馈",
-            path: "/tell_us",
-            style: {
-              'width':'1.65rem',
-              'height': '1.65rem',
-              'line-height': '1.65rem',
-              'font-size': '0.28rem',
-              'right': '1.07rem',
-              'bottom': '0.75rem'
-            }
+            name: '删除缓存',
+            method: 'deleteStore'
           },
+          {
+            name: '关于我们',
+            path: "/about_us"
+          },
+          {
+            name: '电话客服',
+            method: 'callCustomer'
+          },
+          {
+            name: '新人学堂',
+            path: '/list/class'
+          },
+          {
+            name: '规则检索',
+            path: '/contract_search'
+          },
+          {
+            name: '数据工具',
+            path: '/tools_item/5'
+          },
+          {
+            name: '意见反馈',
+            path: '/tell_us'
+          },
+          {
+            name: '日历工具',
+            path: '/message'
+          },
+          {
+            name: '换算工具',
+            path: '/futures_calc'
+          },
+          {
+            name: '币种换算',
+            path: '/exchange_calc'
+          },
+          {
+            name: '其他行情',
+            path: '/tools_item/1'
+          },
+          {
+            name: '发现工具',
+            path: '/discover'
+          },
+          {
+            name: '视频教学',
+            path: '/class_room'
+          },
+          {
+            name: '更多内容',
+            method: 'moreContent'
+          }
         ],
         userInfo: {},
         lastPath: '/',
