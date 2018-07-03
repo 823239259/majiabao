@@ -2,19 +2,21 @@
   <div id="recommend">
     <mt-header fixed :title="title" >
         <mt-button slot="left" icon="back" @click="goBack"></mt-button>
+        <mt-button slot="right">
+          <span class="customer_icon header_icon" @click="callCustomer" ></span>
+        </mt-button>  
+        
     </mt-header>
     <div class="wrap">
        <ul class="list">
          <li class="item" v-for="(item, index) in list" :key="index" @click="goto(item.id)">
+           <p class="text"><span>详细</span><span>{{getTime(item.time)}}</span></p>
             <h2>{{item.title}}</h2>
-              <p>推荐: <span>管家小助手</span></p>
-              <!-- <p v-html="abc"></p> -->
-           
          </li>
        </ul>
     </div>
     
-    
+    <mt-actionsheet :actions="actions" v-model="sheetVisible"></mt-actionsheet>
   </div>
 </template>
 
@@ -23,7 +25,7 @@
   
   const local = pro.local;
   export default {
-    name: "recommend",
+    name: "list",
     props: ['id'],
     components: {
      
@@ -44,18 +46,12 @@
       },
       title () {
         switch (this.id) {
-          case 'recommend':
-            return '推荐'
+          case 'messages':
+            return '消息中心'
             break;
-          case 'crude-oil':
-            return '原油'
+          case 'class':
+            return '新人学堂'
             break;
-          case 'stock-index':
-            return '股指'
-            break;
-          case 'noble-metal':
-            return '贵金属'
-            break;      
           default:
             break;
         }
@@ -72,6 +68,9 @@
         this.$router.push({
           path: `/list_details/${path}`
         });
+      },
+      getTime (time) {
+        return time&&time.split(' ')[0]
       },
        getNewList() {
                 const data = {
@@ -133,11 +132,11 @@
         padding-left: 0.3rem;
         @include font($fs32,0.8rem,$blackNormal,left);
       }
-      p{
-        padding-left: 0.3rem;
-      }
-      span{
-        color: #788b87
+      .text{
+        display: flex;
+        justify-content: space-between;
+        padding: 0 0.3rem;
+        @include font($fs24,0.4rem,#788b87,left);
       }
     }
   }

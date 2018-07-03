@@ -47,7 +47,7 @@ export default {
 #tell_us{
    width: 7.5rem;
   padding-top: 0.96rem;
-  background-color: $bgButler
+  //background-color: $bgButler
 }
 .wrap{
   width: 7.5rem;  
@@ -60,11 +60,11 @@ export default {
     box-sizing: border-box;
     outline:none;
     resize:none;
-    border: none;
+    //border: none;
     margin-bottom: 0.6rem;
   }
   .btn{
-    width: 4rem;
+    width: 6.9rem;
     @include font(0.36rem,0.88rem,#fff);
     background-color: #169781;
     border-radius: 0.4rem;

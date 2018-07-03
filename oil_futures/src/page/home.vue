@@ -6,7 +6,7 @@
       </mt-button>
       <mt-button slot="right">
           <span class="search_icon header_icon" @click="goto('/home_search')"></span>
-          <span class="customer_icon header_icon" ></span>
+          <span class="customer_icon header_icon" @click="callCustomer" ></span>
       </mt-button>
     </mt-header>
     <div class="show_wrap">
@@ -96,27 +96,27 @@
         idList: [],
         homeList: [{
             name: "关于我们",
-            path: "/novice_guide"
+            path: "/about_us"
           },
           {
             name: "行情",
-            path: "/butler_welfare"
+            path: "/quote"
           },
           {
             name: "消息中心",
-            path: "/butler_community"
+            path: "/list/messages"
           },
           {
             name: "工具",
-            path: "/guide_details/0"
+            path: "/discover"
           },
           {
             name: "账号",
-            path: "/guide_details/0"
+            path: "/my"
           },
           {
             name: "活动中心",
-            path: "/guide_details/0"
+            path: "/activity_list"
           },
           {
             name: "信息",
@@ -124,7 +124,7 @@
           },
           {
             name: "新人学堂",
-            path: "/guide_details/0"
+            path: "/list/class"
           },
         ],
         newsList: [{

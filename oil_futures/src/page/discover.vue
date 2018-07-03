@@ -6,7 +6,7 @@
 			</mt-button>
 			<mt-button slot="right">
 				<span class="search_icon header_icon" @click="goto('/home_search')"></span>
-				<span class="help_icon header_icon" @click="callCustomer"></span>
+				<span class="help_icon header_icon"  @click="goto('/list/class')"></span>
 			</mt-button>
 		</mt-header>
 		
