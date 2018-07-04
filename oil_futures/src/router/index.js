@@ -15,7 +15,7 @@ const router = new Router({
   	{
       path: '/',
       redirect:{
-      	name:"home"
+      	name:"quote"
       }
     },
     {
