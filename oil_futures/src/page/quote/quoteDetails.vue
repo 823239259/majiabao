@@ -212,6 +212,7 @@
 	import klineThirty from './klineThirty.vue'
 	import klineDay from './klineDay.vue'
 	import klineOneHour from './klineOneHour.vue'
+	import fens from './fens.vue'
 	export default{
 		name:"quoteDetails",
 		mixins: [pro.mixinsToCustomer],
@@ -237,15 +238,15 @@
 					},
 					
 				],
-				chartsList: ['闪电图','1分','5分','30分','1小时','日K'],
-				currentChartsNum: 1,
+				chartsList: ['闪电图','分时','1分','5分','30分','1小时','日K'],
+				currentChartsNum: 2,
 				currentChartsView: 'klineOne',
 				chartsShow: false,
 				chartsHight: 5.4,
 				strategyList:'',
 				ContractNo:'',
 				dian:'',
-				chooseKline:'1min',
+				chooseKline:'分时',
 				id1:{
 					id1: 'kline',
 					id2: 'kline_volume'
@@ -255,7 +256,7 @@
 			}
 		},
 		components: {
-			light,klineOne,klineFive,klineThirty,klineDay,klineOneHour
+			light,klineOne,klineFive,klineThirty,klineDay,klineOneHour,fens
 		},
 		computed:{
 			parameters(){
@@ -310,7 +311,7 @@
 				//渲染画图
 				this.chartsShow = true;
 				this.currentChartsNum = 1;
-				this.currentChartsView = 'klineOne';
+				this.currentChartsView = 'fens';
 				//重组数据
 				let arr = [];
 				let obj;
@@ -353,22 +354,26 @@
 						this.chooseKline = 'shandian';
 						break;
 					case 1:
+						this.currentChartsView = 'fens';
+						this.chooseKline = "分时";
+						break;	
+					case 2:
 						this.currentChartsView = 'klineOne';
 						this.chooseKline = '1min';
 						break;
-					case 2:
+					case 3:
 						this.currentChartsView = 'klineFive';
 						this.chooseKline = '5min';
 						break;
-					case 3:
+					case 4:
 						this.currentChartsView = 'klineThirty';
 						this.chooseKline = '30min';
 						break;
-					case 4:
+					case 5:
 						this.currentChartsView = 'klineOneHour';
 						this.chooseKline = '1hour';
 						break;
-					case 5:
+					case 6:
 						this.currentChartsView = 'klineDay';
 						this.chooseKline = '1day';
 						break;
@@ -430,13 +435,14 @@
 			},
 			//选择回测类型
 			choseStrategy:function(e,id){
-				if(this.chooseKline == 'shandian'){
+				if(this.chooseKline == 'shandian' || this.chooseKline == "分时"){
+					console.log("11111");
 					Toast({message:'只能在K线图选择策略',position: 'bottom', duration: 1500});
 				}else if(id == 'haigui'){
 					Toast({message:'尽情期待',position: 'bottom', duration: 1500});
 				}else{
 					$(".celue_pie p").removeClass('current');
-				$(e.target).addClass('current');
+					$(e.target).addClass('current');
 					this.strategyK = id;
 					clearInterval(this.timeing);
 					this.strategyData1 = [];
@@ -567,11 +573,13 @@
 				}
 			},
 			chooseKline:function(n,o){
-				if(n != 'shandian' && n != o){
+				if(n == "分时"&& this.strategyK != ''){
+					Toast({message:"请在k线图查看策略",position: 'bottom', duration: 1500})
+				}else if(n == "shandian"&& this.strategyK != ''){
+					Toast({message:"请在k线图查看策略",position: 'bottom', duration: 1500})
+				}else if(this.strategyK != ''){
 					Indicator.open({spinnerType: 'fading-circle'});
 					this.backProbeAjax();
-				}else{
-					Toast({message:"请在k线图查看策略",position: 'bottom', duration: 1500})
 				}
 			}
 		}

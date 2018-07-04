@@ -894,7 +894,228 @@ export default new Vuex.Store({
 			kline.setOption(state.market.option3);
 			volume.setOption(state.market.option4);
 		},
-		
+		//画分时图
+		drawfens: function(state, x) {
+			// 引入 ECharts 主模块
+			var echarts = require('echarts/lib/echarts');
+			// 引入柱状图
+			require('echarts/lib/chart/bar');
+			require('echarts/lib/chart/line');
+			require('echarts/lib/component/tooltip');
+			var fens, volume;
+			if(state.isshow.isfensshow == false) {
+				volume = echarts.init(document.getElementById(x.id1));
+				volume.group = 'group1';
+				// 基于准备好的dom，初始化echarts实例
+				fens = echarts.init(document.getElementById(x.id2));
+				fens.group = 'group1';
+				echarts.connect("group1");
+				state.isshow.isfensshow = true;
+			} else {
+				if(document.getElementById(x.id1) != null){
+					volume = echarts.getInstanceByDom(document.getElementById(x.id1));
+				}
+				if(document.getElementById(x.id2) != null){
+					fens = echarts.getInstanceByDom(document.getElementById(x.id2));
+				}
+			}
+			fens.setOption(state.market.option1);
+			volume.setOption(state.market.option2, true);
+			fens.resize();
+			volume.resize();
+		},
+		//设置分时图数据
+		setfensoption: function(state, arr) {
+			state.isshow.isfensInit = true;
+			var echarts = require('echarts/lib/echarts');
+			var vol = [],
+				price = [],
+				time = [];
+			var dosizeL = state.market.currentdetail.DotSize;
+			if(state.market.jsonData[state.market.currentNo] != undefined && state.market.jsonData[state.market.currentNo].Parameters.Data != null){
+				state.market.jsonData[state.market.currentNo].Parameters.Data.forEach(function(e) {
+					vol.push(e[6]);
+					time.push(e[0].split(' ')[1].split(':')[0] + ':' + e[0].split(' ')[1].split(':')[1]);
+					price.push(e[1]);
+				});
+			}
+			let optionDatas = [{
+				name: state.market.currentNo,
+	            type: 'line',
+	            data: price,
+	            lineStyle: {normal: {width: 1,color: "#5534FF"}},
+				itemStyle: {normal: {color: "#5534FF"}},
+				symbolSize: 2,
+	        },];
+	        let optionxAxis = [{
+				type: 'category',
+				position: 'bottom',
+				boundaryGap: true,
+				axisTick: {onGap: false},
+				splitLine: {show: false},
+				axisLabel: {textStyle: {fontSize: 10,}},
+				axisLine: {lineStyle: {color: '#5534FF'}},
+				data: time
+			}];
+	        
+	        //判断是否有外界传入数据
+	        if(arr != undefined && arr != null && arr != ''){
+	        	optionDatas = optionDatas.concat(arr);
+	        }
+			state.market.option1 = {
+				grid: {
+					x: 50,
+					y: 30,
+					x2: 30,
+					y2: 20
+				},
+				color: ['#ff3363'],
+				xAxis: optionxAxis,
+				yAxis: [{
+					type: 'value',
+					name: '成交量(万)',
+					axisLine: {
+						lineStyle: {
+							color: '#8392A5'
+						}
+					},
+					axisTick: {
+						show: false,
+					},
+					scale: true,
+					axisLabel: {
+						margin: 3,
+						formatter: function(a) {
+							a = +a;
+							return isFinite(a) ? echarts.format.addCommas(+a / 10000) : '';
+						},
+						textStyle: {
+							fontSize: 10
+						},
+						showMinLabel: null
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							color: "#8392A5"
+						}
+					}
+				}],
+				tooltip: {
+					backgroundColor:'#5534FF',
+					trigger: 'axis',
+					axisPointer: {
+						type: 'line',
+						animation: false,
+						lineStyle: {
+							color: '#5534FF',
+							width: 1,
+							opacity: 1
+						}
+					},
+					triggerOn: 'mousemove|click'
+				},
+				series: [{
+					name: '成交量',
+					type: 'bar',
+					data: vol,
+					normal: {
+                        color: "#ff3363"
+                    }
+				}]
+			};
+			var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+			if(h < 950){
+				state.market.option1.yAxis[0].axisLabel.show = false
+			}
+			state.market.option2 = {
+				grid: {
+					x: 50,
+					y: 20,
+					x2: 30,
+					y2: 5
+				},
+				tooltip: {
+					backgroundColor:'#5534FF',
+					show: true,
+					transitionDuration: 0,
+					trigger: 'axis',
+					axisPointer: {
+						type: 'line',
+						animation: false,
+						lineStyle: {
+							color: '#5534FF',
+							width: 1,
+							opacity: 1
+						}
+					},
+					formatter: function(params) {
+						var time = params[0].name;
+						if(time == null || time == "") return;
+						var html = '时间:' + time + '<br/>';
+						if(params.length == 1){
+							html += params[0].seriesName + '价格: ' + params[0].value + '<br/>';
+						}else{
+							html += params[0].seriesName + '价格: ' + params[0].value + '<br/>';
+							params.forEach((o, i) => {
+								state.market.scale.forEach((v, k) => {
+									if(o.seriesName == v.commodityNo){
+										html += o.seriesName + '价格: ' + parseFloat(o.value*v.scale).toFixed(state.market.orderTemplist[v.commodityNo].DotSize) + '<br/>';
+									}
+								});
+								
+							});
+						}
+						return html;
+					},
+				},
+				toolbox: {
+					show: false,
+				},
+				animation: false,
+				xAxis: [{
+					type: 'category',
+					show: false,
+					data: time,
+					axisLine: {
+						lineStyle: {
+							color: '#8392A5'
+						}
+					},
+					boundaryGap: true
+				}],
+				yAxis: [{
+					type: 'value',
+					scale: true,
+					position: "left",
+					axisTick: {
+						show: false,
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#8392A5'
+						}
+					},
+					splitArea: {
+						show: false
+					},
+					axisLabel: {
+						inside: false,
+						margin: 3,
+						textStyle: {
+							fontSize: 10
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							color: "#8392A5"
+						}
+					}
+				}],
+				series: optionDatas
+			};
+		},
     },
 actions: {
 				//初始化行情
