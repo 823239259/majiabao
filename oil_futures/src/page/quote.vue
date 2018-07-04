@@ -16,7 +16,7 @@
 	    		<span v-for="(k,index) in tabList" :class="{current:currentNum == index}" @click="checkType(index)">{{k.id}}</span>
 	    	</div>
 	    	<div>
-	    		<span class="selef">自选</span>
+	    		<span class="selef" @click="toSelef">自选</span>
 	    	</div>
 	    </div>
 	    <div class="tips">点击选择行情，查看详细数据</div>
@@ -38,7 +38,8 @@
 <script>
 	import pro from '../assets/js/common.js'
 	import { mapMutations,mapActions } from 'vuex'
-	 import bottomTab from '../components/bottom_tab'
+	import bottomTab from '../components/bottom_tab'
+	import { Toast } from 'mint-ui';
 	export default{
 		name:"",
 		data(){
@@ -58,7 +59,8 @@
 				],
 				currentNum:0,
 				currentType:[],
-				allType:[]
+				allType:[],
+				selectionList:[]
 			}
 		},
 		components:{bottomTab},
@@ -74,8 +76,14 @@
 			quoteSocket(){
 				return this.$store.state.quoteSocket;
 			},
+			userInfo(){
+				return localStorage.user ? JSON.parse(localStorage.user) : ""
+			},
 		},
 		methods:{
+			...mapActions([
+				'initQuoteClient'
+			]),
 			 showTab(...key) {
 		        if(key.length === 1) {
 		          this[key[0]] = !this[key[0]]
@@ -103,14 +111,37 @@
 //					Toast({message: err.data.message, position: 'bottom', duration: 2000});
 				});
 			},
+			//获取自选
+			getSelection:function(){
+				var headers = {
+					token: this.userInfo.token,
+					secret: this.userInfo.secret
+				}
+				pro.fetch('post', '/quoteTrader/userGetCommodityList', '', headers).then((res) => {
+					if(res.success == true && res.code == 1){
+						this.selectionList = res.data;
+					}
+				}).catch((err) => {
+					if(err.data.code = "-9999"){
+//						Toast({message:"请先登录", position: 'bottom', duration: 2000});
+					}
+				});
+			},
+			//自选列表
+			toSelef(){
+				this.currentType = this.selectionList;
+				this.$store.state.market.commodityOrder = this.selectionList;
+			},
 			toQuoteDetails: function(commodityNo, mainContract, exchangeNo, contrast){
 				this.$router.push({path: '/quoteDetails', query: {'commodityNo': commodityNo, 'mainContract': mainContract, 'exchangeNo': exchangeNo, 'contrast': contrast}});
 			},
 		},
 		mounted: function(){
-			this.getCommodityInfo();
+			this.initQuoteClient();
 		},
 		activated:function(){
+			this.getSelection();
+			this.getCommodityInfo();
 		},
 		created () {
 		},
@@ -125,8 +156,9 @@
 		},
 		watch:{
 			currentType:function(n,o){
-				if(n && n != o){
+				if( n != o){
 					this.$store.state.market.Parameters = [];
+					this.$store.state.market.commodityOrder = n;
 					this.commodityOrder.forEach((o, i) => {
 						this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
 					});

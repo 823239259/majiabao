@@ -9,27 +9,33 @@
           <span class="customer_icon header_icon" @click="callCustomer" ></span>
       </mt-button>
     </mt-header>
-    <div class="show_wrap">
+    <template v-for="(v, index) in parameters">
+    	<div class="show_wrap" v-if="v.CommodityNo == currentNo">
         <h2>当前原油最新价</h2>
         <div class="box">
-            <div class="box_item left">59.63</div>
-            <div class="box_item right">0.55 / 0.21%</div>
+            <div class="box_item left" :class="{red: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.LastPrice | fixNum(v.DotSize)}}</div>
+            <div class="box_item right">
+            	<span :class="{red: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.ChangeValue | fixNum(v.DotSize)}}</span>
+	    				<span :class="{green: v.LastQuotation.ChangeRate < 0, red: v.LastQuotation.ChangeRate > 0}">{{v.LastQuotation.ChangeRate | fixNumTwo}}%</span>
+            </div>
         </div>
         <div class="box">
             <div class="box_item">
                 <p>挂单量</p>
-                <p class="numbers">11236</p>
+                <p class="numbers">{{v.LastQuotation.Position}}</p>
             </div>
              <div class="box_item box_border">
                 <p>成交量</p>
-                <p class="numbers">11236</p>
+                <p class="numbers">{{v.LastQuotation.TotalVolume}}</p>
             </div>
              <div class="box_item">
                 <p>平均价</p>
-                <p class="numbers">11236</p>
+                <p class="numbers">{{(v.LastQuotation.HighPrice+v.LastQuotation.LowPrice)/2 | fixNumTwo}}</p>
             </div>
         </div>
     </div>
+    </template>
+    
     <div class="list_wrap">
         <ul class="home_list">
             <li :class="['item',{'item2':index<=3&&index%2 !== 0},{'item2':index>=4&&index%2 == 0}]"  v-for="(item, index) in homeList" :key="item.name" @click="goto(item.path)">{{item.name}}</li>
@@ -89,6 +95,7 @@
     mixins: [pro.mixinsToCustomer],
     data() {
       return {
+      	currentNo:'CL',
         tabSelected: 'home',
         isLogin: false,
         isShow: false,
@@ -154,6 +161,12 @@
       clientHeight() {
         return document.documentElement.clientHeight + "px";
       },
+    	parameters(){
+				return this.$store.state.market.Parameters;
+			}, 
+    	quoteSocket(){
+				return this.$store.state.quoteSocket;
+			},
       
     },
     methods: {
@@ -161,9 +174,9 @@
         setAccountInfo: 'ACCOUNT_INFO',
         clearUserInfo: 'INFO_CLEAR',
       }),
-			...mapActions([
-				'initQuoteClient'
-			]),
+//			...mapActions([
+//				'initQuoteClient'
+//			]),
       goLast() {
         this.$router.push(this.lastPath);
       },
@@ -183,10 +196,21 @@
       
     },
     activated() {
+    	this.$store.state.market.Parameters = [];
+    	this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + "NYMEX" + '","CommodityNo":"' + "CL" + '","ContractNo":"' + "1808" +'"}}');
     },
     mounted(){
-    	this.initQuoteClient();
-    }
+//  	this.initQuoteClient();
+    },
+   	filters:{
+			fixNumTwo: function(num){
+				return num.toFixed(2);
+			},
+			fixNum: function(num, dotsize){
+				if(dotsize >= 4) dotsize = 4;
+				return num.toFixed(dotsize);
+			}
+		},
   };
 </script>
 

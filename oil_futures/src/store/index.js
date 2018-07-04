@@ -547,7 +547,7 @@ export default new Vuex.Store({
 			        selectedMode:false,
 			   },
 				tooltip: {
-					backgroundColor:"#169781",
+					backgroundColor:"#5534FF",
 					trigger: 'axis',
 					axisPointer: {
 						type: 'line',
@@ -835,7 +835,7 @@ export default new Vuex.Store({
 					}
 				}],
 				tooltip: {
-					backgroundColor:"#169781",
+					backgroundColor:"#5534FF",
 					trigger: 'axis',
 					axisPointer: {
 						type: 'line',
@@ -854,7 +854,7 @@ export default new Vuex.Store({
 					data: vol,
 					itemStyle: {
                     normal: {
-                        color: "#f79646"
+                        color: "#ff3363"
 　　　　　　　　　　　　　
                     }
                 },

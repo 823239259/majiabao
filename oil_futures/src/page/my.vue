@@ -19,14 +19,20 @@
                  <p class="login" @click="changeName(accountInfo.mobile)">{{nameList[accountInfo.mobile]||mobileHidden(accountInfo.mobile)}}</p>
               </div>
           </div>
-           <div class="box">
-              <button @click="goto('/register')" v-if="!isLogin">注册</button>
-              <div v-else>
-                <p>国际原油</p>
-                <p class="green">65.55</p>
-                <p class="green">0.55 / 0.25%</p>
-              </div>
-          </div>
+          <template v-for="(v, index) in parameters">
+          	 <div class="box" v-if="v.CommodityNo == currentNo">
+	              <button @click="goto('/register')" v-if="!isLogin">注册</button>
+	              <div v-else>
+	                <p>{{v.CommodityName}}</p>
+	                <p :class="{red: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.LastPrice | fixNum(v.DotSize)}}</p>
+	                <p class="green">
+	                	<span :class="{red: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.ChangeValue | fixNum(v.DotSize)}}</span>
+	    							<span :class="{green: v.LastQuotation.ChangeRate < 0, red: v.LastQuotation.ChangeRate > 0}">{{v.LastQuotation.ChangeRate | fixNumTwo}}%</span>
+	                </p>
+	              </div>
+	          </div>
+          </template>
+          
         </div>
     </div>
     <cloud :cloudList='list'></cloud>
@@ -58,6 +64,7 @@
     mixins: [pro.mixinsToCustomer],
     data() {
       return {
+      	currentNo:'CL',
         tabSelected: 'my',
         isLogin: false,
         isShow: false,
@@ -171,7 +178,13 @@
       },
       isNew() {
         return this.$store.state.newsList.some(item => item.isRead == false)
-      }
+      },
+      parameters(){
+				return this.$store.state.market.Parameters;
+			}, 
+    	quoteSocket(){
+				return this.$store.state.quoteSocket;
+			},
     },
     methods: {
       ...mapMutations({
@@ -343,6 +356,8 @@
   
     },
     activated() {
+    	this.$store.state.market.Parameters = [];
+    	this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + "NYMEX" + '","CommodityNo":"' + "CL" + '","ContractNo":"' + "1808" +'"}}');
       this.userInfo = local.get('user')
       this.userList = local.get('userList') || []
       this.idList = local.get('idList') || []
@@ -353,6 +368,15 @@
       this.moveCircle()
   
     },
+    filters:{
+			fixNumTwo: function(num){
+				return num.toFixed(2);
+			},
+			fixNum: function(num, dotsize){
+				if(dotsize >= 4) dotsize = 4;
+				return num.toFixed(dotsize);
+			}
+		},
   };
 </script>
 

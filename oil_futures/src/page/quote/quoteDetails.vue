@@ -8,7 +8,7 @@
 						<li>
 							<h1>行情数据</h1>
 						</li>
-						<li><i class="addOption"></i></li>
+						<li><i class="addOption" @click="addOptional"></i></li>
 					</ul>
 				</header>
 				<div class="money">
@@ -60,16 +60,16 @@
 					</div>
 					<div class="celue_pie">
 						<ul>
-							<li><p>海龟交易</br>策略</p></li>
+							<li><p @click="choseStrategy($event,'haigui')">海龟交易</br>策略</p></li>
 						</ul>
 						<ul>
-							<li><p>布林通道</br>策略</p></li>
-							<li><p>移动平均</br>策略</p></li>
+							<li><p @click="choseStrategy($event,'Bollingerbandit')">布林通道</br>策略</p></li>
+							<li><p @click="choseStrategy($event,'SMA')">移动平均</br>策略</p></li>
 						</ul>
 						<ul>
-							<li><p>DualThrust</br>策略</p></li>
-							<li><p>金特肯纳</br>策略</p></li>
-							<li><p>RBreaker</br>策略</p></li>
+							<li><p @click="choseStrategy($event,'DualThrust')">DualThrust</br>策略</p></li>
+							<li><p @click="choseStrategy($event,'Jintena')">金特肯纳</br>策略</p></li>
+							<li><p @click="choseStrategy($event,'RBreaker')">RBreaker</br>策略</p></li>
 						</ul>
 					</div>
 				</div>
@@ -204,8 +204,8 @@
 
 <script>
 	import pro from '../../assets/js/common.js'
-	
-	import { Toast ,MessageBox} from 'mint-ui';
+	import { mapMutations,mapActions } from 'vuex'
+	import { Toast ,MessageBox ,Indicator} from 'mint-ui';
 	import light from './light.vue'
 	import klineOne from './klineOne.vue'
 	import klineFive from './klineFive.vue'
@@ -244,7 +244,14 @@
 				chartsHight: 5.4,
 				strategyList:'',
 				ContractNo:'',
-				dian:''
+				dian:'',
+				chooseKline:'1min',
+				id1:{
+					id1: 'kline',
+					id2: 'kline_volume'
+				},
+				strategyData1: [],
+				strategyK: "",
 			}
 		},
 		components: {
@@ -271,8 +278,17 @@
 			quoteSocket(){
 				return this.$store.state.quoteSocket;
 			},
+			jsonDataKline(){
+				return this.$store.state.market.jsonDataKline;
+			},
+			physhonUrl(){
+				return this.$store.state.market.physhon.url
+			}
 		},
 		methods:{
+			...mapMutations([
+				'setfensoption', 'drawfens','setklineoption','drawkline'
+			]),
 			baifenbi (a,b) {
 				a = Number(a)
 				b = Number(b)
@@ -334,22 +350,27 @@
 				switch(index){
 					case 0:
 						this.currentChartsView = 'light';
+						this.chooseKline = 'shandian';
 						break;
 					case 1:
 						this.currentChartsView = 'klineOne';
-						this.$store.state.market.contd
+						this.chooseKline = '1min';
 						break;
 					case 2:
 						this.currentChartsView = 'klineFive';
+						this.chooseKline = '5min';
 						break;
 					case 3:
 						this.currentChartsView = 'klineThirty';
+						this.chooseKline = '30min';
 						break;
 					case 4:
 						this.currentChartsView = 'klineOneHour';
+						this.chooseKline = '1hour';
 						break;
 					case 5:
 						this.currentChartsView = 'klineDay';
+						this.chooseKline = '1day';
 						break;
 				}
 				this.$store.state.isshow.isfensshow = false;
@@ -365,6 +386,150 @@
 				this.$store.state.isshow.isfensshow = false;
 				this.$store.state.isshow.isklineshow = false;
 				this.$store.state.isshow.islightshow = false;
+			},
+			addOptional: function(){
+				var stateLogin = localStorage.user ? JSON.parse(localStorage.user) : '';
+				if(stateLogin == ''){
+					Toast({message: '请先登录平台账号', position: 'bottom', duration: 1500});
+				}else{
+					var headers = {
+						token: stateLogin.token,
+						secret: stateLogin.secret
+					}
+					if(this.optionalIconShow == true){   //删除自选
+						var _datas = {id: this.optionalId};
+						this.$messageBox.confirm("确定删除自选？","提示").then(action=>{
+							pro.fetch('post', '/quoteTrader/userRemoveCommodity', _datas, headers).then((res) => {
+								if(res.success == true && res.code == 1){
+									Toast({message: '自选删除成功', position: 'bottom', duration: 1000});
+									this.optionalName = '添加自选';
+									this.optionalIconShow = false;
+								}
+							}).catch((err) => {
+								Toast({message: err.data.message, position: 'bottom', duration: 1000});
+							});
+						}).catch(err=>{});
+					}else{   //添加自选
+						var datas = {
+							'exchangeNo': this.orderTemplist[this.currentNo].ExchangeNo,
+							'commodityNo': this.currentNo,
+							'contractNo': this.orderTemplist[this.currentNo].MainContract,
+						}
+						pro.fetch('post', '/quoteTrader/userAddCommodity', datas, headers).then((res) => {
+							if(res.success == true && res.code == 1){
+								this.optionalIconShow = true;
+								this.optionalName = '已添加自选';
+								Toast({message: '自选添加成功', position: 'bottom', duration: 1500});
+								this.optionalId = res.data.id;
+							}
+						}).catch((err) => {
+							Toast({message: err.data.message, position: 'bottom', duration: 1500});
+						});
+					}
+				}
+			},
+			//选择回测类型
+			choseStrategy:function(e,id){
+				if(this.chooseKline == 'shandian'){
+					Toast({message:'只能在K线图选择策略',position: 'bottom', duration: 1500});
+				}else if(id == 'haigui'){
+					Toast({message:'尽情期待',position: 'bottom', duration: 1500});
+				}else{
+					$(".celue_pie p").removeClass('current');
+				$(e.target).addClass('current');
+					this.strategyK = id;
+					clearInterval(this.timeing);
+					this.strategyData1 = [];
+					this.setklineoption(this.strategyData1),
+					this.$store.state.market.strategyData= this.strategyData1;
+					this.drawkline(this.id1);
+					Indicator.open({spinnerType: 'fading-circle'});
+					//第一步回测拿到打点数据
+					this.setklineoption("")
+					this.$store.state.market.strategyData= "";
+					this.drawkline(this.id1);
+					this.backProbeAjax();
+				}
+			},
+			//回测
+			backProbeAjax:function(k){
+				this.strategyData1 = [];
+				var timeData = this.jsonDataKline.Parameters.Data;
+				var ContractNo = this.jsonDataKline.Parameters.ContractNo;
+				var TimeStart = timeData[0][0];
+				var CommodityNo = this.jsonDataKline.Parameters.CommodityNo;
+				this.CommodityNoK = CommodityNo;
+				var TimeEnd = timeData[timeData.length-1][0];
+				let obj = {
+					"strategy":this.strategyK,
+					"commodity":CommodityNo,
+					"frequency":this.chooseKline,
+					"timeStart":TimeStart,
+					"timeEnd":TimeEnd,
+					"initialAccount":1000000,
+					"commodityNumber":ContractNo
+				}
+				$.ajax({
+					type:"POST",
+					url:this.physhonUrl+"/back_test",
+					async:true,
+					data: JSON.stringify(obj),
+					timeout:5000,
+					dataType:"json",
+					success:function(res){
+						var tradeInfo = res.tradeInfo;
+                		for(var i of tradeInfo){
+                			var strategyObj = {};
+                			if(res.backtestIndex.frequency == "1day"){
+                				strategyObj.coord = [i[1].substring(0,10),i[4]];
+                			}else{
+                				strategyObj.coord = [i[1],i[4]];
+                			}
+                			strategyObj.symbolSize = [7,14];
+	                		switch (i[3]){
+	                			case "BP":
+	                			strategyObj.name = "开空";
+								strategyObj.symbol = "image://static/lib/images/BP.png";
+	                				break;
+	                			case "BK":
+	                			strategyObj.name = "开多";
+								strategyObj.symbol = "image://static/lib/images/BK.png";
+	                				break;
+	                			case "SP":
+	                			strategyObj.name = "平空";
+								strategyObj.symbol = "image://static/lib/images/SP.png";
+	                				break;
+	                			case "SK":
+	                			strategyObj.name = "平多";
+								strategyObj.symbol = "image://static/lib/images/SK.png";
+	                				break;
+	                			case "SF":
+	                			strategyObj.name = "反卖";
+								strategyObj.symbol = "image://static/lib/images/BF.png";
+	                				break;
+	                			case "BF":
+	                			strategyObj.name = "反买";
+								strategyObj.symbol = "image://static/lib/images/SF.png";
+	                				break;
+	                		}
+	                		this.strategyData1.push(strategyObj);
+		                }
+                		this.strategyData1 = this.strategyData1.slice(-10);
+						this.setklineoption(this.strategyData1);
+						this.$store.state.market.strategyData= this.strategyData1;
+						this.drawkline(this.id1);
+						Indicator.close();
+					}.bind(this),
+					error:function(err){
+//						console.log("err====="+JSON.stringify(err));
+						Indicator.close();
+						if(err.statusText == "timeout"){
+							this.$toast({message:"连接超时，请重新选择类型或策略！",duration: 1000})
+						}else{
+							this.$toast({message:"网络不给力，请稍后再试!",duration: 1000});
+						}
+					}.bind(this)
+				});
 			},
 		},
 		mounted:function(){
@@ -401,6 +566,14 @@
 					});
 				}
 			},
+			chooseKline:function(n,o){
+				if(n != 'shandian' && n != o){
+					Indicator.open({spinnerType: 'fading-circle'});
+					this.backProbeAjax();
+				}else{
+					Toast({message:"请在k线图查看策略",position: 'bottom', duration: 1500})
+				}
+			}
 		}
 	}
 </script>
@@ -477,10 +650,21 @@
 			padding: 0 0.3rem;
 			line-height: 0.8rem;
 			span{
+				float: left;
+				display: block;
+				width: 1rem;
+				height: 0.6rem;
+				line-height: 0.6rem;
+				text-align: center;
+				background-color: #ffffff;
+				border-radius: 0.3rem;
+				border: solid 0.01rem #d2dae7;
 				font-size: 0.28rem;
-				margin-right: 0.3rem;
+				color: #8F94A7;
+				margin-right: 0.1rem;
 				&.current{
-					color: #1482f0;
+					color: #ffffff;
+					background-color: #5534FF;
 				}
 			}
 		}
@@ -543,29 +727,6 @@
 					}
 				}
 			}
-		}
-	}
-	.charts{
-		width: 7.5rem;
-		.charts_title{
-			background-color: white;
-			border-bottom: 0.01rem solid #BBF6EC;
-			width: 100%;
-			height: 0.8rem;
-			padding: 0 0.3rem;
-			line-height: 0.8rem;
-			span{
-				font-size: 0.28rem;
-				margin-right: 0.3rem;
-				&.current{
-					color: #169781;
-				}
-			}
-		}
-		.charts_container{
-			background-color: white;
-			width: 7.5rem;
-			height: 5.7rem;
 		}
 	}
 	.celue{
