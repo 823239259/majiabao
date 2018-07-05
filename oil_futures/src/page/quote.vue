@@ -33,7 +33,9 @@
 	    	</div>
 	    </div>
 	    <mt-actionsheet :actions="actions" v-model="sheetVisible"></mt-actionsheet>
+		<tipsFloat></tipsFloat>
 	</div>
+	
 </template>
 
 <script>
@@ -65,7 +67,7 @@
 				selectionList:[]
 			}
 		},
-		components:{bottomTab},
+		components:{bottomTab,tipsFloat},
 		mixins: [pro.mixinsToCustomer],
 		computed:{
 			parameters(){
