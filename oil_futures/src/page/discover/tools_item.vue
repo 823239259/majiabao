@@ -53,7 +53,8 @@ export default {
             return 'http://m.yn.com/quotes/XPT.html'
             break;  
           case '5':
-            return 'http://m.yn.com/data/'
+            //return 'http://m.yn.com/data/'
+            return '/mydata.html'
             break;  
         
           default:
@@ -127,7 +128,7 @@ export default {
 }
 .iframe5{
   height: 100vh;
-  overflow: scroll;
+  // overflow: scroll;
   -webkit-overflow-scrolling: touch;
 }
 .inherit-height{
