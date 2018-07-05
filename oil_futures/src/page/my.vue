@@ -16,7 +16,7 @@
               <button @click="goto('/login')" v-if="!isLogin">登录</button>
               <div v-else>
                 <p class="login">已登录</p>
-                 <p class="login" @click="changeName(accountInfo.mobile)">{{nameList[accountInfo.mobile]||mobileHidden(accountInfo.mobile)}}</p>
+                 <p class="login">{{mobileHidden(accountInfo.mobile)}}</p>
               </div>
           </div>
           <template v-for="(v, index) in parameters">
