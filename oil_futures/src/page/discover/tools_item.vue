@@ -7,7 +7,7 @@
         <div class="iframe1" :class="{'iframe5':id==5}">
             <iframe :class="[{'inherit-height':!isIphone},'iframeSpecial']" :src="iframe" frameborder="0" :scrolling="isIphone?'no':'yes'"></iframe>
         </div>
-        <footer class="footer"></footer>
+        <!-- <footer class="footer"></footer> -->
     </div>
 </template>
 
@@ -54,7 +54,7 @@ export default {
             break;  
           case '5':
             //return 'http://m.yn.com/data/'
-            return '/mydata.html'
+            return 'mydata.html'
             break;  
         
           default:
