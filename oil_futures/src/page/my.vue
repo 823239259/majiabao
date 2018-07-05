@@ -437,6 +437,7 @@
         text-align: center;
         background-color: #20202d;
         height: 2.4rem;
+       
         
       }
       .box:nth-child(1){
@@ -452,7 +453,14 @@
         
       }
       .green{
-        color: #11d974;
+         span{
+        	&.red{
+				color: #ff3363;
+				}
+			&.green{
+				color: #11d974;
+			}
+        }
       }
       .center{
           @include font($fs32,0.4rem,#333);
