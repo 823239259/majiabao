@@ -926,6 +926,7 @@
 					padding-left: 0.5rem;
 					line-height: 0.6rem;
 					span{
+						margin-right:0.3rem; 
 						&:nth-child(1){
 						color: black;
 						}
