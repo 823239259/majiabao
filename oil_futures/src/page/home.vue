@@ -54,9 +54,9 @@
     </div>
     <div class="swipe-wrap">
       <mt-swipe :auto="0">
-        <mt-swipe-item>
+        <!-- <mt-swipe-item>
           <img src="../assets/images/home/banner01.jpg" alt="banner1">
-        </mt-swipe-item>
+        </mt-swipe-item> -->
         <mt-swipe-item>
           <img src="../assets/images/home/banner02.jpg" alt="banner2">
         </mt-swipe-item>
