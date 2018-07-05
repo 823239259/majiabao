@@ -6,7 +6,7 @@
 	    	</mt-button>
 	     	<mt-button slot="right">
 	          	<span class="search_icon header_icon" @click="goto('/home_search')"></span>
-	          	<span class="customer_icon header_icon" ></span>
+	          	<span class="customer_icon header_icon" @click="callCustomer" ></span>
 	      	</mt-button>
 	    </mt-header>
 	    <bottomTab :tabSelect="tabSelected" v-show="tabShow" @show-tab="showTab($event,'tabShow')"></bottomTab>
@@ -32,6 +32,7 @@
 	    		<i :class="{icon_buy:v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice,icon_sell:v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}"></i>
 	    	</div>
 	    </div>
+	    <mt-actionsheet :actions="actions" v-model="sheetVisible"></mt-actionsheet>
 	</div>
 </template>
 
@@ -64,6 +65,7 @@
 			}
 		},
 		components:{bottomTab},
+		mixins: [pro.mixinsToCustomer],
 		computed:{
 			parameters(){
 				return this.$store.state.market.Parameters;
@@ -84,7 +86,12 @@
 			...mapActions([
 				'initQuoteClient'
 			]),
-			 showTab(...key) {
+			goto(path) {
+		        this.$router.push({
+		          	path: path
+		        });
+		     },
+			showTab(...key) {
 		        if(key.length === 1) {
 		          this[key[0]] = !this[key[0]]
 		        }else{
