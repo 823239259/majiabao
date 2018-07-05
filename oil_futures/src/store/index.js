@@ -805,7 +805,7 @@ export default new Vuex.Store({
 				}],
 				yAxis: [{
 					type: 'value',
-					name: '成交量(万)',
+//					name: '成交量(万)',
 					axisLine: {
 						lineStyle: {
 							color: '#8392A5'
@@ -849,7 +849,7 @@ export default new Vuex.Store({
 					triggerOn: 'mousemove|click'
 				},
 				series: [{
-					name: '成交量',
+//					name: '成交量',
 					type: 'bar',
 					data: vol,
 					itemStyle: {
@@ -973,7 +973,7 @@ export default new Vuex.Store({
 				xAxis: optionxAxis,
 				yAxis: [{
 					type: 'value',
-					name: '成交量(万)',
+//					name: '成交量(万)',
 					axisLine: {
 						lineStyle: {
 							color: '#8392A5'
@@ -1016,7 +1016,7 @@ export default new Vuex.Store({
 					triggerOn: 'mousemove|click'
 				},
 				series: [{
-					name: '成交量',
+//					name: '成交量',
 					type: 'bar',
 					data: vol,
 					normal: {
