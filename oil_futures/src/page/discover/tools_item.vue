@@ -1,6 +1,6 @@
 
 <template>
-    <div id="tools_item" :style="{height:clientHeight}">
+    <div id="tools_item" >
         <mt-header fixed :title="title">
             <mt-button slot="left" icon="back" @click="goBack"></mt-button>
         </mt-header>

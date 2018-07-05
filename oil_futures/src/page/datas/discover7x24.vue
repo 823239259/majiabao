@@ -3,11 +3,11 @@
 			<ul class="discover_list">
 				<mt-loadmore :bottom-method="loadBottom"  :auto-fill="false" :top-method="loadTop" ref="loadmore">
 						<template >
-							<li class="list" :class="{'show': showItem[index]}" v-for="(k,index) in newsInfo" >
+							<li class="list" :class="{'show': showItem[index]}" v-for="(k,index) in newsInfo" :Key='k.liveTitle'>
 								<h2 class="time_text">{{k.createdAt | changTime }}</h2>
 								<div class="box">
 									<p :class="{textHeight:k.zhankai}">{{k.liveTitle}}</p>
-									<span :class="Math.random()>0.5?'li_kong':'li_hao'"></span>
+									<span :class="k.random>0.5?'li_kong':'li_hao'"></span>
 									<div class="icon_box" v-if="k.liveTitle.length>70" @click="showAll1(k)">
 										<i class="display_icon"></i>	
 									</div>
@@ -61,7 +61,10 @@
 								if(k.liveTitle.length>70){
 									//console.log(k.liveTitle.length)
 									k.zhankai = true
-								}							
+								}else{
+									k.zhankai = false
+								}
+								k.random = Math.random();					
 							})
 							let newList = res.data;
 							//判断 是下拉加载 还是上来刷新操作

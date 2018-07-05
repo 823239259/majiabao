@@ -127,7 +127,7 @@
           },
           {
             name: "信息",
-            path: "/guide_details/0"
+            path: "/message"
           },
           {
             name: "新人学堂",

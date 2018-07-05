@@ -37,8 +37,8 @@
     </div>
     <cloud :cloudList='list'></cloud>
     <bottomTab :tabSelect="tabSelected" v-show="tabShow" @show-tab="showTab($event,'tabShow')"></bottomTab>
-    <mt-actionsheet :actions="actions" v-model="sheetVisible">
-    </mt-actionsheet>
+    
+    
   </div>
 </template>
 
@@ -48,6 +48,7 @@
   } from 'vuex'
   import bottomTab from '../components/bottom_tab'
   import cloud from '../components/cloud'
+  import tipsFloat from '../components/tipsFloat'
   import pro from '../assets/js/common'
 
   const local = pro.local;
@@ -58,7 +59,8 @@
     name: "my",
     components: {
       bottomTab,
-      cloud
+      cloud,
+      tipsFloat
       
     },
     mixins: [pro.mixinsToCustomer],

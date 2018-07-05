@@ -6,11 +6,12 @@
                     <text fill='red' :x='tag.x' :y='tag.y' :font-size='20 * (600/(600-tag.z))' :fill-opacity='((400+tag.z)/600)'>{{tag.text}}</text>
                 </router-link> -->
                 <a v-for='tag in tags'  class="forTest" :key="tag.text" @click.stop="itemClick(tag)">
-                    <text fill='red' :x='tag.x' :y='tag.y' :font-size='20 * (600/(600-tag.z))' :fill-opacity='((400+tag.z)/600)'>{{tag.text}}</text>
+                    <text :fill='bg2()' :x='tag.x' :y='tag.y' :font-size='20 * (600/(600-tag.z))' :fill-opacity='((400+tag.z)/600)'>{{tag.text}}</text>
                 </a>
             </svg>
         </div>
-        
+    <mt-actionsheet :actions="actions" v-model="sheetVisible">
+    </mt-actionsheet>    
     </div>
 </template>
 
@@ -21,6 +22,7 @@
         components: {
     
         },
+        mixins: [pro.mixinsToCustomer],
         props: {
             cloudList: Array
         },
@@ -154,6 +156,9 @@
                     tags.push(tag);
                     return tags
                 },[]);
+            },
+            bg2(){
+             return '#'+Math.floor(Math.random()*0xffffff).toString(16);
             }
         },
          created() { //初始化标签位置

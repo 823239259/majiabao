@@ -396,7 +396,7 @@ pro = {
 				this.sheetVisible = true
 			},
 			callPhone:function(){
-				window.location.href = 'tel://' + 4008528008;
+				window.location.href = 'tel://' + 40086291034;
 			},
 			shareSystem () {
 				//console.log(123)

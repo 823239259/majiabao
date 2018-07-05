@@ -39,6 +39,7 @@
 	import pro from '../assets/js/common.js'
 	import { mapMutations,mapActions } from 'vuex'
 	import bottomTab from '../components/bottom_tab'
+	import tipsFloat from '../components/tipsFloat'
 	import { Toast } from 'mint-ui';
 	export default{
 		name:"",
@@ -63,7 +64,7 @@
 				selectionList:[]
 			}
 		},
-		components:{bottomTab},
+		components:{bottomTab,tipsFloat},
 		computed:{
 			parameters(){
 				return this.$store.state.market.Parameters;

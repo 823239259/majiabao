@@ -23,7 +23,7 @@
             <div class="box_box">
                 <h2 class="spacial">报名开户流程</h2>
                 <p class="text1">一、报名办法：电话热线报名<br><br><br>二、开户流程：请咨询客服</p>
-                <button class="btn">参与活动</button>
+                <button class="btn" @click="alert">参与活动</button>
             </div>
             
         </div>
@@ -55,7 +55,7 @@ export default {
           img: require("../../assets/images/home/activity_banner01.jpg"),
           id: 1,
           time:
-            "报名时间：2018年06月08日—2018年09月25日<br>比赛时间：2018年06月28日—2018年09月26日",
+            "报名时间：2018年08月08日—2018年11月25日<br>比赛时间：2018年08月28日—2018年11月26日",
           text: "管家币可用作后期管家推出活动模拟金使用"
         },
         {
@@ -85,6 +85,11 @@ export default {
       this.$router.push({
         path: path
       });
+    },
+    alert () {
+      this.$toast({
+        message: '活动暂未开始敬请期待'
+      })
     }
   }
 };
