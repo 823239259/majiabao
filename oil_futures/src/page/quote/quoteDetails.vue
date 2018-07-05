@@ -352,10 +352,14 @@
 					case 0:
 						this.currentChartsView = 'light';
 						this.chooseKline = 'shandian';
+						$(".celue_pie p").removeClass('current');
+						this.strategyK = '';
 						break;
 					case 1:
 						this.currentChartsView = 'fens';
 						this.chooseKline = "分时";
+						$(".celue_pie p").removeClass('current');
+						this.strategyK = '';
 						break;	
 					case 2:
 						this.currentChartsView = 'klineOne';
@@ -436,7 +440,6 @@
 			//选择回测类型
 			choseStrategy:function(e,id){
 				if(this.chooseKline == 'shandian' || this.chooseKline == "分时"){
-					console.log("11111");
 					Toast({message:'只能在K线图选择策略',position: 'bottom', duration: 1500});
 				}else if(id == 'haigui'){
 					Toast({message:'尽情期待',position: 'bottom', duration: 1500});
