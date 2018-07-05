@@ -437,7 +437,14 @@
         text-align: center;
         background-color: #20202d;
         height: 2.4rem;
-       
+       p{
+       	&.red{
+						color: #ff3363;
+					}
+					&.green{
+						color: #11d974;
+					}
+       }
         
       }
       .box:nth-child(1){
@@ -455,11 +462,11 @@
       .green{
          span{
         	&.red{
-				color: #ff3363;
-				}
-			&.green{
-				color: #11d974;
-			}
+						color: #ff3363;
+					}
+					&.green{
+						color: #11d974;
+					}
         }
       }
       .center{
