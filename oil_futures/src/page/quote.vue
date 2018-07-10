@@ -10,7 +10,7 @@
 		          	<span class="customer_icon header_icon" @click="callCustomer" ></span>
 		      	</mt-button>
 		    </mt-header>
-		    <bottomTab :tabSelect="tabSelected" v-show="tabShow" @show-tab="showTab($event,'tabShow')"></bottomTab>
+		    <bottomTab :tabSelect="tabSelected" v-show="tabShow"></bottomTab>
 		    <div class="checkType">
 		    	<div class="empty"></div>
 		    	<div class="check">
@@ -30,7 +30,7 @@
 		    			<span :class="{red: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.ChangeValue | fixNum(v.DotSize)}}</span>
 		    			<span :class="{green: v.LastQuotation.ChangeRate < 0, red: v.LastQuotation.ChangeRate > 0}">{{v.LastQuotation.ChangeRate | fixNumTwo}}%</span>
 		    		</p>
-		    		<i :class="{icon_buy:Math.ceil(Math.random()*10) >= 5,icon_sell:Math.ceil(Math.random()*10) < 5}"></i>
+		    		<i :class="{icon_buy:Math.ceil(Math.random()*10) > 5,icon_sell:Math.ceil(Math.random()*10) < 5}" class="icon_buy"></i>
 		    	</div>
 		    </div>
 		    <mt-actionsheet :actions="actions" v-model="sheetVisible"></mt-actionsheet>
