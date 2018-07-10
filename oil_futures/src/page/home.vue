@@ -65,7 +65,7 @@
         </mt-swipe-item>
       </mt-swipe>
     </div>
-    <bottomTab :tabSelect="tabSelected" v-show="tabShow" @show-tab="showTab($event,'tabShow')"></bottomTab>
+    <bottomTab :tabSelect="tabSelected" v-show="tabShow"></bottomTab>
     <tips-float ></tips-float>
     <mt-actionsheet :actions="actions" v-model="sheetVisible"></mt-actionsheet>
   </div>

@@ -28,7 +28,7 @@
 
 
 		
-		<bottomTab :tabSelect="tabSelected" v-show="tabShow" @show-tab="showTab($event,'tabShow')"></bottomTab>
+		<bottomTab :tabSelect="tabSelected" v-show="tabShow"></bottomTab>
 		<tips-float></tips-float>
 	</div>
 </template>

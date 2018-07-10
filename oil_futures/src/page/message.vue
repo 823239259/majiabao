@@ -38,7 +38,7 @@
 
 
 		</div>
-		<bottomTab :tabSelect="tabSelected" v-show="tabShow" @show-tab="showTab($event,'tabShow')"></bottomTab>
+		<bottomTab :tabSelect="tabSelected" v-show="tabShow"></bottomTab>
 		<tips-float></tips-float>
 	</div>
 </template>
@@ -148,23 +148,6 @@
 		
 
 	}
-	 .header_icon{
-    display: inline-block;
-    width: 0.96rem;
-    height: 0.96rem;
-  }
-  .tab_icon{
-    background: url('../assets/images/home/tab_icon.png') center no-repeat;
-    background-size: 0.4rem 0.4rem;
-  }
-  .search_icon{
-    background: url('../assets/images/home/search_icon.png') center no-repeat;
-    background-size: 0.4rem 0.4rem;
-  }
-  .customer_icon{
-     background: url('../assets/images/home/customer_icon.png') center no-repeat;
-     background-size: 0.4rem 0.4rem;
-  }
 	.icon_account,
 	.icon_search,
 	.icon_calendar {

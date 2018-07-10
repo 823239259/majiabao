@@ -36,7 +36,8 @@
         </div>
     </div>
     <cloud :cloudList='list'></cloud>
-    <bottomTab :tabSelect="tabSelected" v-show="tabShow" @show-tab="showTab($event,'tabShow')"></bottomTab>
+    <!-- <bottomTab :tabSelect="tabSelected" v-show="tabShow" @show-tab="showTab($event,'tabShow')"></bottomTab> -->
+    <bottomTab :tabSelect="tabSelected" v-show="tabShow"></bottomTab>
     <tipsFloat></tipsFloat>
     
   </div>

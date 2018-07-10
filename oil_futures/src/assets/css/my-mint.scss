@@ -5,9 +5,15 @@
     width: 7.5rem;
     border-bottom: 1px solid #e6e6e6;
     color: #2d2f3e;
-    padding: 0;
+   
     
 }
+#home,#discover,#message,#my,#quote{
+    .mint-header{
+        padding: 0;
+    }
+}
+
 .mint-header-title{
     font-size: 0.36rem
 }
