@@ -1,6 +1,6 @@
 <template>
 	<div id="datas" ref="viewBox"  :style="{height:clientHeight,overflow:'scroll'}" >
-		<mt-header fixed title="首页">
+		<mt-header fixed title="信息">
 			<mt-button slot="left" @click="showTab('tabShow')">
 				<span class="header_icon" :class="tabShow?'tab_open_icon':'tab_close_icon'"></span>
 			</mt-button>
