@@ -2,7 +2,7 @@
 	<div id="discover" ref="viewBox" >
 		<mt-header fixed title="发现">
 			<mt-button slot="left" @click="showTab('tabShow')">
-				<span class="tab_icon header_icon"></span>
+				<span class="header_icon" :class="tabShow?'tab_open_icon':'tab_close_icon'"></span>
 			</mt-button>
 			<mt-button slot="right">
 				<span class="search_icon header_icon" @click="goto('/home_search')"></span>
@@ -62,7 +62,7 @@
                 endDate: new Date('2020-12-31'),
                 datePosition: '',
 				scrollY: 0,
-				tabShow: false,
+				tabShow: true,
 				warpList: [
 					{
 						title: '现货行情',

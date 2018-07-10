@@ -2,7 +2,7 @@
   <div id="home">
     <mt-header fixed title="首页">
       <mt-button slot="left" @click="showTab('tabShow')">
-        <span class="tab_icon header_icon"></span>
+        <span class="header_icon" :class="tabShow?'tab_open_icon':'tab_close_icon'"></span>
       </mt-button>
       <mt-button slot="right">
           <span class="search_icon header_icon" @click="goto('/home_search')"></span>
@@ -54,9 +54,9 @@
     </div>
     <div class="swipe-wrap">
       <mt-swipe :auto="0">
-        <!-- <mt-swipe-item>
+        <mt-swipe-item>
           <img src="../assets/images/home/banner01.jpg" alt="banner1">
-        </mt-swipe-item> -->
+        </mt-swipe-item>
         <mt-swipe-item>
           <img src="../assets/images/home/banner02.jpg" alt="banner2">
         </mt-swipe-item>
@@ -99,7 +99,7 @@
         tabSelected: 'home',
         isLogin: false,
         isShow: false,
-        tabShow: false,
+        tabShow: true,
         idList: [],
         homeList: [{
             name: "关于我们",

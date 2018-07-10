@@ -87,10 +87,10 @@
 	#bottom_tab{
 		width: 1.6rem;
 		position: fixed;
-		top: 0.96rem;
+		top: 0.9rem;
 		left: 0;
 		z-index: 100;
-		height: calc(100vh - 0.96rem);
+		height: calc(100vh - 0.9rem);
 		min-height: 54px;
 		background-color: #20202d;
 	}

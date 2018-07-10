@@ -2,7 +2,7 @@
   <div id="home" :style="{height:clientHeight}">
     <mt-header fixed title="我的">
 			<mt-button slot="left" @click="showTab('tabShow')">
-				<span class="tab_icon header_icon"></span>
+				<span class="header_icon" :class="tabShow?'tab_open_icon':'tab_close_icon'"></span>
 			</mt-button>
 			<mt-button slot="right">
 				<span class="search_icon header_icon" @click="goto('/home_search')"></span>
@@ -70,7 +70,7 @@
         tabSelected: 'my',
         isLogin: false,
         isShow: false,
-        tabShow: false,
+        tabShow: true,
         idList: [],
         list: [
           {
