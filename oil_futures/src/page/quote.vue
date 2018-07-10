@@ -1,39 +1,42 @@
 <template>
 	<div id="quote">
-		<mt-header fixed title="行情">
-	      	<mt-button slot="left" @click="showTab('tabShow')">
-	       	 	<span class="tab_icon header_icon"></span>
-	    	</mt-button>
-	     	<mt-button slot="right">
-	          	<span class="search_icon header_icon" @click="goto('/home_search')"></span>
-	          	<span class="customer_icon header_icon" @click="callCustomer" ></span>
-	      	</mt-button>
-	    </mt-header>
-	    <bottomTab :tabSelect="tabSelected" v-show="tabShow" @show-tab="showTab($event,'tabShow')"></bottomTab>
-	    <div class="checkType">
-	    	<div class="empty"></div>
-	    	<div class="check">
-	    		<span v-for="(k,index) in tabList" :class="{current:currentNum == index}" @click="checkType(index)">{{k.id}}</span>
-	    	</div>
-	    	<div>
-	    		<span class="selef" @click="toSelef">自选</span>
-	    	</div>
-	    </div>
-	    <div class="tips">↓点击选择行情，查看详细数据↓</div>
-	    <div class="details">
-	    	<div class="quoteBlock" v-for="(v,index) in parameters"  @click="toQuoteDetails(v.CommodityNo, v.MainContract, v.ExchangeNo, v.contrast)">
-	    		<p>{{v.CommodityNo+v.MainContract}}</p>
-	    		<p>{{v.CommodityName}}</p>
-	    		<p :class="{red: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.LastPrice | fixNum(v.DotSize)}}</p>
-	    		<p>
-	    			<span :class="{red: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.ChangeValue | fixNum(v.DotSize)}}</span>
-	    			<span :class="{green: v.LastQuotation.ChangeRate < 0, red: v.LastQuotation.ChangeRate > 0}">{{v.LastQuotation.ChangeRate | fixNumTwo}}%</span>
-	    		</p>
-	    		<i :class="{icon_buy:v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice,icon_sell:v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}"></i>
-	    	</div>
-	    </div>
-	    <mt-actionsheet :actions="actions" v-model="sheetVisible"></mt-actionsheet>
-		<tipsFloat></tipsFloat>
+		<div v-show="isShowGuide">
+			<mt-header fixed title="行情">
+		      	<mt-button slot="left" @click="showTab('tabShow')">
+		       	 	<span class="header_icon" :class="tabShow?'tab_open_icon':'tab_close_icon'"></span>
+		    	</mt-button>
+		     	<mt-button slot="right">
+		          	<span class="search_icon header_icon" @click="goto('/home_search')"></span>
+		          	<span class="customer_icon header_icon" @click="callCustomer" ></span>
+		      	</mt-button>
+		    </mt-header>
+		    <bottomTab :tabSelect="tabSelected" v-show="tabShow" @show-tab="showTab($event,'tabShow')"></bottomTab>
+		    <div class="checkType">
+		    	<div class="empty"></div>
+		    	<div class="check">
+		    		<span v-for="(k,index) in tabList" :class="{current:currentNum == index}" @click="checkType(index)">{{k.id}}</span>
+		    	</div>
+		    	<div>
+		    		<span class="selef" @click="toSelef">自选</span>
+		    	</div>
+		    </div>
+		    <div class="tips">↓点击选择行情，查看详细数据↓</div>
+		    <div class="details">
+		    	<div class="quoteBlock" v-for="(v,index) in parameters"  @click="toQuoteDetails(v.CommodityNo, v.MainContract, v.ExchangeNo, v.contrast)">
+		    		<p>{{v.CommodityNo+v.MainContract}}</p>
+		    		<p>{{v.CommodityName}}</p>
+		    		<p :class="{red: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.LastPrice | fixNum(v.DotSize)}}</p>
+		    		<p>
+		    			<span :class="{red: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.ChangeValue | fixNum(v.DotSize)}}</span>
+		    			<span :class="{green: v.LastQuotation.ChangeRate < 0, red: v.LastQuotation.ChangeRate > 0}">{{v.LastQuotation.ChangeRate | fixNumTwo}}%</span>
+		    		</p>
+		    		<i :class="{icon_buy:Math.ceil(Math.random()*10) >= 5,icon_sell:Math.ceil(Math.random()*10) < 5}"></i>
+		    	</div>
+		    </div>
+		    <mt-actionsheet :actions="actions" v-model="sheetVisible"></mt-actionsheet>
+			<tipsFloat></tipsFloat>
+		</div>
+		<firstGuide v-show="!isShowGuide"></firstGuide>
 	</div>
 	
 </template>
@@ -43,6 +46,7 @@
 	import { mapMutations,mapActions } from 'vuex'
 	import bottomTab from '../components/bottom_tab'
 	import tipsFloat from '../components/tipsFloat'
+	import firstGuide from "./quote/firstGuide.vue"
 	import { Toast } from 'mint-ui';
 	export default{
 		name:"",
@@ -67,7 +71,7 @@
 				selectionList:[]
 			}
 		},
-		components:{bottomTab,tipsFloat},
+		components:{bottomTab,tipsFloat,firstGuide},
 		mixins: [pro.mixinsToCustomer],
 		computed:{
 			parameters(){
@@ -84,6 +88,9 @@
 			userInfo(){
 				return localStorage.user ? JSON.parse(localStorage.user) : ""
 			},
+			isShowGuide(){
+				return this.$store.state.account.isShowGuide
+			}
 		},
 		methods:{
 			...mapActions([
