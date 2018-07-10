@@ -3,7 +3,7 @@
 		<div v-show="isShowGuide">
 			<mt-header fixed title="行情">
 		      	<mt-button slot="left" @click="showTab('tabShow')">
-		       	 	<span class="tab_icon header_icon"></span>
+		       	 	<span class="header_icon" :class="tabShow?'tab_open_icon':'tab_close_icon'"></span>
 		    	</mt-button>
 		     	<mt-button slot="right">
 		          	<span class="search_icon header_icon" @click="goto('/home_search')"></span>
@@ -30,7 +30,7 @@
 		    			<span :class="{red: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.ChangeValue | fixNum(v.DotSize)}}</span>
 		    			<span :class="{green: v.LastQuotation.ChangeRate < 0, red: v.LastQuotation.ChangeRate > 0}">{{v.LastQuotation.ChangeRate | fixNumTwo}}%</span>
 		    		</p>
-		    		<i :class="{icon_buy:v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice,icon_sell:v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}"></i>
+		    		<i :class="{icon_buy:Math.ceil(Math.random()*10) >= 5,icon_sell:Math.ceil(Math.random()*10) < 5}"></i>
 		    	</div>
 		    </div>
 		    <mt-actionsheet :actions="actions" v-model="sheetVisible"></mt-actionsheet>
