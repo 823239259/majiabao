@@ -9,7 +9,7 @@
       </div>
       <div class="text">
         <img src="../../../assets/images/account/about_us.png" alt="about_logo">
-        <h2>原油行情通</h2>
+        <h2>原油行情大师</h2>
         <p>浏览原油行情，从此不再难</p>
         <p class="bottom">V1.0</p>
       </div>
