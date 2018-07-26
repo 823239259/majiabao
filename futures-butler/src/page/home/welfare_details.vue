@@ -85,7 +85,7 @@
         })
       },
       signText () {
-        return this.isSign?`已签到${this.signInfo.signDay}天`:'签到领管家币'
+        return this.isSign?`再签${7 - this.signInfo.signDay}天有礼`:'签到领管家币'
       },
       isSign () {
         let today = pro.getDate(this.today,'y-m-d')
@@ -132,11 +132,20 @@
             })
            }
          }else{
-           this.$toast({
-                message: '签到需要登录后才能进行',
-                duration: 1000
-            })
+           this.toLogin()
          }
+      },
+      toLogin () {
+        this.$messagebox.confirm('签到需登录哦',{
+          title: '提示',
+          confirmButtonText: '去登录'
+
+        }).then(action => {
+          this.$router.push({path:'/login',query:{back:'back'}})
+           
+        }).catch(action => {
+           
+        })
       },
       getWeekDay (time) {
 				const weekList = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']

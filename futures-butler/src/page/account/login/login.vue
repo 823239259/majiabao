@@ -121,7 +121,11 @@
 								localStorage.setItem("user", JSON.stringify(userData));
 								this.addItem(userData)
 								local.get("user");
-								this.$router.push({path:"/my"});
+								if (this.$route.query&&this.$route.query.back) {
+									this.$router.push({path:"/welfare_details/1"});
+								}else{
+									this.$router.push({path:"/my"});
+								}
 								this.$store.state.account.isLogin = true;
 							}
 						}
@@ -169,6 +173,7 @@
 			}
 		},
 		activated:function(){
+			console.log(this.$route);
 			pro.getClentId();
 			//得到userList
 			const userList1 = local.get('userList')||[]
