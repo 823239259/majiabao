@@ -86,10 +86,10 @@
             name: '活动中心',
             path: "/activity_list"
           },
-          {
-            name: '在线客服',
-            path: '/service_online'
-          },
+          // {
+          //   name: '在线客服',
+          //   path: '/service_online'
+          // },
           {
             name: '删除缓存',
             method: 'deleteStore'
