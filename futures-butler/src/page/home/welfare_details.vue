@@ -2,50 +2,28 @@
   <div id="welfare_details" :style="{height:clientHeight}">
     <mt-header fixed title="管家福利" >
         <mt-button slot="left" icon="back" @click="goBack"></mt-button>
-        
         <mt-button slot="right" @click="askServer" v-if="id == 1">
           <span class="wenhao"></span>
         </mt-button>
     </mt-header>
     <div class="wrap">
-        <div class="box" >
-            <img :src="currentItem.img" alt="01">
-            <p>{{currentItem.text}}</p>
-        </div>
-        <template v-if="id == 1">
-            <div class="calendar_list_wrap">
-              <ul class="calendar_list">
-                <li :class="['item',{'active':today.getDate()===item.day}]" v-for="(item, index) in weekList"  :key="index">
-                  <div class="weekday">{{item.weekday}}</div>
-                  <div class="date">{{item.day}}</div>
-                </li>
-              </ul>
-              <div class="Sign_in_wrap">
-                  <div class="left_box">
-                      <span class="number">{{(signInfo.signDay||0)+'.00'}}</span>
-                      <div>当前管家币丨累计签到<span class="color1">{{signInfo.signDay||0}}</span>天</div>
-                  </div>
-                  <div class="right_box">
-                      <button @click="SignIn">{{signText}}</button>
-                  </div>
-              </div>
-          </div>
-        </template>
-        
+        <component ref="activity" :is="activityName" :id="id"></component>
     </div>
-    <AlertMessage v-if="isShow" :type="type" :text="text" :comfirm="draggleShow" />
+    
   </div>
 </template>
 
 <script>
   import pro from '../../assets/js/common'
-  import AlertMessage from '../../components/AlertMessage'
+  import activity02 from './activity02'
+  import activity01 from './activity01'
   const local = pro.local;
   
   export default {
     name: "welfare_details",
     components: {
-      AlertMessage
+      activity02,
+      activity01
     },
     props: ['id'],
     data() {
@@ -79,18 +57,9 @@
       clientHeight() {
         return document.documentElement.clientHeight + "px";
       },
-      currentItem () {
-        return this.imgList.find((item)=>{
-          return item.id == this.id
-        })
-      },
-      signText () {
-        return this.isSign?`再签${7 - this.signInfo.signDay}天有礼`:'签到领管家币'
-      },
-      isSign () {
-        let today = pro.getDate(this.today,'y-m-d')
-        if (!this.signInfo.signList) return false;
-        return this.signInfo.signList.includes(today)
+      activityName () {
+        const activityList = ['activity01', 'activity02']
+        return activityList[this.id - 1]
       }
       
     },
@@ -106,90 +75,9 @@
         });
       },
       askServer () {
-        this.text = '连续签到7天后可联系客服领取礼包'
-        this.type = 1
-        this.draggleShow()
+        this.$refs.activity.askServer()
       },
-      draggleShow () {
-        this.isShow = !this.isShow
-      },
-      setSignInfo () {
-         this.signInfo.signDay++
-         this.signInfo.signList.push(pro.getDate(this.today,'y-m-d'))
-         pro.local.set('signInfo', this.signInfo)
-      },
-      SignIn () {
-         if (this.user) {
-           if(!this.isSign){
-              this.type = 0
-              this.draggleShow()
-              this.setSignInfo()
-              this.text = this.signInfo.signDay
-           }else{
-             this.$toast({
-                message: '您已签过到了',
-                duration: 1000
-            })
-           }
-         }else{
-           this.toLogin()
-         }
-      },
-      toLogin () {
-        this.$messagebox.confirm('签到需登录哦',{
-          title: '提示',
-          confirmButtonText: '去登录'
-
-        }).then(action => {
-          this.$router.push({path:'/login',query:{back:'back'}})
-           
-        }).catch(action => {
-           
-        })
-      },
-      getWeekDay (time) {
-				const weekList = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
-				return weekList[time]
-			},
-      setWeekList () {
-        let today  = new Date();
-        let year = today.getFullYear();
-				let mouth = today.getMonth();
-				let date = today.getDate();
-				let weekday = today.getDay();
-				let mouthDayList = [];
-				const mouthDayLength = [31,28,31,30,31,30,31,31,30,31,30,31]
-				//判断当月的天数
-				//处理闰年二月
-				if (year%4 === 0 ) {
-					mouthDayLength[1] = 29
-				}
-				let mouthDay = mouthDayLength[mouth];
-				//当月第一天 
-				for (let index = 1; index <= 7; index++) {
-          //循环遍历 得到每天的星期数   星期数 = (天数差%7 + 当天星期数)%7   如果为负数加7 解决周六问题
-
-          //放大处理当天为周日的情况
-          if(weekday == 0 ){
-            weekday = 7
-          }
-          let differIndex = index - weekday;
-          let indexDate =  date + differIndex;
-          //每月最后几天
-          if (indexDate>mouthDay) {
-            indexDate = differIndex - 1; //index是从1开始取的
-          }
-          if (indexDate<=0) {
-            indexDate = mouthDayLength[mouth-1] + differIndex + 1; //处理每月开始那几天
-          }
-					let indexDay = {
-						day: indexDate,
-						weekday: this.getWeekDay (index%7),
-					}
-					this.weekList.push(indexDay)
-					 	
-        }
-      }
+ 
     },
     created() {
       this.setWeekList()
