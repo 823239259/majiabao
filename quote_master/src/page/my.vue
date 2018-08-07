@@ -38,7 +38,14 @@
       <div class="box">
          <ul class="user_list">
             <li class="item draggle" v-for="(item, index) in serversList" :key="index">
-              <img :id="'draggle'+index" class="icon" :src="item.img" title="img"/>
+              <img 
+              :id="'draggle'+index" 
+              class="icon" 
+              :src="item.img" 
+              @touchstart="handleDraggleStart"
+              @touchmove="handleDraggleMove(index, $event)"
+              @touchend="handleDraggleEnd"
+              title="img" />
               <p>{{item.name}}</p>
             </li>
           </ul>
@@ -250,6 +257,9 @@
         listIndex: 0,
         recommendList: [],
         upFloat: 0,
+        oW: 0, //draggle 左边
+        oH: 0, //draggle 右边
+        IsClone: true, // 是否clone
   
       };
     },
@@ -375,17 +385,7 @@
            
         })
       },
-      itemClick (item) {
-				if(item.path) {
-					this.$router.push({path: item.path})
-				}
-				if(item.method){
-					console.log(item.method)
-					this[item.method]()
-				}
-      },
       callCostumer () {
-
         //第二项如果是对象就是配置项,否者是第三项才是配置选项
         this.$messagebox.confirm('17313119220',{
           title: '客服热线',
@@ -398,54 +398,10 @@
            
         })
       },
-      
-      changeName (mobile) {
-          if (!mobile) return;
-            this.$messagebox.prompt('您的昵称',{
-                inputPlaceholder: '请输入您的昵称',
-                inputErrorMessage: '昵称1-8个字',
-                inputValidator (value) {
-                   if (value === null) {  
-                        return true;//初始化的值为null，不做处理的话，刚打开MessageBox就会校验出错，影响用户体验  
-                    }  
-                   return (value.length < 8 || value.length > 1)
-                }
-            }).then(({value,action}) => {
-                //console.log(11)
-                this.$toast({message: '修改成功',duration: 1000})
-                this.setName(mobile,value)
-                
-            }).catch(({value,action}) => {
-                //console.log(123)
-            })
-      },
-      setName (mobile, name) {
-          this.$set(this.nameList, mobile, name)
-          //this.nameList[mobile] = name;
-          local.set('nameList',this.nameList)
-          
-      },
       toCollection () {
           if(!this.isLogin) return this.$toast({message: '请先登录才能使用收藏功能',duration: 1000});
           this.goto('/my_collection')
       },
-      //运动函数
-      moveCircle () {
-        // itemList.forEach(item => {
-            
-           
-            setInterval(()=>{
-              if (this.listIndex == 4) {
-                this.listIndex = 0
-              }else{
-                this.listIndex++;
-              }
-              
-            },2000)
-        // });
-        
-        
-     },
       getRandomArrayElements(arr, count) {
         var shuffled = arr.slice(0), i = arr.length, min = i - count, temp, index;
         while (i-- > min) {
@@ -467,77 +423,84 @@
         let val = max - min;
         return Math.floor(Math.random()*min+val)
       },
-      draggle () {
-          var block = document.getElementById("draggle0");
-          var myWidth = block.clientWidth;
-          console.log(block);
-          
-          var oW,oH;
-          var IsClone = true;
-          // 绑定touchstart事件
-          block.addEventListener("touchstart", function(e) {
-              console.log(e);
-              var touches = e.touches[0];
-              oW = touches.clientX - block.offsetLeft; //点击点到左边的距离
-              oH = touches.clientY - block.offsetTop;  //点击点到顶部的距离
-               console.log(oW);
-               console.log(oH);
-              
-              //阻止页面的滑动默认事件
-              window.addEventListener("touchmove",defaultEvent,{ passive: false });
-          },false)
+      handleDraggleStart (e) {
+          var touches = e.touches[0];
+          var block = e.target;
+          this.oW = touches.clientX - block.offsetLeft; //点击点到左边的距离
+          this.oH = touches.clientY - block.offsetTop;  //点击点到顶部的距离
+          //阻止页面的滑动默认事件
+          window.addEventListener("touchmove",this.defaultEvent,{ passive: false });
+      },
+      handleDraggleMove (index, e) {
+        var block = e.target;
+        if (this.IsClone) {
+            //复制一个对象
+          var abc = block.cloneNode();
+          abc.setAttribute('id','test');
+          block.style.position = 'absolute'
+          document.getElementsByClassName("draggle")[index].insertBefore(abc,block);
+          this.IsClone = false
+        }
+        var touches = e.touches[0];
+        var oLeft = touches.clientX - this.oW;
+        var oTop = touches.clientY - this.oH;
+        if(oLeft < 0) {
+          oLeft = 0;
+        }else if(oLeft > document.documentElement.clientWidth - block.offsetWidth) {
+          oLeft = (document.documentElement.clientWidth - block.offsetWidth);
+        }
+        // console.log(oLeft,'当前x');
+        // console.log(oTop,'当前y');
+        block.style.left = oLeft + "px";
+        block.style.top = oTop + "px";
+      },
+      handleDraggleEnd (e) {
+        //放置区间
+        var content = document.getElementsByClassName('traggle_content')[0]
+        var block = e.target;
+        var myWidth = block.clientWidth; //拖拽元素本身宽度
+        var myHight = block.clientHeight; //拖拽元素本身高度
+        var contentWidth = content.clientWidth; //元素本身的宽度(content)
+        var contentHight = content.clientHeight //元素本身的高度(content)
+
+        var leftBorder = content.clientLeft; //元素border的宽度
+        var topBorder = content.clientTop; //元素border的宽度
+        var contentTop = content.offsetTop //元素到顶部的距离
+        var contentLeft = content.offsetLeft; //元素到左边的距离
+        //  放置区域的上下左右
+        var Ctop = topBorder + contentTop; //content到顶部距离
+        var Cbottom = Ctop + contentHight; // content底部 距离
+        var Cleft = leftBorder + contentLeft; //content到左边的距离
+        var Cright = Cleft + contentWidth; //右边内border到左边的距离
+
+        var target = e.changedTouches[0]
+
+        var oLeft = target.clientX - this.oW;
+        var oTop = target.clientY - this.oH;
+
+        // console.log(oLeft);
+        // console.log(oTop);
         
-          block.addEventListener("touchmove", function(e) {
-            console.log(111);
-              if (IsClone) {
-                 //复制一个对象
-                var abc = block.cloneNode();
-                block.style.position = 'absolute'
-                document.getElementsByClassName("draggle")[0].insertBefore(abc,block);
-                IsClone = false
-              }
-              var touches = e.touches[0];
-              var oLeft = touches.clientX - oW;
-              var oTop = touches.clientY - oH;
-              if(oLeft < 0) {
-                oLeft = 0;
-              }else if(oLeft > document.documentElement.clientWidth - block.offsetWidth) {
-                oLeft = (document.documentElement.clientWidth - block.offsetWidth);
-              }
-              console.log(oLeft,'当前x');
-              console.log(oTop,'当前y');
-              block.style.left = oLeft + "px";
-              block.style.top = oTop + "px";
-          },false);
-          
-          block.addEventListener("touchend",function(e) {
-            var content = document.getElementsByClassName('traggle_content')[0]
-            var contentWidth = content.clientWidth;
-            var contentBorder = content.clientLeft;
-            var contentLeft = content.offsetLeft;
+        if((oLeft>=Cleft&&oLeft<=Cright - myWidth)&&(oTop>=Ctop&&oTop <= Cbottom - myHight)){
+          console.log(1)
+          //this.clearClone(block)
+        }else{
+         // this.clearClone(block)
+        }
+        this.clearClone(block)
+        window.removeEventListener("touchmove",this.defaultEvent,{ passive: false });
+      },
 
-            var Cleft = contentBorder + contentLeft;
-            var Cright = Cleft + contentWidth;
-
-            var target = e.changedTouches[0]
-
-            var oLeft = target.clientX - oW;
-            var oTop = target.clientY - oH;
-
-            console.log(oLeft);
-            console.log(oTop);
-            
-            if((oLeft>=Cleft&&oLeft<=Cright - myWidth)){
-              console.log(1)
-            }
-
-            console.log()
-            window.removeEventListener("touchmove",defaultEvent,{ passive: false });
-          },false);
-          function defaultEvent(e) {
-            e.preventDefault();
-          }
-      }
+      defaultEvent (e) {
+        e.preventDefault();
+      },
+      clearClone (block) {
+        var abc = document.getElementById('test');
+        abc.remove();
+        block.style.position = 'static' ;
+        this.IsClone = true
+      },
+     
     },
     created() {
       this.recommendList = this.getRandomArrayElements(recommendList,4)
@@ -545,7 +508,7 @@
       
     },
     mounted() {
-      this.draggle()
+     
     },
     activated() {
     	this.$store.state.market.Parameters = [];
