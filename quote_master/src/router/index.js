@@ -15,23 +15,23 @@ const router = new Router({
   	{
       path: '/',
       redirect:{
-      	name:"quote"
+      	name:"kline"
       }
     },
     {
-    	path:"/home",
-    	name:"home",
-    	component:load('home')
+    	path:"/fensline",
+    	name:"fensline",
+    	component:load('fensline')
     },
     {
-    	path:"/message",
-    	name:"message",
-    	component:load('message')
+    	path:"/barline",
+    	name:"barline",
+    	component:load('barline')
     },
     {
-    	path:"/discover",
-    	name:"discover",
-    	component:load('discover')
+    	path:"/lightline",
+    	name:"lightline",
+    	component:load('lightline')
     },
 
     /* home 内页 */
@@ -154,9 +154,9 @@ const router = new Router({
 
 
     {
-    	path:"/quote",
-    	name:"quote",
-    	component:load('quote')
+    	path:"/kline",
+    	name:"kline",
+    	component:load('kline')
     },
     {
     	path:'/quoteDetails',

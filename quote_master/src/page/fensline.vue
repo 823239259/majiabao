@@ -72,7 +72,7 @@
 		name: "",
 		data() {
 			return {
-				tabSelected: 'quote',
+				tabSelected: 'fensline',
 				tabList:['商','股',"汇",'LIME','率','BIT'],
 				currentChartsNum:0,
 				showTip:false,
@@ -136,7 +136,7 @@
 						this.$store.state.market.commodityOrder = res.data[0].list;
 						this.$store.state.market.currentdetail = res.data[0].list[0];
 						//初始化行情
-						if(this.$store.state.market.commodityOrder){
+						if(this.$store.state.market.commodityOrder && this.$store.state.account.quoteStatus == false){
 							this.initQuoteClient();
 						}
 					}

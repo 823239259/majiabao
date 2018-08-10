@@ -22,11 +22,11 @@
 				tabList: [
 					{
 						name: 'K线',
-						path: 'home'
+						path: 'kline'
 					},
 					{
 						name: '分时',
-						path: 'butler'
+						path: 'fensline'
 					},
 					{
 						name: '个人',
@@ -34,11 +34,11 @@
 					},
 					{
 						name: '闪电',
-						path: 'quote'
+						path: 'lightline'
 					},
 					{
 						name: '柱形',
-						path: 'ss'
+						path: 'barline'
 					}
 
 				],
