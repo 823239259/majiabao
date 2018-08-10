@@ -1,166 +1,154 @@
 <template>
 	<div id="quote">
-		<div v-show="isShowGuide">
-			<mt-header fixed title="行情">
-		      	<mt-button slot="left" @click="showTab('tabShow')">
-		       	 	<span class="header_icon" :class="tabShow?'tab_open_icon':'tab_close_icon'"></span>
-		    	</mt-button>
-		     	<mt-button slot="right">
-		          	<span class="search_icon header_icon" @click="goto('/home_search')"></span>
-		          	<span class="customer_icon header_icon" @click="callCustomer" ></span>
-		      	</mt-button>
-		    </mt-header>
-		    <bottomTab :tabSelect="tabSelected" v-show="tabShow"></bottomTab>
-		    <div class="checkType">
-		    	<div class="empty"></div>
-		    	<div class="check">
-		    		<span v-for="(k,index) in tabList" :class="{current:currentNum == index}" @click="checkType(index)">{{k.id}}</span>
-		    	</div>
-		    	<div>
-		    		<span class="selef" @click="toSelef">自选</span>
-		    	</div>
-		    </div>
-		    <div class="tips">↓点击选择行情，查看详细数据↓</div>
-		    <div class="details">
-		    	<div class="quoteBlock" v-for="(v,index) in parameters"  @click="toQuoteDetails(v.CommodityNo, v.MainContract, v.ExchangeNo, v.contrast)">
-		    		<p>{{v.CommodityNo+v.MainContract}}</p>
-		    		<p>{{v.CommodityName}}</p>
-		    		<p :class="{red: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.LastPrice | fixNum(v.DotSize)}}</p>
-		    		<p>
-		    			<span :class="{red: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.ChangeValue | fixNum(v.DotSize)}}</span>
-		    			<span :class="{green: v.LastQuotation.ChangeRate < 0, red: v.LastQuotation.ChangeRate > 0}">{{v.LastQuotation.ChangeRate | fixNumTwo}}%</span>
-		    		</p>
-		    		<i :class="{icon_buy:Math.ceil(Math.random()*10) > 5,icon_sell:Math.ceil(Math.random()*10) < 5}" class="icon_buy"></i>
-		    	</div>
-		    </div>
-		    <mt-actionsheet :actions="actions" v-model="sheetVisible"></mt-actionsheet>
-			<tipsFloat></tipsFloat>
+		<mt-header fixed title="k线数据">
+			<mt-button slot="left" >
+				<span class="header_icon" ></span>
+			</mt-button>
+			<mt-button slot="right">
+			</mt-button>
+		</mt-header>
+		<div id="container">
+			<div class="tab">
+				<span v-for="(k,index) in tabList" :class="{current: currentChartsNum == index}" @click="changeCommodityNo(index)">{{k}}</span>
+			</div>
+			<div class="tips">
+				<p @click="changeTip">使用说明</p>
+				<transition  name="fade">
+					<div class="tipsList" v-show="showTip">
+						<ul>
+							<li>1.点击上方分类按钮可查看不同类的期货行情</li>
+							<li>2.点击任意行情，可查看该行情的简要数据图</li>
+							<li>3.点击“更详细数据”可查看该品种的详细行情</li>
+						</ul>
+					</div>
+				</transition >
+			</div>
+			<div class="CommodityList">
+				<div class="listName">
+					<span v-for="k in CommodityList">{{k}}</span>
+				</div>
+				<div class="listScoll">
+					<div  v-for="(v, index) in parameters">
+						<div class="listName"   :class="{checked : currentCheck == index}" @click="showKline(index)" >
+							<span>{{v.CommodityName}}</span>
+							<span :class="{red: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.LastPrice | fixNum(v.DotSize)}}</span>
+							<span :class="{green: v.LastQuotation.ChangeRate < 0, red: v.LastQuotation.ChangeRate > 0}">{{v.LastQuotation.ChangeRate | fixNumTwo}}%</span>
+							<span :class="{green: v.LastQuotation.ChangeRate < 0, red: v.LastQuotation.ChangeRate > 0}">{{v.LastQuotation.ChangeValue | fixNum(v.DotSize)}}</span>
+							<i :class="{icon_buy: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, icon_sell: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice ? "买" : "卖"}}</i>
+						</div>	
+						<transition  name="fade">
+							<div v-show="currentCheck == index">
+								<div class="KLinePic" >
+							
+								</div>
+								<div class="toDetails" >
+									<span>开盘价:{{v.LastQuotation.OpenPrice}}</span>
+									<span>查看更多数据></span>
+								</div>
+							</div>
+								
+							
+						</transition >
+					</div>
+				</div>
+			</div>
 		</div>
-		<firstGuide v-show="!isShowGuide"></firstGuide>
+		
+		
+		<bottomTab :tabSelect="tabSelected"></bottomTab>
 	</div>
-	
+
 </template>
 
 <script>
 	import pro from '../assets/js/common.js'
-	import { mapMutations,mapActions } from 'vuex'
+	import { mapMutations, mapActions } from 'vuex'
 	import bottomTab from '../components/bottom_tab'
 	import tipsFloat from '../components/tipsFloat'
 	import firstGuide from "./quote/firstGuide.vue"
 	import { Toast } from 'mint-ui';
-	export default{
-		name:"",
-		data(){
-			return{
-				tabShow: true,
+	export default {
+		name: "",
+		data() {
+			return {
 				tabSelected: 'quote',
-				tabList:[
-					{
-						id:'商品'
-						},
-					{
-						id:'股指'
-					},
-					{
-						id:'其他'
-					}
-				],
-				currentNum:0,
-				currentType:[],
-				allType:[],
-				selectionList:[]
+				tabList:['商','股',"汇",'LIME','率','BIT'],
+				currentChartsNum:0,
+				showTip:false,
+				CommodityList:['期货名称','最新价','涨跌幅','涨跌额','买/卖'],
+				marketList:[],//全部列表分类
+				currentCheck:0
 			}
 		},
-		components:{bottomTab,tipsFloat,firstGuide},
-		mixins: [pro.mixinsToCustomer],
-		computed:{
+		components: {
+			bottomTab,
+			tipsFloat,
+			firstGuide
+		},
+
+		computed: {
 			parameters(){
 				return this.$store.state.market.Parameters;
-			},
-			commodityOrder(){
-				if(this.$store.state.market.commodityOrder){
-					return this.$store.state.market.commodityOrder;
-				}
 			},
 			quoteSocket(){
 				return this.$store.state.quoteSocket;
 			},
-			userInfo(){
-				return localStorage.user ? JSON.parse(localStorage.user) : ""
-			},
-			isShowGuide(){
-				return this.$store.state.account.isShowGuide
-			}
 		},
-		methods:{
+		methods: {
 			...mapActions([
 				'initQuoteClient'
 			]),
-			goto(path) {
-		        this.$router.push({
-		          	path: path
-		        });
-		     },
-			showTab(...key) {
-		        if(key.length === 1) {
-		          this[key[0]] = !this[key[0]]
-		        }else{
-		          this[key[1]] = key[0]
-		        }
-		        
-		    },
-		    checkType(index){
-		    	this.currentNum = index;
-		    	this.currentType = this.allType[index].list;
-		    	this.$store.state.market.commodityOrder = this.currentType ;
-		    },
-			//获取分类
-			getCommodityInfo: function(){
+			changeCommodityNo:function(index){
+				this.currentChartsNum = index;
+			},
+			changeTip:function(){
+				this.showTip =!this.showTip;
+			},
+			getTradeWsUrl: function(){   //获取交易ws地址
+				var data = {
+					quoteVersion: this.$store.state.market.quoteConfig.version,
+					tradeVersion: this.$store.state.market.tradeConfig.version
+				};
+				pro.fetch('post', '/others/getSocket', data, '').then((res) => {
+					if(res.success == true && res.code == '1'){
+						this.$store.state.market.tradeConfig.url_real = res.data.tradeUrl;
+					}
+				}).catch((err) => {
+					var data = err.data;
+					if(data) Toast({message: data.message, position: 'bottom', duration: 2000});
+				});
+			},
+			getCommodityInfo: function(){//获取全部分类
 				pro.fetch('post', '/quoteTrader/getCommodityInfo', '', '').then((res) => {
 					if(res.success == true && res.code == 1){
-						if(res.data!=undefined || res.data!=null){
-							this.allType = res.data;
-							this.currentType = res.data[0].list;
-							this.$store.state.market.commodityOrder = this.currentType;
+						this.marketList = res.data;
+						if(this.quoteStatus == true) return;
+						this.$store.state.market.commodityOrder = res.data[0].list;
+						//初始化行情
+						if(this.$store.state.market.commodityOrder){
+							this.initQuoteClient();
 						}
 					}
 				}).catch((err) => {
-//					Toast({message: err.data.message, position: 'bottom', duration: 2000});
+					Toast({message: err.data.message, position: 'bottom', duration: 2000});
 				});
 			},
-			//获取自选
-			getSelection:function(){
-				var headers = {
-					token: this.userInfo.token,
-					secret: this.userInfo.secret
-				}
-				pro.fetch('post', '/quoteTrader/userGetCommodityList', '', headers).then((res) => {
-					if(res.success == true && res.code == 1){
-						this.selectionList = res.data;
-					}
-				}).catch((err) => {
-					if(err.data.code = "-9999"){
-//						Toast({message:"请先登录", position: 'bottom', duration: 2000});
-					}
-				});
-			},
-			//自选列表
-			toSelef(){
-				this.currentType = this.selectionList;
-				this.$store.state.market.commodityOrder = this.selectionList;
-			},
-			toQuoteDetails: function(commodityNo, mainContract, exchangeNo, contrast){
-				this.$router.push({path: '/quoteDetails', query: {'commodityNo': commodityNo, 'mainContract': mainContract, 'exchangeNo': exchangeNo, 'contrast': contrast}});
-			},
+			showKline:function(index){
+				console.log(index)
+				this.currentCheck = index;
+			}
 		},
-		mounted: function(){
-			this.initQuoteClient();
-		},
-		activated:function(){
-			this.getSelection();
+		mounted: function() {
+			//获取所有合约
 			this.getCommodityInfo();
+			//获取交易ws地址
+			this.getTradeWsUrl();
 		},
-		created () {
+		activated: function() {
+
+		},
+		created() {
+			
 		},
 		filters:{
 			fixNumTwo: function(num){
@@ -171,144 +159,126 @@
 				return num.toFixed(dotsize);
 			}
 		},
-		watch:{
-			currentType:function(n,o){
-				if( n != o){
-					this.$store.state.market.Parameters = [];
-					this.$store.state.market.commodityOrder = n;
-					this.commodityOrder.forEach((o, i) => {
-						this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
-					});
-				}
+		watch: {
+			currentChartsNum:function(n,o){
+				this.$store.state.market.Parameters = [];
+				this.$store.state.market.commodityOrder = [];
+				this.$store.state.market.commodityOrder = this.marketList[n].list;
+				this.marketList[n].list.forEach((o, i) => {
+					this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
+				});
 			}
 		}
 	}
 </script>
 
-
 <style lang="scss" scoped>
 	@import "../assets/css/common.scss";
-	#quote{
+	.fade-enter-active, .fade-leave-active {
+		 transition: opacity 0.5s;
+	}
+	.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+		 opacity: 0;
+	}
+	#container{
 		width: 7.5rem;
+		margin-top: 0.96rem;
+		background-color: #2a2f42;
 	}
-	.empty{
-		width: 0.6rem;
-		height: 0.6rem;
-	}
-	.checkType{
+	.tab{
 		width: 7.5rem;
 		height: 1.2rem;
-		margin-top: 0.98rem;
 		display: flex;
-		justify-content: space-between;
+		justify-content: center;
 		align-items: center;
-		padding: 0 0.3rem;
-		.check{
-			margin: auto;
-			span{
-				display: block;
-				width: 0.6rem;
-				height: 0.6rem;
-				background-color: #8f94a7;
-				font-size: 0.22rem;
-				border-radius: 0.3rem;
-				float: left;
-				line-height: 0.6rem;
-				text-align: center;
-				color: white;
-				&:nth-child(2){
-					margin:0 0.3rem;
-				}
-			}
-			.current{
-				background-color: #181722;
-			}
-		}
-		.selef{
-			display: block;
-			width: 0.6rem;
+		span{
+			width: 1rem;
 			height: 0.6rem;
-			background-color: #5534ff;
-			color: white;
-			border-radius: 0.3rem;
-			text-align: center;
 			line-height: 0.6rem;
+			text-align: center;
+			background-color: #585b6c;
+			color: white;
+			font-size: 0.28rem;
+			border-right: 1px solid #2a2f42;
+			&.current{
+				background-color: #6064e1;
+			}
 		}
 	}
 	.tips{
-		text-align: center;
-		height: 0.6rem;
-		line-height: 0.6rem;
-		color: #8f94a7;
-		font-size: 0.24rem;
+		background-color: #383b4e;
+		p{
+			height: 0.6rem;
+			line-height: 0.6rem;
+			text-align: center;
+			color: #686b7a;
+			font-size: 0.24rem;
+		}
+		li{
+			text-align: left;
+			text-indent: 1.5rem;
+			color: white;
+			line-height:0.4rem;
+			font-size: 0.24rem;
+		}
 	}
-	.details{
-		display: flex;
-		justify-content: space-between;
-		padding: 0 0.3rem;
-		flex-wrap: wrap;
-		.quoteBlock{
-			width: 3.3rem;
-			height: 2.4rem;
-			margin-top: 0.3rem;
-			box-shadow: 0rem 0.05rem 0.05rem 0rem rgba(0, 0, 0, 0.1);
-			border-radius: 0.1rem;
-			position: relative;
-			p{
-				line-height: 0.6rem;
-				&:nth-child(1){
-					font-size: 0.26rem;
-					color: #8f94a7;
-					text-indent: 0.3rem;
-				}	
-				&:nth-child(2){
-					font-size: 0.3rem;
-					color: #181722;
-					text-align: center;
-				}
-				&:nth-child(3){
-					font-size: 0.4rem;
-					text-align: center;
-					&.red{
-						color: #ff3363;
-						}
-					&.green{
-						color: #11d974;
-					}
-				}
-				&:nth-child(4){
-					text-align: center;
-					span{
-						font-size: 0.24rem;
-						&.red{
-							color: #ff3363;
-							}
-						&.green{
-							color: #11d974;
-						}
-					}
-				}
-			}
-			.icon_buy{
-				display: block;
-				width: 0.8rem;
-				height: 0.8rem;
-				position: absolute;
-				top: 0;
-				right: 0;
-				background: url(../assets/images/quote/quote_bug.png) no-repeat;
-				background-size: 0.8rem 0.8rem;
-			}
-			.icon_sell{
-				display: block;
-				width: 0.8rem;
-				height: 0.8rem;
-				position: absolute;
-				top: 0;
-				right: 0;
-				background: url(../assets/images/quote/quote_sell.png) no-repeat;
-				background-size: 0.8rem 0.8rem;
+	.CommodityList{
+		.listScoll{
+			overflow-y: scroll;
+			height: 8.45rem;
+			.checked{
+				background-color: #4c4f60;
 			}
 		}
+		.listName{
+				height: 1rem;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				border-bottom: 1px solid #000000;
+				span{
+					font-size: 0.28rem;
+					color: #9597a3;
+					&:nth-child(1){
+						margin-left: 0.3rem;
+						margin-right: 0.9rem;
+					}
+					&:nth-child(5){
+						/*margin-right: 0.3rem;*/
+					}
+				}
+				i{
+					display: inline-block;
+					width: 1rem;
+					height: 1rem;
+					color: white;
+					font-size: 0.3rem;
+					line-height: 1rem;
+					text-align: center;
+				}
+				.icon_buy{
+					background-color: #ff576e;
+				}
+				.icon_sell{
+					background-color: #14da8b;
+				}
+			}
+			.toDetails{
+				height: 0.8rem;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 0 0.3rem;
+				border-bottom: 1px solid #000000;
+				span{
+					color: #9597a3;
+				}
+			}
+		
+	}
+	.KLinePic{
+		height: 2.4rem;
+		width: 100%;
+		background-color: gray;
 	}
 </style>
