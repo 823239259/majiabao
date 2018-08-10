@@ -136,12 +136,12 @@
         ],
         newsList: [{
             img: require('../assets/images/home/img01.jpg'),
-            title: '#日本央行也不跟牌：维持利率不变',
+            title: '#中央财政出台保费补贴政策:下决心把种业搞上去',
             path: 'news_details/1'
           },
           {
             img: require('../assets/images/home/img02.jpg'),
-            title: '#老虎基金创始人：特朗普相当不错 值得更多肯定',
+            title: '#工信部：将推动区块链产业健康有序发展',
             path: 'news_details/2'
           },
           {
@@ -307,6 +307,7 @@
           .order1{
              order: -1;
              margin-left: 0;
+             padding-right: 0.1rem;
           }
           
       }
