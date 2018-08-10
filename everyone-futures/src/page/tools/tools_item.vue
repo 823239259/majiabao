@@ -36,13 +36,13 @@ export default {
     iframe () {
         switch (this.id) {
           case '1':
-            return 'http://exchangecalc.dktai.cn'
+            return 'http://futuretools.dktai.cn/exchangeCalc'
             break;
            case '2':
-            return 'http://contractsearch.dktai.cn';
+            return 'http://futuretools.dktai.cn/contractSearch';
             break;
            case '3':
-            return 'http://futurecalc.dktai.cn'
+            return 'http://futuretools.dktai.cn/futureCalc'
             break;    
         
           default:
