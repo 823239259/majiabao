@@ -37,9 +37,9 @@
 							<i :class="{icon_buy: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, icon_sell: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice ? "买" : "卖"}}</i>
 						</div>	
 						<transition  name="fade">
-							<div v-show="currentCheck == index">
+							<div v-if="currentCheck == index">
 								<div class="KLinePic" >
-							
+									<components :is="currentChartsView"></components>
 								</div>
 								<div class="toDetails" >
 									<span>开盘价:{{v.LastQuotation.OpenPrice}}</span>
@@ -67,6 +67,7 @@
 	import tipsFloat from '../components/tipsFloat'
 	import firstGuide from "./quote/firstGuide.vue"
 	import { Toast } from 'mint-ui';
+	import klineOne from './quote/klineOne.vue'
 	export default {
 		name: "",
 		data() {
@@ -77,15 +78,16 @@
 				showTip:false,
 				CommodityList:['期货名称','最新价','涨跌幅','涨跌额','买/卖'],
 				marketList:[],//全部列表分类
-				currentCheck:0
+				currentCheck:0,
+				currentChartsView:'klineOne'
 			}
 		},
 		components: {
 			bottomTab,
 			tipsFloat,
-			firstGuide
+			firstGuide,
+			klineOne
 		},
-
 		computed: {
 			parameters(){
 				return this.$store.state.market.Parameters;
@@ -93,13 +95,21 @@
 			quoteSocket(){
 				return this.$store.state.quoteSocket;
 			},
+			jsonData(){
+				return this.$store.state.market.jsonData;
+			},
+			jsonDataKline(){
+				return this.$store.state.market.jsonDataKline;
+			},
 		},
 		methods: {
 			...mapActions([
 				'initQuoteClient'
 			]),
 			changeCommodityNo:function(index){
+				this.currentCheck = 0;
 				this.currentChartsNum = index;
+				
 			},
 			changeTip:function(){
 				this.showTip =!this.showTip;
@@ -124,6 +134,7 @@
 						this.marketList = res.data;
 						if(this.quoteStatus == true) return;
 						this.$store.state.market.commodityOrder = res.data[0].list;
+						this.$store.state.market.currentdetail = res.data[0].list[0];
 						//初始化行情
 						if(this.$store.state.market.commodityOrder){
 							this.initQuoteClient();
@@ -134,20 +145,33 @@
 				});
 			},
 			showKline:function(index){
-				console.log(index)
+				this.$store.state.isshow.isklineshow = false;
 				this.currentCheck = index;
-			}
+				this.$store.state.market.currentdetail = this.$store.state.market.commodityOrder[index];
+			},
+			operateData: function(val){
+				//允许画图
+				this.$store.state.isshow.isfensInit = false;
+				//清空对比合约数据
+				this.$store.state.market.contrastData = [];
+				//渲染画图
+				this.currentChartsView = 'klineOne';
+			},
 		},
 		mounted: function() {
-			//获取所有合约
-			this.getCommodityInfo();
-			//获取交易ws地址
-			this.getTradeWsUrl();
+			
 		},
 		activated: function() {
 
 		},
 		created() {
+			//获取所有合约
+			this.getCommodityInfo();
+			//获取交易ws地址
+			this.getTradeWsUrl();
+			this.operateData();
+		},
+		beforeCreate(){
 			
 		},
 		filters:{
@@ -161,8 +185,10 @@
 		},
 		watch: {
 			currentChartsNum:function(n,o){
+				this.$store.state.isshow.isklineshow = false;
 				this.$store.state.market.Parameters = [];
 				this.$store.state.market.commodityOrder = [];
+				this.$store.state.market.currentdetail = this.marketList[n].list[0];
 				this.$store.state.market.commodityOrder = this.marketList[n].list;
 				this.marketList[n].list.forEach((o, i) => {
 					this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
@@ -277,8 +303,8 @@
 		
 	}
 	.KLinePic{
-		height: 2.4rem;
+		height: 3.7rem;
 		width: 100%;
-		background-color: gray;
+		background-color: white;
 	}
 </style>

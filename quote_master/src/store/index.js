@@ -31,6 +31,7 @@ var isshow = {
 		isfens: false,
 		iskline: false,
 		islight: false,
+		isbar:false,
 		isfensInit: false,
 		warningShow: false,
 		warningType: '',
@@ -454,12 +455,156 @@ export default new Vuex.Store({
 				}]
 			}
 		},
-		//设置K线图数据
-		setklineoption: function(state,strategyData) {
+		//设置bar图数据
+		srtbarDate:function(state){
 			// 引入 ECharts 主模块
 			var echarts = require('echarts/lib/echarts');
 			// 引入柱状图
 			require('echarts/lib/chart/bar');
+			require('echarts/lib/component/tooltip');
+			require('echarts/lib/component/markpoint');
+			require("echarts/lib/component/legend");
+			var dosizeL = state.market.currentdetail.DotSize;
+			var rawData = [];
+			var parameters = state.market.jsonDataKline.Parameters.Data;
+			var Len = parameters.length;
+			var lent = rawData.length;
+			var vol = [],
+				price = [],
+				time = [];
+			var Ktime;
+			state.market.jsonDataKline.Parameters.Data.slice(-40).forEach(function(e) {
+				vol.push(e[6]);
+				Ktime = e[0].split(' ')[1].split(':')[0] + ':' + e[0].split(' ')[1].split(':')[1];
+				if(Ktime == '00:00'){
+					time.push(e[0].split(' ')[0]);
+				}else{
+					time.push(e[0].split(' ')[1].split(':')[0] + ':' + e[0].split(' ')[1].split(':')[1]);
+				}
+				price.push(e[1]);
+			});
+			//成交量设置
+			state.market.option4 = {
+				grid: {
+					x: 43,
+					y: 30,
+					x2: 30,
+					y2: 20
+				},
+				tooltip: {
+					
+				},
+				xAxis: [{
+					type: 'category',
+					position: 'bottom',
+					boundaryGap: true,
+					axisTick: {
+						onGap: false
+					},
+//					splitLine: {
+//						show: true,
+//						interval : 8,
+//						lineStyle: {
+//							type:'dotted',
+//							color: ['gray']
+//						}
+//					},
+					axisLabel: {
+						textStyle: {
+							fontSize: 10,
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#8392A5'
+						}
+					},
+					data: time
+				}],
+				yAxis: [{
+					type: 'value',
+//					name: '成交量(万)',
+					axisLine: {
+						lineStyle: {
+							color: '#8392A5'
+						}
+					},
+					axisTick: {
+						show: false,
+					},
+					scale: true,
+					splitNumber:2,
+					axisLabel: {
+						margin: 3,
+						formatter: function(a) {
+							a = +a;
+							return isFinite(a) ? echarts.format.addCommas(+a / 10000) : '';
+						},
+						textStyle: {
+							fontSize: 10
+						},
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							type:'solid',
+							color: ['#bbf6ec']
+						}
+					}
+				}],
+				tooltip: {
+					backgroundColor:"#5534FF",
+					trigger: 'axis',
+					axisPointer: {
+						type: 'line',
+						animation: false,
+						lineStyle: {
+							color: '#8585a6',
+							width: 1,
+							opacity: 1
+						}
+					},
+					triggerOn: 'mousemove|click'
+				},
+				series: [{
+//					name: '成交量',
+					type: 'bar',
+					data: vol,
+					itemStyle: {
+                    normal: {
+                        color: "#ff3363"
+　　　　　　　　　　　　　
+                    }
+                },
+				}]
+			};
+		},
+		/*画柱形*/
+		drawBar:function(state,x){
+			// 引入 ECharts 主模块
+			var echarts = require('echarts/lib/echarts');
+			// 引入柱状图
+			require('echarts/lib/chart/bar');
+			require('echarts/lib/chart/line');
+			require('echarts/lib/component/tooltip');
+			require('echarts/lib/chart/candlestick');
+			var  volume;
+			if(state.isshow.isklineshow == false) {
+				volume = echarts.init(document.getElementById(x.id1));
+				volume.group = 'group2';
+				// 基于准备好的dom，初始化echarts实例
+				echarts.connect("group2");
+				state.isshow.isklineshow = true;
+			} else {
+				if(document.getElementById(x.id1) != null){
+					volume = echarts.getInstanceByDom(document.getElementById(x.id1));
+				}
+			}
+			volume.setOption(state.market.option4);
+		},
+		//设置K线图数据
+		setklineoption: function(state,strategyData) {
+			
 			require('echarts/lib/chart/line');
 			require('echarts/lib/component/tooltip');
 			require('echarts/lib/chart/candlestick');
@@ -765,105 +910,8 @@ export default new Vuex.Store({
 				}
 				price.push(e[1]);
 			});
-			//成交量设置
-			state.market.option4 = {
-				grid: {
-					x: 43,
-					y: 30,
-					x2: 30,
-					y2: 20
-				},
-				tooltip: {
-					
-				},
-				xAxis: [{
-					type: 'category',
-					position: 'bottom',
-					boundaryGap: true,
-					axisTick: {
-						onGap: false
-					},
-//					splitLine: {
-//						show: true,
-//						interval : 8,
-//						lineStyle: {
-//							type:'dotted',
-//							color: ['gray']
-//						}
-//					},
-					axisLabel: {
-						textStyle: {
-							fontSize: 10,
-						}
-					},
-					axisLine: {
-						lineStyle: {
-							color: '#8392A5'
-						}
-					},
-					data: time
-				}],
-				yAxis: [{
-					type: 'value',
-//					name: '成交量(万)',
-					axisLine: {
-						lineStyle: {
-							color: '#8392A5'
-						}
-					},
-					axisTick: {
-						show: false,
-					},
-					scale: true,
-					splitNumber:2,
-					axisLabel: {
-						margin: 3,
-						formatter: function(a) {
-							a = +a;
-							return isFinite(a) ? echarts.format.addCommas(+a / 10000) : '';
-						},
-						textStyle: {
-							fontSize: 10
-						},
-					},
-					splitLine: {
-						show: true,
-						lineStyle: {
-							type:'solid',
-							color: ['#bbf6ec']
-						}
-					}
-				}],
-				tooltip: {
-					backgroundColor:"#5534FF",
-					trigger: 'axis',
-					axisPointer: {
-						type: 'line',
-						animation: false,
-						lineStyle: {
-							color: '#8585a6',
-							width: 1,
-							opacity: 1
-						}
-					},
-					triggerOn: 'mousemove|click'
-				},
-				series: [{
-//					name: '成交量',
-					type: 'bar',
-					data: vol,
-					itemStyle: {
-                    normal: {
-                        color: "#ff3363"
-　　　　　　　　　　　　　
-                    }
-                },
-				}]
-			};
+			
 			var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-			if(h < 950){
-				state.market.option4.yAxis[0].axisLabel.show = false
-			}
 		},
 		//画K线图
 		drawkline: function(state, x) {
@@ -877,8 +925,6 @@ export default new Vuex.Store({
 			var kline, volume;
 			if(state.isshow.isklineshow == false) {
 				kline = echarts.init(document.getElementById(x.id1));
-				volume = echarts.init(document.getElementById(x.id2));
-				volume.group = 'group2';
 				kline.group = 'group2';
 				// 基于准备好的dom，初始化echarts实例
 				echarts.connect("group2");
@@ -887,12 +933,8 @@ export default new Vuex.Store({
 				if(document.getElementById(x.id1) != null){
 					kline = echarts.getInstanceByDom(document.getElementById(x.id1));
 				}
-				if(document.getElementById(x.id2) != null){
-					volume = echarts.getInstanceByDom(document.getElementById(x.id2));
-				}
 			}
 			kline.setOption(state.market.option3);
-			volume.setOption(state.market.option4);
 		},
 		//画分时图
 		drawfens: function(state, x) {
@@ -1637,8 +1679,7 @@ actions: {
 									}
 									context.commit('setklineoption',context.state.market.strategyData);
 									context.commit('drawkline', {
-										id1: 'kline',
-										id2: 'kline_volume'
+										id1: 'kline'
 									});
 								}
 							}
@@ -1664,8 +1705,13 @@ actions: {
 						if(context.state.isshow.iskline == true){
 							context.commit('setklineoption');
 							context.commit('drawkline', {
-								id1: 'kline',
-								id2: 'kline_volume'
+								id1: 'kline'
+							});
+						}
+						if(context.state.isshow.isbar == true){
+							context.commit('srtbarDate');
+							context.commit('drawBar', {
+								id1: 'bar'
 							});
 						}
 					}
