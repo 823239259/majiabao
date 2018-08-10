@@ -944,27 +944,21 @@ export default new Vuex.Store({
 			require('echarts/lib/chart/bar');
 			require('echarts/lib/chart/line');
 			require('echarts/lib/component/tooltip');
-			var fens, volume;
+			var fens;
 			if(state.isshow.isfensshow == false) {
-				volume = echarts.init(document.getElementById(x.id1));
-				volume.group = 'group1';
+				console.log("111111111111111")
 				// 基于准备好的dom，初始化echarts实例
-				fens = echarts.init(document.getElementById(x.id2));
+				fens = echarts.init(document.getElementById(x.id1));
 				fens.group = 'group1';
 				echarts.connect("group1");
 				state.isshow.isfensshow = true;
 			} else {
 				if(document.getElementById(x.id1) != null){
-					volume = echarts.getInstanceByDom(document.getElementById(x.id1));
-				}
-				if(document.getElementById(x.id2) != null){
-					fens = echarts.getInstanceByDom(document.getElementById(x.id2));
+					fens = echarts.getInstanceByDom(document.getElementById(x.id1));
 				}
 			}
 			fens.setOption(state.market.option1);
-			volume.setOption(state.market.option2, true);
 			fens.resize();
-			volume.resize();
 		},
 		//设置分时图数据
 		setfensoption: function(state, arr) {
@@ -974,7 +968,10 @@ export default new Vuex.Store({
 				price = [],
 				time = [];
 			var dosizeL = state.market.currentdetail.DotSize;
+			console.log("000000000000000000000000")
+			console.log(state.market.jsonData[state.market.currentNo])
 			if(state.market.jsonData[state.market.currentNo] != undefined && state.market.jsonData[state.market.currentNo].Parameters.Data != null){
+				console.log("//////////////////////")
 				state.market.jsonData[state.market.currentNo].Parameters.Data.forEach(function(e) {
 					vol.push(e[6]);
 					time.push(e[0].split(' ')[1].split(':')[0] + ':' + e[0].split(' ')[1].split(':')[1]);
@@ -1070,93 +1067,6 @@ export default new Vuex.Store({
 			if(h < 950){
 				state.market.option1.yAxis[0].axisLabel.show = false
 			}
-			state.market.option2 = {
-				grid: {
-					x: 50,
-					y: 20,
-					x2: 30,
-					y2: 5
-				},
-				tooltip: {
-					backgroundColor:'#5534FF',
-					show: true,
-					transitionDuration: 0,
-					trigger: 'axis',
-					axisPointer: {
-						type: 'line',
-						animation: false,
-						lineStyle: {
-							color: '#5534FF',
-							width: 1,
-							opacity: 1
-						}
-					},
-					formatter: function(params) {
-						var time = params[0].name;
-						if(time == null || time == "") return;
-						var html = '时间:' + time + '<br/>';
-						if(params.length == 1){
-							html += params[0].seriesName + '价格: ' + params[0].value + '<br/>';
-						}else{
-							html += params[0].seriesName + '价格: ' + params[0].value + '<br/>';
-							params.forEach((o, i) => {
-								state.market.scale.forEach((v, k) => {
-									if(o.seriesName == v.commodityNo){
-										html += o.seriesName + '价格: ' + parseFloat(o.value*v.scale).toFixed(state.market.orderTemplist[v.commodityNo].DotSize) + '<br/>';
-									}
-								});
-								
-							});
-						}
-						return html;
-					},
-				},
-				toolbox: {
-					show: false,
-				},
-				animation: false,
-				xAxis: [{
-					type: 'category',
-					show: false,
-					data: time,
-					axisLine: {
-						lineStyle: {
-							color: '#8392A5'
-						}
-					},
-					boundaryGap: true
-				}],
-				yAxis: [{
-					type: 'value',
-					scale: true,
-					position: "left",
-					axisTick: {
-						show: false,
-					},
-					axisLine: {
-						lineStyle: {
-							color: '#8392A5'
-						}
-					},
-					splitArea: {
-						show: false
-					},
-					axisLabel: {
-						inside: false,
-						margin: 3,
-						textStyle: {
-							fontSize: 10
-						}
-					},
-					splitLine: {
-						show: true,
-						lineStyle: {
-							color: "#8392A5"
-						}
-					}
-				}],
-				series: optionDatas
-			};
 		},
     },
 actions: {
@@ -1319,7 +1229,6 @@ actions: {
 										context.commit('setfensoption', context.state.market.contrastData);
 										context.commit('drawfens', {
 											id1: 'fens',
-											id2: 'volume'
 										});
 										context.state.market.charttimetemp = 0;
 									} else {
@@ -1691,10 +1600,10 @@ actions: {
 						context.state.market.jsonData[data.Parameters.CommodityNo] = data;
 						if(context.state.isshow.isfensInit == true) return;
 						if(context.state.isshow.isfens == true){
+							console.log("``````````````````````````")
 							context.commit('setfensoption');
 							context.commit('drawfens', {
 								id1: 'fens',
-								id2: 'volume'
 							});
 						}
 					}else{

@@ -67,7 +67,7 @@
 	import tipsFloat from '../components/tipsFloat'
 	import firstGuide from "./quote/firstGuide.vue"
 	import { Toast } from 'mint-ui';
-	import klineOne from './quote/klineOne.vue'
+	import fens from './quote/fens.vue'
 	export default {
 		name: "",
 		data() {
@@ -79,14 +79,14 @@
 				CommodityList:['期货名称','最新价','涨跌幅','涨跌额','买/卖'],
 				marketList:[],//全部列表分类
 				currentCheck:0,
-				currentChartsView:'klineOne'
+				currentChartsView:'fens'
 			}
 		},
 		components: {
 			bottomTab,
 			tipsFloat,
 			firstGuide,
-			klineOne
+			fens
 		},
 		computed: {
 			parameters(){
@@ -135,6 +135,7 @@
 						if(this.quoteStatus == true) return;
 						this.$store.state.market.commodityOrder = res.data[0].list;
 						this.$store.state.market.currentdetail = res.data[0].list[0];
+						this.$store.state.market.currentNo  = this.$store.state.market.currentdetail.currentNo;
 						//初始化行情
 						if(this.$store.state.market.commodityOrder && this.$store.state.account.quoteStatus == false){
 							this.initQuoteClient();
@@ -145,9 +146,10 @@
 				});
 			},
 			showKline:function(index){
-				this.$store.state.isshow.isklineshow = false;
+				this.$store.state.isshow.isfensshow = false;
 				this.currentCheck = index;
 				this.$store.state.market.currentdetail = this.$store.state.market.commodityOrder[index];
+				this.$store.state.market.currentNo  = this.$store.state.market.commodityOrder[index].currentNo
 			},
 			operateData: function(val){
 				//允许画图
@@ -155,7 +157,7 @@
 				//清空对比合约数据
 				this.$store.state.market.contrastData = [];
 				//渲染画图
-				this.currentChartsView = 'klineOne';
+				this.currentChartsView = 'fens';
 			},
 		},
 		mounted: function() {
@@ -185,10 +187,11 @@
 		},
 		watch: {
 			currentChartsNum:function(n,o){
-				this.$store.state.isshow.isklineshow = false;
+				this.$store.state.isshow.isfensshow = false;
 				this.$store.state.market.Parameters = [];
 				this.$store.state.market.commodityOrder = [];
 				this.$store.state.market.currentdetail = this.marketList[n].list[0];
+				this.$store.state.market.currentNo = this.$store.state.market.currentdetail.currentNo;
 				this.$store.state.market.commodityOrder = this.marketList[n].list;
 				this.marketList[n].list.forEach((o, i) => {
 					this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
