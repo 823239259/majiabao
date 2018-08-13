@@ -24,6 +24,7 @@
 		created(){
 			this.$store.state.isshow.iskline = true;
 			this.$store.state.market.selectTime = 1;
+			console.log(this.currentdetail)
 			var data = {
 				Method: "QryHistory",
 				Parameters:{

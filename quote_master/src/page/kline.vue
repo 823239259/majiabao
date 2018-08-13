@@ -41,7 +41,7 @@
 								<div class="KLinePic" >
 									<components :is="currentChartsView"></components>
 								</div>
-								<div class="toDetails" >
+								<div class="toDetails" @click="toDetails(v.CommodityNo, v.MainContract, v.ExchangeNo, v.contrast)">
 									<span>开盘价:{{v.LastQuotation.OpenPrice}}</span>
 									<span>查看更多数据></span>
 								</div>
@@ -106,6 +106,9 @@
 			...mapActions([
 				'initQuoteClient'
 			]),
+			toDetails: function(commodityNo, mainContract, exchangeNo, contrast){
+				this.$router.push({path: '/klineDetails', query: {'commodityNo': commodityNo, 'mainContract': mainContract, 'exchangeNo': exchangeNo, 'contrast': contrast}});
+			},
 			changeCommodityNo:function(index){
 				this.currentCheck = 0;
 				this.currentChartsNum = index;
