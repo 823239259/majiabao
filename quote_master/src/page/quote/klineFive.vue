@@ -17,9 +17,11 @@
 			}
 		},
 		mounted: function(){
+			
 			let h = this.$parent.chartsHight;
 			$("#kline").css('height', h/10*6.9 + 'rem');
 			$("#kline_volume").css('height', h/10*3 + 'rem');
+			console.log(document.getElementById('kline'))
 			this.$store.state.isshow.iskline = true;
 			this.$store.state.market.selectTime = 5;
 			var data = {
@@ -44,5 +46,11 @@
 	#fens, #volume{
 		width: 100%;
 		margin: 0 auto;
+	}
+	#kline{
+		height: 4.66rem;
+	}
+	#kline_volume{
+		height: 1.62rem;
 	}
 </style>
