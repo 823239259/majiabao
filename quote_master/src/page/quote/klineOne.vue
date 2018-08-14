@@ -19,6 +19,7 @@
 		mounted: function(){
 			let h = this.$parent.chartsHight;
 			$("#kline").css('height', h/10*7.9 + 'rem');
+			console.log(document.getElementById('kline'))
 			$("#kline_volume").css('height', h/10*3 + 'rem');
 			this.$store.state.isshow.iskline = true;
 			this.$store.state.market.selectTime = 1;
@@ -35,7 +36,8 @@
 				}
 			};
 			this.quoteSocket.send(JSON.stringify(data));
-		}
+		},
+		
 	}
 </script>
 
@@ -45,4 +47,11 @@
 		width: 100%;
 		margin: 0 auto;
 	}
+	#kline{
+		height: 4.66rem;
+	}
+	#kline_volume{
+		height: 1.62rem;
+	}
+	
 </style>

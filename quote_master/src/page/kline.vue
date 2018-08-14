@@ -225,6 +225,12 @@
 					});
 				}
 			},
+		},
+		beforeRouteLeave (to, from, next) {
+			this.$children[2].$destroy()
+			//console.log(this.$children[2])
+			next()
+			// ...
 		}
 	}
 </script>

@@ -500,6 +500,7 @@
 		mounted: function() {
 			//重组数据
 			this.operateData();
+			this.menuEvent(0)
 		},
 		activated: function() {
 			this.currentNo = this.$route.query.commodityNo;
