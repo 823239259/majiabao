@@ -1,5 +1,5 @@
 .mint-header{
-    background-color: #2a2f42;
+    background-color: #383b4e;
     height: 0.96rem;
     line-height: 0.96rem;
     width: 7.5rem;
@@ -100,7 +100,13 @@
 // }
 .mint-msgbox-confirm{
     color: #169781;   
-    font-size: 0.28rem;
+    
+}
+.mint-msgbox-btn{
+    font-size: 0.32rem;
+}
+.mint-msgbox-message {
+    color: #868686
 }
 .mint-msgbox-input{
     input{

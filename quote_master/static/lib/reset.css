@@ -105,7 +105,7 @@ input,textarea {
 *:not(input):not(textarea) {
   /* -webkit-user-select: none */
 }
-* { touch-action: none; }  /* 阻止touchmove事件滚动的问题*/
+/* * { touch-action: none; }  阻止touchmove事件滚动的问题 */
 iframe{
 	border: none
 }

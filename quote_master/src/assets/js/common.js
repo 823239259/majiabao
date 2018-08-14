@@ -396,12 +396,12 @@ pro = {
 				this.sheetVisible = true
 			},
 			callPhone:function(){
-				window.location.href = 'tel://' + 40086291034;
+				window.location.href = 'tel://' + 4008431089;
 			},
 			shareSystem () {
 				//console.log(123)
 				var test1 = {
-				  content: '给您分享一款专业的期货行情资讯工具应用，为您提供专业的期货行情资讯、期货小工具、以及专业的期货管家助手，您可以直接用App Store搜索下载【期货管家】即可',
+				  content: '给您分享一款专业的期货行情资讯工具应用，请在苹果应用商店搜索“期货行情大师”，效果好极了',
 				  //href: 'https://www.baidu.com'
 				}
 				pro.shareSystem(test1)

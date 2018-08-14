@@ -150,9 +150,17 @@ const router = new Router({
       props: true
     },
     
+    {
+    	path:"/teach",
+    	name:"teach",
+    	component:load('account/my/teach')
+    },
 
-
-
+    {
+    	path:"/focusNews",
+    	name:"focusNews",
+    	component:load('datas/focusNews')
+    },
     {
     	path:"/kline",
     	name:"kline",
@@ -238,6 +246,7 @@ const router = new Router({
     	name:'search',
     	component:load('quote/search')
     }
+    
   ],
 
 })

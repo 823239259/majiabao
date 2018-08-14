@@ -53,8 +53,8 @@ export default {
             return 'http://m.yn.com/quotes/XPT.html'
             break;  
           case '5':
-            //return 'http://m.yn.com/data/'
-            return 'mydata.html'
+            return 'http://m.yn.com/data/'
+            //return 'mydata.html'
             break;  
         
           default:
@@ -76,7 +76,7 @@ export default {
   },
    methods: {
       goBack() {
-          this.$router.replace('/discover')
+          this.$router.replace('/my')
           //window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
           //history.go(-1);
       },

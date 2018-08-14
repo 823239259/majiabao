@@ -35,7 +35,7 @@
       </div>
     </div>
     <div class="user_wrap">
-      <div class="box">
+      <div class="box" id="draggle_box">
          <ul class="user_list">
             <li class="item draggle" v-for="(item, index) in serversList" :key="index">
               <img 
@@ -44,7 +44,7 @@
               :src="item.img" 
               @touchstart="handleDraggleStart"
               @touchmove="handleDraggleMove(index, $event)"
-              @touchend="handleDraggleEnd"
+              @touchend="handleDraggleEnd(item, $event)"
               title="img" />
               <p>{{item.name}}</p>
             </li>
@@ -57,14 +57,15 @@
           <div class="flex_item">
             <img class="img" src="../assets/images/my/header_icon.png" alt="header_icon">
           </div>
-          <div class="flex_item text">18200295560</div>
+          <div class="flex_item text">{{mobileHidden(userInfo.username)}}</div>
       </template>
       <template v-else>
-        <button>登录</button>
-        <button>注册</button>
+        <button @click="goto('/login')">登录</button>
+        <button  @click="goto('/register')">注册</button>
       </template>
     </div>
     <bottomTab :tabSelect="tabSelected"></bottomTab>
+    <mt-actionsheet :actions="actions" v-model="sheetVisible"></mt-actionsheet>
   </div>
 </template>
 
@@ -130,126 +131,63 @@
         isShow: false,
         tabShow: true,
         idList: [],
-        list: [
-          {
-            name: '消息中心',
-            path: "/list/messages"
-          },
-          {
-            name: '近期热门',
-            path: '/news_details/1'
-          },
-          {
-            name: '活动中心',
-            path: "/activity_list"
-          },
-          // {
-          //   name: '在线客服',
-          //   path: '/service_online'
-          // },
-          {
-            name: '删除缓存',
-            method: 'deleteStore'
-          },
-          {
-            name: '关于我们',
-            path: "/about_us"
-          },
-          {
-            name: '电话客服',
-            method: 'callCustomer'
-          },
-          {
-            name: '新人学堂',
-            path: '/list/class'
-          },
-          {
-            name: '规则检索',
-            path: '/contract_search'
-          },
-          {
-            name: '数据工具',
-            path: '/tools_item/5'
-          },
-          {
-            name: '意见反馈',
-            path: '/tell_us'
-          },
-          {
-            name: '日历工具',
-            path: '/message'
-          },
-          {
-            name: '换算工具',
-            path: '/futures_calc'
-          },
-          {
-            name: '币种换算',
-            path: '/exchange_calc'
-          },
-          {
-            name: '其他行情',
-            path: '/tools_item/1'
-          },
-          {
-            name: '发现工具',
-            path: '/discover'
-          },
-          {
-            name: '视频教学',
-            path: '/class_room'
-          },
-          {
-            name: '更多内容',
-            method: 'moreContent'
-          }
-        ],
         userInfo: {},
         lastPath: '/',
         userList: [],
         serversList: [{
           name: '出口价格',
           img: require('../assets/images/my/chukou_icon.png'),
+          path: '/futures_calc'
         },
         {
           name: '拨打热线',
           img: require('../assets/images/my/rexian_icon.png'),
+          method: 'callCustomer'
         },
         {
           name: '在线咨询',
           img: require('../assets/images/my/zixun_icon.png'),
+          path:"/service_online",
         },
         {
           name: '金融数据',
           img: require('../assets/images/my/jinrong_icon.png'),
+          path:"/tools_item/5",
         },
         {
           name: '投资教育',
           img: require('../assets/images/my/jiaoyu_icon.png'),
+          path:"/teach",
         },
         {
           name: 'BUG反馈',
           img: require('../assets/images/my/bug_icon.png'),
+          path: '/tell_us'
         },
         {
           name: '收藏中心',
           img: require('../assets/images/my/shouchang_icon.png'),
+
         },
         {
           name: '热门时事',
           img: require('../assets/images/my/remen_icon.png'),
+          path:"/focusNews"
         },
         {
           name: '我们是谁',
           img: require('../assets/images/my/woshi_icon.png'),
+          path: "/about_us"
         },
         {
           name: '推荐应用',
           img: require('../assets/images/my/tuijian_icon.png'),
+          method: 'shareSystem'
         },
         {
           name: '清理垃圾',
           img: require('../assets/images/my/qingli_icon.png'),
+          method: 'deleteStore'
         },
         
         ],
@@ -294,6 +232,15 @@
         setAccountInfo: 'ACCOUNT_INFO',
         clearUserInfo: 'INFO_CLEAR',
       }),
+      itemClick (item) {
+				if(item.path) {
+					this.$router.push({path: item.path})
+				}
+				if(item.method){
+					console.log(item.method)
+					this[item.method]()
+				}
+      },
       goLast() {
         this.$router.push(this.lastPath);
       },
@@ -370,9 +317,8 @@
           }
         })
       },
-  
       deleteStore() {
-        this.$messagebox.confirm('是否确认删除缓存?',{
+        this.$messagebox.confirm('是否删除缓存?',{
           title: '提示',
 
         }).then(action => {
@@ -426,7 +372,9 @@
       handleDraggleStart (e) {
           var touches = e.touches[0];
           var block = e.target;
-          this.oW = touches.clientX - block.offsetLeft; //点击点到左边的距离
+          var BoxScrollLeft = document.getElementById('draggle_box').scrollLeft;
+          //console.log(document.getElementsByClassName('user_list')[0].scrollLeft)
+          this.oW = touches.clientX - block.offsetLeft + BoxScrollLeft; //点击点到左边的距离
           this.oH = touches.clientY - block.offsetTop;  //点击点到顶部的距离
           //阻止页面的滑动默认事件
           window.addEventListener("touchmove",this.defaultEvent,{ passive: false });
@@ -454,7 +402,7 @@
         block.style.left = oLeft + "px";
         block.style.top = oTop + "px";
       },
-      handleDraggleEnd (e) {
+      handleDraggleEnd (item, e) {
         //放置区间
         var content = document.getElementsByClassName('traggle_content')[0]
         var block = e.target;
@@ -483,6 +431,7 @@
         
         if((oLeft>=Cleft&&oLeft<=Cright - myWidth)&&(oTop>=Ctop&&oTop <= Cbottom - myHight)){
           console.log(1)
+          this.itemClick(item)
           //this.clearClone(block)
         }else{
          // this.clearClone(block)
@@ -500,6 +449,9 @@
         block.style.position = 'static' ;
         this.IsClone = true
       },
+      mobileHidden (num) {
+        return pro.mobileHidden(num)
+      }
      
     },
     created() {
@@ -512,7 +464,6 @@
     },
     activated() {
     	this.$store.state.market.Parameters = [];
-    	this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + "NYMEX" + '","CommodityNo":"' + "CL" + '","ContractNo":"' + "1808" +'"}}');
       this.userInfo = local.get('user')
       this.userList = local.get('userList') || []
       this.idList = local.get('idList') || []
@@ -520,7 +471,6 @@
       if (this.userInfo) {
         this.getUserInfo()
       }
-      this.moveCircle()
   
     },
     filters:{
@@ -633,6 +583,7 @@
     width: 7.5rem;
     border-bottom: 0.2rem solid #383b4e;
     .box{
+       width: 7.5rem;
       overflow-x: scroll;
     }
     .user_list{
