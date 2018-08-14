@@ -1,6 +1,7 @@
 <template>
 	<div id="echarts">
 		<div id="kline"></div>
+		<div id="kline_volume"></div>
 	</div>
 </template>
 
@@ -16,21 +17,17 @@
 			}
 		},
 		mounted: function(){
-			
-		},
-		activated:function(){
-			
-		},
-		created(){
+			let h = this.$parent.chartsHight;
+			$("#kline").css('height', h/10*7.9 + 'rem');
+			$("#kline_volume").css('height', h/10*3 + 'rem');
 			this.$store.state.isshow.iskline = true;
 			this.$store.state.market.selectTime = 1;
-			console.log(this.currentdetail)
 			var data = {
 				Method: "QryHistory",
 				Parameters:{
-					ExchangeNo: this.currentdetail.exchangeNo,
-					CommodityNo: this.currentdetail.commodityNo,
-					ContractNo: this.currentdetail.contractNo,
+					ExchangeNo: this.currentdetail.ExchangeNo,
+					CommodityNo: this.currentdetail.CommodityNo,
+					ContractNo: this.currentdetail.MainContract,
 					HisQuoteType: 1,
 					BeginTime: "",
 					EndTime: "",
@@ -38,8 +35,7 @@
 				}
 			};
 			this.quoteSocket.send(JSON.stringify(data));
-		},
-		watch:{}
+		}
 	}
 </script>
 
@@ -48,11 +44,5 @@
 	#fens, #volume{
 		width: 100%;
 		margin: 0 auto;
-	}
-	#echarts{
-		height: 5.4rem;
-	}
-	#kline{
-		height: 3.7rem;
 	}
 </style>

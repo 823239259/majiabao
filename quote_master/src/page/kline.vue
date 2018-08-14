@@ -29,7 +29,7 @@
 				</div>
 				<div class="listScoll">
 					<div  v-for="(v, index) in parameters">
-						<div class="listName"   :class="{checked : currentCheck == index}" @click="showKline(index)" >
+						<div class="listName"   :class="{checked : currentCheck == index}" @click="showKline(index,v.CommodityNo)" >
 							<span>{{v.CommodityName}}</span>
 							<span :class="{red: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.LastPrice | fixNum(v.DotSize)}}</span>
 							<span :class="{green: v.LastQuotation.ChangeRate < 0, red: v.LastQuotation.ChangeRate > 0}">{{v.LastQuotation.ChangeRate | fixNumTwo}}%</span>
@@ -79,7 +79,9 @@
 				CommodityList:['期货名称','最新价','涨跌幅','涨跌额','买/卖'],
 				marketList:[],//全部列表分类
 				currentCheck:0,
-				currentChartsView:'klineOne'
+				currentChartsView:'klineOne',
+				chartsHight:5.4,
+				currentNo:''
 			}
 		},
 		components: {
@@ -137,26 +139,27 @@
 						this.marketList = res.data;
 						if(this.quoteStatus == true) return;
 						this.$store.state.market.commodityOrder = res.data[0].list;
-						this.$store.state.market.currentdetail = res.data[0].list[0];
+						this.currentNo = res.data[0].list[0].commodityNo;
+						this.$store.state.market.currentNo = this.currentNo;
 						//初始化行情
 						if(this.$store.state.market.commodityOrder && this.$store.state.account.quoteStatus == false){
 							this.initQuoteClient();
+//							this.operateData();
 						}
 					}
 				}).catch((err) => {
 					Toast({message: err.data.message, position: 'bottom', duration: 2000});
 				});
 			},
-			showKline:function(index){
+			showKline:function(index,commodity){
 				this.$store.state.isshow.isklineshow = false;
 				this.currentCheck = index;
-				this.$store.state.market.currentdetail = this.$store.state.market.commodityOrder[index];
+				this.currentNo = commodity;
+				this.$store.state.market.currentNo = commodity;
 			},
 			operateData: function(val){
 				//允许画图
 				this.$store.state.isshow.isfensInit = false;
-				//清空对比合约数据
-				this.$store.state.market.contrastData = [];
 				//渲染画图
 				this.currentChartsView = 'klineOne';
 			},
@@ -165,14 +168,16 @@
 			
 		},
 		activated: function() {
-
+				this.$store.state.isshow.isfensshow = false;
+				this.$store.state.isshow.isklineshow = false;
+				this.$store.state.isshow.islightshow = false;
+				this.currentChartsView = 'klineOne';
 		},
 		created() {
 			//获取所有合约
 			this.getCommodityInfo();
 			//获取交易ws地址
 			this.getTradeWsUrl();
-			this.operateData();
 		},
 		beforeCreate(){
 			
@@ -191,12 +196,35 @@
 				this.$store.state.isshow.isklineshow = false;
 				this.$store.state.market.Parameters = [];
 				this.$store.state.market.commodityOrder = [];
-				this.$store.state.market.currentdetail = this.marketList[n].list[0];
 				this.$store.state.market.commodityOrder = this.marketList[n].list;
 				this.marketList[n].list.forEach((o, i) => {
 					this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
 				});
-			}
+			},
+			currentNo:function(n,o){
+				if(n!=o){
+					this.parameters.forEach((t, i) => {
+						if(t.CommodityNo == n){
+							this.$store.state.isshow.isfensshow = false;
+							this.$store.state.isshow.isklineshow = false;
+							this.$store.state.isshow.islightshow = false;
+							this.$store.state.isshow.isfensInit = false;
+							this.$store.state.market.currentdetail = t;
+							return;
+						}
+					});
+				}
+			},
+			parameters: function(n, o){
+				if(n && n.length == 1){
+					this.parameters.forEach((o, i) => {
+						if(o.CommodityNo == this.currentNo){
+							this.$store.state.market.currentdetail = o;
+							return;
+						}
+					});
+				}
+			},
 		}
 	}
 </script>
@@ -306,7 +334,7 @@
 		
 	}
 	.KLinePic{
-		height: 3.7rem;
+		height: 6.5rem;
 		width: 100%;
 		background-color: white;
 	}
