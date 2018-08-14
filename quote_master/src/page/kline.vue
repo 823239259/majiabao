@@ -114,7 +114,6 @@
 			changeCommodityNo:function(index){
 				this.currentCheck = 0;
 				this.currentChartsNum = index;
-				
 			},
 			changeTip:function(){
 				this.showTip =!this.showTip;

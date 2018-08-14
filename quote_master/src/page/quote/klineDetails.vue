@@ -1,7 +1,7 @@
 <template>
 	<div id="klineDetails">
 		<template v-for="(v, index) in parameters">
-			<div v-if="v.CommodityNo == currentNo">
+			<div v-show="v.CommodityNo == currentNo">
 				<mt-header fixed title="k线数据详情">
 					<mt-button slot="left">
 						<span class="header_icon"></span>
