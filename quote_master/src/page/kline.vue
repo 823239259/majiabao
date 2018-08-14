@@ -144,7 +144,7 @@
 						//初始化行情
 						if(this.$store.state.market.commodityOrder && this.$store.state.account.quoteStatus == false){
 							this.initQuoteClient();
-//							this.operateData();
+							this.operateData();
 						}
 					}
 				}).catch((err) => {
@@ -161,7 +161,6 @@
 				//允许画图
 				this.$store.state.isshow.isfensInit = false;
 				//渲染画图
-				this.currentChartsView = 'klineOne';
 			},
 		},
 		mounted: function() {
@@ -171,7 +170,6 @@
 				this.$store.state.isshow.isfensshow = false;
 				this.$store.state.isshow.isklineshow = false;
 				this.$store.state.isshow.islightshow = false;
-				this.currentChartsView = 'klineOne';
 		},
 		created() {
 			//获取所有合约

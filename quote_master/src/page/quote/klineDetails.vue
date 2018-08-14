@@ -113,7 +113,7 @@
 					<div class="black"></div>
 					<div class="name">买家趋势</div>
 					<div class="buySell">
-
+						<div id="pie1"></div>
 					</div>
 					<div class="black"></div>
 					<div class="name">对比合约</div>
@@ -158,6 +158,15 @@
 	import klineFive from './klineFive.vue'
 	import klineOneHour from './klineOneHour.vue'
 	import fens from './fens.vue'
+	let echarts = require('echarts/lib/echarts');
+  	// 引入饼图组件
+  	require('echarts/lib/chart/pie');
+  	// 引入提示框和图例组件
+  	require('echarts/lib/component/title');
+  	require('echarts/lib/component/tooltip');
+  	require('echarts/lib/component/legend');
+  	require("echarts/lib/component/legendScroll");
+
 	export default {
 		name: "klineDetails",
 		mixins: [pro.mixinsToCustomer],
@@ -238,6 +247,55 @@
 			...mapMutations([
 				'setfensoption', 'drawfens', 'setklineoption', 'drawkline'
 			]),
+			drawPie:function(){
+				console.log(this)
+				let mycharts = echarts.init(document.getElementById('pie1'));
+				var option = {
+				    tooltip: {
+				        trigger: 'item',
+				        formatter: "{a} <br/>{b}: {c} ({d}%)"
+				    },
+				    legend: {
+				        orient: 'vertical',
+				        x: 'left',
+				        data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+				    },
+				    series: [
+				        {
+				            name:'访问来源',
+				            type:'pie',
+				            radius: ['50%', '70%'],
+				            avoidLabelOverlap: false,
+				            label: {
+				                normal: {
+				                    show: false,
+				                    position: 'center'
+				                },
+				                emphasis: {
+				                    show: true,
+				                    textStyle: {
+				                        fontSize: '30',
+				                        fontWeight: 'bold'
+				                    }
+				                }
+				            },
+				            labelLine: {
+				                normal: {
+				                    show: false
+				                }
+				            },
+				            data:[
+				                {value:335, name:'直接访问'},
+				                {value:310, name:'邮件营销'},
+				                {value:234, name:'联盟广告'},
+				                {value:135, name:'视频广告'},
+				                {value:1548, name:'搜索引擎'}
+				            ]
+				        }
+				    ]
+				}
+				mycharts.setOption(option);
+			},
 			baifenbi(a, b) {
 				a = Number(a)
 				b = Number(b)
@@ -262,11 +320,11 @@
 				});
 			},
 			operateData: function() {
+				this.chartsShow = true;
 				//允许画图
 				this.$store.state.isshow.isfensInit = false;
-					this.$store.state.isshow.iskline = false;
+//				this.$store.state.isshow.iskline = false;
 				//渲染画图
-				this.chartsShow = true;
 				this.currentChartsNum = 0;
 				this.currentChartsView = 'klineOne';
 //				this.$store.state.isshow.isfensshow = false;
@@ -500,6 +558,7 @@
 		mounted: function() {
 			//重组数据
 			this.operateData();
+			this.drawPie();
 		},
 		activated: function() {
 			this.currentNo = this.$route.query.commodityNo;
@@ -640,10 +699,14 @@
 					height: 1.9rem;
 					background-color: #ff9207;
 					border-radius: 0.35rem 0.35rem 0.1rem 0.1rem;
+					text-align: center;
 					p{
+						margin-top: 0.1rem;
 						display: inline-block;
 						width: 0.1rem;
 						height: 1.9rem;
+						color: white;
+						 word-wrap: break-word;
 					}
 
 				}
@@ -705,8 +768,13 @@
 	.buySell {
 		width: 100%;
 		height: 3.62rem;
+		
 	}
-	
+	#pie1{
+		width: 7.5rem;
+		height: 3rem;
+		background-color: white;
+	}
 	.currentCommodityNo {
 		padding: 0 0.3rem;
 		height: 0.8rem;

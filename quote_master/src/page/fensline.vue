@@ -8,9 +8,6 @@
 			</mt-button>
 		</mt-header>
 		<div id="container">
-			<div class="tab">
-				<span v-for="(k,index) in tabList" :class="{current: currentChartsNum == index}" @click="changeCommodityNo(index)">{{k}}</span>
-			</div>
 			<div class="tips">
 				<p @click="changeTip">使用说明</p>
 				<transition  name="fade">
@@ -73,7 +70,6 @@
 		data() {
 			return {
 				tabSelected: 'fensline',
-				tabList:['商','股',"汇",'LIME','率','BIT'],
 				currentChartsNum:0,
 				showTip:false,
 				CommodityList:['期货名称','最新价','涨跌幅','涨跌额','买/卖'],
@@ -106,11 +102,6 @@
 			...mapActions([
 				'initQuoteClient'
 			]),
-			changeCommodityNo:function(index){
-				this.currentCheck = 0;
-				this.currentChartsNum = index;
-				
-			},
 			changeTip:function(){
 				this.showTip =!this.showTip;
 			},

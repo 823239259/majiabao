@@ -851,7 +851,6 @@ export default new Vuex.Store({
 			require('echarts/lib/chart/candlestick');
 			var kline, volume;
 			if(state.isshow.isklineshow == false) {
-				console.log("999999")
 				kline = echarts.init(document.getElementById(x.id1));
 				volume = echarts.init(document.getElementById(x.id2));
 				volume.group = 'group2';
