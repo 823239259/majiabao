@@ -357,6 +357,7 @@ export default new Vuex.Store({
 		},
 		//画闪电图
 		drawlight: function(state, e) {
+			console.log("=============")
 			// 引入 ECharts 主模块
 			var echarts = require('echarts/lib/echarts');
 			// 引入柱状图
@@ -376,6 +377,7 @@ export default new Vuex.Store({
 		},
 		//设置闪电图数据
 		setlightDate: function(state) {
+			console.log("-------------------")
 			state.market.jsonTow.Parameters = state.market.currentdetail.LastQuotation;
 			var TimeLength = state.market.lightChartTime.time.length;
 			state.market.lightChartTime.price.push(state.market.jsonTow.Parameters.LastPrice.toFixed(state.market.currentdetail.DotSize));
@@ -1264,8 +1266,10 @@ actions: {
 								//更新闪电图
 								if(context.state.isshow.islightshow == true && context.state.isshow.islight == true) {
 									context.state.market.jsonTow = JSON.parse(evt.data);
-									context.commit('setlightDate');
-									context.commit('drawlight', 'light');
+									setTimeout(() => {
+										context.commit('setlightDate');
+										context.commit('drawlight', 'light');
+									}, 100);
 								}
 								//更新K线图
 								if(context.state.isshow.isklineshow == true && context.state.isshow.iskline == true) {
@@ -1626,11 +1630,13 @@ actions: {
 						context.state.market.jsonData[data.Parameters.CommodityNo] = data;
 						if(context.state.isshow.isfensInit == true) return;
 						if(context.state.isshow.isfens == true){
-							context.commit('setfensoption');
-							context.commit('drawfens', {
-								id1: 'fens',
-								id2: 'volume'
-							});
+							setTimeout(() => {
+								context.commit('setfensoption');
+								context.commit('drawfens', {
+									id1: 'fens',
+									id2: 'volume'
+								});
+							}, 100);
 						}
 					}else{
 						context.state.market.jsonDataKline = data;

@@ -149,12 +149,23 @@
 }
 .mt-range-progress{
     background-color: #ff576e;
+    border-radius: 0.2rem 0 0 0.2rem;
 }
 .mt-range-runway{
     border-top-color: #14da8b;
+     border-radius: 0.2rem;
 }
 .mt-range-content{
     width: 2rem;
     flex: 0.8;
     margin: auto;
+}
+#rangbuy .mt-range-runway{
+    border-top-color: #696c7b;
+}
+#rangsell .mt-range-progress{
+    background-color: #14da8b;
+}
+#rangsell .mt-range-runway{
+    border-top-color: #696c7b;
 }

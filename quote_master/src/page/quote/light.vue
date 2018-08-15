@@ -28,14 +28,14 @@
 			])
 		},
 		mounted: function(){
-			let h = this.$parent.chartsHight;
-			$("#light").css('height', h*0.98 + 'rem');
 			this.$store.state.isshow.islightshow = false;
 			this.$store.state.isshow.islight = true;
 			this.$store.state.market.lightChartTime.time = [];
 			this.$store.state.market.lightChartTime.price = [];	
-			this.setlightDate();
-			this.drawlight(this.id);
+			setTimeout(function(){
+				this.setlightDate();
+				this.drawlight(this.id);
+			}.bind(this),100)
 		}
 	}
 </script>
@@ -44,6 +44,6 @@
 	@import "../../assets/css/common.scss";
 	#light{
 		width: 100%;
-		margin: 0 auto;
+		height: 3.7rem;
 	}
 </style>

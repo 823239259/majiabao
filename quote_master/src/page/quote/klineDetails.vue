@@ -143,7 +143,7 @@
 						<ul class="duoKong">
 							<li>
 								<span class="red">{{rangleft}}%</span>
-								<sapn class="green">{{100-rangleft}}%</sapn>
+								<span class="green">{{100-rangleft}}%</span>
 							</li>
 							<li>
 								<span @click="chooseDuo('add')">我看多</span>

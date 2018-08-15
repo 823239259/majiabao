@@ -155,6 +155,8 @@
 			operateData: function(val){
 				//允许画图
 				this.$store.state.isshow.isfensInit = false;
+				this.$store.state.isshow.isklineshow = false;
+				this.$store.state.isshow.islightshow = false;
 				//渲染画图
 				this.currentChartsView = 'fens';
 				this.$store.state.isshow.isfensshow = false;
