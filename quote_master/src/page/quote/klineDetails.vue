@@ -1,7 +1,7 @@
 <template>
 	<div id="klineDetails">
 		<template v-for="(v, index) in parameters">
-			<div v-show="v.CommodityNo == currentNo">
+			<div v-if="v.CommodityNo == currentNo">
 				<mt-header fixed title="k线数据详情">
 					<mt-button slot="left">
 						<span class="header_icon"></span>
@@ -248,7 +248,6 @@
 				'setfensoption', 'drawfens', 'setklineoption', 'drawkline'
 			]),
 			drawPie:function(){
-				console.log(this)
 				let mycharts = echarts.init(document.getElementById('pie1'));
 				var option = {
 				    tooltip: {
@@ -559,6 +558,7 @@
 			//重组数据
 			this.operateData();
 			this.drawPie();
+			
 		},
 		activated: function() {
 			this.currentNo = this.$route.query.commodityNo;

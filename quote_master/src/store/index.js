@@ -31,7 +31,6 @@ var isshow = {
 		isfens: false,
 		iskline: false,
 		islight: false,
-		isbar:false,
 		isfensInit: false,
 		warningShow: false,
 		warningType: '',
@@ -1612,10 +1611,10 @@ actions: {
 										}
 									}
 									context.commit('setklineoption',context.state.market.strategyData);
-									context.commit('drawkline', {
-										id1: 'kline',
-										id2: 'kline_volume'
-									});
+//									context.commit('drawkline', {
+//										id1: 'kline',
+//										id2: 'kline_volume'
+//									});
 										
 								}
 							}
