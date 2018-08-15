@@ -1638,7 +1638,7 @@ actions: {
 									id1: 'fens',
 									id2: 'volume'
 								});
-							}, 100);
+							}, 500);
 						}
 					}else{
 						context.state.market.jsonDataKline = data;
@@ -1651,7 +1651,7 @@ actions: {
 									id1: 'kline',
 									id2: 'kline_volume'
 								});
-							}, 100);
+							}, 500);
 							
 						}
 					}

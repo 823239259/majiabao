@@ -215,11 +215,11 @@
     mounted() {
         // console.log('mounted')
          if(JSON.stringify(this.communityList) === JSON.stringify(local.get('communityList'))){
-           this.community = (this.communityList[this.currentDetail.CommodityNo].contentList&&this.communityList[this.currentDetail.CommodityNo].contentList)||[];
+           this.community = (this.communityList[this.currentDetail.CommodityNo]&&this.communityList[this.currentDetail.CommodityNo].contentList)||[];
        } else{
         //    console.log(123)
            this.communityList = local.get('communityList')?local.get('communityList'):{};
-           this.community = (this.communityList[this.currentDetail.CommodityNo].contentList&&this.communityList[this.currentDetail.CommodityNo].contentList)||[];
+           this.community = (this.communityList[this.currentDetail.CommodityNo]&&this.communityList[this.currentDetail.CommodityNo].contentList)||[];
        }
         this.userInfo = local.get('user')||{}
         this.nameList = local.get('nameList')|| {}

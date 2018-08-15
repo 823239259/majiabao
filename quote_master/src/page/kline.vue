@@ -250,12 +250,13 @@
 				// this.$store.state.isshow.isklineshow = false;
 				// this.$store.state.isshow.islightshow = false;
 				// this.$store.state.isshow.isfensInit = false;
-			 	this.$store.state.go = true
-			}
-			this.$store.state.isshow.isfensshow = false;
+				this.$store.state.isshow.isfensshow = false;
 			this.$store.state.isshow.isklineshow = false;
 			this.$store.state.isshow.islightshow = false;
 			this.$store.state.isshow.isfensInit = false;
+			 	this.$store.state.go = true
+			}
+			
 			next()
 		}
 	}

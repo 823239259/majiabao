@@ -513,6 +513,7 @@
 			setTimeout(()=>{this.drawPie()},500);
 		},
 		activated: function() {
+			this.operateData();
 			this.currentNo = this.$route.query.commodityNo;
 		},
 		filters: {
@@ -529,7 +530,7 @@
 		},
 		watch: {
 			total:function(){
-				this.drawPie();
+				// this.drawPie();
 			},
 			parameters: function(n, o) {
 				if(n && n.length == 1) {

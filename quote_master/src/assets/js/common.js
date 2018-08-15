@@ -387,7 +387,7 @@ pro = {
 	mixinsToCustomer : {
 		data () {
 			return {
-				actions:[{name: '400-8629-1034'},{name: '工作日08:00-24:00,周末09:00-17:00'},{name: '拨打',method: this.callPhone}],
+				actions:[{name: '400-843-1089'},{name: '工作日08:00-24:00,周末09:00-17:00'},{name: '拨打',method: this.callPhone}],
 				sheetVisible:false
 			}
 		},

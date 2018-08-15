@@ -360,6 +360,7 @@
 			setTimeout(()=>{this.drawPie()},500);
 		},
 		activated: function() {
+			this.operateData();
 			this.currentNo = this.$route.query.commodityNo;
 		},
 		filters: {
