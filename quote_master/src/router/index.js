@@ -172,6 +172,11 @@ const router = new Router({
     	component:load('quote/klineDetails')
     },
     {
+    	path:"/barlineDetails",
+    	name:'barlineDetails',
+    	component:load('quote/barlineDetails')
+    },
+    {
     	path:"/fenslineDetails",
     	name:'fenslineDetails',
     	component:load('quote/fenslineDetails')

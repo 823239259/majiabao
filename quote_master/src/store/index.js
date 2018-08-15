@@ -357,7 +357,6 @@ export default new Vuex.Store({
 		},
 		//画闪电图
 		drawlight: function(state, e) {
-			console.log("=============")
 			// 引入 ECharts 主模块
 			var echarts = require('echarts/lib/echarts');
 			// 引入柱状图
@@ -369,15 +368,18 @@ export default new Vuex.Store({
 				state.isshow.islightshow = true;
 			} else {
 				if(document.getElementById(e) != null){
+					console.log(document.getElementById(e))
 					lightChart = echarts.getInstanceByDom(document.getElementById(e));
+					console.log(lightChart)
 				}
 			}
+			setTimeout(function(){
+				lightChart.setOption(state.market.option5);
+			},100)
 			
-			lightChart.setOption(state.market.option5);
 		},
 		//设置闪电图数据
 		setlightDate: function(state) {
-			console.log("-------------------")
 			state.market.jsonTow.Parameters = state.market.currentdetail.LastQuotation;
 			var TimeLength = state.market.lightChartTime.time.length;
 			state.market.lightChartTime.price.push(state.market.jsonTow.Parameters.LastPrice.toFixed(state.market.currentdetail.DotSize));
@@ -1266,10 +1268,8 @@ actions: {
 								//更新闪电图
 								if(context.state.isshow.islightshow == true && context.state.isshow.islight == true) {
 									context.state.market.jsonTow = JSON.parse(evt.data);
-									setTimeout(() => {
-										context.commit('setlightDate');
-										context.commit('drawlight', 'light');
-									}, 100);
+									context.commit('setlightDate');
+									context.commit('drawlight', 'light');
 								}
 								//更新K线图
 								if(context.state.isshow.isklineshow == true && context.state.isshow.iskline == true) {

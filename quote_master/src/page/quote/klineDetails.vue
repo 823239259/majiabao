@@ -113,7 +113,7 @@
 					<div class="black"></div>
 					<div class="name">买家趋势</div>
 					<div class="buySell">
-						<!-- <div id="pie1"></div> -->
+						 <div id="pie1"></div> 
 					</div>
 					<div class="black"></div>
 					<div class="name">对比合约</div>
@@ -265,14 +265,10 @@
 			drawPie:function(){
 				let mycharts = echarts.init(document.getElementById('pie1'));
 				var option = {
-				    tooltip: {
-				        trigger: 'item',
-				        formatter: "{a} <br/>{b}: {c} ({d}%)"
-				    },
-				    legend: {
+					legend: {
 				        orient: 'vertical',
 				        x: 'left',
-				        data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+				        data:['买','卖']
 				    },
 				    series: [
 				        {
@@ -299,12 +295,10 @@
 				                }
 				            },
 				            data:[
-				                {value:335, name:'直接访问'},
-				                {value:310, name:'邮件营销'},
-				                {value:234, name:'联盟广告'},
-				                {value:135, name:'视频广告'},
-				                {value:1548, name:'搜索引擎'}
-				            ]
+				                {value:this.total, name:'卖', itemStyle:{normal:{color:'#14da8b'}}},
+				                {value:this.total1, name:'买', itemStyle:{normal:{color:'#ff576e'}}},
+				            ],
+				            
 				        }
 				    ]
 				}
@@ -572,10 +566,7 @@
 		mounted: function() {
 			//重组数据
 			this.operateData();
-		//	this.drawPie();
-			
-			
-			
+			setTimeout(()=>{this.drawPie()},500);
 		},
 		activated: function() {
 			this.currentNo = this.$route.query.commodityNo;
@@ -593,6 +584,9 @@
 			}
 		},
 		watch: {
+			total:function(){
+				this.drawPie();
+			},
 			parameters: function(n, o) {
 				if(n && n.length == 1) {
 					this.parameters.forEach((o, i) => {

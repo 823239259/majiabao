@@ -35,7 +35,8 @@
 			setTimeout(function(){
 				this.setlightDate();
 				this.drawlight(this.id);
-			}.bind(this),100)
+			}.bind(this),1000)
+			
 		}
 	}
 </script>

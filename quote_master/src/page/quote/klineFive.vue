@@ -17,11 +17,9 @@
 			}
 		},
 		mounted: function(){
-			
-			let h = this.$parent.chartsHight;
-			$("#kline").css('height', h/10*6.9 + 'rem');
-			$("#kline_volume").css('height', h/10*3 + 'rem');
-			console.log(document.getElementById('kline'))
+//			let h = this.$parent.chartsHight;
+//			$("#kline").css('height', h/10*6.9 + 'rem');
+//			$("#kline_volume").css('height', h/10*3 + 'rem');
 			this.$store.state.isshow.iskline = true;
 			this.$store.state.market.selectTime = 5;
 			var data = {

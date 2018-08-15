@@ -158,8 +158,8 @@
 				this.currentChartsView = 'light';
 				this.$store.state.isshow.isfensshow = false;
 				this.$store.state.isshow.isklineshow = false;
-				this.$store.state.isshow.islightshow = false;
-				this.$store.state.isshow.islight = false;
+//				this.$store.state.isshow.islightshow = false;
+//				this.$store.state.isshow.islight = false;
 			},
 			changeCommodityNo:function(index){
 				this.currentCheck = 0;
@@ -193,11 +193,11 @@
 		},
 		watch: {
 			currentChartsNum:function(n,o){
-				this.$store.state.isshow.isfensInit = false;
-				this.$store.state.isshow.isfensshow = false;
-				this.$store.state.isshow.isklineshow = false;
-				this.$store.state.isshow.islightshow = false;
-				this.$store.state.isshow.islight = false;
+//				this.$store.state.isshow.isfensInit = false;
+//				this.$store.state.isshow.isfensshow = false;
+//				this.$store.state.isshow.isklineshow = false;
+//				this.$store.state.isshow.islightshow = false;
+//				this.$store.state.isshow.islight = false;
 				this.$store.state.market.Parameters = [];
 				this.$store.state.market.commodityOrder = [];
 				this.$store.state.market.commodityOrder = this.marketList[n].list;
@@ -209,11 +209,12 @@
 				if(n!=o){
 					this.parameters.forEach((t, i) => {
 						if(t.CommodityNo == n){
+//							this.$store.state.isshow.isfensshow = false;
+//							this.$store.state.isshow.isklineshow = false;
+//							this.$store.state.isshow.islightshow = false;
+//							this.$store.state.isshow.islight = false;
 							this.$store.state.market.currentdetail = t;
-							this.$store.state.isshow.isfensshow = false;
-							this.$store.state.isshow.isklineshow = false;
-							this.$store.state.isshow.islightshow = false;
-							this.$store.state.isshow.islight = false;
+							
 							return;
 						}
 					});
