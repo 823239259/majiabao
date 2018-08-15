@@ -368,11 +368,15 @@ export default new Vuex.Store({
 				state.isshow.islightshow = true;
 			} else {
 				if(document.getElementById(e) != null){
+					console.log(document.getElementById(e))
 					lightChart = echarts.getInstanceByDom(document.getElementById(e));
+					console.log(lightChart)
 				}
 			}
+			setTimeout(function(){
+				lightChart.setOption(state.market.option5);
+			},100)
 			
-			lightChart.setOption(state.market.option5);
 		},
 		//设置闪电图数据
 		setlightDate: function(state) {
@@ -1626,11 +1630,13 @@ actions: {
 						context.state.market.jsonData[data.Parameters.CommodityNo] = data;
 						if(context.state.isshow.isfensInit == true) return;
 						if(context.state.isshow.isfens == true){
-							context.commit('setfensoption');
-							context.commit('drawfens', {
-								id1: 'fens',
-								id2: 'volume'
-							});
+							setTimeout(() => {
+								context.commit('setfensoption');
+								context.commit('drawfens', {
+									id1: 'fens',
+									id2: 'volume'
+								});
+							}, 100);
 						}
 					}else{
 						context.state.market.jsonDataKline = data;

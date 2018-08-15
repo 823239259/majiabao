@@ -113,7 +113,7 @@
 					<div class="black"></div>
 					<div class="name">买家趋势</div>
 					<div class="buySell">
-						<!-- <div id="pie1"></div> -->
+						 <div id="pie1"></div> 
 					</div>
 					<div class="black"></div>
 					<div class="name">对比合约</div>
@@ -139,11 +139,21 @@
 					</div>
 					<div class="name">您认为后续走势？</div>
 					<div class="buySellBar">
-
+						<mt-range v-model="rangleft" :barHeight="20" :min="0" :max="100" :step="1"></mt-range>
+						<ul class="duoKong">
+							<li>
+								<span class="red">{{rangleft}}%</span>
+								<span class="green">{{100-rangleft}}%</span>
+							</li>
+							<li>
+								<span @click="chooseDuo('add')">我看多</span>
+								<span @click="chooseDuo('del')">我看空</span>
+							</li>
+						</ul>
 					</div>
 					<div class="black"></div>
 					<talkArea />
-				</div>
+				
 			</div>
 		</template>
 	</div>
@@ -208,6 +218,7 @@
 				},
 				strategyData1: [],
 				strategyK: "",
+				rangleft:50,
 			}
 		},
 		components: {
@@ -250,17 +261,16 @@
 			...mapMutations([
 				'setfensoption', 'drawfens', 'setklineoption', 'drawkline'
 			]),
+			chooseDuo:function(type){
+				type == "add" ? this.rangleft++ : this.rangleft-- ;
+			},
 			drawPie:function(){
 				let mycharts = echarts.init(document.getElementById('pie1'));
 				var option = {
-				    tooltip: {
-				        trigger: 'item',
-				        formatter: "{a} <br/>{b}: {c} ({d}%)"
-				    },
-				    legend: {
+					legend: {
 				        orient: 'vertical',
 				        x: 'left',
-				        data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+				        data:['买','卖']
 				    },
 				    series: [
 				        {
@@ -287,12 +297,10 @@
 				                }
 				            },
 				            data:[
-				                {value:335, name:'直接访问'},
-				                {value:310, name:'邮件营销'},
-				                {value:234, name:'联盟广告'},
-				                {value:135, name:'视频广告'},
-				                {value:1548, name:'搜索引擎'}
-				            ]
+				                {value:this.total, name:'卖', itemStyle:{normal:{color:'#14da8b'}}},
+				                {value:this.total1, name:'买', itemStyle:{normal:{color:'#ff576e'}}},
+				            ],
+				            
 				        }
 				    ]
 				}
@@ -560,10 +568,7 @@
 		mounted: function() {
 			//重组数据
 			this.operateData();
-		//	this.drawPie();
-			
-			
-			
+			setTimeout(()=>{this.drawPie()},500);
 		},
 		activated: function() {
 			this.currentNo = this.$route.query.commodityNo;
@@ -581,6 +586,9 @@
 			}
 		},
 		watch: {
+			total:function(){
+				this.drawPie();
+			},
 			parameters: function(n, o) {
 				if(n && n.length == 1) {
 					this.parameters.forEach((o, i) => {
@@ -825,5 +833,39 @@
 	.buySellBar {
 		width: 100%;
 		height: 2.8rem;
+		.duoKong{
+			width: 100%;
+			height: 1.8rem;
+			li{
+				&:nth-child(1){
+					display: flex;
+					justify-content: space-between;
+					padding: 0 0.3rem;
+					span{
+						font-size: 0.26rem;
+					}
+				}
+				&:nth-child(2){
+					display: flex;
+					justify-content: center;
+					span{
+						width:1.6rem;
+						height:1rem; 
+						border-radius: 0.2rem;
+						font-size: 0.36rem;
+						color: white;
+						text-align: center;
+						line-height: 1rem; 
+						&:nth-child(1){
+							background-color: #FF576E;
+						}
+						&:nth-child(2){
+							background-color: #14da8b;
+							margin-left: 0.3rem;
+						}
+					}
+				}
+			}
+		}
 	}
 </style>

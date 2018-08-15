@@ -1,6 +1,6 @@
 <template>
 	<div id="quote">
-		<mt-header fixed title="k线数据">
+		<mt-header fixed title="柱形数据">
 			<mt-button slot="left" >
 				<span class="header_icon" ></span>
 			</mt-button>
@@ -29,7 +29,7 @@
 				</div>
 				<div class="listScoll">
 					<div  v-for="(v, index) in parameters">
-						<div class="listName"   :class="{checked : currentCheck == index}" @click="showKline(index)" >
+						<div class="listName"   :class="{checked : currentCheck == index}" @click="showKline(index,v.CommodityNo)" >
 							<span>{{v.CommodityName}}</span>
 							<span :class="{red: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.LastPrice | fixNum(v.DotSize)}}</span>
 							<span :class="{green: v.LastQuotation.ChangeRate < 0, red: v.LastQuotation.ChangeRate > 0}">{{v.LastQuotation.ChangeRate | fixNumTwo}}%</span>
@@ -41,7 +41,7 @@
 								<div class="KLinePic" >
 									<components :is="currentChartsView"></components>
 								</div>
-								<div class="toDetails" >
+								<div class="toDetails" @click="toDetails(v.CommodityNo, v.MainContract, v.ExchangeNo, v.contrast)">
 									<span>开盘价:{{v.LastQuotation.OpenPrice}}</span>
 									<span>查看更多数据></span>
 								</div>
@@ -67,7 +67,7 @@
 	import tipsFloat from '../components/tipsFloat'
 	import firstGuide from "./quote/firstGuide.vue"
 	import { Toast } from 'mint-ui';
-	import klineOne from './quote/klineOne.vue'
+	import klineBar from './quote/klineBar.vue'
 	export default {
 		name: "",
 		data() {
@@ -79,14 +79,16 @@
 				CommodityList:['期货名称','最新价','涨跌幅','涨跌额','买/卖'],
 				marketList:[],//全部列表分类
 				currentCheck:0,
-				currentChartsView:'klineOne'
+				currentChartsView:'klineBar',
+				chartsHight:5.4,
+				currentNo:''
 			}
 		},
 		components: {
 			bottomTab,
 			tipsFloat,
 			firstGuide,
-			klineOne
+			klineBar
 		},
 		computed: {
 			parameters(){
@@ -106,10 +108,12 @@
 			...mapActions([
 				'initQuoteClient'
 			]),
+			toDetails: function(commodityNo, mainContract, exchangeNo, contrast){
+				this.$router.push({path: '/barlineDetails', query: {'commodityNo': commodityNo, 'mainContract': mainContract, 'exchangeNo': exchangeNo, 'contrast': contrast}});
+			},
 			changeCommodityNo:function(index){
 				this.currentCheck = 0;
 				this.currentChartsNum = index;
-				
 			},
 			changeTip:function(){
 				this.showTip =!this.showTip;
@@ -134,42 +138,43 @@
 						this.marketList = res.data;
 						if(this.quoteStatus == true) return;
 						this.$store.state.market.commodityOrder = res.data[0].list;
-						this.$store.state.market.currentdetail = res.data[0].list[0];
+						this.currentNo = res.data[0].list[0].commodityNo;
+						this.$store.state.market.currentNo = this.currentNo;
 						//初始化行情
 						if(this.$store.state.market.commodityOrder && this.$store.state.account.quoteStatus == false){
 							this.initQuoteClient();
+							this.operateData();
 						}
 					}
 				}).catch((err) => {
 					Toast({message: err.data.message, position: 'bottom', duration: 2000});
 				});
 			},
-			showKline:function(index){
+			showKline:function(index,commodity){
 				this.$store.state.isshow.isklineshow = false;
 				this.currentCheck = index;
-				this.$store.state.market.currentdetail = this.$store.state.market.commodityOrder[index];
+				this.currentNo = commodity;
+				this.$store.state.market.currentNo = commodity;
 			},
 			operateData: function(val){
 				//允许画图
 				this.$store.state.isshow.isfensInit = false;
-				//清空对比合约数据
-				this.$store.state.market.contrastData = [];
 				//渲染画图
-				this.currentChartsView = 'klineOne';
 			},
 		},
 		mounted: function() {
 			
 		},
 		activated: function() {
-
+				this.$store.state.isshow.isfensshow = false;
+				this.$store.state.isshow.isklineshow = false;
+				this.$store.state.isshow.islightshow = false;
 		},
 		created() {
 			//获取所有合约
 			this.getCommodityInfo();
 			//获取交易ws地址
 			this.getTradeWsUrl();
-			this.operateData();
 		},
 		beforeCreate(){
 			
@@ -188,12 +193,41 @@
 				this.$store.state.isshow.isklineshow = false;
 				this.$store.state.market.Parameters = [];
 				this.$store.state.market.commodityOrder = [];
-				this.$store.state.market.currentdetail = this.marketList[n].list[0];
 				this.$store.state.market.commodityOrder = this.marketList[n].list;
 				this.marketList[n].list.forEach((o, i) => {
 					this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
 				});
-			}
+			},
+			currentNo:function(n,o){
+				if(n!=o){
+					this.parameters.forEach((t, i) => {
+						if(t.CommodityNo == n){
+							this.$store.state.isshow.isfensshow = false;
+							this.$store.state.isshow.isklineshow = false;
+							this.$store.state.isshow.islightshow = false;
+							this.$store.state.isshow.isfensInit = false;
+							this.$store.state.market.currentdetail = t;
+							return;
+						}
+					});
+				}
+			},
+			parameters: function(n, o){
+				if(n && n.length == 1){
+					this.parameters.forEach((o, i) => {
+						if(o.CommodityNo == this.currentNo){
+							this.$store.state.market.currentdetail = o;
+							return;
+						}
+					});
+				}
+			},
+		},
+		beforeRouteLeave (to, from, next) {
+			//this.$children[2].$destroy()
+			//console.log(this.$children[2])
+			next()
+			// ...
 		}
 	}
 </script>
@@ -303,7 +337,7 @@
 		
 	}
 	.KLinePic{
-		height: 3.7rem;
+		height: 6.5rem;
 		width: 100%;
 		background-color: white;
 	}
