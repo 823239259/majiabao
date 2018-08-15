@@ -139,9 +139,20 @@
 					</div>
 					<div class="name">您认为后续走势？</div>
 					<div class="buySellBar">
-
+						<mt-range v-model="rangleft" :barHeight="20" :min="0" :max="100" :step="1"></mt-range>
+						<ul class="duoKong">
+							<li>
+								<span class="red">{{rangleft}}%</span>
+								<sapn class="green">{{100-rangleft}}%</sapn>
+							</li>
+							<li>
+								<span @click="chooseDuo('add')">我看多</span>
+								<span @click="chooseDuo('del')">我看空</span>
+							</li>
+						</ul>
 					</div>
 					<div class="black"></div>
+					<div class="name">话题讨论</div>
 				</div>
 			</div>
 		</template>
@@ -206,6 +217,7 @@
 				},
 				strategyData1: [],
 				strategyK: "",
+				rangleft:50,
 			}
 		},
 		components: {
@@ -247,6 +259,9 @@
 			...mapMutations([
 				'setfensoption', 'drawfens', 'setklineoption', 'drawkline'
 			]),
+			chooseDuo:function(type){
+				type == "add" ? this.rangleft++ : this.rangleft-- ;
+			},
 			drawPie:function(){
 				let mycharts = echarts.init(document.getElementById('pie1'));
 				var option = {
@@ -820,5 +835,39 @@
 	.buySellBar {
 		width: 100%;
 		height: 2.8rem;
+		.duoKong{
+			width: 100%;
+			height: 1.8rem;
+			li{
+				&:nth-child(1){
+					display: flex;
+					justify-content: space-between;
+					padding: 0 0.3rem;
+					span{
+						font-size: 0.26rem;
+					}
+				}
+				&:nth-child(2){
+					display: flex;
+					justify-content: center;
+					span{
+						width:1.6rem;
+						height:1rem; 
+						border-radius: 0.2rem;
+						font-size: 0.36rem;
+						color: white;
+						text-align: center;
+						line-height: 1rem; 
+						&:nth-child(1){
+							background-color: #FF576E;
+						}
+						&:nth-child(2){
+							background-color: #14da8b;
+							margin-left: 0.3rem;
+						}
+					}
+				}
+			}
+		}
 	}
 </style>
