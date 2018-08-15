@@ -53,8 +53,8 @@ export default {
             return 'http://m.yn.com/quotes/XPT.html'
             break;  
           case '5':
-            return 'http://m.yn.com/data/'
-            //return 'mydata.html'
+            //return 'http://m.yn.com/data/'
+            return 'mydata.html'
             break;  
         
           default:

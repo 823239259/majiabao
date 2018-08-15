@@ -7,6 +7,9 @@
    
     
 }
+.mint-header.is-fixed{
+    z-index: 999
+}
 #home,#discover,#datas,#my,#quote{
     .mint-header{
         padding: 0;
