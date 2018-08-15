@@ -17,6 +17,7 @@
 			}
 		},
 		mounted: function(){
+			console.log('mounted','klineOne')
 			let h = this.$parent.chartsHight;
 			$("#kline").css('height', h/10*7.9 + 'rem');
 			$("#kline_volume").css('height', h/10*3 + 'rem');
@@ -36,6 +37,7 @@
 			};
 			this.quoteSocket.send(JSON.stringify(data));
 		},
+		
 		
 	}
 </script>

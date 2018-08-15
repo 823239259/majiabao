@@ -113,7 +113,7 @@
 					<div class="black"></div>
 					<div class="name">买家趋势</div>
 					<div class="buySell">
-						<div id="pie1"></div>
+						<!-- <div id="pie1"></div> -->
 					</div>
 					<div class="black"></div>
 					<div class="name">对比合约</div>
@@ -572,7 +572,9 @@
 		mounted: function() {
 			//重组数据
 			this.operateData();
-			this.drawPie();
+		//	this.drawPie();
+			
+			
 			
 		},
 		activated: function() {

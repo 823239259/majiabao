@@ -1611,10 +1611,10 @@ actions: {
 										}
 									}
 									context.commit('setklineoption',context.state.market.strategyData);
-//									context.commit('drawkline', {
-//										id1: 'kline',
-//										id2: 'kline_volume'
-//									});
+									context.commit('drawkline', {
+										id1: 'kline',
+										id2: 'kline_volume'
+									});
 										
 								}
 							}
@@ -1638,10 +1638,13 @@ actions: {
 						context.state.market.volume = context.state.market.jsonDataKline.Parameters.Data[len - 1][6];
 						if(context.state.isshow.iskline == true){
 							context.commit('setklineoption');
-							context.commit('drawkline', {
-								id1: 'kline',
-								id2: 'kline_volume'
-							});
+							setTimeout(() => {
+								context.commit('drawkline', {
+									id1: 'kline',
+									id2: 'kline_volume'
+								});
+							}, 100);
+							
 						}
 					}
 				}
