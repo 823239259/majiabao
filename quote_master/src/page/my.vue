@@ -370,6 +370,7 @@
         return Math.floor(Math.random()*min+val)
       },
       handleDraggleStart (e) {
+          e.preventDefault()
           var touches = e.touches[0];
           var block = e.target;
           var BoxScrollLeft = document.getElementById('draggle_box').scrollLeft;
