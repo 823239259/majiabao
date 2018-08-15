@@ -1,12 +1,14 @@
 <template>
 	<div id="quote">
-		<mt-header fixed title="柱形数据">
-			<mt-button slot="left" >
-				<span class="header_icon" ></span>
-			</mt-button>
-			<mt-button slot="right">
-			</mt-button>
-		</mt-header>
+		<header>
+		<ul>
+			<li @click="routerback"><i></i></li>
+			<li>
+				<h1>收藏中心</h1>
+			</li>
+			<li></li>
+		</ul>
+	</header>
 		<div id="container">
 			<div class="tab">
 				<span v-for="(k,index) in tabList" :class="{current: currentChartsNum == index}" @click="changeCommodityNo(index)">{{k}}</span>
@@ -36,26 +38,10 @@
 							<span :class="{green: v.LastQuotation.ChangeRate < 0, red: v.LastQuotation.ChangeRate > 0}">{{v.LastQuotation.ChangeValue | fixNum(v.DotSize)}}</span>
 							<i :class="{icon_buy: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, icon_sell: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice ? "买" : "卖"}}</i>
 						</div>	
-						<transition  name="fade">
-							<div v-if="currentCheck == index">
-								<div class="KLinePic" >
-									<components :is="currentChartsView"></components>
-								</div>
-								<div class="toDetails" @click="toDetails(v.CommodityNo, v.MainContract, v.ExchangeNo, v.contrast)">
-									<span>开盘价:{{v.LastQuotation.OpenPrice}}</span>
-									<span>查看更多数据></span>
-								</div>
-							</div>
-								
-							
-						</transition >
 					</div>
 				</div>
 			</div>
 		</div>
-		
-		
-		<bottomTab :tabSelect="tabSelected"></bottomTab>
 	</div>
 
 </template>
@@ -67,28 +53,27 @@
 	import tipsFloat from '../components/tipsFloat'
 	import firstGuide from "./quote/firstGuide.vue"
 	import { Toast } from 'mint-ui';
-	import klineBar from './quote/klineBar.vue'
+	import klineOne from './quote/klineOne.vue'
 	export default {
 		name: "",
 		data() {
 			return {
-				tabSelected: 'barline',
+				tabSelected: 'kline',
 				tabList:['商','股',"汇",'LIME','率','BIT'],
 				currentChartsNum:0,
 				showTip:false,
 				CommodityList:['期货名称','最新价','涨跌幅','涨跌额','买/卖'],
 				marketList:[],//全部列表分类
 				currentCheck:0,
-				currentChartsView:'klineBar',
 				chartsHight:5.4,
-				currentNo:'',
+				currentNo:''
 			}
 		},
 		components: {
 			bottomTab,
 			tipsFloat,
 			firstGuide,
-			klineBar
+			klineOne
 		},
 		computed: {
 			parameters(){
@@ -103,16 +88,13 @@
 			jsonDataKline(){
 				return this.$store.state.market.jsonDataKline;
 			},
-			go () {
-				return this.$store.state.go;
-			}
 		},
 		methods: {
 			...mapActions([
 				'initQuoteClient'
 			]),
-			toDetails: function(commodityNo, mainContract, exchangeNo, contrast){
-				this.$router.push({path: '/barlineDetails', query: {'commodityNo': commodityNo, 'mainContract': mainContract, 'exchangeNo': exchangeNo, 'contrast': contrast}});
+			routerback: function() {
+				this.$router.go(-1);
 			},
 			changeCommodityNo:function(index){
 				this.currentCheck = 0;
@@ -144,10 +126,10 @@
 						this.currentNo = res.data[0].list[0].commodityNo;
 						this.$store.state.market.currentNo = this.currentNo;
 						//初始化行情
-						if(this.$store.state.market.commodityOrder && this.$store.state.account.quoteStatus == false){
+//						if(this.$store.state.market.commodityOrder && this.$store.state.account.quoteStatus == false){
 							this.initQuoteClient();
 							this.operateData();
-						}
+//						}
 					}
 				}).catch((err) => {
 					Toast({message: err.data.message, position: 'bottom', duration: 2000});
@@ -161,7 +143,6 @@
 			},
 			operateData: function(val){
 				//允许画图
-				this.$store.state.isshow.isfensInit = false;
 				//渲染画图
 			},
 		},
@@ -169,22 +150,6 @@
 			
 		},
 		activated: function() {
-			if (this.go) {
-
-				setTimeout(() => {
-					this.$store.state.isshow.isklineshow = false;
-					this.$store.state.market.Parameters = [];
-					this.$store.state.market.commodityOrder = [];
-					this.$store.state.market.commodityOrder = this.marketList[0].list;
-					this.marketList[0].list.forEach((o, i) => {
-						this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
-					});
-				}, 500);
-				
-			}
-				this.$store.state.isshow.isfensshow = false;
-				this.$store.state.isshow.isklineshow = false;
-				this.$store.state.isshow.islightshow = false;
 		},
 		created() {
 			//获取所有合约
@@ -240,15 +205,10 @@
 			},
 		},
 		beforeRouteLeave (to, from, next) {
-			if (to.name === 'my') {
-				
-			 	this.$store.state.go = true
-			}
-			// this.$store.state.isshow.isfensshow = false;
-			// this.$store.state.isshow.isklineshow = false;
-			// this.$store.state.isshow.islightshow = false;
-			// this.$store.state.isshow.isfensInit = false;
+			//this.$children[2].$destroy()
+			//console.log(this.$children[2])
 			next()
+			// ...
 		}
 	}
 </script>
@@ -261,9 +221,57 @@
 	.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
 		 opacity: 0;
 	}
+	header{
+		background-color: #2a2f42;
+		width: 100%;
+		height: 0.88rem;
+		ul{
+			padding: 0 0.3rem;
+			flex-direction: row;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			li{
+				height: 0.88rem;
+				&:nth-child(1){
+					line-height: 0.88rem;
+					flex: 1;
+					i{
+						display:inline-block;
+						width: 0.24rem;
+						height: 0.3rem;
+						background: url(../assets/images/quote/back_icon.png) no-repeat 0 100%;
+						background-size: 0.24rem 0.3rem;
+					}
+				}
+				&:nth-child(2){
+					flex: 6;
+					display: inline-flex;
+					justify-content: center;
+					align-items: center;
+					h1{
+						padding-right: 0.3rem;
+						font-size: 0.36rem;
+						color: white;
+					}
+				}
+				&:nth-child(3){
+					flex: 1;
+					line-height: 0.88rem;
+					text-align: right;
+					i{
+						display: inline-block;
+						width: 0.32rem;
+						height: 0.3rem;
+						background: url(../assets/images/quote/icon_share.png) no-repeat 0 100%;
+						background-size: 0.32rem 0.3rem;
+					}
+				}
+			}
+		}
+	}
 	#container{
 		width: 7.5rem;
-		margin-top: 0.96rem;
 		background-color: #2a2f42;
 	}
 	.tab{

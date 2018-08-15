@@ -82,7 +82,7 @@
 				chartsHight:5.4,
 				currentNo:'',
 				tabList:['商','股',"汇",'LIME','率','BIT'],
-				go: false
+				
 			}
 		},
 		components: {
@@ -104,6 +104,9 @@
 			jsonDataKline(){
 				return this.$store.state.market.jsonDataKline;
 			},
+			go () {
+				return this.$store.state.go;
+			}
 		},
 		methods: {
 			...mapActions([
@@ -168,17 +171,31 @@
 			},
 		},
 		mounted: function() {
-			
+			// if (this.go) {
+			// 	this.$store.state.isshow.isfensInit = false;
+			// 	this.$store.state.isshow.isfensshow = false;
+			// 	this.$store.state.market.Parameters = [];
+			// 	this.$store.state.market.commodityOrder = [];
+			// 	this.$store.state.market.commodityOrder = this.marketList[0].list;
+			// 	this.marketList[0].list.forEach((o, i) => {
+			// 		this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
+			// 	});
+			// }
 		},
 		activated: function() {
 			if (this.go) {
-				this.$store.state.isshow.isklineshow = false;
-				this.$store.state.market.Parameters = [];
-				this.$store.state.market.commodityOrder = [];
-				this.$store.state.market.commodityOrder = this.marketList[0].list;
-				this.marketList[0].list.forEach((o, i) => {
-					this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
-				});
+				setTimeout(()=>{
+					this.$store.state.isshow.isfensInit = false;
+					this.$store.state.isshow.isfensshow = false;
+					this.$store.state.market.Parameters = [];
+					this.$store.state.market.commodityOrder = [];
+					console.log(this.marketList[0])
+					this.$store.state.market.commodityOrder = this.marketList[0].list;
+					this.marketList[0].list.forEach((o, i) => {
+						this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
+					});
+				},500)
+				
 			}
 		},
 		created() {
@@ -237,9 +254,13 @@
 		beforeRouteLeave (to, from, next) {
 			console.log(to)
 			if (to.name === 'my') {
-				this.$store.state.isshow.isklineshow = false;
-			 	this.go = true
+				
+			 	this.$store.state.go = true
 			}
+			this.$store.state.isshow.isfensshow = false;
+			this.$store.state.isshow.isklineshow = false;
+			this.$store.state.isshow.islightshow = false;
+			this.$store.state.isshow.isfensInit = false;
 			next()
 		}
 	}

@@ -34,6 +34,7 @@ var isshow = {
 		isfensInit: false,
 		warningShow: false,
 		warningType: '',
+		
 	}
 };
 
@@ -302,6 +303,7 @@ export default new Vuex.Store({
 		environment: 'online',
 		//打包的时候，值为 build ，开发的时候，值为 dev
 		setting: 'build',
+		go: false,
 	},
 	getters: {  
 		PATH: function(state) {

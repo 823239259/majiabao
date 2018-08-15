@@ -82,7 +82,7 @@
 				currentChartsView:'klineOne',
 				chartsHight:5.4,
 				currentNo:'',
-				go: false
+				
 			}
 		},
 		components: {
@@ -104,6 +104,9 @@
 			jsonDataKline(){
 				return this.$store.state.market.jsonDataKline;
 			},
+			go () {
+				return this.$store.state.go;
+			}
 		},
 		methods: {
 			...mapActions([
@@ -206,7 +209,6 @@
 		},
 		watch: {
 			currentChartsNum:function(n,o){
-				console.log(n,'new')
 				this.$store.state.isshow.isklineshow = false;
 				this.$store.state.market.Parameters = [];
 				this.$store.state.market.commodityOrder = [];
@@ -216,7 +218,6 @@
 				});
 			},
 			currentNo:function(n,o){
-				console.log(n,'new currentNo')
 				if(n!=o){
 					this.parameters.forEach((t, i) => {
 						if(t.CommodityNo == n){
@@ -245,9 +246,16 @@
 		beforeRouteLeave (to, from, next) {
 			console.log(to)
 			if (to.name === 'my') {
-				this.$store.state.isshow.isklineshow = false;
-			 	this.go = true
+				// this.$store.state.isshow.isfensshow = false;
+				// this.$store.state.isshow.isklineshow = false;
+				// this.$store.state.isshow.islightshow = false;
+				// this.$store.state.isshow.isfensInit = false;
+			 	this.$store.state.go = true
 			}
+			this.$store.state.isshow.isfensshow = false;
+			this.$store.state.isshow.isklineshow = false;
+			this.$store.state.isshow.islightshow = false;
+			this.$store.state.isshow.isfensInit = false;
 			next()
 		}
 	}
