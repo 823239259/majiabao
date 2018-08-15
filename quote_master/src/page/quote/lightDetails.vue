@@ -344,9 +344,9 @@
 			},
 			operateData: function() {
 				//允许画图
-//				this.$store.state.isshow.isfensInit = false;
-//				this.$store.state.isshow.isfensshow = false;
-//				this.$store.state.isshow.isfens = false;
+				this.$store.state.isshow.isfensInit = false;
+				this.$store.state.isshow.isfensshow = false;
+				this.$store.state.isshow.isfens = false;
 			},
 			routerback: function() {
 				this.$router.go(-1);
