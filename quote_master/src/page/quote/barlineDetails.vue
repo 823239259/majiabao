@@ -351,67 +351,7 @@
 				this.$store.state.isshow.islightshow = false;
 			},
 			addOptional: function() {
-				var stateLogin = localStorage.user ? JSON.parse(localStorage.user) : '';
-				if(stateLogin == '') {
-					Toast({
-						message: '请先登录平台账号',
-						position: 'bottom',
-						duration: 1500
-					});
-				} else {
-					var headers = {
-						token: stateLogin.token,
-						secret: stateLogin.secret
-					}
-					if(this.optionalIconShow == true) { //删除自选
-						var _datas = {
-							id: this.optionalId
-						};
-						this.$messageBox.confirm("确定删除自选？", "提示").then(action => {
-							pro.fetch('post', '/quoteTrader/userRemoveCommodity', _datas, headers).then((res) => {
-								if(res.success == true && res.code == 1) {
-									Toast({
-										message: '自选删除成功',
-										position: 'bottom',
-										duration: 1000
-									});
-									this.optionalName = '添加自选';
-									this.optionalIconShow = false;
-								}
-							}).catch((err) => {
-								Toast({
-									message: err.data.message,
-									position: 'bottom',
-									duration: 1000
-								});
-							});
-						}).catch(err => {});
-					} else { //添加自选
-						var datas = {
-							'exchangeNo': this.orderTemplist[this.currentNo].ExchangeNo,
-							'commodityNo': this.currentNo,
-							'contractNo': this.orderTemplist[this.currentNo].MainContract,
-						}
-						pro.fetch('post', '/quoteTrader/userAddCommodity', datas, headers).then((res) => {
-							if(res.success == true && res.code == 1) {
-								this.optionalIconShow = true;
-								this.optionalName = '已添加自选';
-								Toast({
-									message: '自选添加成功',
-									position: 'bottom',
-									duration: 1500
-								});
-								this.optionalId = res.data.id;
-							}
-						}).catch((err) => {
-							Toast({
-								message: err.data.message,
-								position: 'bottom',
-								duration: 1500
-							});
-						});
-					}
-				}
+				this.shareSystem();
 			},
 		},
 		mounted: function() {
