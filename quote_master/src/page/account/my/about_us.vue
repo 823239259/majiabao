@@ -7,7 +7,7 @@
       
       <div class="text">
         <img src="../../../assets/images/account/about_us.png" alt="about_logo">
-        <p class="bottom">V1.1</p>
+        <p class="bottom">V1.0</p>
         <div class="text_content">
           我们致力于通过我们的产品来实现行情浏览和阅读的最高标准。<br/>我们的优质品牌产品和服务，使人心情愉悦、神采焕发、享受更加美好的生活。在全球 多个国家内有 无数个期货行情大师的使用者，这让我们拥有难得的机会能与消费者一起，让可持续生
 活成为常态。<br/>每一天，我们都用优质的产品和服务来实现让可持续生活成为常态的目标、努力打造更美好的未来。<br/>
