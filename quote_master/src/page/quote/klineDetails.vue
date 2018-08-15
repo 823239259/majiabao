@@ -2,13 +2,15 @@
 	<div id="klineDetails">
 		<template v-for="(v, index) in parameters">
 			<div v-if="v.CommodityNo == currentNo">
-				<mt-header fixed title="k线数据详情">
-					<mt-button slot="left">
-						<span class="header_icon"></span>
-					</mt-button>
-					<mt-button slot="right">
-					</mt-button>
-				</mt-header>
+				<header>
+					<ul>
+						<li @click="routerback"><i></i></li>
+						<li>
+							<h1>k线数据详情</h1>
+						</li>
+						<li @click="addOptional"><i></i></li>
+					</ul>
+				</header>
 				<div id="container">
 					<div class="klinePic">
 						<div class="chartsList">
@@ -632,10 +634,57 @@
 	
 	#container {
 		width: 7.5rem;
-		margin-top: 0.96rem;
 		background-color: #2a2f42;
 	}
-	
+	header{
+		background-color: #2a2f42;
+		width: 100%;
+		height: 0.88rem;
+		ul{
+			padding: 0 0.3rem;
+			flex-direction: row;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			li{
+				height: 0.88rem;
+				&:nth-child(1){
+					line-height: 0.88rem;
+					flex: 1;
+					i{
+						display:inline-block;
+						width: 0.24rem;
+						height: 0.3rem;
+						background: url(../../assets/images/quote/back_icon.png) no-repeat 0 100%;
+						background-size: 0.24rem 0.3rem;
+					}
+				}
+				&:nth-child(2){
+					flex: 6;
+					display: inline-flex;
+					justify-content: center;
+					align-items: center;
+					h1{
+						padding-right: 0.3rem;
+						font-size: 0.36rem;
+						color: white;
+					}
+				}
+				&:nth-child(3){
+					flex: 1;
+					line-height: 0.88rem;
+					text-align: right;
+					i{
+						display: inline-block;
+						width: 0.32rem;
+						height: 0.3rem;
+						background: url(../../assets/images/quote/icon_share.png) no-repeat 0 100%;
+						background-size: 0.32rem 0.3rem;
+					}
+				}
+			}
+		}
+	}
 	.klinePic {
 		width: 100%;
 		height: 7.5rem;
