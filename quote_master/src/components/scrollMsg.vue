@@ -31,25 +31,25 @@
 						ChangeRate: '1.11%'
 					},
 					{
-						name: '国际原油123',
+						name: '国际原油',
 						lastPrice: 65.55,
 						ChangeValue: 2.11,
 						ChangeRate: '1.11%'
 					},
 					{
-						name: '国际原油123',
+						name: '国际原油',
 						lastPrice: 65.55,
 						ChangeValue: 2.11,
 						ChangeRate: '1.11%'
 					},
 					{
-						name: '国际原油123',
+						name: '国际原油',
 						lastPrice: 65.55,
 						ChangeValue: 2.11,
 						ChangeRate: '1.11%'
 					},
 					{
-						name: '国际原油123',
+						name: '国际原油',
 						lastPrice: 65.55,
 						ChangeValue: 2.11,
 						ChangeRate: '1.11%'
