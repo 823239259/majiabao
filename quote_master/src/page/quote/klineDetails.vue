@@ -142,6 +142,7 @@
 
 					</div>
 					<div class="black"></div>
+					<talkArea />
 				</div>
 			</div>
 		</template>
@@ -158,6 +159,7 @@
 	import klineFive from './klineFive.vue'
 	import klineOneHour from './klineOneHour.vue'
 	import fens from './fens.vue'
+	import talkArea from '../../components/talkArea'
 	let echarts = require('echarts/lib/echarts');
   	// 引入饼图组件
   	require('echarts/lib/chart/pie');
@@ -213,7 +215,8 @@
 			klineFive,
 			klineThirty,
 			klineDay,
-			klineOneHour
+			klineOneHour,
+			talkArea
 		},
 		computed: {
 			parameters() {
