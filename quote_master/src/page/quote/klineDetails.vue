@@ -155,7 +155,7 @@
 					</div>
 					<div class="black"></div>
 					<talkArea />
-				
+				</div>
 			</div>
 		</template>
 	</div>

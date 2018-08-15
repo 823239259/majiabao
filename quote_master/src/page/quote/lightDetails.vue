@@ -194,6 +194,7 @@
 						</ul>
 					</div>
 					<div class="black"></div>
+					<talkArea />
 				</div>
 			</div>
 		</template>
@@ -205,6 +206,7 @@
 	import { mapMutations, mapActions } from 'vuex'
 	import { Toast, MessageBox, Indicator } from 'mint-ui';
 	import light from './light.vue'
+	import talkArea from '../../components/talkArea'
 	let echarts = require('echarts/lib/echarts');
   	// 引入饼图组件
   	require('echarts/lib/chart/pie');
@@ -253,7 +255,8 @@
 			}
 		},
 		components: {
-			light
+			light,
+			talkArea
 		},
 		computed: {
 			parameters() {
