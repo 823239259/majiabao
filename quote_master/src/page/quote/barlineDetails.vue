@@ -529,7 +529,6 @@
 	}
 	#container {
 		width: 7.5rem;
-		margin-top: 0.96rem;
 		background-color: #2a2f42;
 	}
 	

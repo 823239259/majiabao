@@ -167,7 +167,7 @@
         {
           name: '收藏中心',
           img: require('../assets/images/my/shouchang_icon.png'),
-
+          path:'/selefChoose'
         },
         {
           name: '热门时事',
