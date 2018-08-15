@@ -30,7 +30,7 @@
 							</li>
 						</ul>
 					</div>
-					<div class="strategy">
+					<!--<div class="strategy">
 						<div class="name">
 							策略选择
 						</div>
@@ -47,7 +47,7 @@
 								<div class="bottom"></div>
 							</div>
 						</div>
-					</div>
+					</div>-->
 					<div class="black"></div>
 					<div class="infoDetails">
 						<div class="name">数据盘口</div>
