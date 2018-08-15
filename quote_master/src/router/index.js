@@ -33,7 +33,11 @@ const router = new Router({
     	name:"lightline",
     	component:load('lightline')
     },
-
+ 		{
+    	path:"/selefChoose",
+    	name:"selefChoose",
+    	component:load('selefChoose')
+    },
     /* home 内页 */
     {
     	path:"/news_details/:id",

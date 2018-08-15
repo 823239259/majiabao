@@ -230,6 +230,16 @@
 					});
 				}
 			},
+		},
+		beforeRouteLeave (to, from, next) {
+			//this.$children[2].$destroy()
+			//console.log(this.$children[2])
+			next()
+			this.$store.state.isshow.isfensshow = false;
+			this.$store.state.isshow.isklineshow = false;
+			this.$store.state.isshow.islightshow = false;
+			this.$store.state.isshow.isfensInit = false;
+			// ...
 		}
 	}
 </script>
