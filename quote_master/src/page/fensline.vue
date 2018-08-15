@@ -82,6 +82,7 @@
 				chartsHight:5.4,
 				currentNo:'',
 				tabList:['商','股',"汇",'LIME','率','BIT'],
+				go: false
 			}
 		},
 		components: {
@@ -170,7 +171,15 @@
 			
 		},
 		activated: function() {
-
+			if (this.go) {
+				this.$store.state.isshow.isklineshow = false;
+				this.$store.state.market.Parameters = [];
+				this.$store.state.market.commodityOrder = [];
+				this.$store.state.market.commodityOrder = this.marketList[0].list;
+				this.marketList[0].list.forEach((o, i) => {
+					this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo +'"}}');
+				});
+			}
 		},
 		created() {
 			//获取所有合约
@@ -226,14 +235,12 @@
 			},
 		},
 		beforeRouteLeave (to, from, next) {
-			//this.$children[2].$destroy()
-			//console.log(this.$children[2])
+			console.log(to)
+			if (to.name === 'my') {
+				this.$store.state.isshow.isklineshow = false;
+			 	this.go = true
+			}
 			next()
-			this.$store.state.isshow.isfensshow = false;
-			this.$store.state.isshow.isklineshow = false;
-			this.$store.state.isshow.islightshow = false;
-			this.$store.state.isshow.isfensInit = false;
-			// ...
 		}
 	}
 </script>
