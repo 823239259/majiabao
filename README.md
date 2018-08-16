@@ -9,4 +9,4 @@
 - 马甲包——期货行情宝：majiabao
 - 马甲包——人人期货： everyone-futures
 - 马甲包——期货管家：futures-butler
-- 马甲包——原油易融宝：
+- 马甲包——期货行情大师：quote-master
