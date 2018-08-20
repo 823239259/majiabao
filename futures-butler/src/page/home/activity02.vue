@@ -18,6 +18,9 @@
          <button @click="join">我要参加</button>
          <button @click="shareSystem">分享活动</button>
        </div>
+       <div class="btn_group">
+         <button class="go" @click="goto('/butler_community')">进入讲堂</button>
+       </div>
        <div class="activity_content">
          <h2 class="content_header">活动详情</h2>
          <ul class="list">
@@ -219,12 +222,22 @@
   .btn_group{
     @include flex(space-around);
     padding: 0.2rem 0;
+    border-top: 0.16rem solid #bbf6ec;
     button{
       width: 2.4rem;
       height: 0.8rem;
       background-color: #169781;
       border-radius: 0.1rem;
       @include font($fs28,0.8rem,#fff);
+    }
+    .go{
+      width: 6.14rem;
+	    height: 0.8rem;
+      color: #169781;
+      background-color: #fff;
+      border: solid 1px #169781;
+      box-shadow: 0rem 0.05rem 1px 0rem 
+		rgba(1, 1, 1, 0.2);
     }
   }
 .activity_content{

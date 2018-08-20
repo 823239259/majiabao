@@ -80,7 +80,7 @@
  
     },
     created() {
-      this.setWeekList()
+      //this.setWeekList()
     },
     activated() {
       this.signInfo = pro.local.get('signInfo')||this.signInfo

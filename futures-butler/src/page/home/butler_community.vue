@@ -4,6 +4,7 @@
         <mt-button slot="left" icon="back" @click="goBack"></mt-button>
     </mt-header>
     <div class="scroll_wrap" ref="scrollWrap">
+        <img src="../../assets/images/home/hongdong2_banner.jpg" alt="">
          <div class="community_wrap">
             <div class="Communication_box">
                 <div class="note_box">

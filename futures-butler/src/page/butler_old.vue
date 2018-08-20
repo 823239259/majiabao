@@ -4,8 +4,7 @@
     <div class="butler_wrap">
       <ul class="butler_list">
         <li class="item" v-for="(item, index) in butlerList" :key="index + 'abcde'">
-          <!-- <div class="left" :class="{'two_times':index%2===0,'all_times':item.leftShow}"  @touchmove="moveTab(item,index,'left')" @touchstart="setCoordinate"> -->
-          <div class="left"   @touchmove="moveTab(item,index,'left')" @touchstart="setCoordinate">
+          <div class="left" :class="{'two_times':index%2===0,'all_times':item.leftShow}"  @touchmove="moveTab(item,index,'left')" @touchstart="setCoordinate">
              <template v-if="!item.leftShow">
                   {{item.leftName}}
              </template>          
@@ -19,7 +18,7 @@
                 </div>
              </template>
           </div>
-          <!-- <div class="right" :class="{'two_times':index%2!==0,'all_times':item.rightShow}" @touchmove="moveTab(item,index,'right')" @touchstart="setCoordinate">
+          <div class="right" :class="{'two_times':index%2!==0,'all_times':item.rightShow}" @touchmove="moveTab(item,index,'right')" @touchstart="setCoordinate">
             <template v-if="!item.rightShow">
                   {{item.rightName}}
              </template>          
@@ -33,7 +32,7 @@
                 </div>
                   
              </template>
-          </div> -->
+          </div>
         </li>
       </ul>
       <p class="note"><span>管家提示：</span>左右滑动弹出按钮，解锁后可用。</p>
@@ -81,18 +80,9 @@
           // },
           {
             leftName: "新手入门",
-            rightName: "高手进阶",
+            rightName: "",
             leftPath: '/rumen_list/0',
             rightPath: '/rumen_list/1',
-            leftShow: false,
-            rightShow: false,
-            marginShow: false
-          },
-          {
-            leftName: "高手进阶",
-            rightName: "高手进阶",
-            leftPath: '/rumen_list/1',
-            rightPath: '/rumen_list/0',
             leftShow: false,
             rightShow: false,
             marginShow: false
@@ -101,15 +91,6 @@
             leftName: "基础知识",
             rightName: "期货学堂",
             leftPath: '/knowledge/0',
-            rightPath: '/knowledge/1',
-            leftShow: false,
-            rightShow: false,
-            marginShow: false
-          },
-          {
-            leftName: "期货学堂",
-            rightName: "期货学堂",
-            leftPath: '/knowledge/1',
             rightPath: '/knowledge/1',
             leftShow: false,
             rightShow: false,
@@ -125,15 +106,6 @@
             marginShow: false
           },
           {
-            leftName: "汇率计算",
-            rightName: "汇率计算",
-            leftPath: '/exchange_calc',
-            rightPath: '/exchange_calc',
-            leftShow: false,
-            rightShow: false,
-            marginShow: false
-          },
-          {
             leftName: "期货计算",
             rightName: "合约查询",
             leftPath: '/futures_calc',
@@ -143,27 +115,9 @@
             marginShow: false
           },
           {
-            leftName: "合约查询",
-            rightName: "合约查询",
-            leftPath: '/contract_search',
-            rightPath: '/contract_search',
-            leftShow: false,
-            rightShow: false,
-            marginShow: false
-          },
-          {
             leftName: "资讯直播",
             rightName: "系统公告",
             leftPath: '/discover7x24',
-            rightPath: '/rumen_list/3',
-            leftShow: false,
-            rightShow: false,
-            marginShow: false
-          },
-          {
-            leftName: "系统公告",
-            rightName: "系统公告",
-            leftPath: '/rumen_list/3',
             rightPath: '/rumen_list/3',
             leftShow: false,
             rightShow: false,
@@ -212,6 +166,9 @@
                   //console.log('向右滑动了')
                   if (!item.rightName) return; 
                   this.moveFlag = false;
+                  this.moveData['right'+index] = item.rightName
+                  item.rightName = ''
+                  
                   setTimeout(() => {
                   item.leftShow = true
                 }, 10);
@@ -250,9 +207,9 @@
           
           if(type === 'left') {
             item.leftShow = false;
-            //  setTimeout(() => {
-            //   item.rightName = this.moveData['right'+index]
-            // }, 190);
+             setTimeout(() => {
+              item.rightName = this.moveData['right'+index]
+            }, 190);
             setTimeout(() => {
                   item.marginShow = false
                 }, 100);
@@ -342,18 +299,18 @@
       
      
     }
-    @for $i from 1 through 10 {
+    @for $i from 1 through 5 {
       $background_color: (#e46c0a, #9bbb59, #f44234, #93cddd,#77933c,#a43b39,#e2c607,#04a2dc,#e18683,#f79646);
       .item:nth-child(#{$i}) {
         .left {
-          $bg: nth($background_color, $i);
+          $bg: nth($background_color, 2*$i - 1);
           background-color: $bg;
           
         }
-        // .right{
-        //   $bg: nth($background_color, 2*$i);
-        //   background-color: $bg;
-        // }
+        .right{
+          $bg: nth($background_color, 2*$i);
+          background-color: $bg;
+        }
       }
     }
     

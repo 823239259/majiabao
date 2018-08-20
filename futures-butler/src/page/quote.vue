@@ -26,17 +26,19 @@
 			管家提示：点击转盘转动分类到指针位置，再点击指针所指可打开行情。
 		</p>
 		 <i></i>
+		 <tipsFloat></tipsFloat>
 	</div>
 </template>
 
 <script>
 	import bottomTab from '../components/bottom_tab'
 	import pro from '../assets/js/common.js'
+	import tipsFloat from '../components/tipsFloat'
 	import { mapMutations,mapActions } from 'vuex'
 	
 	export default{
 		name:"",
-		components:{bottomTab},
+		components:{bottomTab, tipsFloat},
 		data(){
 			return{
 				tabSelected:'quote',
@@ -103,7 +105,7 @@
 	}
 	i{
 		position: fixed;
-		top: 2.7rem;
+		top: 1.2rem;
 		left: 3.45rem;
 		display: block;
 		width: 0.64rem;
@@ -119,7 +121,7 @@
 	    border-radius: 50%;  
 	    list-style: none;  
 		overflow: hidden;  
-		margin-top: 3rem;
+		margin-top: 1.5rem;
 		margin-left: 0.75rem;
 	}  
 	.slice {  
@@ -198,5 +200,8 @@
 	  span{
 	    color: #c6c5cc
 	  }
+	  position: absolute;
+	  bottom: 2.1rem;
+
 	}
 </style>

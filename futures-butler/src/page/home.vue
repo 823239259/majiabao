@@ -24,7 +24,14 @@
       </ul>
     </div>
     <div class="cube_wrap">
-      <Cube :cubeList = 'cubeList'></Cube>
+      <div class="left">
+        <Cube :cubeList = 'cubeList'></Cube>
+      </div>
+      <div class="right"> 
+         <CubeSmall :cubeList = 'cubeList1' type='1'></CubeSmall>
+        <CubeSmall :cubeList = 'cubeList2' type='2'></CubeSmall>
+      </div>
+     
     </div>
     <div class="message_box" @click="goto('/butler_community')"></div>    
     <bottomTab :tabSelect="tabSelected"></bottomTab>
@@ -36,6 +43,7 @@
   import bottomTab from '../components/bottom_tab'
   import scrollMsg from '../components/scrollMsg'
   import Cube from '../components/Cube'
+  import CubeSmall from '../components/Cube1'
   import pro from '../assets/js/common'
   
   const local = pro.local;
@@ -47,7 +55,8 @@
     components: {
       bottomTab,
       scrollMsg,
-      Cube
+      Cube,
+      CubeSmall
     },
     mixins: [pro.mixinsToCustomer],
     data() {
@@ -81,6 +90,8 @@
         lastPath: '/',
         userList: [],
         cubeList: ['推荐','原油','股指','贵金属'],
+        cubeList1: ['管家签到','管家签到','管家签到','管家签到'],
+        cubeList2: ['大讲堂','大讲堂','大讲堂','大讲堂'],
   
       };
     },
@@ -162,6 +173,13 @@
   }
   .cube_wrap{
     padding: 0.5rem 0;
+    @include flex();
+    .left{
+      flex: 1
+    }
+    .right{
+      flex: 1
+    }
   }
   .message_box{
     position: fixed;
