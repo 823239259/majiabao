@@ -159,42 +159,51 @@
         });
       },
       getNewDetails() {
-                const data = {
-                    id: this.id
-                }
-                pro.fetch("post", "/others/getTNotice", data, "").then((res) => {
-                    //console.log(res)
-                    if (res.success == true) {
-                        if (res.code == 1) {
-                            //console.log(res.data)
-                            this.list = res.data
-                        }
-                    }
-                }).catch((err) => {
-                    var data = err.data;
-                    if (data == undefined) {
-                    } else {
-                        if (data.code == -9999) {
-                            this.$toast({
-                                message: "认证失败，请重新登录",
-                                duration: 1000
-                            });
-                        } else {
-                            this.$toast({
-                                message: data.message,
-                                duration: 1000
-                            });
-                        }
-                    }
-                })
-            },
+          const data = {
+              id: this.id
+          }
+          pro.fetch("post", "/others/getTNotice", data, "").then((res) => {
+              //console.log(res)
+              if (res.success == true) {
+                  if (res.code == 1) {
+                      //console.log(res.data)
+                      this.list = res.data
+                  }
+              }
+          }).catch((err) => {
+              var data = err.data;
+              if (data == undefined) {
+              } else {
+                  if (data.code == -9999) {
+                      this.$toast({
+                          message: "认证失败，请重新登录",
+                          duration: 1000
+                      });
+                  } else {
+                      this.$toast({
+                          message: data.message,
+                          duration: 1000
+                      });
+                  }
+              }
+          })
+      },
+      initData () {
+        this.contentText = contentText
+        this.aboutContent = aboutContent
+        this.aboutContent2 = aboutContent2
+        this.aboutContent3 = aboutContent3
+        this.list = {}
+      }
+
     },
     activated() {
+      console.log()
         if (this.id!=0) {
           this.getNewDetails()
+        }else{
+          this.initData()
         }
-       
-  
     },
   };
 </script>
