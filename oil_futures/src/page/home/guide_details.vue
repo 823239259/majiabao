@@ -1,6 +1,6 @@
 <template>
   <div id="guide_details">
-    <mt-header fixed :title="title" >
+    <mt-header fixed :title="titles" >
         <mt-button slot="left" icon="back" @click="goBack"></mt-button>
     </mt-header>
     <div class="wrap"  v-if="!list.title">
@@ -139,8 +139,15 @@
       clientHeight() {
         return document.documentElement.clientHeight + "px";
       },
-      title () {
-        return this.list.title 
+      titles () {
+        if(this.id == 0 ) {
+          console.log(11);
+          
+          return '风险提示'
+        }else{
+          return this.list.title 
+        }
+        
       },
       
     },

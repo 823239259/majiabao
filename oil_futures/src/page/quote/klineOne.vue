@@ -70,4 +70,10 @@
 		width: 100%;
 		margin: 0 auto;
 	}
+	#kline{
+		height: 4.66rem;
+	}
+	#kline_volume{
+		height: 1.62rem;
+	}
 </style>

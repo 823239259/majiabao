@@ -1,6 +1,5 @@
 <template>
-<transition name="vux-pop-in">
-	<div id="bottom_tab">
+	<div id="bottom_tab2">
 		<mt-tabbar v-model="tabSelected">
 			<template v-for="(item,index) in tabList">
 				<mt-tab-item :id="item.path" :key="item.path">
@@ -10,7 +9,6 @@
 			</template>
 		</mt-tabbar>
 	</div>
-</transition>
 </template>
 
 <script>
@@ -24,31 +22,23 @@
 				tabList: [
 					{
 						name: '首页',
-						path: '/home'
+						path: 'home'
 					},
 					{
 						name: '信息',
-						path: '/message'
+						path: 'message'
 					},
 					{
 						name: '行情',
-						path: '/quote'
+						path: 'quote'
 					},
 					{
 						name: '发现',
-						path: '/discover'
+						path: 'discover'
 					},
 					{
 						name: '我的',
-						path: '/my'
-					},
-					{
-						name: '学堂',
-						path: '/list/class'
-					},
-					{
-						name: '反馈',
-						path: '/tell_us'
+						path: 'my'
 					}
 
 				],
@@ -59,7 +49,6 @@
 			...mapActions([
 				'initTrade'
 			]),
-			
 		},
 		computed:{
 			loginStatus(){
@@ -77,8 +66,7 @@
 						this.$router.push({path: '/tradeLogin'});
 					}
 				}else{
-					this.$emit('show-tab',false);
-					this.$router.push({path: `${value}`});				
+					this.$router.push({path: `/${value}`});				
 				}
 
 			},
@@ -92,52 +80,34 @@
 
 <style lang="scss" scoped>
 	@import "../assets/css/common.scss";
-	#bottom_tab{
-		width: 1.6rem;
+	#bottom_tab2{
+		width: $w;
 		position: fixed;
-		top: 0.9rem;
-		left: 0;
+		bottom: 0;
 		z-index: 100;
-		height: calc(100vh - 0.9rem);
+		height: 1.12rem;
 		min-height: 54px;
-		background-color: #20202d;
+		background-color: #2a2f42;
 	}
 .icon{
   display: inline-block;
+   //width: 0.4rem;
+   //height: 0.4rem;
+  //background: url('../assets/img/icon_colour.png') top center no-repeat;
   background-size: cover;
+  border-radius: 50%
 }
-@for $i from 1 through 7 {
-	 $img: ("home", "information", "quote", "discover", 'my', 'xuetang', 'fankui');
+@for $i from 1 through 5 {
+	$img: ("home", "information", "quote", "discover", 'my');
   .icon#{$i}{
-	
 	background: url('../assets/images/home/#{nth($img,$i)}_icon.png') center no-repeat;
-	background-size: 100%;
-	border-radius: 50%;
-	
+	background-size: contain;
   }
-//   .icon#{$i}.icon-checked{
-// 	background-image: url('../assets/images/home/#{nth($img,$i)}_icon_chose.png');
-// 	background-size: contain;
-//   }	
+  .icon#{$i}.icon-checked{
+	background-image: url('../assets/images/home/#{nth($img,$i)}_icon_chose.png');
+	background-size: contain;
+  }	
 }
-.vux-pop-in-enter-active,
-.vux-pop-in-leave-active {
-  will-change: transform;
-  transition: all 500ms;
-  height: 100%;
-  position: absolute;
-  backface-visibility: hidden;
-  perspective: 1000;
-}
-
-.vux-pop-in-enter,.vux-pop-in-leave-to{
-  opacity: 0;
-  transform: translate3d(-100%, 0, 0);
-}
-
-.vux-pop-in-leave,.vux-pop-in-enter-to {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-}	
+	
 	
 </style>

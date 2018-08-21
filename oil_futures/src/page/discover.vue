@@ -11,7 +11,7 @@
 		</mt-header>
 		
 		<div class="list_wrap" v-for="(item, index) in warpList" :key="index">
-			<h2>{{item.title}}</h2>
+			<h2><span class="float_right"></span><span>↓点击图标使用小工具↓</span><span class="float_right">{{item.title}}</span></h2>
 			<ul class="list">
 				<li class="item" v-for="(n, index) in item.list" @click="goto(n.path)" :key="n.name">
 					<img :src="n.img" :alt="n.name">
@@ -20,7 +20,7 @@
 			</ul>
 		</div>
 		<div class="list_wrap">
-			<h2>教学视频</h2>
+			<h2><span class="float_right"></span><span>↓点击图标使用小工具↓</span><span class="float_right">教学视频</span></h2>
 			<div class="list" @click="goto('/class_room')">
 				<img src="../assets/images/discover/shipin_bg.jpg" alt="">
 			</div>
@@ -30,11 +30,13 @@
 		
 		<bottomTab :tabSelect="tabSelected" v-show="tabShow"></bottomTab>
 		<tips-float></tips-float>
+		<bottom  :tabSelect="tabSelected"/>
 	</div>
 </template>
 
 <script>
 	import bottomTab from "../components/bottom_tab"
+	import bottom from "../components/bottoms_tab"
 	import discover7x24 from '../page/datas/discover7x24'
 	import calendarNews from '../page/datas/calendarNews'
 	import tipsFloat from '../components/tipsFloat'
@@ -47,6 +49,7 @@
 			discover7x24,
 			calendarNews,
 			tipsFloat,
+			bottom
 			//focusNews
 		},
 		mixins:[pro.mixinsToCustomer],
@@ -161,10 +164,16 @@
 	
 .list_wrap{
 	h2{
-		@include font($fs28,0.8rem,#8f94a7,left);
-		padding-left: 0.3rem;
+		display: flex;
+		justify-content: space-between;
+		@include font($fs28,0.8rem,#8f94a7);
+		padding: 0 0.3rem;
 		border-top: 1px solid #d2dae7; 
 		border-bottom: 1px solid #d2dae7; 
+	}
+	.float_right{
+		width: 1.5rem;
+		color: #333;
 	}
 	.list{
 		padding: 0.3rem;

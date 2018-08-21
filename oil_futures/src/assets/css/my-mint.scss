@@ -54,6 +54,36 @@
     }
 
 } 
+#bottom_tab2 {
+    .mint-tab-item-label{
+        color: #9597a3;
+    }
+    .mint-tab-item-icon{
+        width: 0.48rem;
+        height: 0.48rem
+    }
+    .mint-tabbar {
+        width: 7.5rem;
+        background-color: #2a2f42;
+        position: relative;
+        top: 0;
+
+    }
+    .mint-tabbar > .mint-tab-item.is-selected {
+        background-color: #2a2f42;
+        .mint-tab-item-label{
+            color: #9597a3;
+        }
+    }
+
+} 
+.mint-tabbar{
+	position: fixed;
+    bottom: 0;
+    //border-top:1px solid #e6e6e6; 
+    z-index: 999;
+    
+}
 .mint-swipe-indicator{
     opacity: 0.5;
     background-color: #fff

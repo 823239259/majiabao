@@ -1,81 +1,38 @@
 <template>
-	<div class="tips_wrap">
-		<div class="flex flexBack" v-if="isBack">
-			<div class="floatTips1" @click="goBack">
-				<span class="back_icon"></span>
-			</div>
+	<div class="unableShow">
+		<p class="msg">{{msg}}</p>
+		<div class="btn_group">
+			<button @click="handleClick1">{{btnList[0]}}</button>
+			<button @click="handleClick2">{{btnList[1]}}</button>
 		</div>
-		<div class="flex" v-else>
-			<div class="right_box">
-				<transition name="custom-classes-transition"
-    				enter-active-class="animated fadeInUp"
-    				leave-active-class="animated fadeOutDown" 
-					>	
-					<ul v-show="showTools">
-						<li class="item" v-for="(item, index) in toolsList" :key="item.name"  @click="itemClick(item)">{{item.name}}</li>
-					</ul>
-				</transition>
-				<div class="floatTips" @click="show('showTools')">
-					<span>+</span>
-				</div>
-			</div>
-			
-		</div>
-		
 	</div>
 </template>
 
 <script>
 import pro from '../assets/js/common'
 	export default{
-		name:"tipsButton",
-		props:['isBack'],
+		name:"unableShow",
+		props: {
+			msg: {
+				type: String,
+				default: '您尚未登录，暂无数据'
+			},
+			btnList: {
+				type: Array,
+				default: function () {
+					return ['登录', '注册']
+				}  
+			},
+			method: {
+				type: Function
+			}
+		},
 		mixins:[pro.mixinsToCustomer],
 		data(){
 			return{
-				toolsList: [
-					{
-						name: '首页',
-						path: '/home'
-					},
-					{
-						name: '行情',
-						path: '/quote'
-					},
-					{
-						name: '工具',
-						path: '/discover'
-					},
-					{
-						name: '资讯',
-						path: '/news_details/1'
-					},
-					{
-						name: '客服',
-						path: '/service_online'
-					},
-				],
-				showMy: false,
-				showTools: false,
-				
 			}
 		},
 		methods:{
-			goBack() {
-                window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
-            },
-			marginLeft (index,arr,spaceNum) {
-				let length = arr.length;
-				//得到平均数
-				let averageNum = (length+1)/2;
-				let left = (index + 1 - averageNum)*spaceNum;
-				if(spaceNum>0){
-					left = left>0?-left:left
-				}else{
-					left = left>0?left:-left
-				}
-				return  left+'rem'
-			},
 			itemClick (item) {
 				if(item.path) {
 					this.$router.push({path: item.path})
@@ -87,6 +44,12 @@ import pro from '../assets/js/common'
 			},
 			show (key) {
 				this[key] = !this[key]
+			},
+			handleClick1 () {
+				this.method('/login')
+			},
+			handleClick2 () {
+				this.method('/register')
 			}
 		}
 	}
@@ -94,14 +57,29 @@ import pro from '../assets/js/common'
 
 <style lang="scss" scoped>
 	@import "../assets/css/common.scss";
-	.tips_wrap{
-		position: fixed;
-		bottom: 1.28rem;
-		right: 0.3rem;
-		display: flex;
-		padding: 0 0.3rem;
-		z-index: 10;
+	.unableShow{
+		width: 7.5rem;
+		padding-top: 0.5rem;
 	}
+	.msg{
+		width: 100%;
+		@include font(0.3rem,0.56rem,#8f94a7)
+	}
+	.btn_group{
+		text-align: center;
+		button{
+			width: 1.6rem;
+			height: 0.8rem;
+			background-color: #8f94a7;
+			border-radius: 0.1rem;
+			@include font(0.28rem,0.8rem,#FFF)
+		}
+		button:first-child{
+			margin-right: 0.3rem;
+		}
+	}
+
+
 	.flex{
 		display: flex;
 		width: 100%;

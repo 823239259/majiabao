@@ -30,7 +30,7 @@
 					<discover7x24></discover7x24>
 				</mt-tab-container-item>
 				<mt-tab-container-item id="2" :key="2">
-					<calendar-news :newDate ="newsDate"></calendar-news>
+					<calendar-news :newDate ="newsDate" :changeSelected = 'changeSelected'></calendar-news>
 				</mt-tab-container-item>
 		
 				<!-- </transition-group> -->
@@ -40,11 +40,13 @@
 		</div>
 		<bottomTab :tabSelect="tabSelected" v-show="tabShow"></bottomTab>
 		<tips-float></tips-float>
+		<bottom  :tabSelect="tabSelected"/>
 	</div>
 </template>
 
 <script>
 	import bottomTab from "../components/bottom_tab"
+	import bottom from "../components/bottoms_tab"
 	import discover7x24 from '../page/datas/discover7x24'
 	import calendarNews from '../page/datas/calendarNews'
 	import tipsFloat from '../components/tipsFloat'
@@ -57,12 +59,13 @@
 			discover7x24,
 			calendarNews,
 			tipsFloat,
+			bottom
 			//focusNews
 		},
 		mixins:[pro.mixinsToCustomer],
 		data() {
 			return {
-				tabSelected: 'datas',
+				tabSelected: 'message',
 				selected: "2",
 				navCheck: 0,
 				newsDate: '',
@@ -85,6 +88,9 @@
 				if (pathObj.length == 1) {
 					this.$router.push({path:pathObj[0]})
 				}
+			},
+			changeSelected (index) {
+				this.selected = index
 			},
 			showTab (...key) {
 				if(key.length === 1) {
@@ -126,7 +132,6 @@
 		width: $w;
 		background-color: $white;
 		padding-top: 0.96rem;
-		
 		.mint-navbar .mint-tab-item.is-selected {
 			margin: 0;
 			border-bottom: 0;

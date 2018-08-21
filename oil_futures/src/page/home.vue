@@ -41,6 +41,9 @@
             <li :class="['item',{'item2':index<=3&&index%2 !== 0},{'item2':index>=4&&index%2 == 0}]"  v-for="(item, index) in homeList" :key="item.name" @click="goto(item.path)">{{item.name}}</li>
         </ul>
     </div>
+    <div class="charts_container">
+      <klineOne></klineOne>
+    </div>
     <div class="hot_wrap">
         <h2>近期热门</h2>
         <ul class="hot_list">
@@ -51,7 +54,9 @@
                 <p :class="{'order1':index%2 == 0}">{{item.title}}</p>
             </li>
         </ul>
+        <div class="more_title" @click="goto('/message')">查看更多实时资讯▼</div>
     </div>
+    
     <div class="swipe-wrap">
       <mt-swipe :auto="0">
         <mt-swipe-item>
@@ -68,6 +73,7 @@
     <bottomTab :tabSelect="tabSelected" v-show="tabShow"></bottomTab>
     <tips-float ></tips-float>
     <mt-actionsheet :actions="actions" v-model="sheetVisible"></mt-actionsheet>
+    <bottom  :tabSelect="tabSelected"/>
   </div>
   
 </template>
@@ -75,6 +81,8 @@
 <script>
   import { mapMutations,mapActions } from 'vuex'
   import bottomTab from '../components/bottom_tab'
+  import bottom from '../components/bottoms_tab'
+  import klineOne from './quote/klineOne'
   import scrollMsg from '../components/scrollMsg'
   import Cube from '../components/Cube'
   import tipsFloat from '../components/tipsFloat'
@@ -89,8 +97,9 @@
     components: {
       bottomTab,
       scrollMsg,
-      Cube,
-      tipsFloat
+      tipsFloat,
+      bottom,
+      klineOne
     },
     mixins: [pro.mixinsToCustomer],
     data() {
@@ -197,7 +206,10 @@
     },
     activated() {
     	this.$store.state.market.Parameters = [];
-    	this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + "NYMEX" + '","CommodityNo":"' + "CL" + '","ContractNo":"' + "1808" +'"}}');
+      this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + "NYMEX" + '","CommodityNo":"' + "CL" + '","ContractNo":"' + "1808" +'"}}');
+      this.$store.state.isshow.iskline = true
+     // this.$store.state.isshow.isklineshow = true
+      
     },
     mounted(){
 //  	this.initQuoteClient();
@@ -210,7 +222,13 @@
 				if(dotsize >= 4) dotsize = 4;
 				return num.toFixed(dotsize);
 			}
-		},
+    },
+    beforeRouteLeave (to, from, next) {
+      // ...
+      this.$store.state.isshow.iskline = false
+      this.$store.state.isshow.isklineshow = false
+      next()
+    }
   };
 </script>
 
@@ -218,7 +236,7 @@
   @import "../assets/css/common.scss";
   #home {
     width: 7.5rem;
-    padding-top: 0.96rem;
+    padding-top:  0 0.96rem;
     //background-color: $bg;
   }
 .show_wrap{
@@ -326,4 +344,16 @@
     background: url('../assets/images/home/msg_icon.png') center no-repeat;
     background-size: 100%;
   }
+  .charts_container{
+			background-color: white;
+			width: 7.5rem;
+			height: 6.4rem;
+    }
+.more_title{
+  width: 7.5rem;
+	height: 1rem;
+  background-color: #ffffff;
+  @include font(0.26rem,1rem,#8f94a7);
+  border-bottom: 1px solid #d2dae7;
+}    
 </style>

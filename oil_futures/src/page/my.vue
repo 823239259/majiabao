@@ -39,6 +39,7 @@
     <!-- <bottomTab :tabSelect="tabSelected" v-show="tabShow" @show-tab="showTab($event,'tabShow')"></bottomTab> -->
     <bottomTab :tabSelect="tabSelected" v-show="tabShow"></bottomTab>
     <tipsFloat></tipsFloat>
+    <bottom  :tabSelect="tabSelected"/>
     
   </div>
 </template>
@@ -47,6 +48,7 @@
   import {
     mapMutations
   } from 'vuex'
+  import bottom from "../components/bottoms_tab"
   import bottomTab from '../components/bottom_tab'
   import cloud from '../components/cloud'
   import tipsFloat from '../components/tipsFloat'
@@ -61,7 +63,8 @@
     components: {
       bottomTab,
       cloud,
-      tipsFloat
+      tipsFloat,
+      bottom
       
     },
     mixins: [pro.mixinsToCustomer],

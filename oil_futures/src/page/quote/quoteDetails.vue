@@ -34,9 +34,8 @@
 								<span>平均价</span>
 								<span>{{(v.LastQuotation.HighPrice+v.LastQuotation.LowPrice)/2 | fixNumTwo}}</span>
 							</li>
-							<li>
-								<span v-if="v.LastQuotation.OpenPrice - v.LastQuotation.PreSettlePrice > 0" style="font-size: 0.32rem;color: #11d974;">低开</span>
-								<span v-else style="font-size: 0.32rem;color: #ff3363;">高开</span>
+							<li :class="v.LastQuotation.OpenPrice - v.LastQuotation.PreSettlePrice > 0?'quote_green':'quote_red'" >
+								<span>{{v.LastQuotation.OpenPrice - v.LastQuotation.PreSettlePrice > 0?'低开':'高开'}}</span>
 							</li>
 						</ul>
 					</div>
@@ -60,16 +59,16 @@
 					</div>
 					<div class="celue_pie">
 						<ul>
-							<li><p @click="choseStrategy($event,'haigui')">海龟交易</br>策略</p></li>
+							<li><p class="cenue1" @click="choseStrategy($event,'haigui')">海龟交易</br>策略</p></li>
 						</ul>
 						<ul>
-							<li><p @click="choseStrategy($event,'Bollingerbandit')">布林通道</br>策略</p></li>
-							<li><p @click="choseStrategy($event,'SMA')">移动平均</br>策略</p></li>
+							<li><p class="cenue2" @click="choseStrategy($event,'Bollingerbandit')">布林通道</br>策略</p></li>
+							<li><p class="cenue3" @click="choseStrategy($event,'SMA')">移动平均</br>策略</p></li>
 						</ul>
 						<ul>
-							<li><p @click="choseStrategy($event,'DualThrust')">DualThrust</br>策略</p></li>
-							<li><p @click="choseStrategy($event,'Jintena')">金特肯纳</br>策略</p></li>
-							<li><p @click="choseStrategy($event,'RBreaker')">RBreaker</br>策略</p></li>
+							<li><p class="cenue4" @click="choseStrategy($event,'DualThrust')">DualThrust</br>策略</p></li>
+							<li><p class="cenue5" @click="choseStrategy($event,'Jintena')">金特肯纳</br>策略</p></li>
+							<li><p class="cenue6" @click="choseStrategy($event,'RBreaker')">RBreaker</br>策略</p></li>
 						</ul>
 					</div>
 				</div>
@@ -702,6 +701,8 @@
 				color: #8f94a7;
 				font-size: 0.26rem;
 			}
+			
+			
 			ul{
 				justify-content: space-between;
 				align-items: center;
@@ -738,6 +739,12 @@
 					}
 				}
 			}
+		}
+	}
+	@for $i from 1 through 6 {
+		$bgcolor: (#5534ff, #40a9e6, #e3b18f, #f2a0b6, #7ea8cf, #70baba);
+		.celue .celue_pie ul .cenue#{$i}{
+			background-color: nth($bgcolor,$i)
 		}
 	}
 	.celue{
@@ -944,5 +951,14 @@
 			}
 		}
 	}
-	
+.quote_green{
+	font-size: 0.32rem;
+	background-color: #11d974;
+	color: #fff;
+}
+.quote_red{
+	font-size: 0.32rem;
+	background-color: #ff3363;
+	color: #fff;
+}	
 </style>

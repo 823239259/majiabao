@@ -29,7 +29,11 @@
 			</li>
 		</ul>
 		<div class="noInfo" v-show="showNoInfo">
-			暂无内容
+			<p class="msg">暂无内容，请点击其他日期试试</p>
+			<div class="btn_group">
+				<button @click="handleClick">看资讯</button>
+				<button @click="goto('/quote')">看行情</button>
+			</div>
 		</div>
 	</div>
 </template>
@@ -38,7 +42,7 @@
  import Calendar from 'vue-calendar-component';
 	export default {
 		name: "calendarNews",
-		props: ['newDate'],
+		props: ['newDate', 'changeSelected'],
 		components: {
 			 Calendar
 		},
@@ -58,6 +62,9 @@
 			}
 		},
 		methods: {
+			handleClick () {
+				this.changeSelected('1')
+			},
 			goto(...pathObj) {
 				if (pathObj.length == 1) {
 					this.$router.push({
@@ -420,5 +427,21 @@
 			opacity: 1 !important;
 		}
 	}
-	
+	.msg{
+		width: 100%;
+		@include font(0.3rem,0.56rem,#8f94a7)
+	}
+	.btn_group{
+		text-align: center;
+		button{
+			width: 1.6rem;
+			height: 0.8rem;
+			background-color: #8f94a7;
+			border-radius: 0.1rem;
+			@include font(0.28rem,0.8rem,#FFF)
+		}
+		button:first-child{
+			margin-right: 0.3rem;
+		}
+	}
 </style>
