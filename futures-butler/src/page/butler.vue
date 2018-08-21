@@ -6,35 +6,7 @@
       <ul class="butler_list">
         <li class="item" v-for="(item, index) in butlerList" :key="index + 'abcde'">
           <!-- <div class="left" :class="{'two_times':index%2===0,'all_times':item.leftShow}"  @touchmove="moveTab(item,index,'left')" @touchstart="setCoordinate"> -->
-          <div class="left"   @touchmove="moveTab(item,index,'left')" @touchstart="setCoordinate">
-             <template v-if="!item.leftShow">
-                  {{item.leftName}}
-             </template>          
-             <template v-else>
-               <div class="show_after">
-                 {{item.leftName}}
-               </div>
-                <div class="show_after">
-                  <span :class="{'margin1':item.marginShow}" @click="btnback(item,index,'left')">返回</span>
-                  <span :class="{'margin1':item.marginShow}" @click="goto(item.leftPath)">解锁</span>
-                </div>
-             </template>
-          </div>
-          <!-- <div class="right" :class="{'two_times':index%2!==0,'all_times':item.rightShow}" @touchmove="moveTab(item,index,'right')" @touchstart="setCoordinate">
-            <template v-if="!item.rightShow">
-                  {{item.rightName}}
-             </template>          
-             <template v-else>
-                <div class="show_after">
-                 {{item.rightName}}
-               </div>
-               <div class="show_after">
-                  <span :class="{'margin1':item.marginShow}" @click="goto(item.rightPath)">解锁</span>
-                 <span :class="{'margin1':item.marginShow}" @click="btnback(item,index,'right')">返回</span>
-                </div>
-                  
-             </template>
-          </div> -->
+          <div class="left"  @click="goto(item.leftPath)">{{item.leftName}}</div>
         </li>
       </ul>
       
