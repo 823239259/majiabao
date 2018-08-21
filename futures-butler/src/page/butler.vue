@@ -279,7 +279,7 @@
   @import "../assets/css/common.scss";
   #butler {
     width: 7.5rem;
-    padding: 0.98rem 0;
+    padding: 1.1rem 0;
     //background-color: $bg;
     
   }
