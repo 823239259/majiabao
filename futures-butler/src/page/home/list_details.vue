@@ -95,7 +95,6 @@
         });
       },
       dianzan (item) {
-       
         if(item.isGood){
             return  this.$toast({
                 message: "你已经点赞过了",
@@ -111,9 +110,6 @@
             });
 
         }
-
-
-         
       },
       addNews () {
           if (!this.text) return this.$toast({message:"发送内容不能为空",duration: 1000});
