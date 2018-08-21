@@ -1,7 +1,8 @@
 <template>
-  <div id="butler" :style="{height:clientHeight}">
+  <div id="butler" >
     <mt-header fixed title="管家"></mt-header>
     <div class="butler_wrap">
+      <p class="note"><span>管家提示：</span>左右滑动弹出按钮，解锁后可用。</p>
       <ul class="butler_list">
         <li class="item" v-for="(item, index) in butlerList" :key="index + 'abcde'">
           <!-- <div class="left" :class="{'two_times':index%2===0,'all_times':item.leftShow}"  @touchmove="moveTab(item,index,'left')" @touchstart="setCoordinate"> -->
@@ -36,7 +37,7 @@
           </div> -->
         </li>
       </ul>
-      <p class="note"><span>管家提示：</span>左右滑动弹出按钮，解锁后可用。</p>
+      
     </div>
     <bottomTab :tabSelect="tabSelected"></bottomTab>
     
@@ -278,7 +279,7 @@
   @import "../assets/css/common.scss";
   #butler {
     width: 7.5rem;
-    padding-top: 0.98rem;
+    padding: 0.98rem 0;
     //background-color: $bg;
     
   }

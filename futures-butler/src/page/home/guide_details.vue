@@ -140,6 +140,9 @@
         return document.documentElement.clientHeight + "px";
       },
       title () {
+        if (this.id ==0) {
+          return '风险提示'
+        }
         return this.list.title 
       },
       
