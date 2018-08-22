@@ -205,18 +205,15 @@
         },
         beforeRouteLeave (to, from, next) {
             // ...
-            console.log(to.name)
             if (to.name === 'home') {
                 this.setCurrentDetails('CL');
             }
             next()
         },
         mounted : function () {
-            console.log('mounted')
             this.initQuoteClient();
         },
         activated : function () {
-            console.log(43)
             this.isLogin = local.get('user')? true : false;
             this.getSelection();
             this.getCommodityInfo();
@@ -234,7 +231,6 @@
         },
         watch : {
             currentType: function (n, o) {
-                console.log(123)
                 if (n != o) {
                     this.$store.state.market.Parameters = [];
                     this.$store.state.market.commodityOrder = n;
