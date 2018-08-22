@@ -144,8 +144,7 @@
             },
             //获取分类
             getCommodityInfo: function () {
-                pro
-                    .fetch('post', '/quoteTrader/getCommodityInfo', '', '')
+                pro.fetch('post', '/quoteTrader/getCommodityInfo', '', '')
                     .then((res) => {
                         if (res.success == true && res.code == 1) {
                             if (res.data != undefined || res.data != null) {
@@ -156,7 +155,7 @@
                         }
                     })
                     .catch((err) => {
-                        //					Toast({message: err.data.message, position: 'bottom', duration: 2000});
+                        //Toast({message: err.data.message, position: 'bottom', duration: 2000});
                     });
             },
             //获取自选
@@ -165,8 +164,7 @@
                     token: this.userInfo.token,
                     secret: this.userInfo.secret
                 }
-                pro
-                    .fetch('post', '/quoteTrader/userGetCommodityList', '', headers)
+                pro.fetch('post', '/quoteTrader/userGetCommodityList', '', headers)
                     .then((res) => {
                         if (res.success == true && res.code == 1) {
                             this.selectionList = res.data;
@@ -174,7 +172,7 @@
                     })
                     .catch((err) => {
                         if (err.data.code = "-9999") {
-                            //						Toast({message:"请先登录", position: 'bottom', duration: 2000});
+                            //Toast({message:"请先登录", position: 'bottom', duration: 2000});
                         }
                     });
             },
@@ -185,9 +183,7 @@
                 this.$store.state.market.commodityOrder = this.selectionList;
             },
             toQuoteDetails: function (commodityNo, mainContract, exchangeNo, contrast) {
-                this
-                    .$router
-                    .push({
+                this.$router.push({
                         path: '/quoteDetails',
                         query: {
                             'commodityNo': commodityNo,
@@ -199,12 +195,7 @@
             },
             //设置默认current对象
             setCurrentDetails(commodityNo) {
-                this
-                    .$store
-                    .state
-                    .market
-                    .Parameters
-                    .forEach((a, i) => {
+                this.$store.state.market.Parameters.forEach((a, i) => {
                         if (a.CommodityNo == commodityNo) {
                             this.$store.state.market.currentdetail = a;
                             this.ContractNo = a.MainContract
@@ -212,20 +203,21 @@
                     })
             }
         },
+        beforeRouteLeave (to, from, next) {
+            // ...
+            console.log(to.name)
+            if (to.name === 'home') {
+                this.setCurrentDetails('CL');
+            }
+            next()
+        },
         mounted : function () {
+            console.log('mounted')
             this.initQuoteClient();
-            setTimeout(() => {
-                this.setCurrentDetails('CL')
-
-                console.log(this.$store.state.market.currentdetail);
-
-            }, 1000);
-
         },
         activated : function () {
-            this.isLogin = local.get('user')
-                ? true
-                : false;
+            console.log(43)
+            this.isLogin = local.get('user')? true : false;
             this.getSelection();
             this.getCommodityInfo();
         },
@@ -242,15 +234,12 @@
         },
         watch : {
             currentType: function (n, o) {
+                console.log(123)
                 if (n != o) {
                     this.$store.state.market.Parameters = [];
                     this.$store.state.market.commodityOrder = n;
-                    this
-                        .commodityOrder
-                        .forEach((o, i) => {
-                            this
-                                .quoteSocket
-                                .send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo + '"}}');
+                    this.commodityOrder.forEach((o, i) => {
+                            this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo + '"}}');
                         });
                 }
             }
