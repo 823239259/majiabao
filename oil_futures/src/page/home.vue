@@ -236,7 +236,7 @@
   @import "../assets/css/common.scss";
   #home {
     width: 7.5rem;
-    padding-top:  0 0.96rem;
+    padding:  1.1rem 0;
     //background-color: $bg;
   }
 .show_wrap{

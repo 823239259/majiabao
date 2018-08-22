@@ -55,24 +55,27 @@
         communityList: {},
         community: [{
             time: '2018-6-25',
-            name: 'kelelle',
-            img: require('../assets/images/home/person02_icon.png'),
+            name: '瞎说大实话',
+            img: require('../assets/images/home/person01_icon.png'),
             goodNumbers: 123,
-            contentText: '搞定了感觉到了分管局领导国家劳动法攻击力的房价高的浪费了较高的老公的浪费国家了'
+            contentText: '#我给产品提建议#1.增加更多行情数据；2.增加交易功能，至少需要模拟交易；',
+            isGood: false
         },
         {
             time: '2018-6-25',
-            name: 'kelelle',
+            name: 'miaohou',
             img: require('../assets/images/home/person02_icon.png'),
             goodNumbers: 123,
-            contentText: '搞定了感觉的浪费国家了'
+            contentText: '#我给产品提建议#均线多加几条，当前的均线比较少',
+            isGood: false
         },
         {
             time: '2018-6-25',
-            name: 'kelelle',
-            img: require('../assets/images/home/person02_icon.png'),
+            name: '三千一',
+            img: require('../assets/images/home/person03_icon.png'),
             goodNumbers: 123,
-            contentText: '搞定的浪费了较高的老公的浪费国家了'
+            contentText: '#我给产品提建议#数据准确度还需要提高',
+            isGood: false
         }
         ],
         userInfo: {},
@@ -194,7 +197,7 @@
     activated() {
         console.log(123)
         this.communityList = local.get('communityList')?local.get('communityList'):{};
-        this.community = this.communityList[this.id]||[];
+        this.community = this.communityList[this.id]||this.community;
         this.userInfo = local.get('user')||{}
         this.nameList = local.get('nameList')|| {}
     },
