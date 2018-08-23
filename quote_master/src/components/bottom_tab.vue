@@ -87,7 +87,7 @@
 		z-index: 100;
 		height: 1.12rem;
 		min-height: 54px;
-		background-color: #2a2f42;
+		background-color: #fff;
 	}
 .icon{
   display: inline-block;

@@ -77,14 +77,14 @@
 						<div id="rangbuy">
 							<ul class="bugsell">
 								<li class="red">买</li>
-								<li class="red">{{baifenbi(total,total1)}}</li>
+								<li class="red red_box">{{baifenbi(total,total1)}}</li>
 							</ul>
 							<mt-range v-model="total" :barHeight="20" :min="0" :max="Number(v.LastQuotation.BidQty1)+Number(v.LastQuotation.BidQty2)+Number(v.LastQuotation.BidQty3)+Number(v.LastQuotation.BidQty4)+Number(v.LastQuotation.BidQty5)+Number(v.LastQuotation.AskQty1)+Number(v.LastQuotation.AskQty2)+Number(v.LastQuotation.AskQty3)+Number(v.LastQuotation.AskQty4)+Number(v.LastQuotation.AskQty5)" :step="1"></mt-range>
 						</div>
 						<div id="rangsell">
 							<ul class="bugsell">
 								<li class="green">卖</li>
-								<li class="green">{{baifenbi(total1,total)}}</li>
+								<li class="green green_box">{{baifenbi(total1,total)}}</li>
 							</ul>
 							<mt-range v-model="total1" :barHeight="20" :min="0" :max="Number(v.LastQuotation.BidQty1)+Number(v.LastQuotation.BidQty2)+Number(v.LastQuotation.BidQty3)+Number(v.LastQuotation.BidQty4)+Number(v.LastQuotation.BidQty5)+Number(v.LastQuotation.AskQty1)+Number(v.LastQuotation.AskQty2)+Number(v.LastQuotation.AskQty3)+Number(v.LastQuotation.AskQty4)+Number(v.LastQuotation.AskQty5)" :step="1"></mt-range>
 						</div>
@@ -401,9 +401,10 @@
 		width: 7.5rem;
 	}
 	header{
-		background-color: #2a2f42;
+		background-color: #fff;
 		width: 100%;
 		height: 0.88rem;
+		border-bottom: #dadbe0 solid 1px;
 		ul{
 			padding: 0 0.3rem;
 			flex-direction: row;
@@ -431,7 +432,7 @@
 					h1{
 						padding-right: 0.3rem;
 						font-size: 0.36rem;
-						color: white;
+						color: #2b344a;
 					}
 				}
 				&:nth-child(3){
@@ -452,12 +453,13 @@
 	#container {
 		width: 7.5rem;
 		margin-top: 0.96rem;
-		background-color: #2a2f42;
+		background-color: #fff;
 	}
 	
 	.klinePic {
 		width: 100%;
 		height: 4rem;
+		background-color: #eaeaea;
 		.chartsList {
 			padding: 0 0.3rem;
 			height: 1rem;
@@ -467,9 +469,9 @@
 			align-items: center;
 			span {
 				font-size: 0.28rem;
-				color: #9597a3;
+				color: #2b344a;
 				&.current {
-					color: white;
+					color: #497df5;
 					text-decoration: underline;
 				}
 			}
@@ -505,6 +507,7 @@
 			justify-content: space-between;
 			align-items: center;
 			padding:  0 0.3rem;
+			line-height: 0.36rem;
 			li{
 				display: flex;
 				flex-direction: column;
@@ -518,22 +521,31 @@
 		#rangbuy,#rangsell{
 			width: 100%;
 			height: 1.4rem;
-			background-color: #383b4e;
+			background-color: #fff;
 			.bugsell{
 				display: flex;
 				justify-content: space-between;
 				height: 0.5rem;
 				align-items: center;
 				padding: 0 0.3rem;
+				.green_box{
+						background-color: #14da8b;
+					}
+				.red_box{
+					background-color: #f35c5c;
+				}
 				li{
 					margin-top:0.1rem; 
 					&:nth-child(2){
 						width: 1rem;
 						height: 0.5rem;
+						color: #fff !important;
 						text-align: center;
 						line-height: 0.5rem;
-						background-color: #2a2f42;
+						//background-color: #f35c5c;
+						border-radius: 0.1rem;
 					}
+					
 				}
 			}
 		}
@@ -542,16 +554,16 @@
 	.name {
 		height: 1rem;
 		padding: 0 0.3rem;
-		color: white;
+		color: #2b344a;
 		font-size: 0.32rem;
 		line-height: 1rem;
 		font-weight: 600;
-		border: 1px solid #383b4e;
+		border-bottom: 1px solid #e6e6e6;
 	}
 	
 	.black {
 		height: 0.3rem;
-		background-color: #383b4e;
+		background-color: #f7f7f7;
 	}
 	
 	.infoDetails {
@@ -559,7 +571,8 @@
 		height: 3.4rem;
 		.infos {
 			color: #9597a3;
-			font-size: 0.2rem;
+			font-size: 0.24rem;
+			line-height: 0.36rem;
 			padding: 0 0.3rem;
 			ul {
 				height: 0.8rem;
@@ -568,12 +581,13 @@
 				align-items: center;
 				li {
 					display: flex;
+					flex: 1;
 					flex-direction: column;
 					align-content: center;
 					text-align: center;
 					span {
 						&:nth-child(2) {
-							color: white;
+							color: #333;
 						}
 					}
 				}
@@ -617,7 +631,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		color: white;
+		color: #2b344a;
 		font-size: 0.3rem;
 		span {
 			&:nth-child(1) {
@@ -634,7 +648,7 @@
 	
 	.buySellBar {
 		width: 100%;
-		height: 2.8rem;
+		padding: 0.3rem 0 ;
 		.duoKong{
 			width: 100%;
 			height: 1.8rem;

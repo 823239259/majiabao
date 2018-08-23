@@ -256,8 +256,8 @@
   h2{
     width: 7.5rem;
     padding-left: 0.3rem;
-    @include font($fs32,1rem,#fff,left);
-    border-bottom: 1px solid #383b4e;
+    @include font($fs32,1rem,#2b344a,left);
+    border-bottom: 1px solid #e6e6e6;
     }
 
   .comment_wrap{
@@ -284,7 +284,7 @@
           .right{
               flex: 1;
               min-height: 0.8rem;
-              border-bottom: 1px solid #383b4e;
+              border-bottom: 1px solid #f7f7f7;
                @include flex(space-between);
             //   .dianzan_icon{
             //       width: 0.32rem;
@@ -320,14 +320,14 @@
     @include flex(space-between);
     padding: 0.2rem;
     width: 7.5rem;
-    background-color: #2a2f42;
-    border-top: 1px solid #383b4e;
+    background-color: #fff;
+    border-top: 1px solid #f7f7f7;
     .input{
         width: 4.2rem;
         height: 0.72rem;
-        @include font($fs28,.72rem,#fff,left);
+        @include font($fs28,.72rem,#333,left);
         padding: 0 0.2rem;
-        background-color: #373a4d;
+        background-color: #eaeaea;
         border-radius: 0.35rem;
         vertical-align: middle;
         border: none
@@ -335,12 +335,12 @@
     .dianzan,.btn{
         width: 0.7rem;
         height: 0.7rem;
-        background-color: #585b6c;
+        background-color: #a8bce1;
         border-radius: 50%;
         @include font(0.26rem,0.7rem,#fff)
     }
     .btn{
-        background-color: #6064e1;
+        background-color: #497df5;
         
     }
     .lh36{

@@ -55,7 +55,7 @@ export default {
 .wrap{
   width: 7.5rem;
   padding-top: 0.3rem;
-  background-color: #2a2f42;
+  background-color: #fff;
   h2{
     @include font(0.4rem, 0.4rem, #788b87);
     font-weight: bold;
@@ -67,14 +67,14 @@ export default {
     margin: 0 auto;
   }
   p{
-    @include font(0.32rem, 0.48rem, #ff6080);
+    @include font(0.32rem, 0.48rem, #497df5);
      
   }
   .text_content{
     margin: 0.3rem;
     padding: 0.3rem;
-    @include font(0.3rem, 0.48rem, #fff,left);
-    background-color: #35384b;
+    @include font(0.3rem, 0.48rem, #333,left);
+    background-color: #f7f7f7;
   }
   // .bottom{
   //   padding-top: 1rem;

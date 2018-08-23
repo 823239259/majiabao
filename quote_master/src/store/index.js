@@ -370,9 +370,7 @@ export default new Vuex.Store({
 				state.isshow.islightshow = true;
 			} else {
 				if(document.getElementById(e) != null){
-					console.log(document.getElementById(e))
 					lightChart = echarts.getInstanceByDom(document.getElementById(e));
-					console.log(lightChart)
 				}
 			}
 			setTimeout(function(){
@@ -557,8 +555,9 @@ export default new Vuex.Store({
 					axisPointer: {
 						type: 'line',
 						animation: false,
-						lineStyle: {
-							color: '#ffffff',
+						lineStyle: { //tips线的颜色
+							//color: '#ffffff',
+							color: '#26a2ff',
 							width: 1,
 							opacity: 1
 						}
@@ -643,7 +642,8 @@ export default new Vuex.Store({
 							lineStyle: {
 								normal: {
 									width: 1,
-									color: "#ffffff"
+									//color: "#ffffff"
+									color: "#26a2ff"
 								}
 							},
 							data: [{
@@ -827,7 +827,8 @@ export default new Vuex.Store({
 						type: 'line',
 						animation: false,
 						lineStyle: {
-							color: '#ffffff',
+							color: '#26a2ff',
+							//color: '#ffffff',
 							width: 1,
 							opacity: 1
 						}

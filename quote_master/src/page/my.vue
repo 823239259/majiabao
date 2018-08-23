@@ -22,7 +22,7 @@
       </ul>
     </div>
     <div class="yesterday_wrap">
-      <h2 class="title">昨日趋势</h2>
+      <h2 class="title">昨日趋势 <span class="note">统计昨日一整天中的所有品种涨跌趋势</span></h2>
       <div class="box">
         <div class="box_content">
           <p class="green"><span>{{upFloat}}</span>%</p>
@@ -495,7 +495,7 @@
 
   #home {
     width: 7.5rem;
-    background-color: $masterBg;
+    background-color: #fff;
     padding-top: 0.96rem;
     padding-bottom: 1.12rem; 
     //overflow: hidden;
@@ -526,11 +526,11 @@
     }
   }
   .recommend_wrap{
-    border-bottom: 0.2rem solid #383b4e;
+    border-bottom: 0.2rem solid #f7f7f7 ;
     .title{
       padding: 0 0.3rem;
-      @include font($fs32,1rem,#fff,left);
-      border-bottom: 1px solid #383b4e;
+      @include font($fs32,1rem,#2b344a,left);
+      border-bottom: 1px solid #dadbe0 ;
 
     }
     .recommend_list{
@@ -557,20 +557,25 @@
   .yesterday_wrap{
     .title{
       padding: 0 0.3rem;
-      @include font($fs32,1rem,#fff,left);
-      border-bottom: 1px solid #383b4e;
+      @include font($fs32,1rem,#2b344a,left);
+      border-bottom: 1px solid #dadbe0;
+      .note{
+        @include font($fs24,1rem,#acafb6);
+        float: right;
+      }
     }
     .box{
       margin: 0.3rem;
       padding: 0.3rem;
       @include flex(space-between);
-      background-color: #35384b;
+      background-color: #eaeaea;
     }
     .box_content{
-      border: 0.3rem solid #4c4f60;
+      border: 0.3rem solid #f7f7f7;
       width: 3rem;
       height: 2rem;
-      @include font($fs26,0.36rem,#686b7a);
+      @include font($fs26,0.36rem,#2b344a);
+      background-color: #fff;
       .green,.red{
         @include font($fs30,0.8rem,#fff);
         span{
@@ -582,7 +587,7 @@
   }
   .user_wrap{
     width: 7.5rem;
-    border-bottom: 0.2rem solid #383b4e;
+    border-bottom: 0.2rem solid #eaeaea;
     .box{
        width: 7.5rem;
       overflow-x: scroll;
@@ -590,7 +595,7 @@
     .user_list{
       width: 15rem;
       padding: 0.3rem;
-      border-bottom: 1px solid #383b4e;
+      border-bottom: 1px solid #eaeaea;
       @include flex(space-between);
       @include font($fs24,0.4rem,#9597a3);
       
@@ -609,20 +614,20 @@
     .traggle_content{
       margin: 0.3rem;
       height: 2.4rem;
-      border: 0.3rem solid #4c4f60;
-      @include font($fs26,2rem,#686b7a)
+      border: 0.3rem solid #eaeaea;
+      @include font($fs26,2rem,#acafb6)
     }
   }
   .login_wrap{
     @include flex(space-between);
     padding:0.3rem;
-    border-bottom: 1px solid #383b4e;
+    // border-bottom: 1px solid #383b4e;
     .flex_item{
       flex: 1;
       
     }
     .text{
-      @include font($fs30,1rem,#fff,right)
+      @include font($fs30,1rem,#2b344a,right)
     }
     .img{
       width: 1rem;
@@ -632,7 +637,7 @@
     button {
       width: 1.6rem;
       height: 0.8rem;
-      background-color: inherit;
+      background-color: #497df5;
       border-radius: 0.1rem;
       border: solid 0.02rem #fff;
       @include font($fs28,0.8rem, #fff);

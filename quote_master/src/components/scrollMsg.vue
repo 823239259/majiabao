@@ -67,8 +67,6 @@
 					}else{
 						this.currentIndex = 0;
 					}
-					
-
 				},5000)
 				
 			}
@@ -86,7 +84,7 @@
 	#scroll_msg {
 		width: 7.5rem;
 		height: 0.6rem;
-		background-color: $masterBg;
+		background-color: #eaeaea;
 		overflow: hidden;
 	}
 	.msg_box {
@@ -97,8 +95,8 @@
 		width: 7.5rem;
 		padding: 0 0.3rem;
 		@include flex(space-between);
-		@include font($fs30,0.6rem,#9597a3,left);
-		background-color: #383b4e;
+		@include font($fs30,0.6rem,#2b344a,left);
+		background-color: #eaeaea;
 		.left_box{
 		flex: 3
 		}

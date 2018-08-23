@@ -1,9 +1,15 @@
+$bgcolor: #fff;
+$fontColor: #a6b4cd;
+$choseColor: #497df5;
+
+
 .mint-header{
-    background-color: #383b4e;
+    background-color: $bgcolor;
     height: 0.96rem;
     line-height: 0.96rem;
     width: 7.5rem;
-    color: #fff;
+    color: #333;
+    border-bottom: #dadbe0 solid 1px;
    
     
 }
@@ -19,17 +25,13 @@
 .mint-header-title{
     font-size: 0.36rem
 }
-.mint-tabbar{
-	position: fixed;
-    bottom: 0;
-    //border-top:1px solid #e6e6e6; 
-    z-index: 999;
-    
-}	
+
 // bottom_tab
 #bottom_tab {
+    
+
     .mint-tab-item-label{
-        color: #9597a3;
+        color: $fontColor;
     }
     .mint-tab-item-icon{
         width: 0.48rem;
@@ -37,19 +39,27 @@
     }
     .mint-tabbar {
         width: 7.5rem;
-        background-color: #2a2f42;
+        background-color: $bgcolor;
         position: relative;
         top: 0;
 
     }
     .mint-tabbar > .mint-tab-item.is-selected {
-        background-color: #2a2f42;
+        background-color: $bgcolor;
         .mint-tab-item-label{
-            color: #9597a3;
+            color: $choseColor;
         }
     }
 
 } 
+.mint-tabbar{
+	position: fixed;
+    bottom: 0;
+    //border-top:1px solid #e6e6e6; 
+    z-index: 999;
+    
+}	
+
 .mint-swipe-indicator{
     opacity: 0.5;
     background-color: #fff

@@ -208,7 +208,7 @@
   @import "../../../assets/css/common.scss";
   #butler_community {
     width: 7.5rem;
-    background-color: #2a2f42;
+    background-color: #fff;
     padding-top: 0.96rem;
   }
   .note_box{
@@ -253,10 +253,9 @@
     }
     .msg_s{
         position: relative;
-        @include font($fs28,.36rem,#fff,left);
-        background-color: #4c4f60;
+        @include font($fs28,.36rem,#2b344a,left);
+        background-color: #eaeaea;
         border-radius: 0.04rem;
-        
         &::before{
             position: absolute;
             content: '';
@@ -281,7 +280,7 @@
         &::before{
             left: -0.35rem;
             top: 0.2rem;
-            border-right-color: #4c4f60;
+            border-right-color: #eaeaea;
         }
     }
 }
@@ -295,12 +294,12 @@
         margin: 0 0 0 0.3rem;
     }
     .msg_s{
-        color: #fff;
-        background-color: #6064e1;
+        color: #2b344a;
+        background-color: #f7f7f7;
         &::before{
             right: -0.35rem;
             top: 0.2rem;
-            border-left-color: #6064e1;
+            border-left-color: #f7f7f7;
         }
     }
 }

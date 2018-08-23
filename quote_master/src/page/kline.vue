@@ -251,9 +251,9 @@
 				// this.$store.state.isshow.islightshow = false;
 				// this.$store.state.isshow.isfensInit = false;
 				this.$store.state.isshow.isfensshow = false;
-			this.$store.state.isshow.isklineshow = false;
-			this.$store.state.isshow.islightshow = false;
-			this.$store.state.isshow.isfensInit = false;
+				this.$store.state.isshow.isklineshow = false;
+				this.$store.state.isshow.islightshow = false;
+				this.$store.state.isshow.isfensInit = false;
 			 	this.$store.state.go = true
 			}
 			
@@ -273,7 +273,7 @@
 	#container{
 		width: 7.5rem;
 		margin-top: 0.96rem;
-		background-color: #2a2f42;
+		background-color: #fff;
 	}
 	.tab{
 		width: 7.5rem;
@@ -286,22 +286,23 @@
 			height: 0.6rem;
 			line-height: 0.6rem;
 			text-align: center;
-			background-color: #585b6c;
-			color: white;
+			background-color: #eaeaea;
+			color: #2b344a;
 			font-size: 0.28rem;
-			border-right: 1px solid #2a2f42;
+			border-right: 1px solid #fff;
 			&.current{
-				background-color: #6064e1;
+				color: #fff;
+				background-color: #497df5;
 			}
 		}
 	}
 	.tips{
-		background-color: #383b4e;
+		background-color: #eaeaea;
 		p{
 			height: 0.6rem;
 			line-height: 0.6rem;
 			text-align: center;
-			color: #686b7a;
+			color: #2b344a;
 			font-size: 0.24rem;
 		}
 		li{
@@ -317,7 +318,7 @@
 			overflow-y: scroll;
 			height: 8.45rem;
 			.checked{
-				background-color: #4c4f60;
+				background-color: #f7f7f7;
 			}
 		}
 		.listName{
@@ -325,13 +326,14 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				border-bottom: 1px solid #000000;
+				border-bottom: 1px solid #f7f7ff;
 				span{
 					font-size: 0.28rem;
-					color: #9597a3;
+					color: #2b344a;
 					&:nth-child(1){
 						margin-left: 0.3rem;
 						margin-right: 0.9rem;
+						
 					}
 					&:nth-child(5){
 						/*margin-right: 0.3rem;*/
@@ -359,9 +361,9 @@
 				justify-content: space-between;
 				align-items: center;
 				padding: 0 0.3rem;
-				border-bottom: 1px solid #000000;
+				border-bottom: 1px solid #f7f7ff;
 				span{
-					color: #9597a3;
+					color: #2b344a;
 				}
 			}
 		

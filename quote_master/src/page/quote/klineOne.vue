@@ -33,6 +33,23 @@
 			};
 			this.quoteSocket.send(JSON.stringify(data));
 		},
+		activated() {
+			this.$store.state.isshow.iskline = true;
+			this.$store.state.market.selectTime = 1;
+			var data = {
+				Method: "QryHistory",
+				Parameters:{
+					ExchangeNo: this.currentdetail.ExchangeNo,
+					CommodityNo: this.currentdetail.CommodityNo,
+					ContractNo: this.currentdetail.MainContract,
+					HisQuoteType: 1,
+					BeginTime: "",
+					EndTime: "",
+					Count: 0
+				}
+			};
+			this.quoteSocket.send(JSON.stringify(data));
+		},
 		
 		
 	}

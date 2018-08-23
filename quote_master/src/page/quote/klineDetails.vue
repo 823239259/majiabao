@@ -575,12 +575,13 @@
 	
 	#container {
 		width: 7.5rem;
-		background-color: #2a2f42;
+		background-color: #fff;
 	}
 	header{
-		background-color: #2a2f42;
+		background-color: #fff;
 		width: 100%;
 		height: 0.88rem;
+		border-bottom: #dadbe0 solid 1px;
 		ul{
 			padding: 0 0.3rem;
 			flex-direction: row;
@@ -608,7 +609,7 @@
 					h1{
 						padding-right: 0.3rem;
 						font-size: 0.36rem;
-						color: white;
+						color: #2b344a;
 					}
 				}
 				&:nth-child(3){
@@ -629,6 +630,7 @@
 	.klinePic {
 		width: 100%;
 		height: 7.5rem;
+		background-color: #eaeaea;
 		.chartsList {
 			padding: 0 0.3rem;
 			height: 1rem;
@@ -637,11 +639,14 @@
 			justify-content: space-between;
 			align-items: center;
 			span {
+				//flex: 1;
 				font-size: 0.28rem;
-				color: #9597a3;
+				color: #2b344a;
+				
 				&.current {
-					color: white;
+					color: #497df5;
 					text-decoration: underline;
+					//background-color: #497df5;
 				}
 			}
 		}
@@ -729,16 +734,17 @@
 	.name {
 		height: 1rem;
 		padding: 0 0.3rem;
-		color: white;
+		color: #2b344a;
 		font-size: 0.32rem;
 		line-height: 1rem;
 		font-weight: 600;
-		border: 1px solid #383b4e;
+		border-bottom: 1px solid #e6e6e6;
 	}
 	
 	.black {
 		height: 0.3rem;
-		background-color: #383b4e;
+		background-color: #f7f7f7;
+		
 	}
 	
 	.infoDetails {
@@ -746,7 +752,8 @@
 		height: 3.4rem;
 		.infos {
 			color: #9597a3;
-			font-size: 0.2rem;
+			font-size: 0.24rem;
+			line-height: 0.36rem;
 			padding: 0 0.3rem;
 			ul {
 				height: 0.8rem;
@@ -755,12 +762,13 @@
 				align-items: center;
 				li {
 					display: flex;
+					flex: 1;
 					flex-direction: column;
 					align-content: center;
 					text-align: center;
 					span {
 						&:nth-child(2) {
-							color: white;
+							color: #333;
 						}
 					}
 				}
@@ -805,7 +813,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		color: white;
+		color: #2b344a;
 		font-size: 0.3rem;
 		span {
 			&:nth-child(1) {
@@ -822,7 +830,7 @@
 	
 	.buySellBar {
 		width: 100%;
-		height: 2.8rem;
+		padding: 0.3rem 0 ;
 		.duoKong{
 			width: 100%;
 			height: 1.8rem;

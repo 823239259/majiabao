@@ -69,14 +69,14 @@ export default {
 #tell_us{
   width: 7.5rem;
   padding-top: 0.96rem;
-  background-color: #2a2f42;
+  background-color: #fff;
   text-align: center;
 }
 .wrap{
   //width: 7.5rem;  
   margin: 0.2rem 0.3rem;
   padding: 0 0.3rem;
-  background-color: #35384b;
+  background-color: #eaeaea;
   text-align: center;
   textarea{
     width: 100%;
@@ -87,14 +87,14 @@ export default {
     resize:none;
     border: none;
     margin-bottom: 0.3rem;
-    background-color: #2a2f42
+    background-color: #ffffff
   }
   
 }
 .btn{
     width: 3.2rem;
     @include font(0.36rem,1rem,#fff);
-    background-color: #6064e1;
+    background-color: #497df5;
     border-radius: 0.1rem;
     margin-bottom: 0.3rem;
   }
