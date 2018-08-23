@@ -17,7 +17,7 @@
             </div>
             <div class="msg_wrap">
                 <div class="msg_box clearfix" v-for="(n, index) in communicationList">
-                    <div class="msg" :class="n.type === 'others'?'others':'my'">
+                    <div class="msg" :class="n.type === 'others1'||'others2'?'others':'my'">
                         <img :src="personImg[n.type]" alt="01"> 
                         <div  class="msg_s_box">
                             <div class="msg_s">
@@ -57,36 +57,41 @@
         isShow: false,
         idList: [],
         personImg: {
-            others: require('../../assets/images/home/person01_icon.png'),
+            others1: require('../../assets/images/home/person01_icon.png'),
+            others2: require('../../assets/images/home/person03_icon.png'),
             my: require('../../assets/images/home/person02_icon.png'),
         },
         text: '',
         communicationList: [
                     {
-                        type: 'others',
-                        content: '大哥，明天和谁打？时间地点',
-                        time:  '2018/6/25 23:51',
+                        type: 'others1',
+                        content: '日内短就这么点理想了，安全永远放在首位！',
+                        time:  '2018/8/20 23:51',
                     },
                     {
-                        type: 'my',
-                        content: '不知道咋死的',
-                        time:  '2018/6/25 23:51',
-                    },
-               
-                    {
-                        type: 'others',
-                        content: '大哥，明天和谁打？时间地点',
-                        time:  '2018/6/25 23:51',
+                        type: 'others2',
+                        content: '对这单比较有底，因为昨晚68.10试了空，今天打算68开空，正常止损不会超过15-20个点位！',
+                        time:  '2018/8/23 12:51',
                     },
                     {
-                        type: 'my',
-                        content: '不知道咋死的',
-                        time:  '2018/6/25 23:51',
+                        type: 'others2',
+                        content: '我更依赖分时和盘感',
+                        time:  '2018/8/23 13:11',
                     },
                     {
-                        type: 'my',
-                        content: '速度来',
-                        time:  '2018/6/25 23:51',
+                        type: 'others1',
+                        content: '我纯粹的日内短，这种趋势单我把握不好，目前还没有赚趋势这个钱的本领。',
+                        time:  '2018/8/23 13:17',
+                    },
+                    {
+                        type: 'others2',
+                        content: '所有指标相对于价格走势来说都是滞后的，如果能培养出先知先觉的灵敏度是最佳的，努力中！',
+                        time:  '2018/8/23 14:17',
+                    },
+                    {
+                        type: 'others1',
+                        content: '一定要尽量避免被套，无论长线短线，先不说结果是大亏还是反败为胜，单说为此耗费的时间和精力都不值！',
+                        time:  '2018/8/23 15:18',
                     }
                 
   
@@ -143,7 +148,7 @@
        if(JSON.stringify(this.communicationList) === JSON.stringify(local.get('communicationList'))){
            return;
        } else{
-           this.communicationList = local.get('communicationList')?local.get('communicationList'):[]
+           this.communicationList = local.get('communicationList')?local.get('communicationList'):this.communicationList
        }
        
       

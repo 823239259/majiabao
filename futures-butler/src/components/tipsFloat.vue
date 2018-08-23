@@ -16,11 +16,11 @@
 						<li class="item" v-for="(item, index) in toolsList" :key="item.name" @click="itemClick(item)">{{item.name}}</li>
 					</ul>
 				</transition>
-				<div class="floatTip">
+				<!-- <div class="floatTip">
 					<div class="floatTips" @click="show('showTools')">
 						<span>+</span>
 					</div>
-				</div>
+				</div> -->
 				
 			</div>
 		</div>
@@ -63,7 +63,7 @@ import pro from '../assets/js/common'
 					},
 				],
 				showMy: false,
-				showTools: false,
+				showTools: true,
 				
 			}
 		},

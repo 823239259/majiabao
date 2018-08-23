@@ -89,6 +89,15 @@
             marginShow: false
           },
           {
+            leftName: "资讯直播",
+            rightName: "系统公告",
+            leftPath: '/discover7x24',
+            rightPath: '/rumen_list/3',
+            leftShow: false,
+            rightShow: false,
+            marginShow: false
+          },
+          {
             leftName: "新闻公告",
             rightName: "汇率计算",
             leftPath: '/rumen_list/2',
@@ -120,15 +129,6 @@
             rightName: "合约查询",
             leftPath: '/contract_search',
             rightPath: '/contract_search',
-            leftShow: false,
-            rightShow: false,
-            marginShow: false
-          },
-          {
-            leftName: "资讯直播",
-            rightName: "系统公告",
-            leftPath: '/discover7x24',
-            rightPath: '/rumen_list/3',
             leftShow: false,
             rightShow: false,
             marginShow: false

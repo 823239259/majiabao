@@ -4,13 +4,20 @@
     <div class="swipe-wrap">
       <mt-swipe :auto="0">
         <mt-swipe-item>
-          <img src="../assets/images/home/banner01.jpg" alt="banner1">
+          <router-link to="/recommend/recommend">
+            <img src="../assets/images/home/banner01.jpg" alt="banner1">
+          </router-link>
+          
         </mt-swipe-item>
         <mt-swipe-item>
-          <img src="../assets/images/home/banner02.jpg" alt="banner2">
+          <router-link to="/discover7x24">
+            <img src="../assets/images/home/banner02.jpg" alt="banner2">
+          </router-link>
         </mt-swipe-item>
         <mt-swipe-item>
-          <img src="../assets/images/home/banner03.jpg" alt="banner3">
+          <router-link to="/quote">
+            <img src="../assets/images/home/banner03.jpg" alt="banner3">
+          </router-link>
         </mt-swipe-item>
       </mt-swipe>
     </div>

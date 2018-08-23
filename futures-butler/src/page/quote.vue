@@ -22,10 +22,10 @@
 		    <span @click="choose('数字货币',2)">数字货币</span>
 		    <span @click="choose('股指期货',1)">股指期货</span>
 		</ul> 
-		<p class="note">
+		<!-- <p class="note">
 			管家提示：点击转盘转动分类到指针位置，再点击指针所指可打开行情。
-		</p>
-		 <i></i>
+		</p> -->
+		 <!-- <i></i> -->
 		 <tipsFloat></tipsFloat>
 	</div>
 </template>
@@ -69,21 +69,26 @@
 					//Toast({message: err.data.message, position: 'bottom', duration: 2000});
 				});
 			},
-			choose:function(value,index){
-				if(value == this.beginValue){
-					var currentNum = this.type.indexOf(value);
-					this.$store.state.market.commodityOrder = this.allType[currentNum].list;
-				    this.$router.push({path:"/type",query:{type:this.allType[currentNum].name}});
-				}else{
-					var rotate = "rotate("+index*60+"deg)";
-					document.getElementById('pie').style.transform = rotate;
-					document.getElementById('pie').style.transition = '2s';
-					setTimeout(function(){
-						this.beginValue = value;
-					}.bind(this),1500)
-//					this.beginValue = value;
-				}
-			}
+			choose (value,index) {
+				var currentNum = this.type.indexOf(value);
+				this.$store.state.market.commodityOrder = this.allType[currentNum].list;
+				this.$router.push({path:"/type",query:{type:this.allType[currentNum].name}});
+			},
+// 			choose:function(value,index){
+// 				if(value == this.beginValue){
+// 					var currentNum = this.type.indexOf(value);
+// 					this.$store.state.market.commodityOrder = this.allType[currentNum].list;
+// 				    this.$router.push({path:"/type",query:{type:this.allType[currentNum].name}});
+// 				}else{
+// 					var rotate = "rotate("+index*60+"deg)";
+// 					document.getElementById('pie').style.transform = rotate;
+// 					document.getElementById('pie').style.transition = '2s';
+// 					setTimeout(function(){
+// 						this.beginValue = value;
+// 					}.bind(this),1500)
+// //					this.beginValue = value;
+// 				}
+// 			}
 		},
 		mounted: function(){
 		},
