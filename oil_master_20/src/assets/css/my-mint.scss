@@ -1,0 +1,189 @@
+$bgcolor: #d43d3d;
+$top-bar-font-color: #fff; 
+$bottom-bar-bg: #f4f5f6;
+$fontColor: #a6b4cd;
+$choseColor: #f85959;
+
+
+.mint-header{
+    background-color: $bgcolor;
+    height: 0.96rem;
+    line-height: 0.96rem;
+    width: 7.5rem;
+    color: $top-bar-font-color;
+    border-bottom: #dadbe0 solid 1px;
+   
+    
+}
+.mint-header.is-fixed{
+    z-index: 999
+}
+#home,#discover,#datas,#my,#quote{
+    .mint-header{
+        padding: 0;
+    }
+}
+
+.mint-header-title{
+    font-size: 0.36rem
+}
+
+// bottom_tab
+#bottom_tab {
+    
+    .mint-tab-item-label{
+        color: $fontColor;
+    }
+    .mint-tab-item-icon{
+        width: 0.48rem;
+        height: 0.48rem
+    }
+    .mint-tabbar {
+        width: 7.5rem;
+        background-color: $bottom-bar-bg;
+        position: relative;
+        top: 0;
+
+    }
+    .mint-tabbar > .mint-tab-item.is-selected {
+        background-color: $bottom-bar-bg;
+        .mint-tab-item-label{
+            color: $choseColor;
+        }
+    }
+
+} 
+.mint-tabbar{
+	position: fixed;
+    bottom: 0;
+    //border-top:1px solid #e6e6e6; 
+    z-index: 999;
+    
+}	
+
+.mint-swipe-indicator{
+    opacity: 0.5;
+    background-color: #fff
+}
+.mint-swipe-indicator.is-active {
+    opacity: 1;
+}
+.mint-button{
+    height: auto;
+}
+.header_icon{
+    display: inline-block;
+    width: 0.96rem;
+    height: 0.96rem;
+  }
+  .tab_open_icon{
+    width: 1.6rem;
+    background:  #181722 url('../images/home/tab_open_icon.png') center no-repeat;
+    background-size: 0.4rem 0.4rem;
+  }
+  .tab_close_icon{
+    width: 1.6rem;
+    background:  #181722 url('../images/home/tab_close_icon.png') center no-repeat;
+    background-size: 0.4rem 0.4rem;
+  }
+  .search_icon{
+    background: url('../images/home/search_icon.png') center no-repeat;
+    background-size: 0.4rem 0.4rem;
+  }
+  .help_icon{
+     background: url('../images/home/wenhao.png') center no-repeat;
+     background-size: 0.4rem 0.4rem;
+  }
+  .customer_icon{
+    background: url('../images/icons/customer_icon.png') center no-repeat;
+    background-size: 0.4rem 0.4rem;
+ }
+ .reload_icon{
+    background: url('../images/icons/reload_icon.png') center no-repeat;
+    background-size: 0.4rem 0.4rem;
+ }
+
+
+
+
+
+.mint-navbar{
+    background-color: #b3daff; 
+}
+#help_info .mint-tab-item .mint-tab-item-label {
+    font-size: .28rem
+}
+// .mint-msgbox-btn{
+//     background-color: #1482f0;
+// }
+.mint-msgbox-confirm{
+    color: #169781;   
+    
+}
+.mint-msgbox-btn{
+    font-size: 0.32rem;
+}
+.mint-msgbox-message {
+    color: #868686
+}
+.mint-msgbox-input{
+    input{
+        border:0;
+        border-bottom: 1px solid #000;
+        font-size: 0.28rem;
+        line-height: 0.6rem;
+        border-radius: 0;
+    }
+}
+
+#home,#tools,#recommend{
+    .mint-actionsheet-listitem:nth-child(1){
+        border: 0
+    }
+} 
+.calendar_wrap{
+    .wh_content_all{
+        background: #b3daff;
+        li{
+            color: #222
+        }
+    }
+    .wh_content_item .wh_isToday{
+        background: red;
+    }
+    .wh_content_li{
+        color: #222;
+    }
+    .wh_content {
+        .wh_content_item, .wh_content_item_tag{
+            background-color: #b3daff;
+            color: #333
+        }
+    }
+} 
+
+.mt-range-thumb{
+    opacity: 0;
+}
+.mt-range-progress{
+    background-color: #ff576e;
+    border-radius: 0.2rem 0 0 0.2rem;
+}
+.mt-range-runway{
+    border-top-color: #14da8b;
+     border-radius: 0.2rem;
+}
+.mt-range-content{
+    width: 2rem;
+    flex: 0.8;
+    margin: auto;
+}
+#rangbuy .mt-range-runway{
+    border-top-color: #696c7b;
+}
+#rangsell .mt-range-progress{
+    background-color: #14da8b;
+}
+#rangsell .mt-range-runway{
+    border-top-color: #696c7b;
+}
