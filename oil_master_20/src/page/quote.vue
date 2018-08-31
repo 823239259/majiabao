@@ -4,24 +4,27 @@
 		<span slot="my_right" class="header_icon reload_icon"></span>
 	</TopTitle>
 	<div class="btn_box">
-		<button class="btn" v-for="(item, index) in oilList" :key="index">{{item}}</button>
+		<button class="btn" v-for="(item, index) in oilList" :key="index" @click="chooseCommodityNo(item.commodityNo)">{{item.name}}</button>
 	</div>
 	<div class="blockColor"></div>
 	<div class="chart_wrap">
 		<ul class="charts_title">
-			<li :class="{current: currentChartsNum == index}" v-for="(key,index) in chartsList" @tap="menuEvent(index)" :key="index">{{key}}</li>
+			<li :class="{current: currentChartsView === item.type}" v-for="(item,index) in chartsList" @tap="chooseChart(item)" :key="index">{{item.name}}</li>
 		</ul>
 		<div class="charts_container">
 			<components :is="currentChartsView" v-if="showChart"></components>
 		</div>
 	</div>
-	<dishInfo></dishInfo>
+	<div class="dish_info_box">
+		<dishInfo :currentDetail='this.currentdetail' v-if="showDish" />
+	</div>
+	
 	<div class="blockColor"></div>
 	<div class="contrast_wrap">
 		<div class="box">
 			<p class="left">对比合约</p>
 			<p class="right">
-				<button>点击添加行情</button>
+				<button @click="switchKey('contrastNoShow')">点击添加行情</button>
 			</p>
 		</div>
 	</div>
@@ -32,6 +35,30 @@
 		</div>
 	</div>
 	<bottomTab :tabSelect="tabSelected"></bottomTab>
+	<div class="contrastNo_wrap" v-show="contrastNoShow">
+		<ul class="contrastNo_list">
+			<li class="contrastNo_item" v-for="(item, index) in contrastNoList" :key="index">
+				<div class="info_inner">
+					<p>{{item.CommodityName}}</p>
+					<p>{{item.CommodityNo}}{{item.MainContract}}</p>
+				</div>
+				<div class="info_inner">
+					<p>{{item.LastQuotation.LastPrice}}</p>
+				</div>
+				<div class="info_inner">
+					<p :class="item.LastQuotation.ChangeValue > 0?'red': 'green'">{{item.LastQuotation.ChangeRate | fixNum}}%</p>
+				</div>
+				<div  class="info_inner">
+					<img class="img" src="../assets/images/icons/jiahao.png" alt="">
+				</div>
+			</li>
+			<li class="contrastNo_item" @click="switchKey('contrastNoShow')">
+				<div class="info_inner">
+					<img class="img" src="../assets/images/icons/shuangxia_icon.png" alt="">
+				</div>
+			</li>
+		</ul>
+	</div>
 </div>
 </template>
 
@@ -67,7 +94,20 @@ export default {
 	data() {
 		return {
 			tabSelected: 'quote',
-			oilList: ['国际原油', '布伦特原油', '小原油'],
+			oilList: [
+				{
+					name: '国际原油',
+					commodityNo: 'CL'
+				},
+				{
+					name: '布伦特原油',
+					commodityNo: 'BRN'
+				},
+				{
+					name: '小原油',
+					commodityNo: 'QM'
+				}
+			],
 			strategyList: [
 				{
 					name: '原油资讯',
@@ -83,17 +123,36 @@ export default {
 				},
 			],
 			chartsShow: false,
-			chartsList: ['闪电图', '分时图', '1分钟', '5分钟', '日K'],
-			tabList: ['商', '股', "汇", 'LIME', '率', 'BIT'],
+			chartsList: [
+				{
+					name: '闪电图',
+					type: 'light'
+				},
+				{
+					name: '分时图',
+					type: 'fens'
+				},
+				{
+					name: '1分钟',
+					type: 'klineOne'
+				},
+				{
+					name: '5分钟',
+					type: 'klineFive'
+				},
+				{
+					name: '日K',
+					type: 'klineDay'
+				},
+			],
 			currentChartsNum: 0,
 			showTip: false,
-			CommodityList: ['期货名称', '最新价', '涨跌幅', '涨跌额', '买/卖'],
 			marketList: [], //全部列表分类
 			currentCheck: 0,
 			currentChartsView: 'klineOne',
 			chartsHight: 5.4,
 			currentNo: '',
-			showChart: false //是否画图
+			contrastNoShow: false,
 
 		}
 	},
@@ -115,99 +174,82 @@ export default {
 		quoteSocket() {
 			return this.$store.state.quoteSocket;
 		},
-		jsonData() {
-			return this.$store.state.market.jsonData;
-		},
-		jsonDataKline() {
-			return this.$store.state.market.jsonDataKline;
-		},
 		go() {
 			return this.$store.state.go;
+		},
+		showChart () { //控制chart显示
+			return this.$store.state.isshow.showChart;
+		},
+		currentdetail () {
+			return this.$store.state.market.currentdetail
+		},
+		showDish () {
+			return this.$store.state.isshow.showDish;
+		},
+		contrastNoList () {
+			return this.parameters.filter(item => item.CommodityNo !== this.currentNo)
 		}
 	},
 	methods: {
 		...mapActions([
 			'initQuoteClient'
 		]),
-		toDetails: function(commodityNo, mainContract, exchangeNo, contrast) {
-			this.$router.push({
-				path: '/klineDetails',
-				query: {
-					'commodityNo': commodityNo,
-					'mainContract': mainContract,
-					'exchangeNo': exchangeNo,
-					'contrast': contrast
-				}
-			});
-		},
-		changeCommodityNo: function(index) {
-			this.currentCheck = 0;
-			this.currentChartsNum = index;
-		},
-		changeTip: function() {
-			this.showTip = !this.showTip;
-		},
-		getCommodityInfo: function() { //获取全部分类
-			// const {account} = this.$store.state
-			// if (!account.quoteStatus) return;
-
-			pro.fetch('post', '/quoteTrader/getCommodityInfo', '', '').then((res) => {
-				if (res.success == true && res.code == 1) {
-					this.marketList = res.data;
-					this.$store.state.market.commodityOrder = res.data[0].list;
-					this.currentNo = res.data[0].list[0].commodityNo;
-					this.$store.state.market.currentNo = this.currentNo;
-					//初始化行情
-					if (this.$store.state.market.commodityOrder && this.$store.state.account.quoteStatus == false) {
-						this.initQuoteClient();
-						this.operateData();
-					}
-				}
-			}).catch((err) => {
-				Toast({
-					message: err.data.message,
-					position: 'bottom',
-					duration: 2000
-				});
-			});
-		},
-		showKline: function(index, commodity) {
-			this.$store.state.isshow.isklineshow = false;
-			this.currentCheck = index;
-			this.currentNo = commodity;
-			this.$store.state.market.currentNo = commodity;
-		},
-		allowChart () {
-			this.showChart = true
-		},
-		operateData: function(val) {
-			//允许画图
-			this.$store.state.isshow.isfensInit = false;
-			//渲染画图
-		},
-
 		init () {
 			this.currentNo = 'CL';
 			if (this.$store.state.account.quoteStatus == false) {
 				this.initQuoteClient();
 				
 			}
+		},
+		chooseChart (item) {
+			const {isshow} = this.$store.state;
+			this.currentChartsView = item.type;
+			// 切换组件重新画图初始化chart
+			isshow.isklineshow = false;
+			isshow.isfensshow = false;
+			isshow.islight = false;
+			switch (this.currentChartsView) {
+				case 'klineOne':
+					
+					break;
+				case 'klineFive':
+					
+					break;	
+				case 'klineDay':
+					
+					break;	
+				case 'fens':
+					
+					break;
+				case 'light':
+					
+					break;		
+				default:
+					break;
+			}
+			
+		},
+		chooseCommodityNo (CommodityNo) {
+			this.currentNo = CommodityNo;
+		},
+		switchKey (key) {
+			this[key] = !this[key]
 		}
 
 	},
 	created() {
 		//获取所有合约
-		
+		this.init();
 		
 	},
 	mounted() {
-		this.init();
-		setTimeout(() => {
-			this.allowChart();
-		}, 2000);
+		console.log(3);
+		
+		// setTimeout(() => {
+		// 	this.allowChart();
+		// }, 2000);
 	},
 	activated: function() {
-		this.operateData()
 		if (this.go) {
 			this.$store.state.isshow.isklineshow = false;
 			this.$store.state.market.Parameters = [];
@@ -217,62 +259,35 @@ export default {
 				this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo + '"}}');
 			});
 		}
-
-
-
 		this.$store.state.isshow.isfensshow = false;
 		this.$store.state.isshow.isklineshow = false;
 		this.$store.state.isshow.islightshow = false;
-
-		// this.$store.state.isshow.isfensshow = false;
-		// this.$store.state.isshow.isklineshow = false;
-		// this.$store.state.isshow.islightshow = false;
-		// this.$store.state.isshow.isfensInit = false;
 	},
 	
-	filters: {
-		fixNumTwo: function(num) {
-			return num.toFixed(2);
+	 filters:{
+		fixNum (num, dotSize=2) {
+			if(!num) return;
+			if(dotSize >= 4) dotSize = 4;
+			return num.toFixed(dotSize);
 		},
-		fixNum: function(num, dotsize) {
-			if (dotsize >= 4) dotsize = 4;
-			return num.toFixed(dotsize);
-		}
-	},
+  	},
 	watch: {
-		currentChartsNum: function(n, o) {
-			this.$store.state.isshow.isklineshow = false;
-			this.$store.state.market.Parameters = [];
-			this.$store.state.market.commodityOrder = [];
-			this.$store.state.market.commodityOrder = this.marketList[n].list;
-			this.marketList[n].list.forEach((o, i) => {
-				this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo + '"}}');
-			});
-		},
-		currentNo: function(n, o) {
-			if (n != o) {
-				this.parameters.forEach((t, i) => {
-					if (t.CommodityNo == n) {
-						this.$store.state.isshow.isfensshow = false;
-						this.$store.state.isshow.isklineshow = false;
-						this.$store.state.isshow.islightshow = false;
-						this.$store.state.isshow.isfensInit = false;
-						this.$store.state.market.currentdetail = t;
-						return;
-					}
-				});
+		currentNo (n, o) {
+			const {isshow} = this.$store.state;
+			if (n != o && o != '') {
+				this.$store.state.market.currentdetail = this.parameters.find(item => item.CommodityNo === n);
+				this.$store.state.market.currentNo = n;
+				//重新关闭所有 重新画图
+				isshow.showChart = false;
+				isshow.isklineshow = false;
+				isshow.isfensshow = false;
+				isshow.islight = false;
+				setTimeout(() => {
+					this.$store.state.isshow.showChart = true
+				}, 10);
 			}
 		},
-		parameters: function(n, o) {
-			if (n && n.length == 1) {
-				this.parameters.forEach((o, i) => {
-					if (o.CommodityNo == this.currentNo) {
-						this.$store.state.market.currentdetail = o;
-						return;
-					}
-				});
-			}
-		},
+		
 	},
 
 	beforeRouteLeave(to, from, next) {
@@ -312,6 +327,7 @@ export default {
 #quote {
 	width: 7.5rem;
 	margin-top: 0.96rem;
+	padding-bottom: 1.16rem;
 	background-color: #fff;
 }
 
@@ -332,7 +348,9 @@ export default {
 	height: 0.16rem;
 	background-color: #f4f5f6;
 }
-
+// .charts_container{
+// 	height: 6.5rem
+// }
 .charts_title {
 	width: 100%;
 	@include flex(flex-start);
@@ -477,5 +495,32 @@ export default {
 	height: 6.5rem;
 	width: 100%;
 	background-color: white;
+}
+.dish_info_box{
+	height: 2.6rem
+}
+.contrastNo_wrap{
+	position: fixed;
+	bottom: 0;
+	width: 7.5rem;
+	z-index: 100;
+}
+.contrastNo_list{
+	background-color: rgba(0, 0, 0, 0.6);
+	.contrastNo_item{
+		@include flex();
+		padding: 0.1rem 0;
+		height: 0.8rem;
+		border-bottom: 1px solid #e8e8e8;
+	}
+	.info_inner{
+		flex: 1;
+		@include font($fs28,0.4rem,#fff);
+		.img{
+			width: 0.4rem;
+			height: 0.4rem;
+		}
+	}
+	
 }
 </style>

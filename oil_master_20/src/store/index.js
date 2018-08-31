@@ -34,7 +34,8 @@ var isshow = {
 		isfensInit: false,
 		warningShow: false,
 		warningType: '',
-		
+		showChart: false,
+		showDish: false
 	}
 };
 
@@ -386,7 +387,7 @@ export default new Vuex.Store({
 			state.market.jsonTow.Parameters = state.market.currentdetail.LastQuotation;
 			var TimeLength = state.market.lightChartTime.time.length;
 			state.market.lightChartTime.price.push(state.market.jsonTow.Parameters.LastPrice.toFixed(state.market.currentdetail.DotSize));
-			state.market.lightChartTime.time.push((state.market.jsonTow.Parameters.DateTimeStamp).split(" ")[1]);
+			state.market.lightChartTime.time.push((state.market.jsonTow.Parameters.DateTimeStamp).split(/[' '|'.']/)[1]);
 			state.market.lightChartTime.time = state.market.lightChartTime.time.slice(-50);
 			state.market.lightChartTime.price = state.market.lightChartTime.price.slice(-50);
 			state.market.option5 = {
@@ -676,7 +677,8 @@ export default new Vuex.Store({
 						type: 'line',
 						data: calculateMA(5),
 						smooth: true,
-						showSymbol: true,
+						showSymbol: false,
+						//symbolSize: 10,
 						lineStyle: {
 							normal: {
 								color: '#3689B3',
@@ -688,6 +690,7 @@ export default new Vuex.Store({
 						name: 'MA10',
 						type: 'line',
 						showSymbol: false,
+						//symbolSize: 10,
 						data: calculateMA(10),
 						smooth: true,
 						lineStyle: {
@@ -701,6 +704,7 @@ export default new Vuex.Store({
 						name: 'MA20',
 						type: 'line',
 						showSymbol: false,
+						//symbolSize: 10,
 						data: calculateMA(20),
 						smooth: true,
 						lineStyle: {
@@ -714,6 +718,7 @@ export default new Vuex.Store({
 						name: 'MA30',
 						type: 'line',
 						showSymbol: false,
+						//symbolSize: 10,
 						data: calculateMA(30),
 						smooth: true,
 						lineStyle: {
@@ -771,7 +776,7 @@ export default new Vuex.Store({
 					x2: 30,
 					y2: 20
 				},
-				color: ['#edf07c'],
+				color: ['#f79646'],
 				tooltip: {},
 				xAxis: [{
 					type: 'category',
@@ -911,7 +916,6 @@ export default new Vuex.Store({
 		},
 		//设置分时图数据
 		setfensoption: function(state, arr) {
-			state.isshow.isfensInit = true;
 			var echarts = require('echarts/lib/echarts');
 			var vol = [],
 				price = [],
@@ -1106,7 +1110,10 @@ export default new Vuex.Store({
 			state.market.myOrderList = []
 			myOrder.forEach(item => {
 				let currentItem = orderTemplist[item];
-
+				if (item === 'CL') { //默认设置当前选中合约
+					state.market.currentdetail = currentItem;
+					state.market.currentNo = item;
+				} 
 				let sendMsg = {
 				  Method: 'Subscribe',
 				  Parameters: {
@@ -1145,6 +1152,7 @@ actions: {
 				if(context.state.wsjsondata.Method == "OnRspLogin") { // 登录行情服务器
 					Toast({message: '行情服务器连接成功', position: 'bottom', duration: 2000});
 					context.state.account.quoteStatus = true;
+					
 					// 查询服务器支持品种用于订阅
 					context.state.quoteSocket.send('{"Method":"QryCommodity","Parameters":{' + null + '}}');
 				} else if(context.state.wsjsondata.Method == "OnRspQryCommodity") { // 行情服务器支持的品种
@@ -1155,7 +1163,7 @@ actions: {
 						context.state.market.orderTemplist[key] = e;
 					});
 					context.commit('describeItem', context.state.market.orderTemplist);
-
+					context.state.isshow.showChart = true; //可以画图
 					// if(context.state.market.commodityOrder){
 					// 	context.state.market.commodityOrder.forEach((o, i) => {
 					// 		context.state.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + context.state.market.orderTemplist[o.commodityNo].ExchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + context.state.market.orderTemplist[o.commodityNo].MainContract +'"}}');
@@ -1201,6 +1209,7 @@ actions: {
 //					}
 					context.state.market.subscribeIndex++;
 				} else if(context.state.wsjsondata.Method == "OnRtnQuote") { // 最新行情
+					context.state.isshow.showDish = true;
 					var val = JSON.parse(evt.data).Parameters;
 					var key = JSON.parse(evt.data).Parameters.CommodityNo;
 					context.state.market.Parameters.forEach(function(a, r) {
@@ -1653,12 +1662,13 @@ actions: {
 					});
 				} else if(context.state.wsjsondata.Method == "OnRspQryHistory") { // 历史行情
 					let data = JSON.parse(evt.data);
+
 					if(data.Parameters.HisQuoteType == 0){
 						context.state.market.jsonData[data.Parameters.CommodityNo] = data;
-						if(context.state.isshow.isfensInit == true) return;
 						if(context.state.isshow.isfens == true){
 							setTimeout(() => {
 								context.commit('setfensoption');
+								//context.commit('setfensoption', data.Parameters.Data);
 								context.commit('drawfens', {
 									id1: 'fens',
 									id2: 'volume'
@@ -1671,12 +1681,16 @@ actions: {
 						context.state.market.volume = context.state.market.jsonDataKline.Parameters.Data[len - 1][6];
 						if(context.state.isshow.iskline == true){
 							context.commit('setklineoption');
-							setTimeout(() => {
-								context.commit('drawkline', {
-									id1: 'kline',
-									id2: 'kline_volume'
-								});
-							}, 500);
+							context.commit('drawkline', {
+								id1: 'kline',
+								id2: 'kline_volume'
+							});
+							// setTimeout(() => {
+							// 	context.commit('drawkline', {
+							// 		id1: 'kline',
+							// 		id2: 'kline_volume'
+							// 	});
+							// }, 500);
 							
 						}
 					}

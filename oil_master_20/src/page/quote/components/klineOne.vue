@@ -16,6 +16,11 @@
 				return this.$store.state.market.currentdetail;
 			}
 		},
+		watch: {
+			currentdetail (n,o) {
+				console.log(n)
+			}
+		},
 		mounted: function(){
 			this.$store.state.isshow.iskline = true;
 			this.$store.state.market.selectTime = 1;
