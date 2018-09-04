@@ -32,11 +32,17 @@ const router = new Router({
       path: "/quote_strategy",
       name: "quote_strategy",
       component: load("quote_strategy"),
+      meta:{
+        notKeepAlive: true
+      }
     },
     {
       path: "/quote",
       name: "quote",
-      component: load("quote")
+      component: load("quote"),
+      meta: {
+        notKeepAlive: true
+      }
     },
     {
       path: "/strategy",
