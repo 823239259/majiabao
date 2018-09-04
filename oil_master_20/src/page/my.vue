@@ -5,19 +5,6 @@
     </TopTitle>
     <loginDisplay></loginDisplay>
     <div class="blockColor"></div>
-    <!-- <div class="swipe-wrap">
-      <mt-swipe :auto="0">
-        <mt-swipe-item>
-          <img src="../assets/images/my/banner01.png" alt="banner1">
-        </mt-swipe-item>
-        <mt-swipe-item>
-          <img src="../assets/images/my/banner02.png" alt="banner2">
-        </mt-swipe-item>
-        <mt-swipe-item>
-          <img src="../assets/images/my/banner03.png" alt="banner3">
-        </mt-swipe-item>
-      </mt-swipe>
-    </div> -->
     <myList :list = "serversList"></myList>
     <bottomTab :tabSelect="tabSelected"></bottomTab>
     <mt-actionsheet :actions="actions" v-model="sheetVisible"></mt-actionsheet>

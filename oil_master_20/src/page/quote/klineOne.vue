@@ -7,7 +7,13 @@
 
 <script>
 	export default{
-		name: 'echarts',
+		name: 'klineOne',
+		props:['test',"type"],
+		data () {
+			return {
+
+			}
+		},
 		computed: {
 			quoteSocket(){
 				return this.$store.state.quoteSocket;
@@ -16,24 +22,28 @@
 				return this.$store.state.market.currentdetail;
 			}
 		},
-		mounted: function(){
-			this.$store.state.isshow.iskline = true;
-			this.$store.state.market.selectTime = 1;
-			var data = {
-				Method: "QryHistory",
-				Parameters:{
-					ExchangeNo: this.currentdetail.ExchangeNo,
-					CommodityNo: this.currentdetail.CommodityNo,
-					ContractNo: this.currentdetail.MainContract,
-					HisQuoteType: 1,
-					BeginTime: "",
-					EndTime: "",
-					Count: 0
-				}
-			};
-			this.quoteSocket.send(JSON.stringify(data));
-		},
+
+		// mounted: function(){
+		// 	console.log('sdfsdfsdf');
+		// 	this.$store.state.isshow.iskline = true;
+		// 	this.$store.state.market.selectTime = 1;
+		// 	var data = {
+		// 		Method: "QryHistory",
+		// 		Parameters:{
+		// 			ExchangeNo: this.currentdetail.ExchangeNo,
+		// 			CommodityNo: this.currentdetail.CommodityNo,
+		// 			ContractNo: this.currentdetail.MainContract,
+		// 			HisQuoteType: 1,
+		// 			BeginTime: "",
+		// 			EndTime: "",
+		// 			Count: 0
+		// 		}
+		// 	};
+		// 	this.quoteSocket.send(JSON.stringify(data));
+		// },
 		activated() {
+			console.log(this.test);
+			
 			this.$store.state.isshow.iskline = true;
 			this.$store.state.market.selectTime = 1;
 			var data = {

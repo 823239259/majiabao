@@ -89,7 +89,7 @@ export default {
       }
   },
   mounted() {
-      console.log(this.currentDetail)
+     // console.log(this.currentDetail)
   },
   filters:{
     fixNum (num, dotSize=2) {

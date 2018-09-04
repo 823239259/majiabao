@@ -1,10 +1,10 @@
 <template>
 <div id="quote">
 	<TopTitle title="原油行情">
-		<span slot="my_right" class="header_icon reload_icon"></span>
+		<span slot="my_right" class="header_icon reload_icon" ></span>
 	</TopTitle>
 	<div class="btn_box">
-		<button class="btn" v-for="(item, index) in oilList" :key="index" @click="chooseCommodityNo(item.commodityNo)">{{item.name}}</button>
+		<button :class="['btn',{'current_btn': currentNo == item.commodityNo}]" v-for="(item, index) in oilList" :key="index" @click="chooseCommodityNo(item.commodityNo)">{{item.name}}</button>
 	</div>
 	<div class="blockColor"></div>
 	<div class="chart_wrap">
@@ -12,11 +12,11 @@
 			<li :class="{current: currentChartsView === item.type}" v-for="(item,index) in chartsList" @tap="chooseChart(item)" :key="index">{{item.name}}</li>
 		</ul>
 		<div class="charts_container">
-			<components :is="currentChartsView" v-if="showChart"></components>
+			<component :is="currentChartsView" v-if="showChart" test="ddd" she="4441"></component>
 		</div>
 	</div>
 	<div class="dish_info_box">
-		<dishInfo :currentDetail='this.currentdetail' v-if="showDish" />
+		<dishInfo :currentDetail='currentdetail' v-if="showDish" />
 	</div>
 	
 	<div class="blockColor"></div>
@@ -24,20 +24,22 @@
 		<div class="box">
 			<p class="left">对比合约</p>
 			<p class="right">
-				<button @click="switchKey('contrastNoShow')">点击添加行情</button>
+				<button @click="showContrast">点击添加行情</button>
 			</p>
 		</div>
 	</div>
 	<div class="strategy_wrap">
 		<h2>原油攻略</h2>
 		<div class="btn_box">
-			<button class="btn" v-for="(item, index) in strategyList" :key="index">{{item.name}}</button>
+			<button class="btn" v-for="(item, index) in strategyList" :key="index" @click="goto(item.path)">{{item.name}}</button>
+			<button class="btn" @click="goto(pathId)">原油合约</button>
 		</div>
 	</div>
 	<bottomTab :tabSelect="tabSelected"></bottomTab>
+	<!-- 对比合约 -->
 	<div class="contrastNo_wrap" v-show="contrastNoShow">
 		<ul class="contrastNo_list">
-			<li class="contrastNo_item" v-for="(item, index) in contrastNoList" :key="index">
+			<li class="contrastNo_item" v-for="(item, index) in contrastNoList" :key="index" @click="addContrast(item.CommodityNo)">
 				<div class="info_inner">
 					<p>{{item.CommodityName}}</p>
 					<p>{{item.CommodityNo}}{{item.MainContract}}</p>
@@ -111,16 +113,16 @@ export default {
 			strategyList: [
 				{
 					name: '原油资讯',
-					path: '/dd'
+					path: '/recommend/crude-oil'
 				}, 
 				{
 					name: '原油直播',
-					path: '/dd'
+					path: '/oil_online'
 				},
-				{
-					name: '原油合约',
-					path: '/dd'
-				},
+				// {
+				// 	name: '原油合约',
+				// 	path: '/contract_item/8b17a25095394214a825536355b52449'
+				// },
 			],
 			chartsShow: false,
 			chartsList: [
@@ -153,6 +155,10 @@ export default {
 			chartsHight: 5.4,
 			currentNo: '',
 			contrastNoShow: false,
+			id: {
+				id1: 'fens',
+				id2: 'volume'	
+			},
 
 		}
 	},
@@ -168,6 +174,14 @@ export default {
 		light
 	},
 	computed: {
+		pathId () {
+			const idList = {
+				'CL': '8b17a25095394214a825536355b52449',
+				'BRN': '4c42983cba194db4b34cd798e820b306',
+				'QM': '6f42afd430fe4183ba67b9ae21308454'
+			}
+			return `/contract_item/${idList[this.currentNo]}`
+		},
 		parameters() {
 			return this.$store.state.market.Parameters;
 		},
@@ -188,11 +202,21 @@ export default {
 		},
 		contrastNoList () {
 			return this.parameters.filter(item => item.CommodityNo !== this.currentNo)
+		},
+		jsonData(){
+			return this.$store.state.market.jsonData;
+		},
+		isshow () {
+			return this.$store.state.isshow
 		}
 	},
 	methods: {
 		...mapActions([
 			'initQuoteClient'
+		]),
+		...mapMutations([
+			'setfensoption', 
+			'drawfens',
 		]),
 		init () {
 			this.currentNo = 'CL';
@@ -201,28 +225,34 @@ export default {
 				
 			}
 		},
+		goto (path) {
+			this.$router.push({path:path})
+		},
 		chooseChart (item) {
 			const {isshow} = this.$store.state;
 			this.currentChartsView = item.type;
 			// 切换组件重新画图初始化chart
 			isshow.isklineshow = false;
 			isshow.isfensshow = false;
+			isshow.islightshow = false;
+			isshow.iskline = false;
+			isshow.isfens = false;
 			isshow.islight = false;
 			switch (this.currentChartsView) {
 				case 'klineOne':
-					
+					isshow.iskline = true
 					break;
 				case 'klineFive':
-					
+					isshow.iskline = true
 					break;	
 				case 'klineDay':
-					
+					isshow.iskline = true
 					break;	
 				case 'fens':
-					
+					isshow.isfens = true
 					break;
 				case 'light':
-					
+					isshow.islightshow = false;
 					break;		
 				default:
 					break;
@@ -234,7 +264,96 @@ export default {
 		},
 		switchKey (key) {
 			this[key] = !this[key]
-		}
+		},
+		showContrast () {
+			this.switchKey('contrastNoShow')
+			this.getHistoryQuote()
+		},
+		getHistoryQuote () {
+			this.parameters.forEach(item =>{
+				let data = {
+					Method: "QryHistory",
+					Parameters:{
+						ExchangeNo: item.ExchangeNo,
+						CommodityNo: item.CommodityNo,
+						ContractNo: item.MainContract,
+						HisQuoteType: 0,
+						BeginTime: "",
+						EndTime: "",
+						Count: 0
+					}
+				};
+				this.quoteSocket.send(JSON.stringify(data));
+			})
+		},
+		addContrast(index){
+				if(this.currentChartsView != 'fens'){
+					return Toast({message: '只能在分时添加对比', position: 'bottom', duration: 1500});
+				}
+				var currentOrderPrice, contrastOrderPrice, scale,isAdd;
+				this.parameters.forEach((o, i) => {
+					if(o.CommodityNo == index){
+						if(o.check == 1) {
+							isAdd = true
+						}else{
+							o.check = 1
+						}
+						
+					}
+				});
+				if (isAdd) return;
+				let color = ['#5ca1e6', '#d9b816', '#e66b2e', '#b673e6', '#d99a6c'];
+				let arr = [];
+				this.$store.state.market.scale = [];
+				var time;
+				this.parameters.forEach((o, i) => {
+					if(o.check == 1){
+						let price = [], len = '';
+						let lens = this.jsonData[o.CommodityNo].Parameters.Data.length;
+						//TODO
+						time = this.jsonData[o.CommodityNo].Parameters.Data[lens - 1][0];
+						contrastOrderPrice = this.jsonData[o.CommodityNo].Parameters.Data[lens - 1][1];//对比价格
+						// console.log(time)
+						this.jsonData[this.currentNo].Parameters.Data.forEach((j, h) => {
+							price.push('');
+							if(j[0] == time){
+								currentOrderPrice = j[1]; //当前价格
+							}
+							// console.log(currentOrderPrice);
+							
+						});
+						
+						o.scale = parseFloat(contrastOrderPrice/currentOrderPrice).toFixed(10); //缩放比例
+						this.jsonData[this.currentNo].Parameters.Data.forEach((j, h) => {
+							this.jsonData[o.CommodityNo].Parameters.Data.forEach((v) => {
+								if(j[0] == v[0]){
+									price[h] = parseFloat(v[1]/o.scale); //重新赋值price
+//									price.push(parseFloat(v[1]/o.scale).toFixed(this.orderTemplist[this.currentNo].DotSize));
+								}
+							});
+						});
+						// console.log(color[i - 1],i);
+						
+						let obj = {
+							name: o.CommodityNo,
+							type: 'line',
+				            data: price,
+				            lineStyle: {normal: {width: 1, color: color[i]}},
+				            itemStyle: {normal: {color: color[i]}},
+							symbolSize: 2,
+						}
+						arr.push(obj);
+						let scale = {
+							commodityNo: o.CommodityNo,
+							scale: o.scale
+						}
+						this.$store.state.market.scale.push(scale);
+					}
+				});
+				this.$store.state.market.contrastData = arr;
+				this.setfensoption(arr);
+				this.drawfens(this.id);
+			},
 
 	},
 	created() {
@@ -243,25 +362,24 @@ export default {
 		
 	},
 	mounted() {
-		console.log(3);
-		
 		// setTimeout(() => {
 		// 	this.allowChart();
 		// }, 2000);
 	},
 	activated: function() {
-		if (this.go) {
-			this.$store.state.isshow.isklineshow = false;
-			this.$store.state.market.Parameters = [];
-			this.$store.state.market.commodityOrder = [];
-			this.$store.state.market.commodityOrder = this.marketList[0].list;
-			this.marketList[0].list.forEach((o, i) => {
-				this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + o.exchangeNo + '","CommodityNo":"' + o.commodityNo + '","ContractNo":"' + o.contractNo + '"}}');
-			});
+		console.log(this.isshow)
+		if (this.showChart) {
+			if (this.isshow.isfens) {
+				return this.isshow.isfensshow = true;
+			}
+			if (this.isshow.islight) {
+				return this.isshow.islightshow = true;
+			}
+			if (this.isshow.iskline) {
+				return	this.isshow.isklineshow = true;
+			}
+			
 		}
-		this.$store.state.isshow.isfensshow = false;
-		this.$store.state.isshow.isklineshow = false;
-		this.$store.state.isshow.islightshow = false;
 	},
 	
 	 filters:{
@@ -277,33 +395,45 @@ export default {
 			if (n != o && o != '') {
 				this.$store.state.market.currentdetail = this.parameters.find(item => item.CommodityNo === n);
 				this.$store.state.market.currentNo = n;
+				this.currentNo = this.$store.state.market.currentNo;
+				//清空历史对比合约
+				this.$store.state.market.contrastData = [];
+				//清空parameters
+				this.parameters.forEach((o, i) => {
+					o.check = 0
+				});
 				//重新关闭所有 重新画图
 				isshow.showChart = false;
 				isshow.isklineshow = false;
 				isshow.isfensshow = false;
-				isshow.islight = false;
+				isshow.islightshow = false;
+				// isshow.isfens = false;
+				// isshow.isling = false;
+				// isshow.islight = false;
+
 				setTimeout(() => {
 					this.$store.state.isshow.showChart = true
 				}, 10);
+				console.log(isshow);
+				
 			}
 		},
 		
 	},
-
+	beforeRouteEnter: (to, from, next) => {
+         next(vm => {
+             vm.$store.state.market.klineOne = {
+				kId: "kline",
+				volId: "kline_volume"
+			 }
+            // 通过 `vm` 访问组件实例
+        })
+    },
 	beforeRouteLeave(to, from, next) {
-		console.log(to)
-		if (to.name === 'my') {
-			// this.$store.state.isshow.isfensshow = false;
-			// this.$store.state.isshow.isklineshow = false;
-			// this.$store.state.isshow.islightshow = false;
-			// this.$store.state.isshow.isfensInit = false;
-			this.$store.state.isshow.isfensshow = false;
-			this.$store.state.isshow.isklineshow = false;
-			this.$store.state.isshow.islightshow = false;
-			this.$store.state.isshow.isfensInit = false;
-			this.$store.state.go = true
-		}
-
+		const {isshow} = this.$store.state;
+		isshow.isklineshow = false;
+		isshow.isfensshow = false;
+		isshow.islightshow = false;
 		next()
 	}
 }
@@ -326,8 +456,7 @@ export default {
 
 #quote {
 	width: 7.5rem;
-	margin-top: 0.96rem;
-	padding-bottom: 1.16rem;
+	padding: 0.96rem 0 1.16rem;
 	background-color: #fff;
 }
 
@@ -340,6 +469,11 @@ export default {
 		@include font($fs28, 0.8rem, $btn_bg_color);
 		background-color: #f85959;
 		border-radius: 0.1rem;
+	}
+	.current_btn {
+		color: #f85959;
+		background-color: #fff;
+		border: 1px solid #f85959;
 	}
 }
 

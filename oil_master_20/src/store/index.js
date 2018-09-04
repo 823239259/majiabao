@@ -283,8 +283,24 @@ var market = {
 
 		//马甲包用的
 		myOrderList: [],//需要订阅的合约
+		
+		klineOne: {
+			kId: "kline",
+			volId: "kline_volume"
+		} //1分钟k线的dom的id
 	}
 }
+
+
+// 引入 ECharts 主模块
+var echarts = require('echarts/lib/echarts');
+// 引入柱状图
+require('echarts/lib/chart/bar');
+require('echarts/lib/chart/line');
+require('echarts/lib/component/tooltip');
+require('echarts/lib/chart/candlestick');
+require('echarts/lib/component/markpoint');
+require("echarts/lib/component/legend");
 
 export default new Vuex.Store({
 	modules: {
@@ -363,11 +379,6 @@ export default new Vuex.Store({
 		},
 		//画闪电图
 		drawlight: function(state, e) {
-			// 引入 ECharts 主模块
-			var echarts = require('echarts/lib/echarts');
-			// 引入柱状图
-			require('echarts/lib/chart/bar');
-			// 基于准备好的dom，初始化echarts图表
 			var lightChart;
 			if(state.isshow.islightshow == false) {
 				lightChart = echarts.init(document.getElementById(e));
@@ -464,15 +475,7 @@ export default new Vuex.Store({
 		},
 		//设置K线图数据
 		setklineoption: function(state,strategyData) {
-			// 引入 ECharts 主模块
-			var echarts = require('echarts/lib/echarts');
-			// 引入柱状图
-			require('echarts/lib/chart/bar');
-			require('echarts/lib/chart/line');
-			require('echarts/lib/component/tooltip');
-			require('echarts/lib/chart/candlestick');
-			require('echarts/lib/component/markpoint');
-			require("echarts/lib/component/legend");
+			//console.time('setklineoption')
 			var dosizeL = state.market.currentdetail.DotSize;
 			var rawData = [];
 			var parameters = state.market.jsonDataKline.Parameters.Data;
@@ -512,6 +515,16 @@ export default new Vuex.Store({
 				values: values,
 				time: time
 			};
+			/* 
+				处理回测数据的markpoint点(所有的标记点都会在图像显示), 所以需要数据处理
+					1. K线图起始的一条数据的时间搓
+					2. 选出超过该时间搓的数据	
+			*/
+			let startTime = new Date(time[0]).getTime() //得到
+			let markPointData = strategyData && strategyData.filter(item => {
+				return new Date(item.coord[0]).getTime() > startTime
+				
+			})
 			/*MA5 10 20 30*/
 			function calculateMA(dayCount) {
 				var result = [];
@@ -559,9 +572,8 @@ export default new Vuex.Store({
 					axisPointer: {
 						type: 'line',
 						animation: false,
-						lineStyle: { //tips线的颜色
-							//color: '#ffffff',
-							color: '#26a2ff',
+						lineStyle: {
+							color: '#f79646',
 							width: 1,
 							opacity: 1
 						}
@@ -637,8 +649,9 @@ export default new Vuex.Store({
 			                            return " "
 			                        }
 			                    }
-			                },
-							data:strategyData
+							},
+							data: markPointData
+							//data:strategyData
 			            },
 						markLine: {
 							symbol: ['none', 'none'],
@@ -646,8 +659,7 @@ export default new Vuex.Store({
 							lineStyle: {
 								normal: {
 									width: 1,
-									//color: "#ffffff"
-									color: "#26a2ff"
+									color: "#f79646"
 								}
 							},
 							data: [{
@@ -678,7 +690,6 @@ export default new Vuex.Store({
 						data: calculateMA(5),
 						smooth: true,
 						showSymbol: false,
-						//symbolSize: 10,
 						lineStyle: {
 							normal: {
 								color: '#3689B3',
@@ -690,7 +701,6 @@ export default new Vuex.Store({
 						name: 'MA10',
 						type: 'line',
 						showSymbol: false,
-						//symbolSize: 10,
 						data: calculateMA(10),
 						smooth: true,
 						lineStyle: {
@@ -704,7 +714,6 @@ export default new Vuex.Store({
 						name: 'MA20',
 						type: 'line',
 						showSymbol: false,
-						//symbolSize: 10,
 						data: calculateMA(20),
 						smooth: true,
 						lineStyle: {
@@ -718,7 +727,6 @@ export default new Vuex.Store({
 						name: 'MA30',
 						type: 'line',
 						showSymbol: false,
-						//symbolSize: 10,
 						data: calculateMA(30),
 						smooth: true,
 						lineStyle: {
@@ -835,8 +843,7 @@ export default new Vuex.Store({
 						type: 'line',
 						animation: false,
 						lineStyle: {
-							color: '#26a2ff',
-							//color: '#ffffff',
+							color: '#f79646',
 							width: 1,
 							opacity: 1
 						}
@@ -853,16 +860,11 @@ export default new Vuex.Store({
 			if(h < 950){
 				state.market.option4.yAxis[0].axisLabel.show = false
 			}
+			//console.timeEnd('setklineoption')
 		},
 		//画K线图
 		drawkline: function(state, x) {
-			// 引入 ECharts 主模块
-			var echarts = require('echarts/lib/echarts');
-			// 引入柱状图
-			require('echarts/lib/chart/bar');
-			require('echarts/lib/chart/line');
-			require('echarts/lib/component/tooltip');
-			require('echarts/lib/chart/candlestick');
+			
 			var kline, volume;
 			if(state.isshow.isklineshow == false) {
 				kline = echarts.init(document.getElementById(x.id1));
@@ -881,17 +883,12 @@ export default new Vuex.Store({
 					volume = echarts.getInstanceByDom(document.getElementById(x.id2));
 				}
 			}
+			console.log(kline)
 			kline.setOption(state.market.option3);
 			volume.setOption(state.market.option4);
 		},
 		//画分时图
 		drawfens: function(state, x) {
-			// 引入 ECharts 主模块
-			var echarts = require('echarts/lib/echarts');
-			// 引入柱状图
-			require('echarts/lib/chart/bar');
-			require('echarts/lib/chart/line');
-			require('echarts/lib/component/tooltip');
 			var fens, volume;
 			if(state.isshow.isfensshow == false) {
 				volume = echarts.init(document.getElementById(x.id1));
@@ -916,10 +913,7 @@ export default new Vuex.Store({
 		},
 		//设置分时图数据
 		setfensoption: function(state, arr) {
-			var echarts = require('echarts/lib/echarts');
-			var vol = [],
-				price = [],
-				time = [];
+			var vol = [],price = [],time = [];
 			var dosizeL = state.market.currentdetail.DotSize;
 			if(state.market.jsonData[state.market.currentNo] != undefined && state.market.jsonData[state.market.currentNo].Parameters.Data != null){
 				state.market.jsonData[state.market.currentNo].Parameters.Data.forEach(function(e) {
@@ -950,7 +944,8 @@ export default new Vuex.Store({
 	        //判断是否有外界传入数据
 	        if(arr != undefined && arr != null && arr != ''){
 	        	optionDatas = optionDatas.concat(arr);
-	        }
+			}
+			// console.log({optionDatas})
 			state.market.option1 = {
 				grid: {
 					x: 50,
@@ -1312,6 +1307,7 @@ actions: {
 //									if(context.state.market.CacheLastQuote[1].TotalVolume <= context.state.market.CacheLastQuote[0].TotalVolume){
 //										return;
 //									}
+									const { market } = context.state;
 									var arr = [];
 									arr[0] = JSON.parse(evt.data).Parameters.DateTimeStamp;
 									arr[1] = JSON.parse(evt.data).Parameters.LastPrice;
@@ -1652,8 +1648,8 @@ actions: {
 									}
 									context.commit('setklineoption',context.state.market.strategyData);
 									context.commit('drawkline', {
-										id1: 'kline',
-										id2: 'kline_volume'
+										id1: market.klineOne.kId,
+										id2: market.klineOne.volId
 									});
 										
 								}
@@ -1662,7 +1658,7 @@ actions: {
 					});
 				} else if(context.state.wsjsondata.Method == "OnRspQryHistory") { // 历史行情
 					let data = JSON.parse(evt.data);
-
+					let { market } = context.state
 					if(data.Parameters.HisQuoteType == 0){
 						context.state.market.jsonData[data.Parameters.CommodityNo] = data;
 						if(context.state.isshow.isfens == true){
@@ -1682,9 +1678,10 @@ actions: {
 						if(context.state.isshow.iskline == true){
 							context.commit('setklineoption');
 							context.commit('drawkline', {
-								id1: 'kline',
-								id2: 'kline_volume'
+								id1: market.klineOne.kId,
+								id2: market.klineOne.volId
 							});
+							
 							// setTimeout(() => {
 							// 	context.commit('drawkline', {
 							// 		id1: 'kline',

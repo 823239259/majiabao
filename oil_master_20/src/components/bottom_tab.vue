@@ -26,11 +26,11 @@
 					},
 					{
 						name: '原油策略',
-						path: 'fensline'
+						path: 'quote_strategy'
 					},
 					{
 						name: '原油回测',
-						path: 'eee'
+						path: 'strategy'
 					},
 					{
 						name: '原油直播',
