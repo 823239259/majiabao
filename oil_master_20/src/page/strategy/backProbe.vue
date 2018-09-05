@@ -1,8 +1,6 @@
 <template>
 	<div id="backProbe">
-		<mt-header :title="strategyName" fixed style="background-color:#b3daff;font-size: 0.32rem;height: 0.96rem;line-height: 0.96rem;">
-			 <mt-button slot="left" icon="back" @click="backRounter"></mt-button>
-		</mt-header>
+		<TopTitle :title="strategyName" type="back" />
 		<div id="container" v-show="showConatiner">
 			<div class="info">
 				<p>历史回测测试，是通过真实的历史数据，测试并评估一个量化策略在此历史时段的收益能力和风险控制能力。 </p>
@@ -57,8 +55,12 @@
 
 <script>
 	import pro from "../../assets/js/common.js"
+	import TopTitle from '../../components/top_Title'
 	export default{
 		name:"backProbe",
+		components:{
+			TopTitle
+		},
 		data(){
 			return{
 				type:"1分K",

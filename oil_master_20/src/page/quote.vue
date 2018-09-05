@@ -1,7 +1,7 @@
 <template>
 <div id="quote">
 	<TopTitle title="原油行情">
-		<span slot="my_right" class="header_icon reload_icon" ></span>
+		<!-- <span slot="my_right" class="header_icon reload_icon" ></span> -->
 	</TopTitle>
 	<div class="btn_box">
 		<button :class="['btn',{'current_btn': currentNo == item.commodityNo}]" v-for="(item, index) in oilList" :key="index" @click="chooseCommodityNo(item.commodityNo)">{{item.name}}</button>
@@ -73,7 +73,6 @@ import klineFive from './quote/components/klineFive.vue'
 import klineDay from './quote/components/klineDay.vue'
 import fens from './quote/components/fens.vue'
 import light from './quote/components/light.vue'
-import firstGuide from "./quote/firstGuide.vue"
 import pro from '../assets/js/common.js'
 
 import {
@@ -90,7 +89,6 @@ export default {
 		TopTitle,
 		bottomTab,
 		dishInfo,
-		firstGuide,
 		klineOne
 	},
 	data() {
@@ -166,7 +164,6 @@ export default {
 		TopTitle,
 		bottomTab,
 		dishInfo,
-		firstGuide,
 		klineOne,
 		klineFive,
 		klineDay,
@@ -362,9 +359,7 @@ export default {
 		
 	},
 	mounted() {
-		// setTimeout(() => {
-		// 	this.allowChart();
-		// }, 2000);
+		
 	},
 	activated: function() {
 		console.log(this.isshow)

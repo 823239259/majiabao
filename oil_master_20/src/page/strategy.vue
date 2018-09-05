@@ -1,7 +1,7 @@
 <template>
     <div id="strategy" >
          <TopTitle title="原油回测">
-            <span slot="my_right" class="header_icon reload_icon"></span>
+            <!-- <span slot="my_right" class="header_icon reload_icon"></span> -->
         </TopTitle>
         <div class="btn_box">
           <button :class="['btn',{'current_btn': currentNo == item.commodityNo}]" v-for="(item, index) in oilList" :key="index" @click="chooseCommodityNo(item.commodityNo, index)">{{item.name}}</button>

@@ -1,6 +1,6 @@
 <template>
-	<div id="loginHeader">
-		<mt-header :fixed='fixed' :title="title">
+	
+	<mt-header :fixed='fixed' :title="title">
 		<mt-button v-if="type==='back'" icon="back" slot="left" @click="goBack"></mt-button>
 		<mt-button v-else slot="left">
 			<slot name="my_left"></slot>
@@ -11,8 +11,8 @@
 		<mt-button slot="right" >
 			<slot name="my_right"></slot>
 		</mt-button>
-		</mt-header>
-	</div>
+	</mt-header>
+
 </template>
 
 <script>
