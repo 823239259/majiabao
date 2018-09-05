@@ -158,6 +158,7 @@ export default {
 				id2: 'volume'	
 			},
 
+
 		}
 	},
 	components: {
@@ -264,7 +265,12 @@ export default {
 		},
 		showContrast () {
 			this.switchKey('contrastNoShow')
-			this.getHistoryQuote()
+			// console.log(this.jsonData);
+			// if (this.jsonData) return;
+			if (this.contrastNoShow) {
+				this.getHistoryQuote()
+			}
+			
 		},
 		getHistoryQuote () {
 			this.parameters.forEach(item =>{
