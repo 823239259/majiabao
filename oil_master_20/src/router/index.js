@@ -103,6 +103,16 @@ const router = new Router({
       component: load("account/my/activity_details"),
       props: true
     },
+    {
+      path: '/login',
+      name: 'login',
+      component: load('account/login/login')
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: load('account/login/register')
+    },
     /* my 内页 end */
 
     /* 组件工具集 begin */
