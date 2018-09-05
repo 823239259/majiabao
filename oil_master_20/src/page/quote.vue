@@ -157,6 +157,7 @@ export default {
 				id1: 'fens',
 				id2: 'volume'	
 			},
+			hasGetJsonData: false
 
 
 		}
@@ -267,10 +268,8 @@ export default {
 			this.switchKey('contrastNoShow')
 			// console.log(this.jsonData);
 			// if (this.jsonData) return;
-			if (this.contrastNoShow) {
-				this.getHistoryQuote()
-			}
-			
+			if (this.hasGetJsonData) return;
+			this.getHistoryQuote()
 		},
 		getHistoryQuote () {
 			this.parameters.forEach(item =>{
@@ -288,6 +287,7 @@ export default {
 				};
 				this.quoteSocket.send(JSON.stringify(data));
 			})
+			this.hasGetJsonData = true
 		},
 		addContrast(index){
 				if(this.currentChartsView != 'fens'){
