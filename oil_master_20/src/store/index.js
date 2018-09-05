@@ -520,11 +520,17 @@ export default new Vuex.Store({
 					1. K线图起始的一条数据的时间搓
 					2. 选出超过该时间搓的数据	
 			*/
-			let startTime = new Date(time[0]).getTime() //得到
+			//ios safafi new Date 只能识别 YYYY/MM/DD hh:mm:ss
+			function formatDate(date){
+				return date&&new Date(date.replace(/-/g, "/"))
+			}
+			let startTime = formatDate(time[0]).getTime() //得到
 			let markPointData = strategyData && strategyData.filter(item => {
-				return new Date(item.coord[0]).getTime() > startTime
-				
+				if (!item.name) return; //处理回推问题
+				let times = formatDate(item.coord[0]);
+				return times.getTime() > startTime
 			})
+			
 			/*MA5 10 20 30*/
 			function calculateMA(dayCount) {
 				var result = [];
@@ -558,12 +564,18 @@ export default new Vuex.Store({
 			        top:10,
 			        left:10,
 					data:[
-						{name:"开空",textStyle:{color:"#a3b1cc"},icon:'image://static/lib/images/BP.png'},
-						{name:"开多",textStyle:{color:"#a3b1cc"},icon:'image://static/lib/images/BK.png'},
-						{name:"平空",textStyle:{color:"#a3b1cc"},icon:'image://static/lib/images/SP.png'},
-						{name:"平多",textStyle:{color:"#a3b1cc"},icon:'image://static/lib/images/SK.png'},
-						{name:"反卖",textStyle:{color:"#a3b1cc"},icon:'image://static/lib/images/BF.png'},
-						{name:"反买",textStyle:{color:"#a3b1cc"},icon:'image://static/lib/images/SF.png'},
+						{name:"开空",textStyle:{color:"#a3b1cc"},icon:'image://./static/lib/images/BP.png'},
+						{name:"开多",textStyle:{color:"#a3b1cc"},icon:'image://./static/lib/images/BK.png'},
+						{name:"平空",textStyle:{color:"#a3b1cc"},icon:'image://./static/lib/images/SP.png'},
+						{name:"平多",textStyle:{color:"#a3b1cc"},icon:'image://./static/lib/images/SK.png'},
+						{name:"反卖",textStyle:{color:"#a3b1cc"},icon:'image://./static/lib/images/BF.png'},
+						{name:"反买",textStyle:{color:"#a3b1cc"},icon:'image://./static/lib/images/SF.png'},
+						// {name:"开空",textStyle:{color:"#a3b1cc"},icon:'image://../assets/images/dadian/BP.png'},
+						// {name:"开多",textStyle:{color:"#a3b1cc"},icon:'image://../assets/images/dadian/BK.png'},
+						// {name:"平空",textStyle:{color:"#a3b1cc"},icon:'image://../assets/images/dadian/SP.png'},
+						// {name:"平多",textStyle:{color:"#a3b1cc"},icon:'image://../assets/images/dadian/SK.png'},
+						// {name:"反卖",textStyle:{color:"#a3b1cc"},icon:'image://../assets/images/dadian/BF.png'},
+						// {name:"反买",textStyle:{color:"#a3b1cc"},icon:'image://../assets/images/dadian/SF.png'},
 					],
 			        selectedMode:false,
 			   },

@@ -282,7 +282,9 @@ export default {
                     for (var i of tradeInfo) {
                         var strategyObj = {
                             name: symbolObj[i[3]],
-                            symbol: `image://static/lib/images/${i[3]}.png`,
+                            // symbol: `image://../assets/images/dadian/${i[3]}.png`,
+                           symbol: `image://./static/lib/images/${i[3]}.png`,
+                        //    symbol: `roundRect`,
                             symbolSize: [7, 14],
                         }
                         if (res.backtestIndex.frequency == "1day") {
@@ -353,40 +355,25 @@ export default {
                     data: JSON.stringify(obj1),
                     dataType: "json",
                     success: function(res) {
-                        var strategy_signal_obj = {};
-                        //							strategyObj.coord = [i[1].substring(11,16),i[4]];
-                        var strategy_signal_time = pro.getDate("h:m", Date.parse(new Date()));
-                        strategy_signal_obj.coord = [strategy_signal_time, res.last_trade];
-                        strategy_signal_obj.symbolSize = [7, 14];
-                        switch (res.action) {
-                            case null:
-                                strategy_signal_obj.coord = [];
-                                strategy_signal_obj.symbolSize = [];
-                                break;
-                            case "BP":
-                                strategyObj.name = "开空";
-                                strategyObj.symbol = "image://static/lib/images/BP.png";
-                                break;
-                            case "BK":
-                                strategyObj.name = "开多";
-                                strategyObj.symbol = "image://static/lib/images/BK.png";
-                                break;
-                            case "SP":
-                                strategyObj.name = "平空";
-                                strategyObj.symbol = "image://static/lib/images/SP.png";
-                                break;
-                            case "SK":
-                                strategyObj.name = "平多";
-                                strategyObj.symbol = "image://static/lib/images/SK.png";
-                                break;
-                            case "SF":
-                                strategyObj.name = "反卖";
-                                strategyObj.symbol = "image://static/lib/images/BF.png";
-                                break;
-                            case "BF":
-                                strategyObj.name = "反买";
-                                strategyObj.symbol = "image://static/lib/images/SF.png";
-                                break;
+                        var strategy_signal_time = pro.getDate(Date.parse(new Date()),"y-m-d h:i:s")
+                        const symbolObj = {
+                            BP: '开空',
+                            BK: '开多',
+                            SP: '平空',
+                            SK: '平多',
+                            SF: '反卖',
+                            BF: '反买'
+                        }
+                        let strategy_signal_obj = {
+                           coord:  [strategy_signal_time, res.last_trade],
+                           symbolSize: [7, 14],
+                           name: symbolObj[res.action],
+                           //symbol: `image://../assets/images/dadian/${res.action}.png`,
+                            symbol: `image://./static/lib/images/${res.action}.png`,
+                        }
+                        if (res.action === null) { //处理推回来为null的情况
+                            strategy_signal_obj.coord = [];
+						    strategy_signal_obj.symbolSize = [];
                         }
                         this.strategyData1.push(strategy_signal_obj);
                         this.strategyData1 = this.strategyData1.slice(-40);
@@ -414,14 +401,14 @@ export default {
                 this.strategyK = k;
                 clearInterval(this.timeing);
                 this.strategyData1 = [];
-                this.setklineoption(this.strategyData1),
-                this.$store.state.market.strategyData= this.strategyData1;
-                this.drawkline(this.id1);
+                // this.setklineoption(this.strategyData1),
+                // this.$store.state.market.strategyData= this.strategyData1;
+                // this.drawkline(this.id1);
                 Indicator.open({spinnerType: 'fading-circle'});
                 //第一步回测拿到打点数据
-                this.setklineoption("")
-                this.$store.state.market.strategyData= "";
-                this.drawkline(this.id1);
+                // this.setklineoption("")
+                // this.$store.state.market.strategyData= "";
+                // this.drawkline(this.id1);
                 this.backProbeAjax();
                 //第二步实时
                 this.backProbeInterval();
@@ -503,6 +490,9 @@ export default {
         //isshow.iskline = false;
         this.$store.state.isshow.isklineshow = false
         isshow.isklineshow = false;
+        //清楚打点影响
+        this.$store.state.market.strategyData = [];
+        clearInterval(this.timeing);
         // if (to.name = 'quote') {
             
         // }

@@ -30,8 +30,6 @@
 			}
 		},
 		mounted(){
-			console.log(this.test);
-			console.log('mounted');
 			this.$store.state.isshow.iskline = true;
 			this.$store.state.market.selectTime = 1;
 			var data = {
