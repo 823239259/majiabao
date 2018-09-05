@@ -36,6 +36,7 @@
 import TopTitle from '../components/top_Title'
 import bottomTab from '../components/bottom_tab'
 import klineOne from './quote/components/klineOne2.vue'
+import dishInfo from './quote/components/dish_info'
 import pro from '../assets/js/common.js'
 
 import {

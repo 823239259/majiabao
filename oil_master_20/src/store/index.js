@@ -883,7 +883,6 @@ export default new Vuex.Store({
 					volume = echarts.getInstanceByDom(document.getElementById(x.id2));
 				}
 			}
-			console.log(kline)
 			kline.setOption(state.market.option3);
 			volume.setOption(state.market.option4);
 		},
