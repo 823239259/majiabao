@@ -10,3 +10,5 @@
 - 马甲包——人人期货： everyone-futures
 - 马甲包——期货管家：futures-butler
 - 马甲包——期货行情大师：quote-master
+- 马甲包——原油大师：oil_master_20
+- 马甲包——原油行情宝：oil_futures
