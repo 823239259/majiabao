@@ -504,6 +504,15 @@ export default new Vuex.Store({
 				values: values,
 				time: time
 			};
+			function formatDate(date) {
+			  return date && new Date(date.replace(/-/g, "/"))
+			}
+			let startTime = formatDate(time[0]).getTime() //得到
+			let markPointData = strategyData && strategyData.filter(item => {
+			  if (!item.name) return; //处理回推问题
+			  let times = formatDate(item.coord[0]);
+			  return times.getTime() > startTime
+			})
 			/*MA5 10 20 30*/
 			function calculateMA(dayCount) {
 				var result = [];
@@ -640,7 +649,7 @@ export default new Vuex.Store({
 			                        }
 			                    },
 			                },
-							data:strategyData
+							data: markPointData
 			            },
 						markLine: {
 							symbol: ['none', 'none'],

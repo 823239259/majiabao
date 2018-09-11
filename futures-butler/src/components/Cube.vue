@@ -72,7 +72,7 @@
 
 <style lang="scss" scoped>
     @import "../assets/css/common.scss";
-    $width: 2.4rem;
+    $width: 1.8rem;
 @keyframes rotate {
     100% {
         transform: rotateY(360deg) rotateX(360deg);

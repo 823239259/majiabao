@@ -26,7 +26,7 @@
 			管家提示：点击转盘转动分类到指针位置，再点击指针所指可打开行情。
 		</p> -->
 		 <!-- <i></i> -->
-		 <tipsFloat></tipsFloat>
+		 <tipsFloat :allType="allType" :type="type"></tipsFloat>
 	</div>
 </template>
 

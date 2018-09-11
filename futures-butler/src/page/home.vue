@@ -24,7 +24,7 @@
     <scroll-msg></scroll-msg>
     <div class="butler_wrap">
       <ul class="butler_list">
-        <li class="item" v-for="(item, index) in butlerList" :key="item.name" @click="goto(item.path)">
+        <li class="item" v-for="(item, index) in butlerList" :key="index" @click="goto(item.path)">
           <span class="circle">{{item.title}}</span>
           <p>{{item.name}}</p>
         </li>
@@ -32,11 +32,12 @@
     </div>
     <div class="cube_wrap">
       <div class="left">
-        <Cube :cubeList = 'cubeList'></Cube>
+        <Cube :cubeList = 'cubeList' type='3'></Cube>
+        <CubeSmall :cubeList = 'cubeList3' type='2'></CubeSmall>
       </div>
       <div class="right"> 
          <CubeSmall :cubeList = 'cubeList1' type='1'></CubeSmall>
-        <CubeSmall :cubeList = 'cubeList2' type='2'></CubeSmall>
+        <CubeSmall :cubeList = 'cubeList2' type='3'></CubeSmall>
       </div>
      
     </div>
@@ -85,7 +86,7 @@
           {
             name: "管家社区",
             title: '管',
-            path: "/butler_community"
+            path: "/community"
           },
           {
             name: "风险提示",
@@ -97,8 +98,60 @@
         lastPath: '/',
         userList: [],
         cubeList: ['推荐','原油','股指','贵金属'],
-        cubeList1: ['管家签到','管家签到','管家签到','管家签到'],
-        cubeList2: ['大讲堂','大讲堂','大讲堂','大讲堂'],
+        cubeList1: [
+          {
+            name: '管家签到',
+            path: 'welfare_details/1'
+          },
+          {
+            name: '大讲堂',
+            path: 'welfare_details/2'
+          },
+          {
+            name: '管家签到',
+            path: 'welfare_details/1'
+          },
+          {
+            name: '大讲堂',
+            path: 'welfare_details/2'
+          }
+        ],
+        cubeList2: [
+           {
+            name: '推荐有奖',
+            path: 'welfare_details/4'
+          },
+          {
+            name: '回答有礼',
+            path: 'welfare_details/3'
+          },
+         {
+            name: '推荐有奖',
+            path: 'welfare_details/4'
+          },
+          {
+            name: '回答有礼',
+            path: 'welfare_details/3'
+          },
+        ],  
+        cubeList3: [
+           {
+            name: '原油策略',
+            path: `quoteDetails_celue?commodityNo=CL&mainContract=1810&exchangeNo=NYMEX&contrast=BRN,GC,DX,NG`
+          },
+         {
+            name: '原油策略',
+            path: `quoteDetails_celue?commodityNo=CL&mainContract=1810&exchangeNo=NYMEX&contrast=BRN,GC,DX,NG`
+          },
+           {
+            name: '原油策略',
+            path: `quoteDetails_celue?commodityNo=CL&mainContract=1810&exchangeNo=NYMEX&contrast=BRN,GC,DX,NG`
+          },
+           {
+            name: '原油策略',
+            path: `quoteDetails_celue?commodityNo=CL&mainContract=1810&exchangeNo=NYMEX&contrast=BRN,GC,DX,NG`
+          },
+        ],
   
       };
     },
@@ -106,6 +159,12 @@
       clientHeight() {
         return document.documentElement.clientHeight + "px";
       },
+      quoteSocket () {
+        return this.$store.state.quoteSocket;
+      },
+      celuePath () {
+        return `/quoteDetails?commodityNo=CL&mainContract=1810&exchangeNo=NYMEX&contrast=BRN,GC,DX,NG`
+      }
       
     },
     methods: {
@@ -124,11 +183,26 @@
           path: path
         });
       },
+      subscribe(){
+        console.log(this.$store.state.market.markettemp);
+        this.$store.state.market.markettemp.forEach(element => {
+          if (element.CommodityNo== 'CL') {
+              this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + element.ExchangeNo + '","CommodityNo":"' + element.CommodityNo + '","ContractNo":"' + element.MainContract +'"}}');
+          }
+        });
+        
+				
+			},
     },
     activated() {
     },
     mounted(){
-    	this.initQuoteClient();
+      this.initQuoteClient();
+      setTimeout(() => {
+        this.subscribe()
+      }, 1000);
+      
+      
     }
   };
 </script>

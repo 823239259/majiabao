@@ -1,38 +1,13 @@
 <template>
   <!-- <div id="welfare_details" :style="{height:clientHeight}"> -->
-  <div id="activity02">
-     <div class="activity_wrap">
-       <div class="title_box">
-         <div class="left_box">
-           <img src="../../assets/images/home/logo_icon.png" alt="icon">
-           <div class="left_content">
-             <p class="rol_display">管家大讲堂</p>
-            </div>
-         </div>
-         <div class="right_box">
-           <p v-for="(item, index) in informationList" :key="index"><span class="huise">{{item.title}}</span>{{item.content}}</p>
-         </div>
-
-       </div>
-       <div class="btn_group">
-         <button @click="join">我要参加</button>
-         <button @click="shareSystem">分享活动</button>
-       </div>
-       <div class="btn_group">
-         <button class="go" @click="goto('/butler_community')">进入讲堂</button>
-       </div>
-       <div class="activity_content">
-         <h2 class="content_header">活动详情</h2>
-         <ul class="list">
-           <li class="item" v-for="(item, index) in list" :key="index">
-             <h2>{{item.title}}</h2>
-             <p :class="['item_content',{'spacial_item':item.content.length<30}]" v-html="item.content"></p>
-           </li>
-         </ul>
-       </div>
-     </div>
-        
-    
+  <div>
+    <header class="top">
+      <h2 class="title">推荐新人有奖，大礼等你来拿</h2>
+      <p class="text">活动开始时间 <span class="yellow">2018-09-05</span></p>
+    </header>
+    <div class="wrap">
+      <div class="jpg"></div>
+    </div>  
   </div>
 </template>
 
@@ -164,120 +139,115 @@
   #activity02{
     background-color: #fff;
   }
-  .title_box{
-    @include flex();
-    border-top: solid 1px #bbf6ec;
-    border-bottom: solid 1px #bbf6ec;
+  .top{
     
+    background-color: #fff;
+    .title{
+      @include font($fs32,0.8rem,#333,left);
+      font-weight: bold;
+      padding: 0 0.3rem;
+      border-bottom: 1px solid #bbf6ec;
+    }
+  .text{
+    @include font($fs28,0.8rem,#333,left);
+    border-bottom: 1px solid #bbf6ec;
+    padding: 0 0.3rem;
+    .yellow{
+      color: #de8c22
+    }
   }
-  .left_box{
-    flex: 1;
-    
-    text-align: center;
-    img {
-      width: 0.8rem;
-      margin-bottom: -0.4rem;
-      z-index: 10;
-      position: relative;
-      
+  }
+ 
+  .wrap{
+    margin: 0 0.3rem;
+    background-color: #fff;
+    .jpg{
+      width: 6.9rem;
+      height: 13.53rem;
+      background: url('../../assets/images/home/activity03_jpg.jpg');
+      background-size: cover;
     }
-    .left_content{
-      position: relative;
-      width: 1.6rem;
+    .top_banner{
+      width: 100%;
       height: 2.4rem;
-      margin: 0 auto;
-      background-color: #e5f9f6;
-      border-radius: 0.1rem;
-      border: solid 1px #bbf6ec;
-      @include font($fs28,0.3rem,#333);
-     
+      background: url('../../assets/images/home/activity03_banner.jpg') center no-repeat;
+      background-size: cover;
     }
-    .rol_display{
+  }
+  .title_box{
+    position: relative;
+    text-align: center;
+    margin: 0.4rem;
+    &::before,&::after{
+       content: '';
       position: absolute;
       top: 50%;
-      left: 50%;
-      transform: translate(-50%,-50%);
-      width: 0.5rem;
-
+      transform: translateY(-50%);
+      width: 2.24rem;
+      height: 1px;
+      background-color: #f69c00;
+    }
+    &::before{
+      left: 0;
+    }
+    &::after{
+      right: 0;
+    }
+    .title1{
+        position: relative;
+        display: inline-block;
+        padding: 0 0.48rem;
+        font-size: 0.32rem;
+        line-height: 0.46rem;
+        color: #f69c00;
+        text-align: center;
+        &::before,&::after{
+          content: '';
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%) rotate(45deg);
+          width: 0.3rem;
+          height: 0.3rem;
+          background-color: #f69c00;
+          // border-radius: 50%;
+        }
+        &::before{
+          left: 0;
+        }
+        &::after{
+          right: 0;
+        }
     }
   }
-  .right_box{
-    flex: 2;
-    border-left: solid 1px #bbf6ec;
-    p{
-      width: 5.1rem;
-      height: 0.8rem;
-      padding: 0 0.3rem;
-      background-color: #ffffff;
-      @include font($fs28,0.8rem,#333,left);
-      border-bottom: solid 1px #bbf6ec;
+  .activity_box{
+    width: 6.1rem;
+    margin: 0 auto;
+    border-radius: 0.2rem;
+    border: solid 1px #f69c00;
+    padding: 0.24rem;
+    .text{
+      @include font($fs28,0.48rem,#f69c00,left);
     }
-    p:last-child{
-      border-bottom: none;
-    }
-    .huise{
-      color: #788b87
-    }
-  }
-  .btn_group{
-    @include flex(space-around);
-    padding: 0.2rem 0;
-    border-top: 0.16rem solid #bbf6ec;
-    button{
-      width: 2.4rem;
-      height: 0.8rem;
-      background-color: #169781;
-      border-radius: 0.1rem;
-      @include font($fs28,0.8rem,#fff);
-    }
-    .go{
-      width: 6.14rem;
-	    height: 0.8rem;
-      color: #169781;
-      background-color: #fff;
-      border: solid 1px #169781;
-      box-shadow: 0rem 0.05rem 1px 0rem 
-		rgba(1, 1, 1, 0.2);
+    .logo_box{
+      text-align: center;
+      padding: 0.24rem 0;
+      img{
+        display: block;
+        margin: 0 auto;
+        width: 0.8rem;
+        height: 0.8rem
+      }
+      span{
+        @include font($fs24,0.48rem,#283835);
+      }
     }
   }
-.activity_content{
-  //padding-top: 0.16rem;
-  border-top: 0.16rem solid #bbf6ec;
-  .content_header{
-    padding: 0 0.3rem;
-    @include font($fs28,0.8rem,#333,left);
-    text-indent: 0.48rem;
-    border-bottom: solid 1px #bbf6ec;
-    background: url('../../assets/images/home/activity02_header_icon.png') 0.3rem center no-repeat;
-    background-size: 0.24rem 0.24rem;
-  }
-  .item{
-    h2{
-      @include font($fs28,0.8rem,#788b87,left);
-      padding: 0 0.3rem;
-      border-bottom: solid 1px #bbf6ec;
-      
-    }
-    .item_content{
-      @include font($fs28,0.56rem,#333,left);
-      padding: 0 0.3rem;
-      border-bottom: solid 1px #bbf6ec;
-    }
-    .spacial_item{
-      line-height: 0.8rem;
-    }
-
-  }
+.note{
+  @include font($fs24,0.36rem,#788b87);
+  padding: 0.4rem 0;
 }
 
-
-
-
-
-
-
-
-
-
+ 
+  
 
 </style>

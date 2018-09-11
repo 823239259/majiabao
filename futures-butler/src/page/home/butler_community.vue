@@ -1,8 +1,6 @@
 <template>
   <div id="butler_community" >
-    <mt-header title="管家社区" >
-        <mt-button slot="left" icon="back" @click="goBack"></mt-button>
-    </mt-header>
+    
     <div class="scroll_wrap" ref="scrollWrap">
         <img src="../../assets/images/home/hongdong2_banner.jpg" alt="">
          <div class="community_wrap">
@@ -16,8 +14,8 @@
                 </div>
             </div>
             <div class="msg_wrap">
-                <div class="msg_box clearfix" v-for="(n, index) in communicationList">
-                    <div class="msg" :class="n.type === 'others1'||'others2'?'others':'my'">
+                <div class="msg_box clearfix" v-for="(n, index) in communicationList" :key="index">
+                    <div class="msg" :class="n.type === ('others1'||'others2')?'others':'my'">
                         <img :src="personImg[n.type]" alt="01"> 
                         <div  class="msg_s_box">
                             <div class="msg_s">

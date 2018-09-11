@@ -2,11 +2,12 @@
     <div id="cube">
         <div class="contain" @touchmove="moveCube" @touchstart="setCoordinate">
             <div class='box'>
-                <div class="face one">one</div> <!-- 上面 -->
-                <div :class="['face',`two${type}`]" @click="goto(typePath)">{{cubeList[0]}} </div><!-- 正面 -->
-                <div :class="['face',`three${type}`]" @click="goto(typePath)">{{cubeList[1]}} </div> <!-- 右边 -->
-                <div  :class="['face',`four${type}`]" @click="goto(typePath)">{{cubeList[2]}}</div><!-- 后面 -->
-                <div :class="['face',`five${type}`]"  @click="goto(typePath)">{{cubeList[3]}} </div><!-- 左边 -->
+                <div class="face one">one</div> <!-- 上面 two正面 three右边  four后面  five左边-->
+
+                <div :class="['face',`${numbers[index]}${type}`]" @click="goto(item.path)" v-for="(item, index) in cubeList" :key="index">{{item.name}} </div><!-- 正面 -->
+                <!-- <div :class="['face',`three${type}`]" @click="goto(item.)">{{cubeList[1]}} </div> 
+                <div :class="['face',`four${type}`]" @click="goto(typePath)">{{cubeList[2]}}</div>
+                <div :class="['face',`five${type}`]"  @click="goto(typePath)">{{cubeList[3]}} </div> -->
                 <div class="face six">six </div> <!-- 下面 -->
             </div>
         </div>
@@ -23,7 +24,8 @@
                 startCoordinate: {},
                 moveFlag: false,
                 rotateTime: 0,
-                pathList: ['welfare_details/1', 'welfare_details/1', 'welfare_details/1' ,'welfare_details/1']
+                pathList: ['welfare_details/1', 'welfare_details/1', 'welfare_details/1' ,'welfare_details/1'],
+                numbers: ['two', 'three', 'four', 'five']
             }
         },
         computed: {
@@ -124,11 +126,11 @@
     transform: rotateX(90deg) translateZ($width/2);
 
 }
-@for $i from 1 through 2 {
-    $bgColorTwo: (#9bbb59, #80bfd0);
-    $bgColorThree: (#ee8a37, #d99694);
-    $bgColorFour: (#d99694, #ee8a37);
-    $bgColorFive: (#80bfd0, #9bbb59);
+@for $i from 1 through 3 {
+    $bgColorTwo: (#9bbb59, #80bfd0, #d99694);
+    $bgColorThree: (#ee8a37, #d99694, #80bfd0);
+    $bgColorFour: (#d99694, #ee8a37, #9bbb59);
+    $bgColorFive: (#80bfd0, #9bbb59, #ee8a37);
     .box .two#{$i} {
         transform: translateZ($width/2);
         background-color: nth($bgColorTwo,$i);

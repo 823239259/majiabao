@@ -4,7 +4,7 @@
         <mt-button slot="left" icon="back" @click="goBack"></mt-button>
     </mt-header>
     <div class="wrap">
-        <div class="box" v-for="item in imgList" @click="goto(item.id)">
+        <div class="box" v-for="(item, index) in imgList" @click="goto(item.id)" :key="index">
             <img :src="item.img" alt="01">
         </div>
         
@@ -35,6 +35,14 @@
         {
             img: require('../../assets/images/home/welfare_activity02.jpg'),
             id: 2
+        },
+        {
+            img: require('../../assets/images/home/welfare_activity03.jpg'),
+            id: 3
+        },
+        {
+            img: require('../../assets/images/home/welfare_activity04.jpg'),
+            id: 4
         }]
   
       };

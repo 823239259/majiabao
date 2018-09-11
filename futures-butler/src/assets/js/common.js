@@ -360,7 +360,13 @@ pro = {
 		},
 		get (key) {
 			try {
-				return JSON.parse(ls.getItem(key))
+				let strings = ls.getItem(key);
+				const exg = /[{|}]/g; //保证简单数据类型
+				if (strings && exg.test(strings)) {
+					return JSON.parse(strings)
+				}else{
+					return strings
+				}
 			} catch (error) {
 				console.log(`${key}不存在`)
 				return null

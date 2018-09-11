@@ -51,11 +51,17 @@
 
 
 
-
+#community{
+    .mint-navbar .mint-tab-item.is-selected {
+      border-bottom: 3px solid #169781;
+      color: #169781;
+      margin-bottom: 0;
+    }
+}
 
 
 .mint-navbar{
-    background-color: #b3daff; 
+    background-color: #fff; 
 }
 #help_info .mint-tab-item .mint-tab-item-label {
     font-size: .28rem

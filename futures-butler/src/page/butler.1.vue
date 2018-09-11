@@ -3,19 +3,15 @@
     <mt-header fixed title="管家"></mt-header>
     <div class="butler_wrap">
       <!-- <p class="note"><span>管家提示：</span>左右滑动弹出按钮，解锁后可用。</p> -->
-      <!-- <ul class="butler_list">
+      <ul class="butler_list">
         <li class="item" v-for="(item, index) in butlerList" :key="index + 'abcde'">
+          <!-- <div class="left" :class="{'two_times':index%2===0,'all_times':item.leftShow}"  @touchmove="moveTab(item,index,'left')" @touchstart="setCoordinate"> -->
           <div class="left"  @click="goto(item.leftPath)">{{item.leftName}}</div>
         </li>
-      </ul> -->
+      </ul>
       
     </div>
     <bottomTab :tabSelect="tabSelected"></bottomTab>
-    <div v-for="(item, index) in titleList" :key="index">
-      <h3 class="title">{{item.name}}</h3>
-      <Swiper :list="listObj[item.list]" :color="item.color"></Swiper>
-      <div class="hr24"></div>
-    </div>
     
    
   </div>
@@ -24,7 +20,6 @@
 <script>
   import { mapMutations } from 'vuex'
   import bottomTab from '../components/bottom_tab'
-  import Swiper from '../components/swiper'
   import scrollMsg from '../components/scrollMsg'
   import Cube from '../components/Cube'
   import pro from '../assets/js/common'
@@ -38,7 +33,7 @@
     components: {
       bottomTab,
       scrollMsg,
-      Swiper
+      Cube
     },
     mixins: [pro.mixinsToCustomer],
     data() {
@@ -47,82 +42,107 @@
         isLogin: false,
         isShow: false,
         idList: [],
-        titleList: [
+        butlerList: [
+          // {
+          //   leftName: "新手入门",
+          //   rightName: "高手进阶",
+          //   leftPath: '/rumen_list/0',
+          //   rightPath: '/rumen_list/1',
+          //   leftShow: false,
+          //   rightShow: false,
+          //   marginShow: false
+          // },
           {
-            name: '管家学堂',
-            list: 'list1',
-            color: '#e46c0a'
-          },
-           {
-            name: '管家工具',
-            list: 'list2',
-            color: '#f44234'
+            leftName: "新手入门",
+            rightName: "高手进阶",
+            leftPath: '/rumen_list/0',
+            rightPath: '/rumen_list/1',
+            leftShow: false,
+            rightShow: false,
+            marginShow: false
           },
           {
-            name: '管家新闻',
-            list: 'list3',
-            color: '#04a2dc'
-          }, 
+            leftName: "高手进阶",
+            rightName: "高手进阶",
+            leftPath: '/rumen_list/1',
+            rightPath: '/rumen_list/0',
+            leftShow: false,
+            rightShow: false,
+            marginShow: false
+          },
+          {
+            leftName: "基础知识",
+            rightName: "期货学堂",
+            leftPath: '/knowledge/0',
+            rightPath: '/knowledge/1',
+            leftShow: false,
+            rightShow: false,
+            marginShow: false
+          },
+          {
+            leftName: "期货学堂",
+            rightName: "期货学堂",
+            leftPath: '/knowledge/1',
+            rightPath: '/knowledge/1',
+            leftShow: false,
+            rightShow: false,
+            marginShow: false
+          },
+          {
+            leftName: "资讯直播",
+            rightName: "系统公告",
+            leftPath: '/discover7x24',
+            rightPath: '/rumen_list/3',
+            leftShow: false,
+            rightShow: false,
+            marginShow: false
+          },
+          {
+            leftName: "新闻公告",
+            rightName: "汇率计算",
+            leftPath: '/rumen_list/2',
+            rightPath: '/exchange_calc',
+            leftShow: false,
+            rightShow: false,
+            marginShow: false
+          },
+          {
+            leftName: "汇率计算",
+            rightName: "汇率计算",
+            leftPath: '/exchange_calc',
+            rightPath: '/exchange_calc',
+            leftShow: false,
+            rightShow: false,
+            marginShow: false
+          },
+          {
+            leftName: "期货计算",
+            rightName: "合约查询",
+            leftPath: '/futures_calc',
+            rightPath: '/contract_search',
+            leftShow: false,
+            rightShow: false,
+            marginShow: false
+          },
+          {
+            leftName: "合约查询",
+            rightName: "合约查询",
+            leftPath: '/contract_search',
+            rightPath: '/contract_search',
+            leftShow: false,
+            rightShow: false,
+            marginShow: false
+          },
+          {
+            leftName: "系统公告",
+            rightName: "系统公告",
+            leftPath: '/rumen_list/3',
+            rightPath: '/rumen_list/3',
+            leftShow: false,
+            rightShow: false,
+            marginShow: false
+          }
         ],
-        listObj: {
-          list1: [
-          {
-            name: '新手入门',
-            path: '/rumen_list/0',
-            
-          },
-          {
-            name: '高手进阶',
-            path: '/rumen_list/1',
-            
-          },
-          {
-            name: '期货学堂',
-            path: '/knowledge/1',
-            
-          },
-          {
-            name: '基础知识',
-            path: '/knowledge/2',
-            
-          },
-        ],
-        list2: [
-          {
-            name: '管家合约查询',
-            path: '/contract_search',
-            
-          },
-          {
-            name: '管家期货计算',
-            path: '/futures_calc',
-            
-          },
-          {
-            name: '管家汇率计算',
-            path: '/exchange_calc',
-            
-          },
-        ],
-        list3: [
-          {
-            name: '资讯直播',
-            path: '/discover7x24',
-            
-          },
-          {
-            name: '管家新闻',
-            path: '/rumen_list/2',
-            
-          },
-          {
-            name: '管家公告',
-            path: '/rumen_list/3',
-            
-          },
-        ],
-        },
-       
         userInfo: {},
         lastPath: '/',
         userList: [],
@@ -330,16 +350,7 @@
     color: #c6c5cc
   }
 }
-.title{
-  @include font($fs28,0.8rem,#283835,left);
-  padding: 0 0.3rem;
-  border-bottom: solid 1px #bbf6ec; 
-}
-.hr24{
-  width: 7.5rem;
-  height: 0.18rem;
-  background-color: #bbf6ec;
-}
+
 
 
 

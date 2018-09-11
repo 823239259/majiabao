@@ -13,7 +13,7 @@
 					>	
 					<ul v-show="showTools">
 						<!-- <li class="item" v-for="(item, index) in toolsList" :key="item.name" :style="{'margin-left':marginLeft(index,toolsList,'-0.16')}" @click="itemClick(item)">{{item.name}}</li> -->
-						<li class="item" v-for="(item, index) in toolsList" :key="item.name" @click="itemClick(item)">{{item.name}}</li>
+						<li class="item" v-for="(item, index) in toolsList" :key="item.name" @click="choose(item,index)">{{item.name}}</li>
 					</ul>
 				</transition>
 				<!-- <div class="floatTip">
@@ -32,7 +32,7 @@
 import pro from '../assets/js/common'
 	export default{
 		name:"tipsButton",
-		props:['isBack'],
+		props:['isBack','allType', 'type'],
 		mixins:[pro.mixinsToCustomer],
 		data(){
 			return{
@@ -46,7 +46,7 @@ import pro from '../assets/js/common'
 						path: '/type?type=股指期货'
 					},
 					{
-						name: '数值货币',
+						name: '数字货币',
 						path: '/type?type=数值货币'
 					},
 					{
@@ -94,7 +94,12 @@ import pro from '../assets/js/common'
 			},
 			show (key) {
 				this[key] = !this[key]
-			}
+			},
+			choose (item,index) {
+				var currentNum = this.type.indexOf(item.name);
+				this.$store.state.market.commodityOrder = this.allType[currentNum].list;
+				this.$router.push({path:"/type",query:{type:this.allType[currentNum].name}});
+			},
 		}
 	}
 </script>

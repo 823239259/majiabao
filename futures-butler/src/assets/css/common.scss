@@ -144,3 +144,9 @@ $w: 7.5rem;
 .flex{
     @include flex()
 }
+.position_center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%)
+}

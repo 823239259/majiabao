@@ -53,9 +53,9 @@ const router = new Router({
       props: true
     },
     {
-    	path:"/butler_community",
-    	name:"butler_community",
-    	component:load('home/butler_community')
+    	path:"/community",
+    	name:"community",
+    	component:load('home/community')
     },
     {
     	path:"/recommend/:id",
@@ -183,6 +183,14 @@ const router = new Router({
     	component:load('quote/quoteDetails')
     },
     {
+      path: '/quoteDetails_celue',
+      name: 'quoteDetails_celue',
+      component: load('quote/quoteDetails_celue'),
+      // meta: {
+      //   notKeepAlive: true
+      // }
+    },
+    {
       path: '/my',
       name: 'my',
    		component: load('my')
@@ -251,7 +259,16 @@ const router = new Router({
     	path:'/search',
     	name:'search',
     	component:load('quote/search')
-    }
+    },
+    {
+      path: "/backProbe",
+      name: "backProbe",
+      component: load('quote/backProbe')
+    }, {
+      path: '/backPresentation',
+      name: 'backPresentation',
+      component: load('quote/backPresentation')
+    },
   ],
 
 })

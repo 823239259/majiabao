@@ -125,6 +125,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       'axios': 'axios',
       'mint-ui': 'MINT',
       'vue-router': 'VueRouter',
+      'vue-awesome-swiper': 'VueAwesomeSwiper'
 
   }
 })

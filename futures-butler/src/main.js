@@ -4,6 +4,8 @@ import Vue from 'vue'
 import FastClick from 'fastclick'
 import App from './App'
 import axios from 'axios'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+
 import 'babel-polyfill'
 Vue.prototype.$http = axios
 import Mint from 'mint-ui';
@@ -19,7 +21,9 @@ import pro from './assets/js/common'
 */
 if (process.env.NODE_ENV === 'development') {
   Vue.use(Mint);
+  Vue.use(VueAwesomeSwiper);
   require('mint-ui/lib/style.css')
+  require('swiper/dist/css/swiper.css')
 }
 /* 
   用于区分打包 及开发时的依赖 end
