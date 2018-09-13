@@ -33,18 +33,22 @@ export default new Vuex.Store({
 			Object.assign(state.historyList,payload)
 		},
 		createKLine (state,payload) {
-			console.log(state.historyList)
+			
+			let xData = payload.xDatas1.concat(payload.xDatas2);
 			let chartBox = document.getElementById(payload.id);
 			let myChart = echarts.init(chartBox);
+			
+			
+
 			let upColor = '#ec0000';
 			let upBorderColor = '#8A0000';
 			let downColor = '#00da3c';
 			let downBorderColor = '#008F28';
 			let option = {
 				title: {
-					text: '国际原油 CL',
+					text: payload.name,
 					textStyle:{
-						color: '#333',
+						color: '#fff',
 					},
 					
 
@@ -55,7 +59,7 @@ export default new Vuex.Store({
 					axisPointer: {  //axisPointer 默认不显示 
 						type: 'cross',
 						lineStyle: {
-							color: 'red'
+							//color: 'blue'
 						}
 					},
 					formatter: function (params) {
@@ -86,38 +90,93 @@ export default new Vuex.Store({
 				},
 				xAxis: { //横坐标
 					type: 'category',
-					data: new Array(40).fill(1),
+					data: xData,
 					scale: false, //min max 后无效
 					boundaryGap: false, //两边不留白
-					// nameTextStyle: {
-					// 	color: 'red',
-					// 	backgroundColor: 'red'
-					// },
-					axisLine: {
-						onZero: false
+					axisLine: { //横坐标轴线相关设置
+						onZero: false,
+						lineStyle: {
+							color: '#8392A5' //影响label
+						}
 					},
-					// splitLine: {
-					// 	show: false
-					// },
-					// //splitNumber: 20, //坐标轴的分割段数
-					// min: 'dataMin', //坐标轴的刻度最小值
-					// max: 'dataMax', //坐标轴的刻度最大值
-					// axisPointer: { //坐标轴设置
-					// 	label: {
-					// 		color: 'red'
-					// 	}
-					// },
-					axisLabel: { //横坐标的值
-						color: 'red'
+					splitLine: { //外边框线
+						show: false
+					},
+					//splitNumber: 20, //坐标轴的分割段数
+					min: 'dataMin', //坐标轴的刻度最小值
+					max: 'dataMax', //坐标轴的刻度最大值
+					axisPointer: { //坐标轴设置
+						label: {
+							//color: 'red'
+							backgroundColor: 'rgba(50, 50, 50, 0.5)'
+						}
+					},
+					axisLabel: { //横坐标的值的相关设置
+						color: '#8392A5',
+						//interval: xData.length - 2,  //隔多少个显示
+						interval: payload.xDatas1.length - 2,  //隔多少个显示
+						showMaxLabel: true, //是否显示最大值
+						formatter: function(value,index){ //html标签无法使用
+							console.log(value,index)
+							let values =  value.split(' ');
+							console.log(values)
+							let newValues = `{a|${values[0]}}\n{b|${values[1]}}`
+							return newValues
+						},
+						rich: {
+							a: {
+								color: 'red',
+								lineHeight: 12
+							},
+							b: {
+								color: 'white',
+								lineHeight: 12
+							},
+						}
+
 					},
 					axisTick: { //横坐标的朝向
-						show: false
+						show: true,
+						
+					},
+					splitArea: {
+						show: true,
+						
+						interval: payload.xDatas1.length - 2,
+						areaStyle: {
+							color: ['blue','yellow'] 
+						}
 					}
 				},
 				yAxis: { //纵轴
 					scale: true,
-					splitArea: {
-						show: true
+					axisLabel: { //坐标轴文字相关
+						color: '#8392A5'
+					},
+					splitArea: { //背景色
+						show: false
+					},
+					axisLine: { //坐标轴线相关设置
+						onZero: false,
+						lineStyle: {
+							color: '#8392A5'
+						}
+					},
+					axisTick: { //刻度相关
+						show: false
+					},
+					axisPointer: {
+						type: 'line',
+						snap: false,
+						triggerTooltip: true,
+						label: { //tooltips文本
+							show: true,
+							backgroundColor: 'rgba(50, 50, 50, 0.5)'
+							
+						},
+						lineStyle: {
+							color: 'red'
+						}
 					}
 				},
 				// dataZoom: [{
@@ -135,13 +194,13 @@ export default new Vuex.Store({
 				series:[{
 					name: '小时K',
                     type: 'candlestick',
-					data: state.historyList.CL.set123,
+					data: state.historyList[payload.commodity_no].set123.concat(state.historyList[payload.commodity_no].nextDatas),
 					itemStyle: {
                         normal: {
-                            color: '#e64552',
-								color0: '#3aa643',
-								borderColor: '#e64552',
-								borderColor0: '#3aa643'
+                            color: upColor,
+							color0: downColor,
+							borderColor: upBorderColor,
+							borderColor0: downBorderColor
 							//borderWidth: 3
                         }
 					},

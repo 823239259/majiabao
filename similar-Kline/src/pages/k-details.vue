@@ -36,11 +36,17 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App',
       items:{},
+      nextKdatas: [],
     }  
   },
   computed: {
     historyList () {
-      return this.$store.historyList
+      return this.$store.state.historyList
+    },
+    currentItem () {
+      return this.$store.state.contractList.find((item)=>{
+          return item.commodity_no == this.id
+      })
     }
   },
   methods: {
@@ -56,39 +62,72 @@ export default {
       'createKLine',
       'addHistoryList'
     ]),
-    getHistoryList (commodityNo) {
+    getHistoryList (item) {
         let sendData = {
-          commodity: commodityNo,
-          frequency: "KLINE_5MIN",
-          timeStart: "2018-05-19 00:00:00",
-          timeEnd: "2018-05-20 00:00:00"
+          commodity: `${item.commodity_no}_${item.main_contract_no}`,
+          frequency: "KLINE_1HR",
         }
         $.ajax({
           type: "post",
+          //url: 'http://192.168.0.174:8989/similar_k',
           url: 'http://192.168.0.223:8989/similar_k',
           //contentType: "application/json;charset=utf-8",
           data: JSON.stringify(sendData),
           dataType: "json",
           success: function(data){
             console.log(data.correlatedPairs)
+
+            data.correlatedPairs[0]  //预测的24根k线
+            this.nextKdatas = data.correlatedPairs[0];
             let klineData = {};
             console.time('abc')
-            let abcd =  data.correlatedPairs[0][2].reduce((newArr,value,index) => {
+            /* 
+              处理返回的数据格式
+            */
+            // for (let index = 1,length = data.correlatedPairs.length; index < length; index++) {
+            //   let element = data.correlatedPairs[index];
+              
+            // }
+
+            let firstHistory = data.correlatedPairs[2];
+            const {opennew_pre, highnew_pre, lownew_pre, close_pre} = firstHistory;
+
+            let abcd =  highnew_pre.reduce((newArr,value,index) => {
               let arrs = [];
               //开盘价 收盘价 最低价 最高价
-              arrs.push(data.correlatedPairs[0][3][index],data.correlatedPairs[0][5][index], data.correlatedPairs[0][4][index], value )
+              arrs.push(opennew_pre[index],close_pre[index],lownew_pre[index], value)
               newArr.push(arrs)
               return newArr
             },[]);
-            console.log(abcd)
+            
             klineData.set123 = abcd;
+
+            const {opennew_after, highnew_after, lownew_after, close_after} = firstHistory;
+
+            let nextDatas =  highnew_after.reduce((newArr,value,index) => {
+              let arrs = [];
+              //开盘价 收盘价 最低价 最高价
+              arrs.push(opennew_after[index],close_after[index],lownew_after[index], value )
+              newArr.push(arrs)
+              return newArr
+            },[]);
+
+            klineData.nextDatas = nextDatas;
+
+            console.log('后续的24根',nextDatas)
+
+            
             console.timeEnd('abc')
             //储存klineData
             this.addHistoryList({
-              [commodityNo]:klineData
+              [item.commodity_no]:klineData
             })
             this.createKLine({
-              id: 'current_box2'
+              id: 'current_box2',
+              commodity_no: item.commodity_no,
+              name:`${item.commodity_name} ${item.commodity_no}${item.main_contract_no}`,
+              xDatas1: firstHistory.time_pre,
+              xDatas2: firstHistory.time_after
             })
             
 					
@@ -103,10 +142,11 @@ export default {
     }
   },
   created () {
-     this.getHistoryList(this.id);
-     
+     //this.getHistoryList(this.id);
+      this.getHistoryList(this.currentItem);
   },
   mounted () {
+    //this.getHistoryList(this.currentItem);
     // this.createKLine({
     //    id: 'current_box2'
     //  })
@@ -167,6 +207,6 @@ export default {
 .canvas{
   width: 100%;
   height: 250px;
-  background-color: #fff;
+  background-color: #292933;
 }
 </style>

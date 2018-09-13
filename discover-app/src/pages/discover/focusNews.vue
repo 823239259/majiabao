@@ -1,29 +1,5 @@
 <template>
 	<div>
-		<!-- <div class="swipe_wrap">
-			<mt-swipe>
-				<mt-swipe-item>
-					<img src="../../assets/images/discover/solider_01.png" alt="01">
-				</mt-swipe-item>
-				<mt-swipe-item>
-					<img src="../../assets/images/discover/solider_02.png" alt="02">
-				</mt-swipe-item>
-				<mt-swipe-item>
-					<img src="../../assets/images/discover/solider_01.png" alt="03">
-				</mt-swipe-item>
-			</mt-swipe>
-		</div>
-		<div>
-			<ul class="news_list">
-				<li class="item" v-for="k in infoArr" @click="goto('/importantDetails',k)">
-					<img class="img" :src="k.imgurl" alt="01">
-					<div>
-						<p>{{k.title}}</p>
-						<p class="time">{{k.time}}</p>
-					</div>
-				</li>
-			</ul>
-		</div> -->
 		<div>
 			<iframe  id="iframe1" target="_parent" src="http://www.duokongtai.com/html/1/191/index.html" frameborder="0" :scrolling="isIphone?'no':'yes'"></iframe>
 		</div>

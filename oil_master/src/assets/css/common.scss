@@ -1,0 +1,155 @@
+@charset "utf-8";
+/*颜色*/
+$bg: #d3e9ff;
+$headColr : #b3daff; /*头部导航背景*/
+$blackBold : #242933; /*粗黑字体*/
+$blcakThin : #333340; /*细黑字体*/
+$graySimple : #9898a0;/*浅灰字体*/
+$grayDeep : #8585a6;/*深灰字体*/
+$grayMiddle : #6c6c70;/*中灰字体*/
+$redDeep : #e64552;/*深红*/
+$redSimple : #fadad7;/*浅红*/
+$greenDeep : #3aa643;/*深绿*/
+$greenSimple : #cef2e6;/*浅绿*/
+$bgGray : #f2f2f2;/*浅灰背景*/
+$bgDeep : #e6e6e6;/*深灰背景和下划线*/
+$yellow: #ffd400;/*黄色*/
+$grayBtn: #c2c2cc; /*灰色不可用 按钮*/
+$orange: #ff6a00; /* 橘色数字颜色 */
+$blueBall: #0099e6; /* 蓝色小球颜色 */
+$bg1:#242933;
+$fontBlue: #7a8599;  //蓝色字体
+$fontBlueTitle: #a3b1cc;  //标题蓝色字体
+$lightBlue:#363d4d;   //浅蓝色
+$titleBlue: #2d3340;  //蓝色标题背景
+$black: #12141a;   //下划线
+$blue: #00a1f2;    
+$red: #ff4c4c;
+$orange: #ff5533;
+$yellow: #ffd400;
+$white: #ffffff;
+$green: #12b362;
+$bgRed: #e44f34;
+$bgPink:#fab7ac;
+$tabBgColor:#1482f0;
+$aaa: #aaaaaa;
+$bgWhite: #edf6ff;
+$black222: #222;
+$whitefff: #FFF;
+
+$masterBg: #2a2f42;
+$headerColor: #169781; /* header跟bottomTab的背景颜色 */
+$bottomChose: #24b79e; /* bottomTab的选中背景颜色 */
+
+/* 背景色 */
+$bgWhite: #fff;
+$bgButler:#e5f9f6;
+
+/* 字体颜色  以颜色名 */
+$white:#ffffff;
+$blackNormal :#283835;
+
+
+
+
+
+/*字体大小*/
+
+$fs24: 0.24rem;
+$fs26: 0.26rem;
+$fs28: 0.28rem;
+$fs30: 0.3rem;
+$fs32: 0.32rem;
+$fs40: 0.40rem;
+$fs36: 0.36rem;
+$fs20: 0.20rem;
+$fs64: 0.64rem;
+
+
+/*****字体类型*****/
+$yh: "\5FAE\8F6F\96C5\9ED1"; /*微软雅黑*/
+$st: "\5B8B\4F53"; /*宋体*/
+$ht: "\9ED1\4F53"; /*黑体*/
+$arial: Arial;
+
+
+/*****排版*****/
+$w: 7.5rem;
+
+/*****排版*****/
+.clear{
+    clear: both;
+}
+
+.fl{ 
+    float: left;
+}
+.fr{ 
+    float: right;
+}
+
+
+/*****遮罩*****/
+.bg{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 99;
+    background: #000;
+    opacity: 0.5;
+}
+.border_bottom{
+    border-bottom: 0.01rem solid $bgDeep;
+}
+
+/*****mixin*****/
+@mixin font ($size:$fs36,$line-height:1,$color:#333,$text-align:center) {
+    font: normal $size "Microsoft YaHei";
+    line-height: $line-height;
+    color: $color;
+    text-align: $text-align;
+}
+@mixin padding_bg($w:7.5rem,$h:0.12rem,$bgcolor:#F5F5F5) {
+    display: block;
+    content: '';
+    width: $w;
+    height: $h;
+    background-color: $bgcolor;
+}
+@mixin flex($justify_content:center,$align_items:center) {
+    display: flex;
+    align-items: $align_items;
+    justify-content: $justify_content;
+}
+
+
+/*20高div背景*/
+.h_20{
+    width:100%;
+    height: 0.2rem;
+    background-color:#f2f2f2 ;
+    border-bottom:0.01rem solid #e6e6e6;
+    border-top: 0.01rem solid #e6e6e6;
+    
+}
+/*98高空白撑空间*/
+.h_98{
+    width:100%;
+    height: 1.1rem;
+    background-color:$bg;
+}
+.scroll_x{
+    overflow-x: scroll;
+}
+.flex{
+    @include flex()
+}
+.green{
+    color: #14da8b !important;
+
+}
+.red{
+    color: #ff576e !important;
+}

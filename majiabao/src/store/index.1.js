@@ -7,8 +7,8 @@ let market = {
   state: {
     quoteConfig:{
 			version: '5.1.2',    //版本
-			url_real: "ws://192.168.0.232:19002",  //测试地址
-			//url_real: "ws://quote.zhishutianxia.com:19002",   //正式地址
+			//url_real: "ws://192.168.0.232:19002",  //测试地址
+			url_real: "ws://quote.zhishutianxia.com:19002",   //正式地址
 			userName: "13677622344",
 			passWord: "a123456"
     },
@@ -85,7 +85,7 @@ export default new Vuex.Store({
       let {quoteSocket, wsjsondata} = context.state
       let {quoteConfig, quoteStatus, markettemp, orderTemplist, commodityOrder, templateList, testArr} = context.state.market
       let quoteSocket1 = webSocketLink(context);
-      console.log(testArr)
+      // console.log(testArr)
       quoteSocket1.onmessage = function (evt){        
         onMessage.call(this,evt)
       }

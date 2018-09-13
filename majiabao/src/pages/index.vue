@@ -93,10 +93,10 @@ export default {
       let arr = this.$store.state.market.testArr;
       let arr1 = [];
       let length1 = this.showList.length;
-      console.log(arr.length);
+      //console.log(arr.length);
       if(arr.length === 21){
         for (const v of arr) {
-          console.log(1)
+          //console.log(1)
           if(!length1) return arr1;
           if(this.showList.includes(v.CommodityNo)){
             arr1.push(v);
@@ -130,17 +130,17 @@ export default {
   watch: {
     selected (value, oldvalue) {
       this.$router.push({path: `/${value}`})
-      console.log(value)
+      //console.log(value)
     }
   },
   created () {
     var timeer
-    console.time(timeer)
+    //console.time(timeer)
     if(!this.$store.state.quoteStatus) {
       this.initQuoteClient();    
 
     }   
-    console.timeEnd(timeer) 
+    //console.timeEnd(timeer) 
   }
   
     
