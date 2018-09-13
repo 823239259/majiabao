@@ -1,10 +1,11 @@
 <template>
 	<div id="quote">
 		<mt-header fixed title="k线数据">
-			<mt-button slot="left" >
-				<span class="header_icon" ></span>
+			<mt-button slot="left" @click="goto('/search')">
+				<span class="header_icon search_icon_k" ></span>
 			</mt-button>
-			<mt-button slot="right">
+			<mt-button slot="right" @click="setSort(mode)">
+				<span class="header_icon paixu_icon_k" ></span>
 			</mt-button>
 		</mt-header>
 		<div id="container">
@@ -28,7 +29,7 @@
 					<span v-for="k in CommodityList">{{k}}</span>
 				</div>
 				<div class="listScoll">
-					<div  v-for="(v, index) in parameters">
+					<div  v-for="(v, index) in parameters" :key="index">
 						<div class="listName"   :class="{checked : currentCheck == index}" @click="showKline(index,v.CommodityNo)" >
 							<span>{{v.CommodityName}}</span>
 							<span :class="{red: v.LastQuotation.LastPrice > v.LastQuotation.PreSettlePrice, green: v.LastQuotation.LastPrice < v.LastQuotation.PreSettlePrice}">{{v.LastQuotation.LastPrice | fixNum(v.DotSize)}}</span>
@@ -82,6 +83,8 @@
 				currentChartsView:'klineOne',
 				chartsHight:5.4,
 				currentNo:'',
+				mode: true,
+				myParameters: ''
 				
 			}
 		},
@@ -95,6 +98,13 @@
 			parameters(){
 				return this.$store.state.market.Parameters;
 			},
+			// myParameters () {
+			// 	let myParameters = this.parameters.slice();
+			// 	return myParameters
+			// 	// return myParameters.sort(item =>{
+			// 	// 	if(item.LastQuotation.LastPrice > item.LastQuotation.PreSettlePrice) return true
+			// 	// })
+			// },
 			quoteSocket(){
 				return this.$store.state.quoteSocket;
 			},
@@ -112,6 +122,11 @@
 			...mapActions([
 				'initQuoteClient'
 			]),
+			goto(path) {
+				this.$router.push({
+				path: path
+				});
+			},
 			toDetails: function(commodityNo, mainContract, exchangeNo, contrast){
 				this.$router.push({path: '/klineDetails', query: {'commodityNo': commodityNo, 'mainContract': mainContract, 'exchangeNo': exchangeNo, 'contrast': contrast}});
 			},
@@ -155,6 +170,8 @@
 				});
 			},
 			showKline:function(index,commodity){
+				console.log({index,commodity});
+				
 				this.$store.state.isshow.isklineshow = false;
 				this.currentCheck = index;
 				this.currentNo = commodity;
@@ -165,9 +182,35 @@
 				this.$store.state.isshow.isfensInit = false;
 				//渲染画图
 			},
+			setSort (mode) {
+				console.log(1123);
+
+				if (mode) {
+					this.$store.state.market.Parameters = this.$store.state.market.Parameters.reduce((arr,item) =>{
+						if (item.LastQuotation.LastPrice > item.LastQuotation.PreSettlePrice){
+							arr.unshift(item)
+						}else{
+							arr.push(item)
+						}
+						return arr
+					},[])
+				}else{
+					this.$store.state.market.Parameters = this.$store.state.market.Parameters.reduce((arr,item) =>{
+						if (item.LastQuotation.LastPrice < item.LastQuotation.PreSettlePrice){
+							arr.unshift(item)
+						}else{
+							arr.push(item)
+						}
+						return arr
+					},[])
+				}
+				this.mode = !this.mode;
+
+				this.showKline(0,this.$store.state.market.Parameters[0].CommodityNo)
+				//this.myParameters = myParameters
+			}
 		},
 		mounted: function() {
-			
 		},
 		activated: function() {
 			this.operateData()
@@ -205,7 +248,8 @@
 			fixNum: function(num, dotsize){
 				if(dotsize >= 4) dotsize = 4;
 				return num.toFixed(dotsize);
-			}
+			},
+		
 		},
 		watch: {
 			currentChartsNum:function(n,o){
@@ -218,9 +262,11 @@
 				});
 			},
 			currentNo:function(n,o){
+				console.log({n})
 				if(n!=o){
 					this.parameters.forEach((t, i) => {
 						if(t.CommodityNo == n){
+							console.log(n)
 							this.$store.state.isshow.isfensshow = false;
 							this.$store.state.isshow.isklineshow = false;
 							this.$store.state.isshow.islightshow = false;
@@ -245,7 +291,8 @@
 
 		beforeRouteLeave (to, from, next) {
 			console.log(to)
-			if (to.name === 'my') {
+			const goList = ['my', 'search'];
+			if (goList.includes(to.name)) {
 				// this.$store.state.isshow.isfensshow = false;
 				// this.$store.state.isshow.isklineshow = false;
 				// this.$store.state.isshow.islightshow = false;
@@ -373,4 +420,7 @@
 		width: 100%;
 		background-color: white;
 	}
+	// .header_icon{
+
+	// }
 </style>

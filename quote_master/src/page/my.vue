@@ -234,7 +234,10 @@
       }),
       itemClick (item) {
 				if(item.path) {
-					this.$router.push({path: item.path})
+          if (item.path==='/selefChoose'&&!this.isLogin) {
+            return this.$toast('您还未登录,无法查看收藏')
+          }
+          this.goto(item.path)
 				}
 				if(item.method){
 					console.log(item.method)

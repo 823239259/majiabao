@@ -264,7 +264,16 @@ const router = new Router({
     	path:'/search',
     	name:'search',
     	component:load('quote/search')
-    }
+    },
+    {
+      path: "/backProbe",
+      name: "backProbe",
+      component: load('quote/backProbe')
+    }, {
+      path: '/backPresentation',
+      name: 'backPresentation',
+      component: load('quote/backPresentation')
+    },
     
   ],
 

@@ -1144,6 +1144,12 @@ actions: {
 					context.state.market.markettemp.forEach(function(e) {
 						if(e.CommodityNo == key) {
 							e.LastQuotation = JSON.parse(evt.data).Parameters.LastQuotation;
+							//去重复操作
+							let isIn = context.state.market.Parameters.some(item => {
+								// console.log(item.CommodityNo, e.CommodityNo)
+								return item.CommodityNo === e.CommodityNo
+							});
+							if (isIn) return;
 							context.state.market.Parameters.push(e);
 							//订阅成功  成交信息
 							_dealDetails['time'] = e.LastQuotation.DateTimeStamp.split(' ')[1];

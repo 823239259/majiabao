@@ -55,23 +55,23 @@
         community: [{
             time: '2018-6-25',
             name: 'kelelle',
-            img: require('../assets/images/home/person02_icon.png'),
-            goodNumbers: 123,
-            contentText: '搞定了感觉到了分管局领导国家劳动法攻击力的房价高的浪费了较高的老公的浪费国家了'
+            img: require('../assets/images/home/person03_icon.png'),
+            goodNumbers: 13,
+            contentText: '趋势开始了，涨涨涨！'
         },
         {
             time: '2018-6-25',
             name: 'kelelle',
-            img: require('../assets/images/home/person02_icon.png'),
-            goodNumbers: 123,
-            contentText: '搞定了感觉的浪费国家了'
+            img: require('../assets/images/home/person05_icon.png'),
+            goodNumbers: 12,
+            contentText: '请大家积极发言！'
         },
         {
             time: '2018-6-25',
             name: 'kelelle',
-            img: require('../assets/images/home/person02_icon.png'),
-            goodNumbers: 123,
-            contentText: '搞定的浪费了较高的老公的浪费国家了'
+            img: require('../assets/images/home/person01_icon.png'),
+            goodNumbers: 55,
+            contentText: '人穷志短，马瘦毛长'
         }
         ],
         userInfo: {},
@@ -215,11 +215,11 @@
     mounted() {
         // console.log('mounted')
          if(JSON.stringify(this.communityList) === JSON.stringify(local.get('communityList'))){
-           this.community = (this.communityList[this.currentDetail.CommodityNo]&&this.communityList[this.currentDetail.CommodityNo].contentList)||[];
+           this.community = (this.communityList[this.currentDetail.CommodityNo]&&this.communityList[this.currentDetail.CommodityNo].contentList)||this.community;
        } else{
         //    console.log(123)
            this.communityList = local.get('communityList')?local.get('communityList'):{};
-           this.community = (this.communityList[this.currentDetail.CommodityNo]&&this.communityList[this.currentDetail.CommodityNo].contentList)||[];
+           this.community = (this.communityList[this.currentDetail.CommodityNo]&&this.communityList[this.currentDetail.CommodityNo].contentList)||this.community;
        }
         this.userInfo = local.get('user')||{}
         this.nameList = local.get('nameList')|| {}
@@ -229,7 +229,7 @@
     activated() {
         console.log(this.$store.state.market.currentNo)
         this.communityList = local.get('communityList')?local.get('communityList'):{};
-        this.community =  (this.communityList[this.$store.state.market.currentNo]&&this.communityList[this.$store.state.market.currentNo].contentList)||[];
+        this.community =  (this.communityList[this.$store.state.market.currentNo]&&this.communityList[this.$store.state.market.currentNo].contentList)||this.community;
         this.userInfo = local.get('user')||{}
         this.nameList = local.get('nameList')|| {}
         this.isGood =  (this.communityList[this.$store.state.market.currentNo]&&this.communityList[this.$store.state.market.currentNo].isGood)||false;

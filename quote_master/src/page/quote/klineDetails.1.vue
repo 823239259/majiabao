@@ -215,10 +215,10 @@
 				chartsShow: false,
 				chartsHight: 5.4,
 				strategyList: [
-					// {
-					// 	name: '经典日内策略',
-					// 	type: 'Rbreaker'
-					// },
+					{
+						name: '经典日内策略',
+						type: 'Rbreaker'
+					},
 					{
 						name: '双重推力策略',
 						type: 'DualThrust'
@@ -242,7 +242,7 @@
 				],
 				ContractNo: '',
 				dian: '',
-				chooseKline: '1min',
+				chooseKline: '分时',
 				id1: {
 					id1: 'kline',
 					id2: 'kline_volume'
@@ -546,7 +546,7 @@
           var touches = e.touches[0];
           var block = e.target;
           var BoxScrollLeft = document.getElementById('draggle_box').scrollLeft;
-        //   console.log(BoxScrollLeft)
+          console.log(BoxScrollLeft)
           this.oW = touches.clientX - block.offsetLeft + BoxScrollLeft; //点击点到左边的距离
           this.oH = touches.clientY - block.offsetTop;  //点击点到顶部的距离
           //阻止页面的滑动默认事件
@@ -609,11 +609,16 @@
         var oLeft = target.clientX - this.oW;
         var oTop = target.clientY - this.oH;
 
-        // console.log(oLeft,Cleft);
-        // console.log(oTop,Ctop);
+        console.log(oLeft,Cleft);
+        console.log(oTop,Ctop);
         
         if((oLeft>=Cleft&&oLeft<=Cright - myWidth)&&(oTop>=Ctop&&oTop <= Cbottom - myHight)){
-		  this.submit(item)
+		  console.log(1)
+		  this.submit()
+        //   this.itemClick(item)
+          //this.clearClone(block)
+        }else{
+         // this.clearClone(block)
         }
         this.clearClone(block)
         window.removeEventListener("touchmove",this.defaultEvent,{ passive: false });
@@ -629,7 +634,7 @@
         this.IsClone = true
 	  },
 	//回测
-	submit(item) {
+	submit() {
 			if (this.money == '' || this.money == null) {
 				this.$toast({
 					message: "初始资金不能为空",
@@ -643,17 +648,16 @@
 			} else {
 				// this.showConatiner = false;
 				// this.showSubmit = true;
-				this.strategyChecked = item.type;
 				this.startTime = new Date();
 				this.endTime = new Date(this.startTime.getTime() - (3 * 24 * 60 * 60) * 1000);
 				let timeStart = pro.getDate(this.endTime.getTime(), 'y-m-d h:i:s')
 				let timeEnd = pro.getDate(this.startTime.getTime(), 'y-m-d h:i:s')
-				// console.log(this.parameters)
+				console.log(this.parameters)
 				let obj = {
 					"strategy": this.strategyChecked,
 					"commodity": this.currentNo,
 					//"frequency": this.getFrequency(this.type),
-					"frequency": this.chooseKline,
+					"frequency": '1min',
 					"timeStart": timeStart,
 					"timeEnd": timeEnd,
 					"initialAccount": Number(this.money),
@@ -676,11 +680,11 @@
 								message: "无回测数据，请重新选择",
 								duration: 1000
 							});
-							// this.$router.back(-1);
+							this.$router.back(-1);
 						} else {
 							this.$indicator.close()
 							//const strategyName = this.strategyList.find(item => item.type == this.strategyChecked).name;
-							const strategyName = item.name;
+							const strategyName = '移动平均策略';
 							this.$router.push({
 								path: "/backPresentation",
 								query: {
@@ -692,11 +696,10 @@
 					}.bind(this),
 					error: function(err) {
 						this.$indicator.close()
-						// console.log(err)
-						// this.$toast({
-						// 	message: "网络不给力，请稍后再试",
-						// 	duration: 1000
-						// });
+						this.$toast({
+							message: "网络不给力，请稍后再试",
+							duration: 1000
+						});
 					}.bind(this)
 				})
 			}
@@ -762,15 +765,6 @@
 					this.backProbeAjax();
 				}
 			}
-		},
-		beforeRouteLeave(to, from, next) {
-			const { isshow } = this.$store.state;
-			this.$store.state.isshow.isklineshow = false
-			isshow.isklineshow = false;
-			//清楚打点影响
-			this.$store.state.market.strategyData = [];
-			clearInterval(this.timeing);
-			next()
 		}
 	}
 </script>
