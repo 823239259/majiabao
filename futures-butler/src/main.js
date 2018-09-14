@@ -14,16 +14,18 @@ import "./assets/css/my-mint.scss";
 import router from './router'
 import store from './store'
 import pro from './assets/js/common'
+import 'swiper/dist/css/swiper.css'
 
+Vue.use(VueAwesomeSwiper);
 /* 
   用于区分打包 及开发时的依赖 begin
 
 */
 if (process.env.NODE_ENV === 'development') {
   Vue.use(Mint);
-  Vue.use(VueAwesomeSwiper);
+  
   require('mint-ui/lib/style.css')
-  require('swiper/dist/css/swiper.css')
+  
 }
 /* 
   用于区分打包 及开发时的依赖 end
