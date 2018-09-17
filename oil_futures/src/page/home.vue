@@ -242,25 +242,29 @@
 .show_wrap{
     width: 6.9rem;
     margin: 0 auto;
-    border: 1px solid #d2dae7;
-    @include font($fs26,0.6rem,#8f94a7);
+    border: 1px solid #344a65;
+    @include font($fs26,0.6rem,#707070);
     border-radius: 0.1rem;
     margin-top: 0.3rem;
-    box-shadow: 0 0 3px #8f94a7;
+    // box-shadow: 0 0 3px #d2dae7;
+    h2{
+      color: #fff;
+    }
     .box{
          @include flex(space-around);
          padding: 0 0.3rem;
-         border-top: 1px solid #d2dae7;
+         border-top: 1px solid #344a65;
          .box_item{
              flex: 1;
              .numbers{
-                color: #2c2e3d;
+                color: #fff;
                 font-weight: bold;
              }
+             
          }
          .box_border{
-            border-left: 1px solid #d2dae7;
-            border-right: 1px solid #d2dae7;
+            border-left: 1px solid #344a65;
+            border-right: 1px solid #344a65;
             
          }
          .left{
@@ -289,28 +293,28 @@
     .item{
       flex: 0 0 1.6rem;
       @include font($fs24,0.8rem,#fff);
-      background-color: #5534ff;
+      background-color: #127c8d;
       border-radius: 0.1rem;
       margin-bottom: 0.3rem;
     }
     .item2{
         flex: 0 0 1rem;
-        background-color: #2c2e3d;
+        background-color: #0d61ab;
     }
     
 
   }
   .hot_wrap{
       h2{
-         @include font($fs28,0.6rem,#8f94a7,left);
+         @include font($fs28,0.6rem,#ffd15d,left);
          padding: 0 0.3rem;
-          border-bottom: 1px solid #d2dae7;
+          border-bottom: 1px solid #344a65;
       }
       .item{
           @include flex(space-around);
 
            padding: 0 0.3rem;
-           border-bottom: 1px solid #d2dae7;
+           border-bottom: 1px solid #344a65;
           .img{
               flex: 0 0 1.5rem;
               border-radius: 0.1rem;
@@ -318,7 +322,7 @@
           }
           p{
               flex: 1;
-              @include font($fs32,0.48rem,#2c2e3d,left);
+              @include font($fs32,0.48rem,#fff,left);
               padding: 0.4rem 0;
               margin-left: 0.48rem;
           }
@@ -345,15 +349,15 @@
     background-size: 100%;
   }
   .charts_container{
-			background-color: white;
+			// background-color: white;
 			width: 7.5rem;
 			height: 6.4rem;
     }
 .more_title{
   width: 7.5rem;
 	height: 1rem;
-  background-color: #ffffff;
+  // background-color: #ffffff;
   @include font(0.26rem,1rem,#8f94a7);
-  border-bottom: 1px solid #d2dae7;
+  border-bottom: 1px solid #344a65;
 }    
 </style>

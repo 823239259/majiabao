@@ -343,7 +343,7 @@
 		.time_text{
 				position: relative;
 				@include font($fs24,0.7rem,#ffffff);
-				background-color: #5534ff;
+				background-color: #344a65;
 			}
 		.item{
 			background-color: $bgWhite;
@@ -360,7 +360,7 @@
 				@include flex(space-between);
 				.time,.country{
 					display: block;
-					@include font($fs24,0.3rem,$grayMiddle);
+					@include font($fs24,0.3rem,#127c8d);
 					
 				}
 				.star_box{
@@ -402,7 +402,7 @@
 		}
 		
 		.text{
-			@include font($fs30,0.3rem,#e44f34,left);
+			@include font($fs30,0.3rem,#fff,left);
 			padding: 0.3rem 0;
 		}
 		.text_red{
@@ -411,9 +411,9 @@
 		.number_box{
 			@include flex(space-between);
 			p{
-				@include font($fs24,0.3rem,$graySimple,left);
+				@include font($fs24,0.3rem,#707070,left);
 				span{
-					color:$blcakThin
+					color:#707070
 				}
 			}
 		}

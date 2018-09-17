@@ -144,7 +144,7 @@
 <style lang="scss" scoped>
 	@import "../../assets/css/common.scss";
 	.wrap{
-
+		background-color: #162336;
 
 		.discover_list{
 			//padding: 0.25rem 0.3rem;
@@ -157,8 +157,8 @@
 			//box-shadow: 0 0 5px 1px #ccc;
 			.time_text{
 				position: relative;
-				@include font($fs24,0.6rem,#8f94a7);
-				background-color: #d2dae7;
+				@include font($fs24,0.6rem,#fff);
+				// background-color: #d2dae7;
 			}
 			.time{
 				display: inline-block;
@@ -178,7 +178,8 @@
 				position: relative;
 				border-left: 1px solid #dbdee1;
 				padding: 0.3rem 0.2rem;
-				margin: 0 0.05rem;
+				// margin: 0 0.05rem;
+				background-color: #1f334f;
 				.textHeight{
 					height: 1.4rem;
 					overflow: hidden;
@@ -187,7 +188,7 @@
 				}
 				p{
 					width: 5.5rem;
-					@include font($fs30,0.46rem,$blcakThin,left);
+					@include font($fs30,0.46rem,#fff,left);
 					transition: all 0.5s;
 				}
 				.hr30{

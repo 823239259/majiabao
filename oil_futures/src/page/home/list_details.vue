@@ -173,7 +173,7 @@
   #list_details {
     width: 7.5rem;
     //padding-top: 0.96rem;
-    //background-color: $bg;
+    // background-color: $bg;
   }
   .scroll_wrap{
     height: calc(100vh - 1rem - 0.96rem);
@@ -184,15 +184,15 @@
   }
   .wrap{
     padding-bottom: 0.2rem;
-    border-bottom: 0.16rem solid #e5f9f6;
+    // border-bottom: 0.16rem solid #e5f9f6;
       h2{
         width: 7.5rem;
         padding-left: 0.3rem;
-        @include font($fs32,0.8rem,$blackNormal,left);
+        @include font($fs32,0.8rem,#fff,left);
       }
       p{
         padding: 0 0.3rem;
-        @include font($fs28,0.46rem,$blackNormal,left);
+        @include font($fs28,0.46rem,#fff,left);
       }
     
   }
@@ -234,7 +234,7 @@
               p{
                   @include font($fs26,0.48rem,#788b87,left);
                   span{
-                      color: #333;
+                      color: #fff;
                   }
               }
           }
@@ -256,7 +256,7 @@
     .input{
         width: 5.4rem;
         height: 0.72rem;
-        @include font($fs28,.72rem,#333,left);
+        @include font($fs28,.72rem,#fff,left);
         padding: 0 0.2rem;
         background-color: #fff;
         border-radius: 0.35rem;

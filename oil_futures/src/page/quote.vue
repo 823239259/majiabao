@@ -247,7 +247,8 @@
     @import "../assets/css/common.scss";
     #quote {
         width: 7.5rem;
-		padding-bottom: 1.32rem
+        padding-bottom: 1.32rem;
+        background-color: #162336;
     }
     .empty {
         width: 0.6rem;
@@ -267,7 +268,7 @@
                 display: block;
                 width: 0.6rem;
                 height: 0.6rem;
-                background-color: #8f94a7;
+                background-color: #344a65;
                 font-size: 0.22rem;
                 border-radius: 0.3rem;
                 float: left;
@@ -279,7 +280,7 @@
                 }
             }
             .current {
-                background-color: #181722;
+                background-color: #0d61ab;
             }
         }
         .selef {
@@ -299,6 +300,9 @@
         line-height: 0.6rem;
         color: #8f94a7;
         font-size: 0.24rem;
+        border-top: 1px solid #344a65;
+        border-bottom: 1px solid #344a65;
+
     }
     .details {
         display: flex;
@@ -310,18 +314,19 @@
             height: 2.4rem;
             margin-top: 0.3rem;
             box-shadow: 0 0.05rem 0.05rem 0 rgba(0, 0, 0, 0.1);
+            background-color: #1f334f;
             border-radius: 0.1rem;
             position: relative;
             p {
                 line-height: 0.6rem;
                 &:nth-child(1) {
                     font-size: 0.26rem;
-                    color: #8f94a7;
+                    color: #ffd15d;
                     text-indent: 0.3rem;
                 }
                 &:nth-child(2) {
                     font-size: 0.3rem;
-                    color: #181722;
+                    color: #fff;
                     text-align: center;
                 }
                 &:nth-child(3) {
@@ -356,6 +361,7 @@
                 right: 0;
                 background: url("../assets/images/quote/quote_bug.png") no-repeat;
                 background-size: 0.8rem 0.8rem;
+                border-radius: 0.1rem;
             }
             .icon_sell {
                 display: block;
@@ -366,6 +372,7 @@
                 right: 0;
                 background: url("../assets/images/quote/quote_sell.png") no-repeat;
                 background-size: 0.8rem 0.8rem;
+                border-radius: 0.1rem;
             }
         }
     }

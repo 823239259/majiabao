@@ -180,7 +180,7 @@
     @import "../assets/css/common.scss";
     #discover {
         width: $w;
-        background-color: #fff;
+        background-color: #162336;
         .mint-navbar .mint-tab-item.is-selected {
             margin: 0;
             border-bottom: 0.03rem solid $redDeep;

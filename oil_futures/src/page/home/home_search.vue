@@ -1,5 +1,5 @@
 <template>
-	<div id="search">
+	<div id="search" :style="{height:clientHeight}">
 		<mt-header title="搜索" fixed>
 			<mt-button slot="left" icon="back" @click="goBack"></mt-button>
 		</mt-header>
@@ -41,6 +41,9 @@
 			}
 		},
 		computed: {
+			 clientHeight () {
+					return document.documentElement.clientHeight + 'px';
+				}
 		},
 		watch: {
 			searchVal:function(value){
@@ -80,17 +83,17 @@
 	@import "../../assets/css/common.scss";
 	#search{
 		width: 7.5rem;
-		background-color: $white;
+		padding-top: 0.98rem;
 	}
 	.container{
-		margin-top: 0.98rem;
+		// margin-top: 0.98rem;
 		.search_ipt{
 			position: relative;
 			padding: 0 0.3rem;
 			width: 100%;
 			height: 1.2rem;
-			background-color: #ffffff;
-			border-bottom: 1px solid #d2dae7;
+			background-color: #344a65;
+			// border-bottom: 1px solid #d2dae7;
 			i{
 				position: absolute;
 				top: 0.4rem;
@@ -106,19 +109,22 @@
 				top: 0.2rem;
 				width: 6.9rem;
 				height: 0.8rem;
-				border: 0.01rem solid #d2dae7;
+				// border: 0.01rem solid #d2dae7;
 				border-radius: 0.08rem;
 				text-indent: 0.8rem;
-				//background-color: #f7f9fc;
+				background-color: #162336;
+				color: #fff;
 			}
 			.input_2{
 				position: absolute;
 				top: 0.2rem;
 				width: 5.06rem;
 				height: 0.8rem;
-				border: 0.01rem solid #d2dae7;
+				// border: 0.01rem solid #d2dae7;
 				border-radius: 0.3rem;
 				text-indent: 0.8rem;
+				color: #fff;
+				background-color: #162336;
 			}
 			span{
 				position: absolute;
@@ -132,6 +138,7 @@
 				font-size: 0.28rem;
 				text-align: center;
 				line-height: 0.8rem;
+				color: #fff;
 			}
 		}	
 		.recomind{

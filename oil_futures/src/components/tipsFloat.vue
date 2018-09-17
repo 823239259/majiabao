@@ -122,15 +122,15 @@ import pro from '../assets/js/common'
 	.right_box{
 		justify-content: flex-end;
 		.floatTips{
-			background-color: #5534ff;
+			background-color: #127c8d;
 		}
 		
 	}
 	.floatTips,.floatTips1{
 		position: relative;
 		display: block;
-		width: 1.2rem;
-		height: 1.2rem;
+		width: 0.8rem;
+		height: 0.8rem;
 		background-color: #41b5ff;
 		border-radius: 50%;
 		span{

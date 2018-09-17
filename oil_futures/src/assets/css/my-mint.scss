@@ -1,10 +1,10 @@
 .mint-header{
-    background-color: #fff;
+    background-color: #344a65;
     height: 0.96rem;
     line-height: 0.96rem;
     width: 7.5rem;
-    border-bottom: 1px solid #e6e6e6;
-    color: #2d2f3e;
+    // border-bottom: 1px solid #e6e6e6;
+    color: #fff;
    
     
 }
@@ -27,10 +27,10 @@
 // bottom_tab
 #bottom_tab {
     .mint-tab-item-label{
-        color: #8f94a7;
+        color: #333;
     }
     .mint-tab-item{
-        border-bottom: 1px solid #2c2e3d;
+        border-bottom: 1px solid #dfbb5b;
     }
     .mint-tab-item-icon{
         width: 0.8rem;
@@ -41,22 +41,22 @@
     }
     .mint-tabbar {
         width: inherit;
-        background-color: #181722;
+        background-color: #ffd15d;
         position: relative;
         flex-direction: column;
 
     }
     .mint-tabbar > .mint-tab-item.is-selected {
-        background-color: #181722;
+        background-color: #ffd15d;
         .mint-tab-item-label{
-            color: #8f94a7;
+            color: #333;
         }
     }
 
 } 
 #bottom_tab2 {
     .mint-tab-item-label{
-        color: #9597a3;
+        color: #127c8d;
     }
     .mint-tab-item-icon{
         width: 0.48rem;
@@ -64,15 +64,15 @@
     }
     .mint-tabbar {
         width: 7.5rem;
-        background-color: #2a2f42;
+        background-color: #000;
         position: relative;
         top: 0;
 
     }
     .mint-tabbar > .mint-tab-item.is-selected {
-        background-color: #2a2f42;
+        background-color: #000;
         .mint-tab-item-label{
-            color: #9597a3;
+            color: #fff;
         }
     }
 
@@ -101,12 +101,12 @@
   }
   .tab_open_icon{
     width: 1.6rem;
-    background:  #181722 url('../images/home/tab_open_icon.png') center no-repeat;
+    background: #127c8d url('../images/home/tab_open_icon.png') center no-repeat;
     background-size: 0.4rem 0.4rem;
   }
   .tab_close_icon{
     width: 1.6rem;
-    background:  #181722 url('../images/home/tab_close_icon.png') center no-repeat;
+    background: #127c8d url('../images/home/tab_close_icon.png') center no-repeat;
     background-size: 0.4rem 0.4rem;
   }
   .search_icon{

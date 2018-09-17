@@ -79,7 +79,7 @@
   #butler_welfare {
     width: 7.5rem;
     padding-top: 0.96rem;
-    //background-color: $bgButler;
+    background-color: #fff;
   }
   .box{
     padding: 0  0.3rem 0.3rem;

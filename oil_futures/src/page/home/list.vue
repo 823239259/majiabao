@@ -1,5 +1,5 @@
 <template>
-  <div id="recommend">
+  <div id="recommend" :style="{'min-height':clientHeight}">
     <mt-header fixed :title="title" >
         <mt-button slot="left" icon="back" @click="goBack"></mt-button>
         <mt-button slot="right">
@@ -114,6 +114,7 @@
 
 <style lang="scss" scoped>
   @import "../../assets/css/common.scss";
+  $blackNormal: #ffffff;
   #recommend {
     width: 7.5rem;
     padding-top: 0.96rem;
@@ -125,7 +126,10 @@
       padding: 0.2rem 0 0 0;
       @include font($fs28,0.48rem,$blackNormal,left);
       .item{
-        border-bottom: 1px solid #bbf6ec;
+        // border-bottom: 1px solid #bbf6ec;
+        background-color: #1f334f;
+        margin-bottom: 0.2rem;
+        padding-bottom: 0.2rem; 
       }
       h2{
         width: 7.5rem;
@@ -136,7 +140,7 @@
         display: flex;
         justify-content: space-between;
         padding: 0 0.3rem;
-        @include font($fs24,0.4rem,#788b87,left);
+        @include font($fs24,0.4rem, #707070,left);
       }
     }
   }

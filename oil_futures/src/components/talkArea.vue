@@ -250,7 +250,7 @@
           .right{
               flex: 1;
               min-height: 0.8rem;
-              border-bottom: 1px solid #e6e6e6;
+              border-bottom: 1px solid #344a65;
               flex-direction: column;
                @include flex(space-between);
               .dianzan_icon{
@@ -287,7 +287,7 @@
     @include flex(space-between);
     padding: 0.2rem;
     width: 7.5rem;
-    border-top: 1px solid #d2dae7;
+    border-top: 1px solid #344a65;
     .input{
         width: 5rem;
         height: 0.8rem;
@@ -300,7 +300,7 @@
     .btn{
         width: 1.6rem;
         height: 0.8rem;
-        background-color: #181722;
+        background-color: #000;
         border-radius: 0.08rem;
         @include font(0.26rem,0.8rem,#fff)
     }

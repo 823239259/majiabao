@@ -168,12 +168,12 @@
 		justify-content: space-between;
 		@include font($fs28,0.8rem,#8f94a7);
 		padding: 0 0.3rem;
-		border-top: 1px solid #d2dae7; 
-		border-bottom: 1px solid #d2dae7; 
+		border-top: 1px solid #344a65; 
+		border-bottom: 1px solid #344a65; 
 	}
 	.float_right{
 		width: 1.5rem;
-		color: #333;
+		color: #ffd15d;
 	}
 	.list{
 		padding: 0.3rem;
@@ -187,7 +187,7 @@
 		border-radius: 0.1rem;
 		margin-bottom: 0.3rem;
 		p{
-			@include font($fs30,0.8rem,#181722);
+			@include font($fs30,0.8rem,#fff);
 		}
 	}
 }

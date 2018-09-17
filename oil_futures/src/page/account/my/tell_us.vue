@@ -135,8 +135,8 @@ export default {
 .navbar{
   @include flex();
   @include font(0.28rem, 0.8rem,#8f94a7);
-  border-top: 1px solid #d2dae7;
-  border-bottom: 1px solid #d2dae7;
+  border-top: 1px solid #344a65;
+  border-bottom: 1px solid #344a65;
   .item{
     flex: 1
   }

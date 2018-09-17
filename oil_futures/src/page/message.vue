@@ -137,7 +137,7 @@
 			border-bottom: 0;
 			//color: $tabBgColor;
 			color: #fff;
-			background-color: #8f94a7;
+			background-color: #127c8d;
 		}
 		.mint-navbar .mint-tab-item{
 			padding: 0.27rem;

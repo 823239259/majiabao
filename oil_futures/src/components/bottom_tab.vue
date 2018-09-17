@@ -100,7 +100,7 @@
 		z-index: 100;
 		height: calc(100vh - 0.9rem);
 		min-height: 54px;
-		background-color: #20202d;
+		background-color: #ffd15d;
 	}
 .icon{
   display: inline-block;

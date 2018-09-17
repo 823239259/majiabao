@@ -11,6 +11,28 @@
 						<li><i class="addOption" @click="addOptional"></i></li>
 					</ul>
 				</header>
+				<div class="celue">
+					<div class="celue_title">
+						-策略打点-
+					</div>
+					<div class="celue_tips">
+						<span>新功能：</span>请在K线图模式下，选择下列策略进行实时买卖点提示！实时提示交易，小白也能轻松做交易。
+					</div>
+					<div class="celue_pie">
+						<!-- <ul>
+							<li><p class="cenue1" @click="choseStrategy($event,'haigui')">海龟交易</br>策略</p></li>
+						</ul> -->
+						<ul>
+							<li><p class="cenue2" @click="choseStrategy($event,'Bollingerbandit')">布林通道</br>策略</p></li>
+							<li><p class="cenue3" @click="choseStrategy($event,'SMA')">移动平均</br>策略</p></li>
+						</ul>
+						<ul>
+							<li><p class="cenue4" @click="choseStrategy($event,'DualThrust')">DualThrust</br>策略</p></li>
+							<li><p class="cenue5" @click="choseStrategy($event,'Jintena')">金特肯纳</br>策略</p></li>
+							<li><p class="cenue6" @click="choseStrategy($event,'RBreaker')">RBreaker</br>策略</p></li>
+						</ul>
+					</div>
+				</div>
 				<div class="money">
 					<div class="moneyDetails">
 						<p>{{v.CommodityName+v.CommodityNo+v.MainContract}}</p>
@@ -48,28 +70,6 @@
 					</div>
 					<div class="charts_container">
 						<components :is="currentChartsView" v-if="chartsShow"></components>
-					</div>
-				</div>
-				<div class="celue">
-					<div class="celue_title">
-						-策略打点-
-					</div>
-					<div class="celue_tips">
-						<span>新功能：</span>请在K线图模式下，选择下列策略进行实时买卖点提示！实时提示交易，小白也能轻松做交易。
-					</div>
-					<div class="celue_pie">
-						<ul>
-							<li><p class="cenue1" @click="choseStrategy($event,'haigui')">海龟交易</br>策略</p></li>
-						</ul>
-						<ul>
-							<li><p class="cenue2" @click="choseStrategy($event,'Bollingerbandit')">布林通道</br>策略</p></li>
-							<li><p class="cenue3" @click="choseStrategy($event,'SMA')">移动平均</br>策略</p></li>
-						</ul>
-						<ul>
-							<li><p class="cenue4" @click="choseStrategy($event,'DualThrust')">DualThrust</br>策略</p></li>
-							<li><p class="cenue5" @click="choseStrategy($event,'Jintena')">金特肯纳</br>策略</p></li>
-							<li><p class="cenue6" @click="choseStrategy($event,'RBreaker')">RBreaker</br>策略</p></li>
-						</ul>
 					</div>
 				</div>
 				<div class="bugOne">
@@ -625,11 +625,11 @@
 					align-items: center;
 					h1{
 						font-size: 0.32rem;
-						color: #181722;
+						color: #fff;
 					}
 					span{
 						font-size: 0.24rem;
-						color: #181722;
+						color: #fff;
 					}
 				}
 				&:nth-child(3){
@@ -655,50 +655,51 @@
 	.charts{
 		width: 7.5rem;
 		.charts_title{
+			@include flex();
 			width: 100%;
 			height: 0.8rem;
 			padding: 0 0.3rem;
 			line-height: 0.8rem;
 			span{
-				float: left;
-				display: block;
+				float: 1;
 				width: 1rem;
 				height: 0.6rem;
 				line-height: 0.6rem;
 				text-align: center;
-				background-color: #ffffff;
+				background-color: #344a65;
 				border-radius: 0.3rem;
 				border: solid 0.01rem #d2dae7;
 				font-size: 0.28rem;
-				color: #8F94A7;
+				color: #fff;
 				margin-right: 0.1rem;
 				&.current{
 					color: #ffffff;
-					background-color: #5534FF;
+					background-color: #127c8d;
 				}
 			}
 		}
 		.charts_container{
-			background-color: white;
+			// background-color: white;
 			width: 7.5rem;
 			height: 5.7rem;
 		}
 	}
 	.money{
 		width: 100%;
-		background-color: #f7f9fc;
+		// background-color: #1f334f;
 		padding: 0.3rem;
 		.moneyDetails{
-			background-color: white;
+			background-color: #1f334f;
 			width: 6.9rem;
 			height: 2.4rem;
 			margin: auto;
 			border-radius: 0.1rem;
+			border: 1px solid #344a65;
 			p{
 				line-height: 0.6rem;
 				height: 0.6rem;
 				text-align: center;
-				color: #8f94a7;
+				color: #fff;
 				font-size: 0.26rem;
 			}
 			
@@ -707,9 +708,11 @@
 				justify-content: space-between;
 				align-items: center;
 				display: flex;
+				border-top: 1px solid #344a65;
 				&:nth-child(2){
 					height: 0.8rem;
 					li{
+						
 						span{
 							&.red{
 							color: #ff3363;
@@ -728,6 +731,7 @@
 				}
 				&:nth-child(3){
 					height: 1rem;
+					color: #fff;
 					li{
 						display: flex;
 						flex-direction: column;
@@ -735,7 +739,7 @@
 						align-items: center;
 						width: 25%;
 						height: 100%;
-						border: 0.01rem solid #d2dae7;
+						border: 1px solid #344a65;
 					}
 				}
 			}
@@ -753,15 +757,16 @@
 			height: 0.8rem;
 			text-align: center;
 			line-height: 0.8rem;
-			color: #2d2f3e;
+			color: #fff;
 			font-size: 0.28rem;
 		}
 		.celue_tips{
 			width: 100%;
 			height: 1rem;
 			line-height: 0.5rem;
-			background-color: #f7f9fc;
+			// background-color: #f7f9fc;
 			padding: 0 0.3rem;
+			color: #fff;
 		}
 		.celue_pie{
 			ul{
@@ -769,6 +774,8 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
+				padding: 0 0.1rem;
+				
 				li{
 					margin:0 0.2rem;
 					p{
@@ -793,6 +800,7 @@
 		margin-top: 0.3rem;
 		width: 7.5rem;
 		height: 2.4rem;
+		background-color: #344a65;
 		.left{
 			background-color: #2c2e3d;
 			width: 50%;
@@ -836,18 +844,19 @@
 		margin-bottom: 1rem;
 		width: 100%;
 		height: 3.2rem;
+		background-color: #162336;
 		.left{
 			float: left;
 			width: 50%;
 			height: 100%;
-			background-color: #fff5f3;
 			padding:0 0.3rem;
 			li{
 				display: flex;
 				justify-content: space-between;
 				height: 0.64rem;
 				line-height: 0.64rem;
-				border-bottom: 0.01rem solid #dbdee1;
+				// border-bottom: 0.01rem solid #dbdee1;
+				color: #ff3363;
 				span{
 					&:nth-child(2){
 						color: #e44f34;
@@ -855,8 +864,8 @@
 				}
 			}
 			&:nth-child(2){
-				background-color: #ebfff9;
 				li{
+					color: #11d974;
 					span{
 						&:nth-child(2){
 							color: #16b887;
@@ -872,19 +881,20 @@
 			text-align: center;
 			width: 7.5rem;
 			height: 0.8rem;
-			background-color: #ffffff;
+			// background-color: #ffffff;
 			font-size: 0.28rem;
 			line-height: 0.8rem;
-			color: #2d2f3e;
+			color: #fff;
+			border-bottom: 1px solid #344a65;
 		}
 		.duibi_details{
 			width: 100%;
 			padding: 0.3rem;
-			background-color: #f7f9fc;
+			background-color: #1f334f;
 			display: flex;
 		}
 		.duibi_left{
-			background-color: white;
+			// background-color: white;
 			width: 2.3rem;
 			height: 2.4rem;
 			p{
@@ -892,10 +902,11 @@
 				line-height: 0.6rem;
 				&:nth-child(1){
 					font-size: 0.3rem;
-					color: #8f94a7;
+					color: #fff;
 				}
 				&:nth-child(2){
 					font-size: 0.26rem;
+					color: #707070;
 				}
 				&:nth-child(3){
 					font-size: 0.26rem;
@@ -920,14 +931,14 @@
 			}
 		}
 		.duibi_right{
-			background-color: white;
+			// background-color: white;
 			width: 4.6rem;
 			height: 2.4rem;
 			p{
 				text-align: center;
 				line-height: 0.6rem;
 				font-size: 0.3rem;
-				color: #8f94a7;
+				color: #fff;
 			}
 			ul{
 				width: 100%;
@@ -938,7 +949,7 @@
 					span{
 						margin-right:0.3rem; 
 						&:nth-child(1){
-						color: black;
+						color: #707070;
 						}
 						&:nth-child(2){
 							color:#ff3363 ;
