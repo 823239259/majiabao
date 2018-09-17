@@ -1,6 +1,7 @@
 <template>
   <div id="home" :style="{height:clientHeight}">
     <mt-header fixed title="我的">
+      <span class="header_icon kefu_icon" slot="right" @click="callCustomer"></span>
       <!-- <mt-button slot="left" @click="callCustomer">电话客服</mt-button>
       <mt-button slot="right" @click="goto('/service_online')">在线客服</mt-button> -->
     </mt-header>

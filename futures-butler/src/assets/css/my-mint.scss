@@ -143,3 +143,18 @@
 .mint-header.is-fixed{
     z-index: 100
 }
+.mint-header-button.is-right{
+    height: inherit;
+}
+
+.header_icon {
+  display: inline-block;
+  width: 0.96rem;
+  height: 0.96rem;
+}
+
+.kefu_icon {
+//   width: 0.96rem;
+  background: url('../images/home/kefu_icon.png') center no-repeat;
+  background-size: 0.4rem 0.4rem;
+}

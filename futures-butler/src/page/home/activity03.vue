@@ -3,7 +3,7 @@
   <div>
     <header class="top">
       <h2 class="title">推荐新人有奖，大礼等你来拿</h2>
-      <p class="text">活动开始时间 <span class="yellow">2018-09-05</span></p>
+      <p class="text">活动开始时间 <span class="yellow">2018-10-01</span></p>
     </header>
     <div class="wrap">
       <div class="jpg"></div>

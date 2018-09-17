@@ -34,11 +34,17 @@ const router = new Router({
     	path:"/novice_guide",
     	name:"novice_guide",
     	component:load('home/novice_guide')
-    },
+    }, 
     {
     	path:"/guide_details/:id",
     	name:"guide_details",
       component:load('home/guide_details'),
+      props: true
+    },
+    {
+      path: "/recommend_homes",
+      name: "recommend_homes",
+      component: load('home/recommend_homes'),
       props: true
     },
      {
@@ -91,7 +97,7 @@ const router = new Router({
     {
     	path:"/tools_item/:id",
     	name:"tools_item",
-      component:load('butler/tools_item'),
+      component:load('home/tools_item'),
       props: true
     },
     {

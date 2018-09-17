@@ -1,6 +1,8 @@
 <template>
   <div id="home" :style="{height:clientHeight}">
-    <mt-header fixed title="首页"></mt-header>
+    <mt-header fixed title="首页">
+      <span class="header_icon kefu_icon" slot="right" @click="callCustomer"></span>
+    </mt-header>
     <div class="swipe-wrap">
       <mt-swipe :auto="0">
         <mt-swipe-item>
@@ -43,6 +45,8 @@
     </div>
     <div class="message_box" @click="goto('/butler_community')"></div>    
     <bottomTab :tabSelect="tabSelected"></bottomTab>
+    <mt-actionsheet :actions="actions" v-model="sheetVisible">
+    </mt-actionsheet>
   </div>
 </template>
 
@@ -184,14 +188,11 @@
         });
       },
       subscribe(){
-        console.log(this.$store.state.market.markettemp);
         this.$store.state.market.markettemp.forEach(element => {
           if (element.CommodityNo== 'CL') {
               this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + element.ExchangeNo + '","CommodityNo":"' + element.CommodityNo + '","ContractNo":"' + element.MainContract +'"}}');
           }
         });
-        
-				
 			},
     },
     activated() {

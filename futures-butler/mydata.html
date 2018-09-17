@@ -1,0 +1,2595 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>全球财经数据中心-美国非农数据查询解读_一牛财经网</title>
+    <meta name="keywords" content="全球财经数据中心,美国非农数据解读,美国EIA原油库存数据解读">
+    <meta name="description" content="一牛财经网数据中心栏目为用户提供全球财经数据信息，包括美国非农数据、EIA原油库存数据等财经数据的基本信息、数据影响、数据释义、统计方法、关注原因及历史数据查询与服务。">
+</head>
+<link href="http://m.yn.com/public/static/mobile/css/base.css" rel="stylesheet" type="text/css">
+<link href="http://m.yn.com/public/static/mobile/css/index.css" rel="stylesheet" type="text/css">
+<script src="http://m.yn.com/public/static/mobile/libs/jquery-3.3.1.min.js"></script>
+<script src="http://m.yn.com/public/static/mobile/js/index.js"></script>
+
+<body style="display: flex; flex-direction: column">
+        
+<div class="nav_box">
+    <div class="nav_box_t flex_cm">网站栏目
+        <a javascript:void(0) class="close"></a>
+    </div>
+    <div class="nav_list_b">
+        <div class="nav_box_list clear">
+            <div class="nav_box_list_l fl"><a href="/">首页</a></div>
+            <ul>
+                <li class="fl"><a href="/kuaixun/">快讯</a></li>
+                <li class="fl"><a href="/quotes/">行情</a></li>
+                <li class="fl"><a href="/videoinfo/">视听</a><span class="hot"></span></li>
+                <li class="fl"><a href="/data/">数据</a></li>
+                <li class="fl"><a href="http://np.yn.com">牛人圈</a></li>
+            </ul>
+        </div>
+        <div class="nav_box_list clear">
+            <div class="nav_box_list_l fl"><a href="/news/">要闻</a></div>
+            <ul>
+                <li class="fl"><a href="/news/gushi/">股市</a><span class="hot"></span></li>
+                <li class="fl"><a href="/news/guijinshu/">贵金属</a><span class="hot"></span></li>
+                <li class="fl"><a href="/news/waihui/">外汇</a><span class="hot"></span></li>
+                <li class="fl"><a href="/news/yuanyou/">原油</a><span class="hot"></span></li>
+                <li class="fl"><a href="/news/guoji/">国际</a></li>
+                <li class="fl"><a href="/news/hongguan/">宏观</a></li>
+                <li class="fl"><a href="/news/dongtai/">行业</a></li>
+            </ul>
+        </div>
+        <div class="nav_box_list clear">
+            <div class="nav_box_list_l fl"><a href="/videoinfo/">视听</a> </div>
+            <ul>
+                <li class="fl"><a href="/videoList/146/">微财经</a><span class="hot"></span></li>                
+                <li class="fl"><a href="/videoList/139/">财经观察</a><span class="hot"></span></li>
+                <li class="fl"><a href="/videoList/144/">汇市解码</a><span class="hot"></span></li>
+                <li class="fl"><a href="/videoList/135/">投资学堂</a><span class="hot"></span></li>
+                <li class="fl"><a href="/videoList/134/">特别节目</a></li>
+                <!-- <li class="fl"><a href="/videoList/145/">精选短视频</a></li> -->
+                <li class="fl"><a href="/videoList/132/">财经数据show</a></li>
+                <li class="fl"><a href="/videoList/130/">财经译点通</a></li>
+                <li class="fl"><a href="/videoList/141/">财经汇客厅</a></li>
+                
+            </ul>
+        </div>
+        <div class="nav_box_list clear">
+            <div class="nav_box_list_l fl"><a href="/quotes/">行情 </a></div>
+            <ul>
+                <li class="fl"><a href="/quotes/list/WGJS/">国际金</a><span class="hot"></span></li>
+                <li class="fl"><a href="/quotes/list/WH/">外汇</a></li>
+                <li class="fl"><a href="/quotes/list/SGE/">上金所</a></li>
+                <li class="fl"><a href="/quotes/list/NY/">WTI原油</a><span class="hot"></span></li>
+                <li class="fl"><a href="/quotes/DINIW/">美元指数</a></li>
+                <li class="fl"><a href="/quotes/XAU/">现货黄金</a></li>
+                <li class="fl"><a href="/quotes/XAG/">现货白银</a></li>
+                <li class="fl"><a href="/quotes/SHICOM/">上证指数</a></li>
+                <li class="fl"><a href="/quotes/AUTD/">黄金T+D</a></li>
+            </ul>
+        </div>
+        <div class="nav_box_list clear">
+            <div class="nav_box_list_l fl"><a href="/data/">数据</a> </div>
+            <ul>
+                <li class="fl"><a href="/data/nfp tch index/">非农数据</a><span class="hot"></span></li>
+                <li class="fl"><a href="/data/DOEASCRD index/">EIA原油库存</a></li>
+                <li class="fl"><a href="/data/silver/">白银ETF</a></li>
+                <li class="fl"><a href="/data/gold/">黄金ETF</a></li>
+                <li class="fl"><a href="/data/usoiac=eci/">API原油库存</a></li>
+                <li class="fl"><a href="/data/comex/spt_gld/">CFTC白银</a></li>
+                <li class="fl"><a href="/data/comex/spt_svr/">CFTC黄金</a></li>
+            </ul>
+        </div>
+        <div class="nav_box_list clear">
+            <div class="nav_box_list_l fl"><a href="http://np.yn.com">牛人圈 </a></div>
+            <ul>
+                <li class="fl"><a href="http://np.yn.com/article/all/">专栏点评</a></li>
+                <li class="fl"><a href="http://np.yn.com/viewpoint/all/">名家观点</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+        
+    <div class="ynm_title" style="position: fixed; top: 0px;background-color: #383b4e;">
+        <a href="javascript:void(0);" class="back" onclick="goBack()">返回</a>
+        <div class="inside-logo flex_cm" style="color: #fff">
+            	数据详情
+        </div>
+        <!--<span class="fr column_btn">
+            <img src="http://m.yn.com/public/static/mobile/images/column_btn.png"> 
+        </span>-->
+    </div>
+    <div class="data_nav" style="margin-top:1rem;">
+        <ul class="clear">
+                        <li class="">
+                <a href="/data/nfp+tch+index.html ">非农数据</a>
+            </li>
+                        <li class="">
+                <a href="/data/doeascrd+index.html ">EIA原油库存</a>
+            </li>
+                        <li class="">
+                <a href="/data/etf/silver.html ">白银ETF</a>
+            </li>
+                        <li class="">
+                <a href="/data/etf/gold.html ">黄金ETF</a>
+            </li>
+                        <li class="">
+                <a href="/data/usoiac%3deci.html ">API原油库存</a>
+            </li>
+                        <li class="">
+                <a href="/data/comex/spt_gld.html ">CFTC白银</a>
+            </li>
+                        <li class="">
+                <a href="/data/comex/spt_svr.html ">CFTC黄金</a>
+            </li>
+                    </ul>
+    </div>
+    <div class="G_data_tabWrap boxcenter tab clear">
+    <div class="fl data_nav_l">
+        <ul class="G_dataTabul j_tab_nav">
+                        <li name="CFTC" class="on flex_cm">CFTC</li>
+                        <li name="美国" class=" flex_cm">美国</li>
+                        <li name="欧元区" class=" flex_cm">欧元区</li>
+                        <li name="中国" class=" flex_cm">中国</li>
+                        <li name="英国" class=" flex_cm">英国</li>
+                        <li name="澳大利亚" class=" flex_cm">澳大利亚</li>
+                        <li name="德国" class=" flex_cm">德国</li>
+                        <li name="日本" class=" flex_cm">日本</li>
+                        <li name="加拿大" class=" flex_cm">加拿大</li>
+                        <li name="瑞士" class=" flex_cm">瑞士</li>
+                        <li name="新西兰" class=" flex_cm">新西兰</li>
+                        <li name="意大利" class=" flex_cm">意大利</li>
+                        <li name="法国" class=" flex_cm">法国</li>
+                        <li name="西班牙" class=" flex_cm">西班牙</li>
+                        <li name="ETF" class=" flex_cm">ETF</li>
+                    </ul>
+        </div>
+        <div class="fr data_nav_r">
+        <div class="tab_boxs ">
+                        <div name="CFTC" class="j_tab_box show c_tab_nav">
+                <ul>
+                                        <a title="美元指数 " href="/data/comex/spt_dxy.html ">
+                        <li class="flex_cm1">美元指数CFTC持仓报告</li>
+                    </a>
+                                        <a title="原油 " href="/data/comex/cl_1.html ">
+                        <li class="flex_cm1">原油CFTC持仓报告</li>
+                    </a>
+                                        <a title="白银 " href="/data/comex/spt_svr.html ">
+                        <li class="flex_cm1">白银CFTC持仓报告</li>
+                    </a>
+                                        <a title="黄金 " href="/data/comex/spt_gld.html ">
+                        <li class="flex_cm1">黄金CFTC持仓报告</li>
+                    </a>
+                                        <a title="欧元 " href="/data/comex/eurusd.html ">
+                        <li class="flex_cm1">欧元</li>
+                    </a>
+                                        <a title="日元 " href="/data/comex/usdjpy.html ">
+                        <li class="flex_cm1">日元</li>
+                    </a>
+                                        <a title="英镑 " href="/data/comex/gbpusd.html ">
+                        <li class="flex_cm1">英镑</li>
+                    </a>
+                                        <a title="澳元 " href="/data/comex/audusd.html ">
+                        <li class="flex_cm1">澳元</li>
+                    </a>
+                                        <a title="瑞郎 " href="/data/comex/usdchf.html ">
+                        <li class="flex_cm1">瑞郎</li>
+                    </a>
+                                        <a title="加元 " href="/data/comex/usdcad.html ">
+                        <li class="flex_cm1">加元</li>
+                    </a>
+                                    </ul>
+            </div>
+                        <div name="美国" class="j_tab_box show c_tab_nav">
+                <ul>
+                                        <a title="季调后非农就业人口 " href="/data/nfp+tch+index.html ">
+                        <li class="flex_cm1">季调后非农就业人口</li>
+                    </a>
+                                        <a title="联邦公开市场委员会利率决定(利率上限) " href="/data/fdtr+index.html ">
+                        <li class="flex_cm1">联邦公开市场委员会利率决定(利率上限)</li>
+                    </a>
+                                        <a title="联邦公开市场委员会利率决定(利率下限) " href="/data/fdtrftrl+index.html ">
+                        <li class="flex_cm1">联邦公开市场委员会利率决定(利率下限)</li>
+                    </a>
+                                        <a title="失业率 " href="/data/usurtot+index.html ">
+                        <li class="flex_cm1">失业率</li>
+                    </a>
+                                        <a title="ADP就业人数变动 " href="/data/adp+chng+index.html ">
+                        <li class="flex_cm1">ADP就业人数变动</li>
+                    </a>
+                                        <a title="当周EIA原油库存 " href="/data/doeascrd+index.html ">
+                        <li class="flex_cm1">当周EIA原油库存</li>
+                    </a>
+                                        <a title="当周初请失业金人数 " href="/data/injcjc+index.html ">
+                        <li class="flex_cm1">当周初请失业金人数</li>
+                    </a>
+                                        <a title="就业市场状况指数(LMCI) " href="/data/lmcilmcc+index.html ">
+                        <li class="flex_cm1">就业市场状况指数(LMCI)</li>
+                    </a>
+                                        <a title="实际GDP年化季率终值 " href="/data/gdp+cqoq+indext.html ">
+                        <li class="flex_cm1">实际GDP年化季率终值</li>
+                    </a>
+                                        <a title="当周API原油库存 " href="/data/usoiac%3deci.html ">
+                        <li class="flex_cm1">当周API原油库存</li>
+                    </a>
+                                        <a title="ISM制造业PMI " href="/data/napmpmi+index.html ">
+                        <li class="flex_cm1">ISM制造业PMI</li>
+                    </a>
+                                        <a title="当周石油钻井总数 " href="/data/bakeoil+index.html ">
+                        <li class="flex_cm1">当周石油钻井总数</li>
+                    </a>
+                                        <a title="成屋签约销售指数月率 " href="/data/usphtmom+index.html ">
+                        <li class="flex_cm1">成屋签约销售指数月率</li>
+                    </a>
+                                        <a title="成屋签约销售指数 " href="/data/usnar%3deci.html ">
+                        <li class="flex_cm1">成屋签约销售指数</li>
+                    </a>
+                                        <a title="里奇蒙德联储制造业指数 " href="/data/rchsindx+index.html ">
+                        <li class="flex_cm1">里奇蒙德联储制造业指数</li>
+                    </a>
+                                        <a title="耐用品订单月率 " href="/data/dgnochng+indexp.html ">
+                        <li class="flex_cm1">耐用品订单月率</li>
+                    </a>
+                                        <a title="新屋销售年化月率 " href="/data/nhslchng+index.html ">
+                        <li class="flex_cm1">新屋销售年化月率</li>
+                    </a>
+                                        <a title="成屋销售总数年化 " href="/data/etsltotl+index.html ">
+                        <li class="flex_cm1">成屋销售总数年化</li>
+                    </a>
+                                        <a title="GDP平减指数终值 " href="/data/gdp+piqq+indext.html ">
+                        <li class="flex_cm1">GDP平减指数终值</li>
+                    </a>
+                                        <a title="密歇根大学消费者信心指数初值 " href="/data/conssent+indexp.html ">
+                        <li class="flex_cm1">密歇根大学消费者信心指数初值</li>
+                    </a>
+                                        <a title="季调后CPI月率 " href="/data/cpi+chng+index.html ">
+                        <li class="flex_cm1">季调后CPI月率</li>
+                    </a>
+                                        <a title="零售销售月率 " href="/data/rstamom+index.html ">
+                        <li class="flex_cm1">零售销售月率</li>
+                    </a>
+                                        <a title="营建许可月率 " href="/data/nhchatch+index.html ">
+                        <li class="flex_cm1">营建许可月率</li>
+                    </a>
+                                        <a title="贸易帐 " href="/data/ustbtot+index.html ">
+                        <li class="flex_cm1">贸易帐</li>
+                    </a>
+                                        <a title="成屋销售年化月率 " href="/data/etslmom+index.html ">
+                        <li class="flex_cm1">成屋销售年化月率</li>
+                    </a>
+                                        <a title="实际GDP年化季率修正值 " href="/data/gdp+cqoq+indexs.html ">
+                        <li class="flex_cm1">实际GDP年化季率修正值</li>
+                    </a>
+                                        <a title="GDP平减指数修正值 " href="/data/gdp+piqq+indexs.html ">
+                        <li class="flex_cm1">GDP平减指数修正值</li>
+                    </a>
+                                        <a title="最终销售年化季率终值 " href="/data/usgfsf%3deci.html ">
+                        <li class="flex_cm1">最终销售年化季率终值</li>
+                    </a>
+                                        <a title="最终销售年化季率修正值 " href="/data/usgfsp%3deci.html ">
+                        <li class="flex_cm1">最终销售年化季率修正值</li>
+                    </a>
+                                        <a title="Markit综合PMI初值 " href="/data/mpmiusca+indexp.html ">
+                        <li class="flex_cm1">Markit综合PMI初值</li>
+                    </a>
+                                        <a title="耐用品订单月率修正值 " href="/data/usdgr%3deci.html ">
+                        <li class="flex_cm1">耐用品订单月率修正值</li>
+                    </a>
+                                        <a title="核心PCE物价指数年率初值 " href="/data/gdpcpcec+indexa.html ">
+                        <li class="flex_cm1">核心PCE物价指数年率初值</li>
+                    </a>
+                                        <a title="密歇根大学消费者信心指数终值 " href="/data/conssent+indexf.html ">
+                        <li class="flex_cm1">密歇根大学消费者信心指数终值</li>
+                    </a>
+                                        <a title="Markit制造业PMI终值 " href="/data/mpmiusma+indexf.html ">
+                        <li class="flex_cm1">Markit制造业PMI终值</li>
+                    </a>
+                                        <a title="营建支出月率 " href="/data/cnsttmom+index.html ">
+                        <li class="flex_cm1">营建支出月率</li>
+                    </a>
+                                        <a title="核心PCE物价指数月率 " href="/data/pce+cmom+index.html ">
+                        <li class="flex_cm1">核心PCE物价指数月率</li>
+                    </a>
+                                        <a title="个人支出月率 " href="/data/pce+crch+index.html ">
+                        <li class="flex_cm1">个人支出月率</li>
+                    </a>
+                                        <a title="芝加哥PMI " href="/data/chpmindx+index.html ">
+                        <li class="flex_cm1">芝加哥PMI</li>
+                    </a>
+                                        <a title="实际个人消费支出月率 " href="/data/pce+chnc+index.html ">
+                        <li class="flex_cm1">实际个人消费支出月率</li>
+                    </a>
+                                        <a title="核心PCE物价指数年化季率终值 " href="/data/gdpcpcec+indext.html ">
+                        <li class="flex_cm1">核心PCE物价指数年化季率终值</li>
+                    </a>
+                                        <a title="批发销售月率 " href="/data/mwslchng+index.html ">
+                        <li class="flex_cm1">批发销售月率</li>
+                    </a>
+                                        <a title="PPI月率 " href="/data/fdidfdmo+index.html ">
+                        <li class="flex_cm1">PPI月率</li>
+                    </a>
+                                        <a title="纽约联储制造业指数 " href="/data/emprgbci+index.html ">
+                        <li class="flex_cm1">纽约联储制造业指数</li>
+                    </a>
+                                        <a title="新屋开工总数年化 " href="/data/nhspstot+index.html ">
+                        <li class="flex_cm1">新屋开工总数年化</li>
+                    </a>
+                                        <a title="工业产出月率  " href="/data/ip+chng+index.html ">
+                        <li class="flex_cm1">工业产出月率 </li>
+                    </a>
+                                        <a title="个人收入月率 " href="/data/pitlchng+index.html ">
+                        <li class="flex_cm1">个人收入月率</li>
+                    </a>
+                                        <a title="当周EIA天然气库存 " href="/data/usoiln%3deci.html ">
+                        <li class="flex_cm1">当周EIA天然气库存</li>
+                    </a>
+                                        <a title="当周EIA汽油库存 " href="/data/doeasmgs+index.html ">
+                        <li class="flex_cm1">当周EIA汽油库存</li>
+                    </a>
+                                        <a title="当周EIA精炼厂设备利用变动率 " href="/data/doeautil+index.html ">
+                        <li class="flex_cm1">当周EIA精炼厂设备利用变动率</li>
+                    </a>
+                                        <a title="当周EIA原油产量引伸需求数据 " href="/data/doidcrud+index.html ">
+                        <li class="flex_cm1">当周EIA原油产量引伸需求数据</li>
+                    </a>
+                                        <a title="挑战者企业裁员人数 " href="/data/uschal%3deci.html ">
+                        <li class="flex_cm1">挑战者企业裁员人数</li>
+                    </a>
+                                        <a title="挑战者裁员年率 " href="/data/chalyoy%25+index.html ">
+                        <li class="flex_cm1">挑战者裁员年率</li>
+                    </a>
+                                        <a title="S&P/CS20座大城市房价指数年率 " href="/data/spcs20y%25+index.html ">
+                        <li class="flex_cm1">S&P/CS20座大城市房价指数年率</li>
+                    </a>
+                                        <a title="谘商会消费者信心指数 " href="/data/concconf+index.html ">
+                        <li class="flex_cm1">谘商会消费者信心指数</li>
+                    </a>
+                                        <a title="达拉斯联储商业活动指数 " href="/data/dfedgba+index.html ">
+                        <li class="flex_cm1">达拉斯联储商业活动指数</li>
+                    </a>
+                                        <a title="扣除运输的耐用品订单月率 " href="/data/dgnoxtch+index.html ">
+                        <li class="flex_cm1">扣除运输的耐用品订单月率</li>
+                    </a>
+                                        <a title="当周红皮书商业零售销售年率 " href="/data/usredy%3deci.html ">
+                        <li class="flex_cm1">当周红皮书商业零售销售年率</li>
+                    </a>
+                                        <a title="当周红皮书商业零售销售月率 " href="/data/usredm%3deci.html ">
+                        <li class="flex_cm1">当周红皮书商业零售销售月率</li>
+                    </a>
+                                        <a title="芝加哥联储全国活动指数 " href="/data/cfnai+index.html ">
+                        <li class="flex_cm1">芝加哥联储全国活动指数</li>
+                    </a>
+                                        <a title="当周API汽油库存 " href="/data/usoiag%3deci.html ">
+                        <li class="flex_cm1">当周API汽油库存</li>
+                    </a>
+                                        <a title="当周API库欣原油库存 " href="/data/usapic%3deci.html ">
+                        <li class="flex_cm1">当周API库欣原油库存</li>
+                    </a>
+                                        <a title="当周API精炼油库存 " href="/data/usoiad%3deci.html ">
+                        <li class="flex_cm1">当周API精炼油库存</li>
+                    </a>
+                                        <a title="当周MBA30年期固定抵押贷款利率 " href="/data/usmg%3deci.html ">
+                        <li class="flex_cm1">当周MBA30年期固定抵押贷款利率</li>
+                    </a>
+                                        <a title="当周MBA抵押贷款申请活动指数 " href="/data/usmgm%3deci.html ">
+                        <li class="flex_cm1">当周MBA抵押贷款申请活动指数</li>
+                    </a>
+                                        <a title="FHFA房价指数月率  " href="/data/hpimmom%25+index.html ">
+                        <li class="flex_cm1">FHFA房价指数月率 </li>
+                    </a>
+                                        <a title="FHFA房价指数年率 " href="/data/ushpiy%3deci.html ">
+                        <li class="flex_cm1">FHFA房价指数年率</li>
+                    </a>
+                                        <a title="当周初请失业金人数四周均值 " href="/data/usjoba%3deci.html ">
+                        <li class="flex_cm1">当周初请失业金人数四周均值</li>
+                    </a>
+                                        <a title="当周彭博消费者信心指数 " href="/data/comfcomf+index.html ">
+                        <li class="flex_cm1">当周彭博消费者信心指数</li>
+                    </a>
+                                        <a title="新屋销售总数年化 " href="/data/nhsltot+index.html ">
+                        <li class="flex_cm1">新屋销售总数年化</li>
+                    </a>
+                                        <a title="堪萨斯联储制造业产出指数 " href="/data/uskcmf%3deci.html ">
+                        <li class="flex_cm1">堪萨斯联储制造业产出指数</li>
+                    </a>
+                                        <a title="堪萨斯联储制造业综合指数 " href="/data/kclssaci+index.html ">
+                        <li class="flex_cm1">堪萨斯联储制造业综合指数</li>
+                    </a>
+                                        <a title="扣除运输的耐用品订单月率 " href="/data/dgnoxtch+indexp.html ">
+                        <li class="flex_cm1">扣除运输的耐用品订单月率</li>
+                    </a>
+                                        <a title="扣除飞机非国防资本耐用品订单月率 " href="/data/cgnoxai%25+indexp.html ">
+                        <li class="flex_cm1">扣除飞机非国防资本耐用品订单月率</li>
+                    </a>
+                                        <a title="扣除国防的耐用品订单月率 " href="/data/usdgnd%3deci.html ">
+                        <li class="flex_cm1">扣除国防的耐用品订单月率</li>
+                    </a>
+                                        <a title="当周ECRI领先指标年率 " href="/data/usgrw%3deci.html ">
+                        <li class="flex_cm1">当周ECRI领先指标年率</li>
+                    </a>
+                                        <a title="当周ECRI领先指标 " href="/data/usecrw%3deci.html ">
+                        <li class="flex_cm1">当周ECRI领先指标</li>
+                    </a>
+                                        <a title="当周总钻井总数 " href="/data/baketot+index.html ">
+                        <li class="flex_cm1">当周总钻井总数</li>
+                    </a>
+                                        <a title="S&P/CS20座大城市季调后房价指数月率 " href="/data/spcs20sm+index.html ">
+                        <li class="flex_cm1">S&P/CS20座大城市季调后房价指数月率</li>
+                    </a>
+                                        <a title="S&P/CS20座大城市未季调房价指数 " href="/data/spcs20+index.html ">
+                        <li class="flex_cm1">S&P/CS20座大城市未季调房价指数</li>
+                    </a>
+                                        <a title="S&P/CS20座大城市未季调房价指数月率 " href="/data/usshp%3deci.html ">
+                        <li class="flex_cm1">S&P/CS20座大城市未季调房价指数月率</li>
+                    </a>
+                                        <a title="里奇蒙德联储制造业装船指数 " href="/data/usrfd%3deci.html ">
+                        <li class="flex_cm1">里奇蒙德联储制造业装船指数</li>
+                    </a>
+                                        <a title="里奇蒙德联储服务业收入指数 " href="/data/usrfds%3deci.html ">
+                        <li class="flex_cm1">里奇蒙德联储服务业收入指数</li>
+                    </a>
+                                        <a title="成屋签约销售指数年率 " href="/data/usphtyoy+index.html ">
+                        <li class="flex_cm1">成屋签约销售指数年率</li>
+                    </a>
+                                        <a title="企业获利年化季率初值 " href="/data/uscpp%3deci.html ">
+                        <li class="flex_cm1">企业获利年化季率初值</li>
+                    </a>
+                                        <a title="PCE物价指数年化季率终值 " href="/data/uspcef%3deci.html ">
+                        <li class="flex_cm1">PCE物价指数年化季率终值</li>
+                    </a>
+                                        <a title="ISM就业指数 " href="/data/usisme%3deci.html ">
+                        <li class="flex_cm1">ISM就业指数</li>
+                    </a>
+                                        <a title="ISM制造业物价支付指数 " href="/data/napmpric+index.html ">
+                        <li class="flex_cm1">ISM制造业物价支付指数</li>
+                    </a>
+                                        <a title="ISM新订单指数 " href="/data/napmnewo+index.html ">
+                        <li class="flex_cm1">ISM新订单指数</li>
+                    </a>
+                                        <a title="扣除运输的工厂订单月率 " href="/data/usfxtr%3deci.html ">
+                        <li class="flex_cm1">扣除运输的工厂订单月率</li>
+                    </a>
+                                        <a title="扣除飞机非国防资本耐用品订单月率修正值 " href="/data/usndcg%3deci.html ">
+                        <li class="flex_cm1">扣除飞机非国防资本耐用品订单月率修正值</li>
+                    </a>
+                                        <a title="扣除国防的耐用品订单月率修正值 " href="/data/usdgnr%3deci.html ">
+                        <li class="flex_cm1">扣除国防的耐用品订单月率修正值</li>
+                    </a>
+                                        <a title="工厂订单月率 " href="/data/tmnochng+index.html ">
+                        <li class="flex_cm1">工厂订单月率</li>
+                    </a>
+                                        <a title="服务业PMI终值 " href="/data/mpmiussa+indexf.html ">
+                        <li class="flex_cm1">服务业PMI终值</li>
+                    </a>
+                                        <a title="综合PMI终值 " href="/data/mpmiusca+indexf.html ">
+                        <li class="flex_cm1">综合PMI终值</li>
+                    </a>
+                                        <a title="ISM非制造业PMI " href="/data/napmnmi+index.html ">
+                        <li class="flex_cm1">ISM非制造业PMI</li>
+                    </a>
+                                        <a title="ISM非制造业物价指数 " href="/data/usppmi%3deci.html ">
+                        <li class="flex_cm1">ISM非制造业物价指数</li>
+                    </a>
+                                        <a title="ISM非制造业新订单指数 " href="/data/usdpmi%3deci.html ">
+                        <li class="flex_cm1">ISM非制造业新订单指数</li>
+                    </a>
+                                        <a title="ISM非制造业就业指数 " href="/data/usepmi%3deci.html ">
+                        <li class="flex_cm1">ISM非制造业就业指数</li>
+                    </a>
+                                        <a title="私人非农就业人数 " href="/data/nfp+pch+index.html ">
+                        <li class="flex_cm1">私人非农就业人数</li>
+                    </a>
+                                        <a title="季调后制造业就业人口 " href="/data/usmmmnch+index.html ">
+                        <li class="flex_cm1">季调后制造业就业人口</li>
+                    </a>
+                                        <a title="平均每小时工资月率 " href="/data/ahe+mom%25+index.html ">
+                        <li class="flex_cm1">平均每小时工资月率</li>
+                    </a>
+                                        <a title="平均每小时工资年率 " href="/data/ahe+yoy%25+index.html ">
+                        <li class="flex_cm1">平均每小时工资年率</li>
+                    </a>
+                                        <a title="平均每周工时 " href="/data/awh+totl+index.html ">
+                        <li class="flex_cm1">平均每周工时</li>
+                    </a>
+                                        <a title="消费信贷 " href="/data/cicrtot+index.html ">
+                        <li class="flex_cm1">消费信贷</li>
+                    </a>
+                                        <a title="核心PCE物价指数年化季率修正值 " href="/data/gdpcpcec+indexs.html ">
+                        <li class="flex_cm1">核心PCE物价指数年化季率修正值</li>
+                    </a>
+                                        <a title="Markit服务业PMI初值 " href="/data/mpmiussa+indexp.html ">
+                        <li class="flex_cm1">Markit服务业PMI初值</li>
+                    </a>
+                                        <a title="Markit制造业PMI初值 " href="/data/mpmiusma+indexp.html ">
+                        <li class="flex_cm1">Markit制造业PMI初值</li>
+                    </a>
+                                        <a title="GDP平减指数初值 " href="/data/gdp+piqq+indexa.html ">
+                        <li class="flex_cm1">GDP平减指数初值</li>
+                    </a>
+                                        <a title="当周EIA精炼油库存 " href="/data/doeasdis+index.html ">
+                        <li class="flex_cm1">当周EIA精炼油库存</li>
+                    </a>
+                                        <a title="当周续请失业金人数 " href="/data/injcsp+index.html ">
+                        <li class="flex_cm1">当周续请失业金人数</li>
+                    </a>
+                                        <a title="谘商会就业趋势指数 " href="/data/usempi%3deci.html ">
+                        <li class="flex_cm1">谘商会就业趋势指数</li>
+                    </a>
+                                        <a title="扣除飞机非国防资本耐用品订单月率 " href="/data/cgnoxai%25+index.html ">
+                        <li class="flex_cm1">扣除飞机非国防资本耐用品订单月率</li>
+                    </a>
+                                        <a title="JOLTs职位空缺 " href="/data/jolttotl+index.html ">
+                        <li class="flex_cm1">JOLTs职位空缺</li>
+                    </a>
+                                        <a title="出口物价指数月率 " href="/data/usexp%3deci.html ">
+                        <li class="flex_cm1">出口物价指数月率</li>
+                    </a>
+                                        <a title="进口物价指数月率 " href="/data/imp1chng+index.html ">
+                        <li class="flex_cm1">进口物价指数月率</li>
+                    </a>
+                                        <a title="进口物价指数年率 " href="/data/imp1yoy%25+index.html ">
+                        <li class="flex_cm1">进口物价指数年率</li>
+                    </a>
+                                        <a title="政府预算 " href="/data/fddssd+index.html ">
+                        <li class="flex_cm1">政府预算</li>
+                    </a>
+                                        <a title="核心PPI月率 " href="/data/fdidsgmo+index.html ">
+                        <li class="flex_cm1">核心PPI月率</li>
+                    </a>
+                                        <a title="PPI年率 " href="/data/fdiufdyo+index.html ">
+                        <li class="flex_cm1">PPI年率</li>
+                    </a>
+                                        <a title="核心PPI年率 " href="/data/fdiusgyo+index.html ">
+                        <li class="flex_cm1">核心PPI年率</li>
+                    </a>
+                                        <a title="密歇根大学现况指数初值 " href="/data/conscurr+indexp.html ">
+                        <li class="flex_cm1">密歇根大学现况指数初值</li>
+                    </a>
+                                        <a title="密歇根大学现况指数终值 " href="/data/conscurr+indexf.html ">
+                        <li class="flex_cm1">密歇根大学现况指数终值</li>
+                    </a>
+                                        <a title="密歇根大学预期指数初值 " href="/data/consexp+indexp.html ">
+                        <li class="flex_cm1">密歇根大学预期指数初值</li>
+                    </a>
+                                        <a title="密歇根大学预期指数终值 " href="/data/consexp+indexf.html ">
+                        <li class="flex_cm1">密歇根大学预期指数终值</li>
+                    </a>
+                                        <a title="实际收入月率 " href="/data/usearn%3deci.html ">
+                        <li class="flex_cm1">实际收入月率</li>
+                    </a>
+                                        <a title="未季调核心CPI月率 " href="/data/cpupxchg+index.html ">
+                        <li class="flex_cm1">未季调核心CPI月率</li>
+                    </a>
+                                        <a title="未季调核心CPI年率 " href="/data/cpi+xyoy+index.html ">
+                        <li class="flex_cm1">未季调核心CPI年率</li>
+                    </a>
+                                        <a title="未季调CPI年率 " href="/data/cpi+yoy+index.html ">
+                        <li class="flex_cm1">未季调CPI年率</li>
+                    </a>
+                                        <a title="季调后核心CPI指数 " href="/data/cpupaxfe+index.html ">
+                        <li class="flex_cm1">季调后核心CPI指数</li>
+                    </a>
+                                        <a title="未季调CPI " href="/data/cpurnsa+index.html ">
+                        <li class="flex_cm1">未季调CPI</li>
+                    </a>
+                                        <a title="核心零售销售月率 " href="/data/rstaxmom+index.html ">
+                        <li class="flex_cm1">核心零售销售月率</li>
+                    </a>
+                                        <a title="商业库存月率 " href="/data/mtibchng+index.html ">
+                        <li class="flex_cm1">商业库存月率</li>
+                    </a>
+                                        <a title="外资净买入美国公债 " href="/data/usfbt%3deci.html ">
+                        <li class="flex_cm1">外资净买入美国公债</li>
+                    </a>
+                                        <a title="国际资本净流入 " href="/data/frnttnet+index.html ">
+                        <li class="flex_cm1">国际资本净流入</li>
+                    </a>
+                                        <a title="长期资本净流入 " href="/data/frnttotl+index.html ">
+                        <li class="flex_cm1">长期资本净流入</li>
+                    </a>
+                                        <a title="新屋开工年化月率 " href="/data/nhchstch+index.html ">
+                        <li class="flex_cm1">新屋开工年化月率</li>
+                    </a>
+                                        <a title="营建许可总数 " href="/data/nhspatot+index.html ">
+                        <li class="flex_cm1">营建许可总数</li>
+                    </a>
+                                        <a title="产能利用率 " href="/data/cptichng+index.html ">
+                        <li class="flex_cm1">产能利用率</li>
+                    </a>
+                                        <a title="制造业产出月率 " href="/data/ipmgchng+index.html ">
+                        <li class="flex_cm1">制造业产出月率</li>
+                    </a>
+                                        <a title="费城联储制造业就业指数 " href="/data/uspfei%3deci.html ">
+                        <li class="flex_cm1">费城联储制造业就业指数</li>
+                    </a>
+                                        <a title="费城联储制造业物价支付指数 " href="/data/uspfpp%3deci.html ">
+                        <li class="flex_cm1">费城联储制造业物价支付指数</li>
+                    </a>
+                                        <a title="谘商会领先指标月率 " href="/data/lei+chng+index.html ">
+                        <li class="flex_cm1">谘商会领先指标月率</li>
+                    </a>
+                                        <a title="费城联储制造业新订单指数 " href="/data/uspfno%3deci.html ">
+                        <li class="flex_cm1">费城联储制造业新订单指数</li>
+                    </a>
+                                        <a title="费城联储制造业指数 " href="/data/outfgaf+index.html ">
+                        <li class="flex_cm1">费城联储制造业指数</li>
+                    </a>
+                                        <a title="彭博经济预期 " href="/data/comfbtwr+index.html ">
+                        <li class="flex_cm1">彭博经济预期</li>
+                    </a>
+                                        <a title="核心PCE物价指数年率 " href="/data/pce+cyoy+index.html ">
+                        <li class="flex_cm1">核心PCE物价指数年率</li>
+                    </a>
+                                        <a title="非农生产力终值 " href="/data/prodnfr%25+indexf.html ">
+                        <li class="flex_cm1">非农生产力终值</li>
+                    </a>
+                                        <a title="非农单位劳动力成本终值 " href="/data/costnfr%25+indexf.html ">
+                        <li class="flex_cm1">非农单位劳动力成本终值</li>
+                    </a>
+                                        <a title="最终销售年化季率初值 " href="/data/usgfsa%3deci.html ">
+                        <li class="flex_cm1">最终销售年化季率初值</li>
+                    </a>
+                                        <a title="GDP平减指数初值 " href="/data/usdgea%3deci.html ">
+                        <li class="flex_cm1">GDP平减指数初值</li>
+                    </a>
+                                        <a title="一年期通胀率预期 " href="/data/conspxmd+indexf.html ">
+                        <li class="flex_cm1">一年期通胀率预期</li>
+                    </a>
+                                        <a title="密尔沃基ISM指数 " href="/data/mapmindx+index.html ">
+                        <li class="flex_cm1">密尔沃基ISM指数</li>
+                    </a>
+                                        <a title="MBA抵押贷款违约率 " href="/data/forltotl+index.html ">
+                        <li class="flex_cm1">MBA抵押贷款违约率</li>
+                    </a>
+                                        <a title="非农生产力初值 " href="/data/prodnfr%25+indexp.html ">
+                        <li class="flex_cm1">非农生产力初值</li>
+                    </a>
+                                        <a title="ISM纽约联储企业活动指数 " href="/data/nypmcurr+index.html ">
+                        <li class="flex_cm1">ISM纽约联储企业活动指数</li>
+                    </a>
+                                        <a title="非农单位劳动力成本初值 " href="/data/costnfr%25+indexp.html ">
+                        <li class="flex_cm1">非农单位劳动力成本初值</li>
+                    </a>
+                                        <a title="IBD消费者信心指数 " href="/data/econusib+index.html ">
+                        <li class="flex_cm1">IBD消费者信心指数</li>
+                    </a>
+                                        <a title="批发库存月率 " href="/data/mwinchng+index.html ">
+                        <li class="flex_cm1">批发库存月率</li>
+                    </a>
+                                        <a title="就业成本指数 " href="/data/eci+sa%25+index.html ">
+                        <li class="flex_cm1">就业成本指数</li>
+                    </a>
+                                        <a title="抵押贷款违约 " href="/data/dlqtdlqt+index.html ">
+                        <li class="flex_cm1">抵押贷款违约</li>
+                    </a>
+                                        <a title="PCE物价指数月率 " href="/data/pce+defm+index.html ">
+                        <li class="flex_cm1">PCE物价指数月率</li>
+                    </a>
+                                        <a title="PCE物价指数年率 " href="/data/pce+defy+index.html ">
+                        <li class="flex_cm1">PCE物价指数年率</li>
+                    </a>
+                                        <a title="PCE物价指数 " href="/data/uspcep%3deci.html ">
+                        <li class="flex_cm1">PCE物价指数</li>
+                    </a>
+                                        <a title="NFIB商业乐观指数 " href="/data/sboitotl+index.html ">
+                        <li class="flex_cm1">NFIB商业乐观指数</li>
+                    </a>
+                                        <a title="NAHB房产市场指数 " href="/data/ushbmidx+index.html ">
+                        <li class="flex_cm1">NAHB房产市场指数</li>
+                    </a>
+                                        <a title="当周EIA俄克拉荷马州库欣原油库存 " href="/data/doeascus+index.html ">
+                        <li class="flex_cm1">当周EIA俄克拉荷马州库欣原油库存</li>
+                    </a>
+                                        <a title="当周EIA车用汽油总产量引伸需求数据 " href="/data/doidmoga+index.html ">
+                        <li class="flex_cm1">当周EIA车用汽油总产量引伸需求数据</li>
+                    </a>
+                                        <a title="当周EIA蒸馏燃油产量引伸需求数据 " href="/data/doiddist+index.html ">
+                        <li class="flex_cm1">当周EIA蒸馏燃油产量引伸需求数据</li>
+                    </a>
+                                        <a title="当周MBA抵押贷款再融资活动指数 " href="/data/usmgr%3deci.html ">
+                        <li class="flex_cm1">当周MBA抵押贷款再融资活动指数</li>
+                    </a>
+                                        <a title="当周MBA抵押贷款购买指数 " href="/data/usmgpi%3deci.html ">
+                        <li class="flex_cm1">当周MBA抵押贷款购买指数</li>
+                    </a>
+                                        <a title="当周天然气钻井总数 " href="/data/bakegas+index.html ">
+                        <li class="flex_cm1">当周天然气钻井总数</li>
+                    </a>
+                                        <a title="MBA抵押贷款申请活动指数 " href="/data/mbavchng+index.html ">
+                        <li class="flex_cm1">MBA抵押贷款申请活动指数</li>
+                    </a>
+                                        <a title="劳动力参与率 " href="/data/prustot+index.html ">
+                        <li class="flex_cm1">劳动力参与率</li>
+                    </a>
+                                        <a title="U6失业率 " href="/data/usudmaer+index.html ">
+                        <li class="flex_cm1">U6失业率</li>
+                    </a>
+                                        <a title="五至十年期通胀率预期 " href="/data/consp5md+indexf.html ">
+                        <li class="flex_cm1">五至十年期通胀率预期</li>
+                    </a>
+                                    </ul>
+            </div>
+                        <div name="欧元区" class="j_tab_box show c_tab_nav">
+                <ul>
+                                        <a title="欧洲央行基准利率 " href="/data/eurr002w+index.html ">
+                        <li class="flex_cm1">欧洲央行基准利率</li>
+                    </a>
+                                        <a title="Sentix投资者信心指数 " href="/data/snteeugx+index.html ">
+                        <li class="flex_cm1">Sentix投资者信心指数</li>
+                    </a>
+                                        <a title="工业产出月率 " href="/data/euitemum+index.html ">
+                        <li class="flex_cm1">工业产出月率</li>
+                    </a>
+                                        <a title="CPI月率 " href="/data/eccpemum+index.html ">
+                        <li class="flex_cm1">CPI月率</li>
+                    </a>
+                                        <a title="消费者信心指数初值 " href="/data/euccemu+indexa.html ">
+                        <li class="flex_cm1">消费者信心指数初值</li>
+                    </a>
+                                        <a title="制造业PMI初值 " href="/data/mpmiezma+indexp.html ">
+                        <li class="flex_cm1">制造业PMI初值</li>
+                    </a>
+                                        <a title="核心CPI年率初值 " href="/data/cpexemuy+indexa.html ">
+                        <li class="flex_cm1">核心CPI年率初值</li>
+                    </a>
+                                        <a title="零售销售月率 " href="/data/rssaemum+index.html ">
+                        <li class="flex_cm1">零售销售月率</li>
+                    </a>
+                                        <a title="ZEW经济景气指数  " href="/data/grzeeuex+index.html ">
+                        <li class="flex_cm1">ZEW经济景气指数 </li>
+                    </a>
+                                        <a title="消费者信心指数终值 " href="/data/euccemu+indexf.html ">
+                        <li class="flex_cm1">消费者信心指数终值</li>
+                    </a>
+                                        <a title="经济景气指数 " href="/data/euesemu+index.html ">
+                        <li class="flex_cm1">经济景气指数</li>
+                    </a>
+                                        <a title="GDP年率初值 " href="/data/eugnemuy+indexa.html ">
+                        <li class="flex_cm1">GDP年率初值</li>
+                    </a>
+                                        <a title="GDP年率修正值 " href="/data/eugnemuy+indexp.html ">
+                        <li class="flex_cm1">GDP年率修正值</li>
+                    </a>
+                                        <a title="工业订单年率 " href="/data/eungezy+index.html ">
+                        <li class="flex_cm1">工业订单年率</li>
+                    </a>
+                                        <a title="工业订单月率 " href="/data/eunoezm+index.html ">
+                        <li class="flex_cm1">工业订单月率</li>
+                    </a>
+                                        <a title="失业率 " href="/data/umrtemu+index.html ">
+                        <li class="flex_cm1">失业率</li>
+                    </a>
+                                        <a title="PPI月率 " href="/data/euppemum+index.html ">
+                        <li class="flex_cm1">PPI月率</li>
+                    </a>
+                                        <a title="PPI年率 " href="/data/euppemuy+index.html ">
+                        <li class="flex_cm1">PPI年率</li>
+                    </a>
+                                        <a title="CPI年率初值 " href="/data/eccpest+index.html ">
+                        <li class="flex_cm1">CPI年率初值</li>
+                    </a>
+                                        <a title="服务业PMI终值 " href="/data/mpmiezsa+indexf.html ">
+                        <li class="flex_cm1">服务业PMI终值</li>
+                    </a>
+                                        <a title="综合PMI终值 " href="/data/mpmiezca+indexf.html ">
+                        <li class="flex_cm1">综合PMI终值</li>
+                    </a>
+                                        <a title="零售销售年率 " href="/data/rswaemuy+index.html ">
+                        <li class="flex_cm1">零售销售年率</li>
+                    </a>
+                                        <a title="零售业PMI " href="/data/mpmiezra+index.html ">
+                        <li class="flex_cm1">零售业PMI</li>
+                    </a>
+                                        <a title="政府支出季率 " href="/data/ngvtemuq+index.html ">
+                        <li class="flex_cm1">政府支出季率</li>
+                    </a>
+                                        <a title="工业产出年率 " href="/data/euipemuy+index.html ">
+                        <li class="flex_cm1">工业产出年率</li>
+                    </a>
+                                        <a title="季调后就业人数年率 " href="/data/ememulyy+index.html ">
+                        <li class="flex_cm1">季调后就业人数年率</li>
+                    </a>
+                                        <a title="CPI年率终值 " href="/data/eccpemuy+indexf.html ">
+                        <li class="flex_cm1">CPI年率终值</li>
+                    </a>
+                                        <a title="核心CPI年率终值 " href="/data/cpexemuy+indexf.html ">
+                        <li class="flex_cm1">核心CPI年率终值</li>
+                    </a>
+                                        <a title="核心CPI月率终值 " href="/data/eucpix%3deci.html ">
+                        <li class="flex_cm1">核心CPI月率终值</li>
+                    </a>
+                                        <a title="建筑业产出年率 " href="/data/eucptwdy+index.html ">
+                        <li class="flex_cm1">建筑业产出年率</li>
+                    </a>
+                                        <a title="未季调后贸易帐 " href="/data/xttbez+index.html ">
+                        <li class="flex_cm1">未季调后贸易帐</li>
+                    </a>
+                                        <a title="建筑业产出月率 " href="/data/eucptsam+index.html ">
+                        <li class="flex_cm1">建筑业产出月率</li>
+                    </a>
+                                        <a title="季调后贸易帐 " href="/data/xtsbez+index.html ">
+                        <li class="flex_cm1">季调后贸易帐</li>
+                    </a>
+                                        <a title="未季调经常帐 " href="/data/eucatlba+index.html ">
+                        <li class="flex_cm1">未季调经常帐</li>
+                    </a>
+                                        <a title="季调后经常帐 " href="/data/eusatotn+index.html ">
+                        <li class="flex_cm1">季调后经常帐</li>
+                    </a>
+                                        <a title="货币供应M3年率 " href="/data/ecmam3yy+index.html ">
+                        <li class="flex_cm1">货币供应M3年率</li>
+                    </a>
+                                        <a title="企业景气指数 " href="/data/eubci+index.html ">
+                        <li class="flex_cm1">企业景气指数</li>
+                    </a>
+                                        <a title="核心CPI年率 " href="/data/cpexemuy+index.html ">
+                        <li class="flex_cm1">核心CPI年率</li>
+                    </a>
+                                        <a title="CPI年率 " href="/data/eccpemuy+index.html ">
+                        <li class="flex_cm1">CPI年率</li>
+                    </a>
+                                        <a title="季调后GDP季率修正值 " href="/data/eugnemuq+indexp.html ">
+                        <li class="flex_cm1">季调后GDP季率修正值</li>
+                    </a>
+                                        <a title="工业景气指数 " href="/data/euicemu+index.html ">
+                        <li class="flex_cm1">工业景气指数</li>
+                    </a>
+                                        <a title="服务业景气指数 " href="/data/euscemu+index.html ">
+                        <li class="flex_cm1">服务业景气指数</li>
+                    </a>
+                                        <a title="季调后GDP季率初值 " href="/data/eugnemuq+indexa.html ">
+                        <li class="flex_cm1">季调后GDP季率初值</li>
+                    </a>
+                                        <a title="综合PMI初值 " href="/data/mpmiezca+indexp.html ">
+                        <li class="flex_cm1">综合PMI初值</li>
+                    </a>
+                                        <a title="三个月货币供应M3年率 " href="/data/ecma3mth+index.html ">
+                        <li class="flex_cm1">三个月货币供应M3年率</li>
+                    </a>
+                                        <a title="私营企业贷款年率 " href="/data/eum3pc%3deci.html ">
+                        <li class="flex_cm1">私营企业贷款年率</li>
+                    </a>
+                                        <a title="直接投资与投资组合 " href="/data/eupinv%3deci.html ">
+                        <li class="flex_cm1">直接投资与投资组合</li>
+                    </a>
+                                        <a title="制造业PMI终值 " href="/data/mpmiezma+indexf.html ">
+                        <li class="flex_cm1">制造业PMI终值</li>
+                    </a>
+                                        <a title="劳动力成本年率 " href="/data/lntnemuy+index.html ">
+                        <li class="flex_cm1">劳动力成本年率</li>
+                    </a>
+                                        <a title="薪资年率 " href="/data/euwagy%3deci.html ">
+                        <li class="flex_cm1">薪资年率</li>
+                    </a>
+                                    </ul>
+            </div>
+                        <div name="中国" class="j_tab_box show c_tab_nav">
+                <ul>
+                                        <a title="1年期贷款利率 " href="/data/chlr12mc+index.html ">
+                        <li class="flex_cm1">1年期贷款利率</li>
+                    </a>
+                                        <a title="年初至今工业产出年率 " href="/data/chvaicy+index.html ">
+                        <li class="flex_cm1">年初至今工业产出年率</li>
+                    </a>
+                                        <a title="谘商会领先指标月率 " href="/data/cncili+index.html ">
+                        <li class="flex_cm1">谘商会领先指标月率</li>
+                    </a>
+                                        <a title="实际外商直接投资年率 " href="/data/cndiinry+index.html ">
+                        <li class="flex_cm1">实际外商直接投资年率</li>
+                    </a>
+                                        <a title="新增人民币贷款 " href="/data/cnlnnew+index.html ">
+                        <li class="flex_cm1">新增人民币贷款</li>
+                    </a>
+                                        <a title="人民币融资总额 " href="/data/cnlnsfin+index.html ">
+                        <li class="flex_cm1">人民币融资总额</li>
+                    </a>
+                                        <a title="年初至今社会消费品零售总额年率 " href="/data/cnrsacmy+index.html ">
+                        <li class="flex_cm1">年初至今社会消费品零售总额年率</li>
+                    </a>
+                                        <a title="进口年率(按人民币计) " href="/data/cntsicny+index.html ">
+                        <li class="flex_cm1">进口年率(按人民币计)</li>
+                    </a>
+                                        <a title="外商直接投资月率 " href="/data/cnfdi%3deci.html ">
+                        <li class="flex_cm1">外商直接投资月率</li>
+                    </a>
+                                        <a title="PPI年率 " href="/data/cheftyoy+index.html ">
+                        <li class="flex_cm1">PPI年率</li>
+                    </a>
+                                        <a title="工业产出年率 " href="/data/chvaioy+index.html ">
+                        <li class="flex_cm1">工业产出年率</li>
+                    </a>
+                                        <a title="城镇固定资产投资年率 " href="/data/cnfayoy+index.html ">
+                        <li class="flex_cm1">城镇固定资产投资年率</li>
+                    </a>
+                                        <a title="贸易账(按美元计) " href="/data/cnfrbal%24+index.html ">
+                        <li class="flex_cm1">贸易账(按美元计)</li>
+                    </a>
+                                        <a title="出口年率(按美元计) " href="/data/cnfrexpy+index.html ">
+                        <li class="flex_cm1">出口年率(按美元计)</li>
+                    </a>
+                                        <a title="进口年率(按美元计) " href="/data/cnfrimpy+index.html ">
+                        <li class="flex_cm1">进口年率(按美元计)</li>
+                    </a>
+                                        <a title="规模以上工业企业利润年率 " href="/data/cnpretly+index.html ">
+                        <li class="flex_cm1">规模以上工业企业利润年率</li>
+                    </a>
+                                        <a title="社会消费品零售总额年率 " href="/data/cnrscyoy+index.html ">
+                        <li class="flex_cm1">社会消费品零售总额年率</li>
+                    </a>
+                                        <a title="出口年率(按人民币计) " href="/data/cntsecny+index.html ">
+                        <li class="flex_cm1">出口年率(按人民币计)</li>
+                    </a>
+                                        <a title="CPI年率 " href="/data/cncpiyoy+index.html ">
+                        <li class="flex_cm1">CPI年率</li>
+                    </a>
+                                        <a title="GDP季率 " href="/data/cngdpqoq+index.html ">
+                        <li class="flex_cm1">GDP季率</li>
+                    </a>
+                                        <a title="GDP年率 " href="/data/cngdpyoy+index.html ">
+                        <li class="flex_cm1">GDP年率</li>
+                    </a>
+                                        <a title="外汇储备 " href="/data/cngforex+index.html ">
+                        <li class="flex_cm1">外汇储备</li>
+                    </a>
+                                        <a title="M0货币供应年率 " href="/data/cnms0yoy+index.html ">
+                        <li class="flex_cm1">M0货币供应年率</li>
+                    </a>
+                                        <a title="M1货币供应年率 " href="/data/cnms1yoy+index.html ">
+                        <li class="flex_cm1">M1货币供应年率</li>
+                    </a>
+                                        <a title="M2货币供应年率 " href="/data/cnms2yoy+index.html ">
+                        <li class="flex_cm1">M2货币供应年率</li>
+                    </a>
+                                        <a title="官方制造业PMI " href="/data/cpmindx+index.html ">
+                        <li class="flex_cm1">官方制造业PMI</li>
+                    </a>
+                                        <a title="非制造业PMI " href="/data/cpminman+index.html ">
+                        <li class="flex_cm1">非制造业PMI</li>
+                    </a>
+                                        <a title="财新综合PMI " href="/data/mpmicnca+index.html ">
+                        <li class="flex_cm1">财新综合PMI</li>
+                    </a>
+                                        <a title="财新服务业PMI " href="/data/mpmicnsa+index.html ">
+                        <li class="flex_cm1">财新服务业PMI</li>
+                    </a>
+                                        <a title="CPI月率 " href="/data/cncpim%3deci.html ">
+                        <li class="flex_cm1">CPI月率</li>
+                    </a>
+                                        <a title="贸易帐(按人民币计) " href="/data/cntstcn+index.html ">
+                        <li class="flex_cm1">贸易帐(按人民币计)</li>
+                    </a>
+                                        <a title="财新制造业PMI终值 " href="/data/mpmicnma+index.html ">
+                        <li class="flex_cm1">财新制造业PMI终值</li>
+                    </a>
+                                        <a title="MNI消费者信心指数 " href="/data/mnccindx+index.html ">
+                        <li class="flex_cm1">MNI消费者信心指数</li>
+                    </a>
+                                    </ul>
+            </div>
+                        <div name="英国" class="j_tab_box show c_tab_nav">
+                <ul>
+                                        <a title="服务业PMI " href="/data/mpmigbsa+index.html ">
+                        <li class="flex_cm1">服务业PMI</li>
+                    </a>
+                                        <a title="建筑业PMI " href="/data/mpmigbxa+index.html ">
+                        <li class="flex_cm1">建筑业PMI</li>
+                    </a>
+                                        <a title="CBI零售销售差值 " href="/data/dtsrr1rb+index.html ">
+                        <li class="flex_cm1">CBI零售销售差值</li>
+                    </a>
+                                        <a title="CBI工业订单差值 " href="/data/mtef1c+index.html ">
+                        <li class="flex_cm1">CBI工业订单差值</li>
+                    </a>
+                                        <a title="CBI工业物价预期差值 " href="/data/mtef4c+index.html ">
+                        <li class="flex_cm1">CBI工业物价预期差值</li>
+                    </a>
+                                        <a title="季调后零售销售月率 " href="/data/ukrvinfm+index.html ">
+                        <li class="flex_cm1">季调后零售销售月率</li>
+                    </a>
+                                        <a title="季调后零售销售年率 " href="/data/ukrvinfy+index.html ">
+                        <li class="flex_cm1">季调后零售销售年率</li>
+                    </a>
+                                        <a title="央行资产购买规模 " href="/data/ukaptarg+index.html ">
+                        <li class="flex_cm1">央行资产购买规模</li>
+                    </a>
+                                        <a title="三个月包括红利的平均工资年率 " href="/data/ukawmwho+index.html ">
+                        <li class="flex_cm1">三个月包括红利的平均工资年率</li>
+                    </a>
+                                        <a title="三个月剔除红利的平均工资年率 " href="/data/ukawxtom+index.html ">
+                        <li class="flex_cm1">三个月剔除红利的平均工资年率</li>
+                    </a>
+                                        <a title="经常帐 " href="/data/ukca+index.html ">
+                        <li class="flex_cm1">经常帐</li>
+                    </a>
+                                        <a title="Gfk消费者信心指数 " href="/data/ukcci+index.html ">
+                        <li class="flex_cm1">Gfk消费者信心指数</li>
+                    </a>
+                                        <a title="建筑业产出月率 " href="/data/ukcnalsm+index.html ">
+                        <li class="flex_cm1">建筑业产出月率</li>
+                    </a>
+                                        <a title="建筑业产出年率 " href="/data/ukcnalsy+index.html ">
+                        <li class="flex_cm1">建筑业产出年率</li>
+                    </a>
+                                        <a title="三个月NIESR-GDP预估年率 " href="/data/ukegestg+index.html ">
+                        <li class="flex_cm1">三个月NIESR-GDP预估年率</li>
+                    </a>
+                                        <a title="出口季率 " href="/data/ukgeikkq+indexp.html ">
+                        <li class="flex_cm1">出口季率</li>
+                    </a>
+                                        <a title="进口季率 " href="/data/ukgeiklq+indexp.html ">
+                        <li class="flex_cm1">进口季率</li>
+                    </a>
+                                        <a title="GDP季率终值 " href="/data/ukgrabiq+indexf.html ">
+                        <li class="flex_cm1">GDP季率终值</li>
+                    </a>
+                                        <a title="Halifax季调后房价指数月率 " href="/data/ukhbsamm+index.html ">
+                        <li class="flex_cm1">Halifax季调后房价指数月率</li>
+                    </a>
+                                        <a title="核心CPI年率 " href="/data/ukhca9iq+index.html ">
+                        <li class="flex_cm1">核心CPI年率</li>
+                    </a>
+                                        <a title="央行/ GfK的通货膨胀未来12个月菜单 " href="/data/ukbfftin+index.html ">
+                        <li class="flex_cm1">央行/ GfK的通货膨胀未来12个月菜单</li>
+                    </a>
+                                        <a title="BBA房屋购买抵押贷款许可件数 " href="/data/ukmlmnhp+index.html ">
+                        <li class="flex_cm1">BBA房屋购买抵押贷款许可件数</li>
+                    </a>
+                                        <a title="制造业产出月率 " href="/data/ukmpimom+index.html ">
+                        <li class="flex_cm1">制造业产出月率</li>
+                    </a>
+                                        <a title="制造业产出年率 " href="/data/ukmpiyoy+index.html ">
+                        <li class="flex_cm1">制造业产出年率</li>
+                    </a>
+                                        <a title="政府支出季率初值 " href="/data/ukgenmyq+indexp.html ">
+                        <li class="flex_cm1">政府支出季率初值</li>
+                    </a>
+                                        <a title="央行消费信贷 " href="/data/ukmsb3ps+index.html ">
+                        <li class="flex_cm1">央行消费信贷</li>
+                    </a>
+                                        <a title="固定资本形成总值季率初值 " href="/data/ukgenptq+indexp.html ">
+                        <li class="flex_cm1">固定资本形成总值季率初值</li>
+                    </a>
+                                        <a title="M4货币供应月率 " href="/data/ukmsm41m+index.html ">
+                        <li class="flex_cm1">M4货币供应月率</li>
+                    </a>
+                                        <a title="服务业指数月率 " href="/data/ukisctmm+index.html ">
+                        <li class="flex_cm1">服务业指数月率</li>
+                    </a>
+                                        <a title="M4货币供应年率 " href="/data/ukmsm41y+index.html ">
+                        <li class="flex_cm1">M4货币供应年率</li>
+                    </a>
+                                        <a title="未季调核心输出PPI年率 " href="/data/ukppxfby+index.html ">
+                        <li class="flex_cm1">未季调核心输出PPI年率</li>
+                    </a>
+                                        <a title="央行抵押贷款许可 " href="/data/ukmsvtvx+index.html ">
+                        <li class="flex_cm1">央行抵押贷款许可</li>
+                    </a>
+                                        <a title="商品零售价格指数 " href="/data/ukrpi+index.html ">
+                        <li class="flex_cm1">商品零售价格指数</li>
+                    </a>
+                                        <a title="Nationwide房价指数月率 " href="/data/uknbaamm+index.html ">
+                        <li class="flex_cm1">Nationwide房价指数月率</li>
+                    </a>
+                                        <a title="贸易账 " href="/data/uktbttba+index.html ">
+                        <li class="flex_cm1">贸易账</li>
+                    </a>
+                                        <a title="Nationwide房价指数年率 " href="/data/uknbanyy+index.html ">
+                        <li class="flex_cm1">Nationwide房价指数年率</li>
+                    </a>
+                                        <a title="失业率 " href="/data/ukuer+index.html ">
+                        <li class="flex_cm1">失业率</li>
+                    </a>
+                                        <a title="未季调输入PPI月率 " href="/data/ukppiinc+index.html ">
+                        <li class="flex_cm1">未季调输入PPI月率</li>
+                    </a>
+                                        <a title="未季调输入PPI年率 " href="/data/ukppiiny+index.html ">
+                        <li class="flex_cm1">未季调输入PPI年率</li>
+                    </a>
+                                        <a title="未季调输出PPI月率 " href="/data/ukppioc+index.html ">
+                        <li class="flex_cm1">未季调输出PPI月率</li>
+                    </a>
+                                        <a title="未季调输出PPI年率 " href="/data/ukppioy+index.html ">
+                        <li class="flex_cm1">未季调输出PPI年率</li>
+                    </a>
+                                        <a title="未季调核心输出PPI月率 " href="/data/ukppxfbm+index.html ">
+                        <li class="flex_cm1">未季调核心输出PPI月率</li>
+                    </a>
+                                        <a title="政府收支短差 " href="/data/ukpsbr+index.html ">
+                        <li class="flex_cm1">政府收支短差</li>
+                    </a>
+                                        <a title="公共部门净借款 " href="/data/ukpsnb+index.html ">
+                        <li class="flex_cm1">公共部门净借款</li>
+                    </a>
+                                        <a title="Rightmove平均房屋要价指数月率 " href="/data/ukrmnapm+index.html ">
+                        <li class="flex_cm1">Rightmove平均房屋要价指数月率</li>
+                    </a>
+                                        <a title="Rightmove平均房屋要价指数年率 " href="/data/ukrmnapy+index.html ">
+                        <li class="flex_cm1">Rightmove平均房屋要价指数年率</li>
+                    </a>
+                                        <a title="核心零售物价指数年率 " href="/data/ukrpxyoy+index.html ">
+                        <li class="flex_cm1">核心零售物价指数年率</li>
+                    </a>
+                                        <a title="季调后核心零售销售月率 " href="/data/ukrvamom+index.html ">
+                        <li class="flex_cm1">季调后核心零售销售月率</li>
+                    </a>
+                                        <a title="季调后核心零售销售年率 " href="/data/ukrvayoy+index.html ">
+                        <li class="flex_cm1">季调后核心零售销售年率</li>
+                    </a>
+                                        <a title="商品贸易帐 " href="/data/uktbalee+index.html ">
+                        <li class="flex_cm1">商品贸易帐</li>
+                    </a>
+                                        <a title="非欧盟贸易帐 " href="/data/uktblgdt+index.html ">
+                        <li class="flex_cm1">非欧盟贸易帐</li>
+                    </a>
+                                        <a title="三个月ILO失业率 " href="/data/ukueilor+index.html ">
+                        <li class="flex_cm1">三个月ILO失业率</li>
+                    </a>
+                                        <a title="失业金申请人数 " href="/data/ukuemom+index.html ">
+                        <li class="flex_cm1">失业金申请人数</li>
+                    </a>
+                                        <a title="商业总值年率初值 " href="/data/ukbinpey+indexp.html ">
+                        <li class="flex_cm1">商业总值年率初值</li>
+                    </a>
+                                        <a title="Halifax季调后房价指数年率 " href="/data/ukhb3myr+index.html ">
+                        <li class="flex_cm1">Halifax季调后房价指数年率</li>
+                    </a>
+                                        <a title="央行抵押贷款 " href="/data/ukmsvtvj+index.html ">
+                        <li class="flex_cm1">央行抵押贷款</li>
+                    </a>
+                                        <a title="三个月RICS房价指数 " href="/data/ukrxpbal+index.html ">
+                        <li class="flex_cm1">三个月RICS房价指数</li>
+                    </a>
+                                        <a title="零售物价指数年率 " href="/data/ukrpyoy+index.html ">
+                        <li class="flex_cm1">零售物价指数年率</li>
+                    </a>
+                                        <a title="零售物价指数月率 " href="/data/ukrpmom+index.html ">
+                        <li class="flex_cm1">零售物价指数月率</li>
+                    </a>
+                                        <a title="官方储备变动 " href="/data/ukcr+index.html ">
+                        <li class="flex_cm1">官方储备变动</li>
+                    </a>
+                                        <a title="Markit/CIPS综合PMI " href="/data/mpmigbca+index.html ">
+                        <li class="flex_cm1">Markit/CIPS综合PMI</li>
+                    </a>
+                                        <a title="制造业PMI " href="/data/mpmigbma+index.html ">
+                        <li class="flex_cm1">制造业PMI</li>
+                    </a>
+                                        <a title="CBI服务业乐观信心指数 " href="/data/itsr1b+index.html ">
+                        <li class="flex_cm1">CBI服务业乐观信心指数</li>
+                    </a>
+                                        <a title="商业投资总值季率终值 " href="/data/ukbinpeq+indexf.html ">
+                        <li class="flex_cm1">商业投资总值季率终值</li>
+                    </a>
+                                        <a title="商业投资总值季率初值 " href="/data/ukbinpeq+indexp.html ">
+                        <li class="flex_cm1">商业投资总值季率初值</li>
+                    </a>
+                                        <a title="商业总值年率终值 " href="/data/ukbinpey+indexf.html ">
+                        <li class="flex_cm1">商业总值年率终值</li>
+                    </a>
+                                        <a title="DCLG房价指数年率 " href="/data/ukdhuky+index.html ">
+                        <li class="flex_cm1">DCLG房价指数年率</li>
+                    </a>
+                                        <a title="BRC商店物价指数年率 " href="/data/brcpally+index.html ">
+                        <li class="flex_cm1">BRC商店物价指数年率</li>
+                    </a>
+                                        <a title="BRC同店零售销售年率 " href="/data/kprslfls+index.html ">
+                        <li class="flex_cm1">BRC同店零售销售年率</li>
+                    </a>
+                                        <a title="央行基准利率 " href="/data/ukbrbase+index.html ">
+                        <li class="flex_cm1">央行基准利率</li>
+                    </a>
+                                        <a title="GDP季率初值 " href="/data/ukgrabiq+indexa.html ">
+                        <li class="flex_cm1">GDP季率初值</li>
+                    </a>
+                                        <a title="GDP季率修正值 " href="/data/ukgrabiq+indexp.html ">
+                        <li class="flex_cm1">GDP季率修正值</li>
+                    </a>
+                                        <a title="GDP年率初值 " href="/data/ukgrabiy+indexa.html ">
+                        <li class="flex_cm1">GDP年率初值</li>
+                    </a>
+                                        <a title="GDP年率终值 " href="/data/ukgrabiy+indexf.html ">
+                        <li class="flex_cm1">GDP年率终值</li>
+                    </a>
+                                        <a title="GDP年率修正值 " href="/data/ukgrabiy+indexp.html ">
+                        <li class="flex_cm1">GDP年率修正值</li>
+                    </a>
+                                        <a title="工业产出月率 " href="/data/ukipimom+index.html ">
+                        <li class="flex_cm1">工业产出月率</li>
+                    </a>
+                                        <a title="工业产出年率 " href="/data/ukipiyoy+index.html ">
+                        <li class="flex_cm1">工业产出年率</li>
+                    </a>
+                                        <a title="CPI月率 " href="/data/ukrpcjmr+index.html ">
+                        <li class="flex_cm1">CPI月率</li>
+                    </a>
+                                        <a title="CPI年率 " href="/data/ukrpcjyr+index.html ">
+                        <li class="flex_cm1">CPI年率</li>
+                    </a>
+                                    </ul>
+            </div>
+                        <div name="澳大利亚" class="j_tab_box show c_tab_nav">
+                <ul>
+                                        <a title="商品指数年率 " href="/data/aurbsdy%25+index.html ">
+                        <li class="flex_cm1">商品指数年率</li>
+                    </a>
+                                        <a title="NAB商业景气指数 " href="/data/nabscond+index.html ">
+                        <li class="flex_cm1">NAB商业景气指数</li>
+                    </a>
+                                        <a title="NAB商业信心指数 " href="/data/nabsconf+index.html ">
+                        <li class="flex_cm1">NAB商业信心指数</li>
+                    </a>
+                                        <a title="HIA新屋销售月率 " href="/data/eco8aubs+index.html ">
+                        <li class="flex_cm1">HIA新屋销售月率</li>
+                    </a>
+                                        <a title="NAB商业信心指数 " href="/data/nabqcodo+index.html ">
+                        <li class="flex_cm1">NAB商业信心指数</li>
+                    </a>
+                                        <a title="季调私营营建许可月率 " href="/data/aupha%3deci.html ">
+                        <li class="flex_cm1">季调私营营建许可月率</li>
+                    </a>
+                                        <a title="建筑业资本支出季率 " href="/data/aubcap%3deci.html ">
+                        <li class="flex_cm1">建筑业资本支出季率</li>
+                    </a>
+                                        <a title="出口月率 " href="/data/augse%3deci.html ">
+                        <li class="flex_cm1">出口月率</li>
+                    </a>
+                                        <a title="进口月率 " href="/data/augsi%3deci.html ">
+                        <li class="flex_cm1">进口月率</li>
+                    </a>
+                                        <a title="季调营建许可月率 " href="/data/aubac+index.html ">
+                        <li class="flex_cm1">季调营建许可月率</li>
+                    </a>
+                                        <a title="季调营建许可年率 " href="/data/aubay+index.html ">
+                        <li class="flex_cm1">季调营建许可年率</li>
+                    </a>
+                                        <a title="私人新增资本支出季率 " href="/data/aucechg+index.html ">
+                        <li class="flex_cm1">私人新增资本支出季率</li>
+                    </a>
+                                        <a title="CPI季率 " href="/data/aucpichg+index.html ">
+                        <li class="flex_cm1">CPI季率</li>
+                    </a>
+                                        <a title="商品及服务贸易帐 " href="/data/auitgsb+index.html ">
+                        <li class="flex_cm1">商品及服务贸易帐</li>
+                    </a>
+                                        <a title="季调后失业率 " href="/data/aulfunem+index.html ">
+                        <li class="flex_cm1">季调后失业率</li>
+                    </a>
+                                        <a title="GDP季调季率 " href="/data/aunagdpc+index.html ">
+                        <li class="flex_cm1">GDP季调季率</li>
+                    </a>
+                                        <a title="PPI季率 " href="/data/auppfmom+index.html ">
+                        <li class="flex_cm1">PPI季率</li>
+                    </a>
+                                        <a title="PPI年率 " href="/data/auppfyoy+index.html ">
+                        <li class="flex_cm1">PPI年率</li>
+                    </a>
+                                        <a title="季调后零售销售月率 " href="/data/aurstsa+index.html ">
+                        <li class="flex_cm1">季调后零售销售月率</li>
+                    </a>
+                                        <a title="零售销售季率 " href="/data/aurturnq+index.html ">
+                        <li class="flex_cm1">零售销售季率</li>
+                    </a>
+                                        <a title="当周ANZ消费者信心指数 " href="/data/auanccw+index.html ">
+                        <li class="flex_cm1">当周ANZ消费者信心指数</li>
+                    </a>
+                                        <a title="商品指数（澳元） " href="/data/aurba%24+index.html ">
+                        <li class="flex_cm1">商品指数（澳元）</li>
+                    </a>
+                                        <a title="全国房价指数季率  " href="/data/aurhqoq+index.html ">
+                        <li class="flex_cm1">全国房价指数季率 </li>
+                    </a>
+                                        <a title="新车销售月率 " href="/data/auvhmom%25+index.html ">
+                        <li class="flex_cm1">新车销售月率</li>
+                    </a>
+                                        <a title="新车销售年率 " href="/data/auvhyoy%25+index.html ">
+                        <li class="flex_cm1">新车销售年率</li>
+                    </a>
+                                        <a title="DEEWR熟练工职位空缺月率 " href="/data/dlivtm%25+index.html ">
+                        <li class="flex_cm1">DEEWR熟练工职位空缺月率</li>
+                    </a>
+                                        <a title="CBA / HIA房屋负担能力 " href="/data/cbahia+index.html ">
+                        <li class="flex_cm1">CBA / HIA房屋负担能力</li>
+                    </a>
+                                        <a title="谘商会领先指标月率 " href="/data/eco4aucl+index.html ">
+                        <li class="flex_cm1">谘商会领先指标月率</li>
+                    </a>
+                                        <a title="私营企业贷款月率 " href="/data/ozcacrm%25+index.html ">
+                        <li class="flex_cm1">私营企业贷款月率</li>
+                    </a>
+                                        <a title="私营企业贷款年率 " href="/data/ozcacry%25+index.html ">
+                        <li class="flex_cm1">私营企业贷款年率</li>
+                    </a>
+                                        <a title="TD-MI通胀指数月率 " href="/data/tdmimom+index.html ">
+                        <li class="flex_cm1">TD-MI通胀指数月率</li>
+                    </a>
+                                        <a title="消费者通胀预期 " href="/data/mecctrim+index.html ">
+                        <li class="flex_cm1">消费者通胀预期</li>
+                    </a>
+                                        <a title="CPI修剪均值环比 " href="/data/rbcptriq+index.html ">
+                        <li class="flex_cm1">CPI修剪均值环比</li>
+                    </a>
+                                        <a title="CPI微调平均值同比 " href="/data/rbcptriy+index.html ">
+                        <li class="flex_cm1">CPI微调平均值同比</li>
+                    </a>
+                                        <a title="CPI加权中值环比 " href="/data/rbcpwm%25q+index.html ">
+                        <li class="flex_cm1">CPI加权中值环比</li>
+                    </a>
+                                        <a title="CPI同比加权平均 " href="/data/rbcpwm%25y+index.html ">
+                        <li class="flex_cm1">CPI同比加权平均</li>
+                    </a>
+                                        <a title="澳洲联储外汇交易的其他 " href="/data/rbfeotri+index.html ">
+                        <li class="flex_cm1">澳洲联储外汇交易的其他</li>
+                    </a>
+                                        <a title="TD-MI通胀指数年率 " href="/data/tdmiyoy+index.html ">
+                        <li class="flex_cm1">TD-MI通胀指数年率</li>
+                    </a>
+                                        <a title="季调后ANZ报纸招聘广告月率 " href="/data/aunads%3deci.html ">
+                        <li class="flex_cm1">季调后ANZ报纸招聘广告月率</li>
+                    </a>
+                                        <a title="西太平洋/墨尔本消费者信心指数月率  " href="/data/wmcccon%25+index.html ">
+                        <li class="flex_cm1">西太平洋/墨尔本消费者信心指数月率 </li>
+                    </a>
+                                        <a title="西太平洋/墨尔本消费者信心指数 " href="/data/wmcccons+index.html ">
+                        <li class="flex_cm1">西太平洋/墨尔本消费者信心指数</li>
+                    </a>
+                                        <a title="季调后企业库存季率 " href="/data/auinvq%3deci.html ">
+                        <li class="flex_cm1">季调后企业库存季率</li>
+                    </a>
+                                        <a title="AIG建筑业表现指数 " href="/data/aicipci+index.html ">
+                        <li class="flex_cm1">AIG建筑业表现指数</li>
+                    </a>
+                                        <a title="AIG/CBA服务业表现指数 " href="/data/aigismi+index.html ">
+                        <li class="flex_cm1">AIG/CBA服务业表现指数</li>
+                    </a>
+                                        <a title="AIG/PWC制造业表现指数 " href="/data/aigpmi+index.html ">
+                        <li class="flex_cm1">AIG/PWC制造业表现指数</li>
+                    </a>
+                                        <a title="营建完工季率 " href="/data/aucnqtot+index.html ">
+                        <li class="flex_cm1">营建完工季率</li>
+                    </a>
+                                        <a title="季调后房屋贷款许可件数月率 " href="/data/auhfchg+index.html ">
+                        <li class="flex_cm1">季调后房屋贷款许可件数月率</li>
+                    </a>
+                                        <a title="季调后ANZ总招聘广告月率 " href="/data/aulfantc+index.html ">
+                        <li class="flex_cm1">季调后ANZ总招聘广告月率</li>
+                    </a>
+                                        <a title="兼职就业人口变动 " href="/data/aulfemcp+index.html ">
+                        <li class="flex_cm1">兼职就业人口变动</li>
+                    </a>
+                                        <a title="全职就业人口变动 " href="/data/aulfemfc+index.html ">
+                        <li class="flex_cm1">全职就业人口变动</li>
+                    </a>
+                                        <a title="就业人口变动 " href="/data/aulfempc+index.html ">
+                        <li class="flex_cm1">就业人口变动</li>
+                    </a>
+                                        <a title="季调后就业参与率 " href="/data/aulfpart+index.html ">
+                        <li class="flex_cm1">季调后就业参与率</li>
+                    </a>
+                                        <a title="西太平洋领先指标月率 " href="/data/aulilgm%25+index.html ">
+                        <li class="flex_cm1">西太平洋领先指标月率</li>
+                    </a>
+                                        <a title="企业经营利润季率 " href="/data/aupgop+index.html ">
+                        <li class="flex_cm1">企业经营利润季率</li>
+                    </a>
+                                        <a title="全国房价指数年率 " href="/data/aurhyoy+index.html ">
+                        <li class="flex_cm1">全国房价指数年率</li>
+                    </a>
+                                        <a title="季调后薪资价格指数季率 " href="/data/auwcqsa+index.html ">
+                        <li class="flex_cm1">季调后薪资价格指数季率</li>
+                    </a>
+                                        <a title="季调后薪资价格指数年率 " href="/data/auwcysa+index.html ">
+                        <li class="flex_cm1">季调后薪资价格指数年率</li>
+                    </a>
+                                        <a title="进口物价指数季率 " href="/data/auwmqqia+index.html ">
+                        <li class="flex_cm1">进口物价指数季率</li>
+                    </a>
+                                        <a title="出口物价指数季率 " href="/data/auwmqqib+index.html ">
+                        <li class="flex_cm1">出口物价指数季率</li>
+                    </a>
+                                        <a title="信用卡余额 " href="/data/acrdbt+index.html ">
+                        <li class="flex_cm1">信用卡余额</li>
+                    </a>
+                                        <a title="信用卡购物 " href="/data/acrdtpv+index.html ">
+                        <li class="flex_cm1">信用卡购物</li>
+                    </a>
+                                        <a title="净出口对GDP贡献率 " href="/data/aucanxp+index.html ">
+                        <li class="flex_cm1">净出口对GDP贡献率</li>
+                    </a>
+                                        <a title="职位空缺率 " href="/data/auemchge+index.html ">
+                        <li class="flex_cm1">职位空缺率</li>
+                    </a>
+                                        <a title="外汇储备 " href="/data/aufra+index.html ">
+                        <li class="flex_cm1">外汇储备</li>
+                    </a>
+                                        <a title="季调后投资房屋贷款许可额月率 " href="/data/auhfilm+index.html ">
+                        <li class="flex_cm1">季调后投资房屋贷款许可额月率</li>
+                    </a>
+                                        <a title="自用贷款价值的环比 " href="/data/auhftchg+index.html ">
+                        <li class="flex_cm1">自用贷款价值的环比</li>
+                    </a>
+                                        <a title="CPI年率 " href="/data/aucpiyoy+index.html ">
+                        <li class="flex_cm1">CPI年率</li>
+                    </a>
+                                        <a title="GDP年率 " href="/data/aunagdpy+index.html ">
+                        <li class="flex_cm1">GDP年率</li>
+                    </a>
+                                        <a title="澳洲联储基准利率 " href="/data/rbatctr+index.html ">
+                        <li class="flex_cm1">澳洲联储基准利率</li>
+                    </a>
+                                        <a title="房屋开工季率 " href="/data/aubcqoq%25+index.html ">
+                        <li class="flex_cm1">房屋开工季率</li>
+                    </a>
+                                        <a title="季度经常帐 " href="/data/aucabal+index.html ">
+                        <li class="flex_cm1">季度经常帐</li>
+                    </a>
+                                    </ul>
+            </div>
+                        <div name="德国" class="j_tab_box show c_tab_nav">
+                <ul>
+                                        <a title="制造业PMI终值 " href="/data/mpmidema+indexf.html ">
+                        <li class="flex_cm1">制造业PMI终值</li>
+                    </a>
+                                        <a title="国内需求季率 " href="/data/grgdddqq+index.html ">
+                        <li class="flex_cm1">国内需求季率</li>
+                    </a>
+                                        <a title="资本投资总值季率 " href="/data/grgdgciq+index.html ">
+                        <li class="flex_cm1">资本投资总值季率</li>
+                    </a>
+                                        <a title="建筑投资季率 " href="/data/grgdicq+index.html ">
+                        <li class="flex_cm1">建筑投资季率</li>
+                    </a>
+                                        <a title="私人消费季率 " href="/data/grgdpcq+index.html ">
+                        <li class="flex_cm1">私人消费季率</li>
+                    </a>
+                                        <a title="工作日调整后GDP年率终值 " href="/data/grgdppgy+indexf.html ">
+                        <li class="flex_cm1">工作日调整后GDP年率终值</li>
+                    </a>
+                                        <a title="劳动力成本年率 " href="/data/grlxisay+index.html ">
+                        <li class="flex_cm1">劳动力成本年率</li>
+                    </a>
+                                        <a title="劳动力成本季率 " href="/data/grlxisrq+index.html ">
+                        <li class="flex_cm1">劳动力成本季率</li>
+                    </a>
+                                        <a title="工作日调整后工业产出年率 " href="/data/geinyy+index.html ">
+                        <li class="flex_cm1">工作日调整后工业产出年率</li>
+                    </a>
+                                        <a title="工作日调整后制造业订单年率 " href="/data/geioyy+index.html ">
+                        <li class="flex_cm1">工作日调整后制造业订单年率</li>
+                    </a>
+                                        <a title="季调后出口月率 " href="/data/grbtexmm+index.html ">
+                        <li class="flex_cm1">季调后出口月率</li>
+                    </a>
+                                        <a title="季调后进口月率 " href="/data/grbtimmm+index.html ">
+                        <li class="flex_cm1">季调后进口月率</li>
+                    </a>
+                                        <a title="CPI月率终值 " href="/data/grcp20mm+indexf.html ">
+                        <li class="flex_cm1">CPI月率终值</li>
+                    </a>
+                                        <a title="CPI月率初值 " href="/data/grcp20mm+indexp.html ">
+                        <li class="flex_cm1">CPI月率初值</li>
+                    </a>
+                                        <a title="CPI年率终值 " href="/data/grcp20yy+indexf.html ">
+                        <li class="flex_cm1">CPI年率终值</li>
+                    </a>
+                                        <a title="CPI年率初值 " href="/data/grcp20yy+indexp.html ">
+                        <li class="flex_cm1">CPI年率初值</li>
+                    </a>
+                                        <a title="调和CPI月率终值 " href="/data/grcp2hmm+indexf.html ">
+                        <li class="flex_cm1">调和CPI月率终值</li>
+                    </a>
+                                        <a title="调和CPI月率初值 " href="/data/grcp2hmm+indexp.html ">
+                        <li class="flex_cm1">调和CPI月率初值</li>
+                    </a>
+                                        <a title="调和CPI年率终值 " href="/data/grcp2hyy+indexf.html ">
+                        <li class="flex_cm1">调和CPI年率终值</li>
+                    </a>
+                                        <a title="调和CPI年率初值 " href="/data/grcp2hyy+indexp.html ">
+                        <li class="flex_cm1">调和CPI年率初值</li>
+                    </a>
+                                        <a title="实际零售销售月率 " href="/data/grfriamm+index.html ">
+                        <li class="flex_cm1">实际零售销售月率</li>
+                    </a>
+                                        <a title="实际零售销售年率 " href="/data/grfrinyy+index.html ">
+                        <li class="flex_cm1">实际零售销售年率</li>
+                    </a>
+                                        <a title="出口季率 " href="/data/grgdexq+index.html ">
+                        <li class="flex_cm1">出口季率</li>
+                    </a>
+                                        <a title="工作日调整后GDP年率初值 " href="/data/grgdppgy+indexp.html ">
+                        <li class="flex_cm1">工作日调整后GDP年率初值</li>
+                    </a>
+                                        <a title="IFO商业预期指数 " href="/data/grifpex+index.html ">
+                        <li class="flex_cm1">IFO商业预期指数</li>
+                    </a>
+                                        <a title="进口物价指数月率 " href="/data/grimp95m+index.html ">
+                        <li class="flex_cm1">进口物价指数月率</li>
+                    </a>
+                                        <a title="进口物价指数年率 " href="/data/grimp95y+index.html ">
+                        <li class="flex_cm1">进口物价指数年率</li>
+                    </a>
+                                        <a title="季调后制造业订单月率 " href="/data/griortmm+index.html ">
+                        <li class="flex_cm1">季调后制造业订单月率</li>
+                    </a>
+                                        <a title="季调后工业产出月率 " href="/data/gripimom+index.html ">
+                        <li class="flex_cm1">季调后工业产出月率</li>
+                    </a>
+                                        <a title="PPI月率 " href="/data/grpfimom+index.html ">
+                        <li class="flex_cm1">PPI月率</li>
+                    </a>
+                                        <a title="PPI年率 " href="/data/grpfiyoy+index.html ">
+                        <li class="flex_cm1">PPI年率</li>
+                    </a>
+                                        <a title="未季调贸易帐 " href="/data/grtbale+index.html ">
+                        <li class="flex_cm1">未季调贸易帐</li>
+                    </a>
+                                        <a title="Gfk消费者信心指数 " href="/data/eco1gfkc+index.html ">
+                        <li class="flex_cm1">Gfk消费者信心指数</li>
+                    </a>
+                                        <a title="季调后失业人数变动 " href="/data/gruechng+index.html ">
+                        <li class="flex_cm1">季调后失业人数变动</li>
+                    </a>
+                                        <a title="未季调GDP年率终值 " href="/data/gdpb95yy+indexf.html ">
+                        <li class="flex_cm1">未季调GDP年率终值</li>
+                    </a>
+                                        <a title="季调后失业率 " href="/data/gruepr+index.html ">
+                        <li class="flex_cm1">季调后失业率</li>
+                    </a>
+                                        <a title="批发物价指数月率 " href="/data/grwpmomi+index.html ">
+                        <li class="flex_cm1">批发物价指数月率</li>
+                    </a>
+                                        <a title="季调后GDP季率终值 " href="/data/grgdppgq+indexf.html ">
+                        <li class="flex_cm1">季调后GDP季率终值</li>
+                    </a>
+                                        <a title="批发物价指数年率 " href="/data/grwpyoyi+index.html ">
+                        <li class="flex_cm1">批发物价指数年率</li>
+                    </a>
+                                        <a title="季调后GDP季率初值 " href="/data/grgdppgq+indexp.html ">
+                        <li class="flex_cm1">季调后GDP季率初值</li>
+                    </a>
+                                        <a title="IFO商业景气指数 " href="/data/grifpbus+index.html ">
+                        <li class="flex_cm1">IFO商业景气指数</li>
+                    </a>
+                                        <a title="ZEW经济现况指数 " href="/data/grzecurr+index.html ">
+                        <li class="flex_cm1">ZEW经济现况指数</li>
+                    </a>
+                                        <a title="IFO商业现况指数 " href="/data/grifpca+index.html ">
+                        <li class="flex_cm1">IFO商业现况指数</li>
+                    </a>
+                                        <a title="综合PMI初值 " href="/data/mpmideca+indexp.html ">
+                        <li class="flex_cm1">综合PMI初值</li>
+                    </a>
+                                        <a title="ZEW经济景气指数 " href="/data/grzewi+index.html ">
+                        <li class="flex_cm1">ZEW经济景气指数</li>
+                    </a>
+                                        <a title="制造业PMI初值 " href="/data/mpmidema+indexp.html ">
+                        <li class="flex_cm1">制造业PMI初值</li>
+                    </a>
+                                        <a title="服务业PMI初值 " href="/data/mpmidesa+indexp.html ">
+                        <li class="flex_cm1">服务业PMI初值</li>
+                    </a>
+                                        <a title="未季调失业总人数 " href="/data/deuemn%3deci.html ">
+                        <li class="flex_cm1">未季调失业总人数</li>
+                    </a>
+                                        <a title="季调后失业总人数 " href="/data/deuemp%3deci.html ">
+                        <li class="flex_cm1">季调后失业总人数</li>
+                    </a>
+                                        <a title="季调后经常帐 " href="/data/grcaeu+index.html ">
+                        <li class="flex_cm1">季调后经常帐</li>
+                    </a>
+                                        <a title="综合PMI终值 " href="/data/mpmideca+indexf.html ">
+                        <li class="flex_cm1">综合PMI终值</li>
+                    </a>
+                                        <a title="零售业PMI " href="/data/mpmidera+index.html ">
+                        <li class="flex_cm1">零售业PMI</li>
+                    </a>
+                                        <a title="服务业PMI终值 " href="/data/mpmidesa+indexf.html ">
+                        <li class="flex_cm1">服务业PMI终值</li>
+                    </a>
+                                        <a title="建筑业PMI " href="/data/mpmidexa+index.html ">
+                        <li class="flex_cm1">建筑业PMI</li>
+                    </a>
+                                        <a title="勃兰登堡州CPI月率 " href="/data/grcp2brm+index.html ">
+                        <li class="flex_cm1">勃兰登堡州CPI月率</li>
+                    </a>
+                                        <a title="勃兰登堡州CPI年率 " href="/data/grcp2bry+index.html ">
+                        <li class="flex_cm1">勃兰登堡州CPI年率</li>
+                    </a>
+                                        <a title="巴伐利亚州CPI月率 " href="/data/grcp2bvm+index.html ">
+                        <li class="flex_cm1">巴伐利亚州CPI月率</li>
+                    </a>
+                                        <a title="巴伐利亚州CPI年率 " href="/data/grcp2bvy+index.html ">
+                        <li class="flex_cm1">巴伐利亚州CPI年率</li>
+                    </a>
+                                        <a title="巴登-符腾堡州CPI月率 " href="/data/grcp2bwm+index.html ">
+                        <li class="flex_cm1">巴登-符腾堡州CPI月率</li>
+                    </a>
+                                        <a title="巴登-符腾堡州CPI年率 " href="/data/grcp2bwy+index.html ">
+                        <li class="flex_cm1">巴登-符腾堡州CPI年率</li>
+                    </a>
+                                        <a title="萨克森州CPI月率 " href="/data/grcp2sam+index.html ">
+                        <li class="flex_cm1">萨克森州CPI月率</li>
+                    </a>
+                                        <a title="萨克森州CPI年率 " href="/data/grcp2say+index.html ">
+                        <li class="flex_cm1">萨克森州CPI年率</li>
+                    </a>
+                                        <a title="政府支出季率 " href="/data/grgdgcq+index.html ">
+                        <li class="flex_cm1">政府支出季率</li>
+                    </a>
+                                        <a title="进口季率 " href="/data/grgdimq+index.html ">
+                        <li class="flex_cm1">进口季率</li>
+                    </a>
+                                        <a title="黑森州CIP月率 " href="/data/grcp2hem+index.html ">
+                        <li class="flex_cm1">黑森州CIP月率</li>
+                    </a>
+                                        <a title="黑森州CIP年率 " href="/data/grcp2hey+index.html ">
+                        <li class="flex_cm1">黑森州CIP年率</li>
+                    </a>
+                                        <a title="GDP年率 " href="/data/grgdarcl+index.html ">
+                        <li class="flex_cm1">GDP年率</li>
+                    </a>
+                                        <a title="GDP(年增长率) " href="/data/gryg95yy+index.html ">
+                        <li class="flex_cm1">GDP(年增长率)</li>
+                    </a>
+                                    </ul>
+            </div>
+                        <div name="日本" class="j_tab_box show c_tab_nav">
+                <ul>
+                                        <a title="Markit/JMMA综合PMI " href="/data/mpmijpca+index.html ">
+                        <li class="flex_cm1">Markit/JMMA综合PMI</li>
+                    </a>
+                                        <a title="制造业PMI终值 " href="/data/mpmijpma+indexf.html ">
+                        <li class="flex_cm1">制造业PMI终值</li>
+                    </a>
+                                        <a title="服务业PMI " href="/data/mpmijpsa+index.html ">
+                        <li class="flex_cm1">服务业PMI</li>
+                    </a>
+                                        <a title="住房贷款年率 " href="/data/jbldhfoy+index.html ">
+                        <li class="flex_cm1">住房贷款年率</li>
+                    </a>
+                                        <a title="BSI全行业指数季率 " href="/data/jbsibcla+index.html ">
+                        <li class="flex_cm1">BSI全行业指数季率</li>
+                    </a>
+                                        <a title="GDP商业支出季环比终值 " href="/data/jgdpciq+indexf.html ">
+                        <li class="flex_cm1">GDP商业支出季环比终值</li>
+                    </a>
+                                        <a title="GDP商业支出季环比初值 " href="/data/jgdpciq+indexp.html ">
+                        <li class="flex_cm1">GDP商业支出季环比初值</li>
+                    </a>
+                                        <a title="国内生产总值个人消费环比终值 " href="/data/jgdppcq+indexf.html ">
+                        <li class="flex_cm1">国内生产总值个人消费环比终值</li>
+                    </a>
+                                        <a title="国内生产总值个人消费季率初值 " href="/data/jgdppcq+indexp.html ">
+                        <li class="flex_cm1">国内生产总值个人消费季率初值</li>
+                    </a>
+                                        <a title="M3货币存量年率 " href="/data/jmnsm3y+index.html ">
+                        <li class="flex_cm1">M3货币存量年率</li>
+                    </a>
+                                        <a title="银行贷款(含信托)年率 " href="/data/jnblbyoy+index.html ">
+                        <li class="flex_cm1">银行贷款(含信托)年率</li>
+                    </a>
+                                        <a title="季调后经常帐 " href="/data/jnbpaba+index.html ">
+                        <li class="flex_cm1">季调后经常帐</li>
+                    </a>
+                                        <a title="贸易帐 " href="/data/jnbptrd+index.html ">
+                        <li class="flex_cm1">贸易帐</li>
+                    </a>
+                                        <a title="便利店销售同比增长 " href="/data/jncvssy+index.html ">
+                        <li class="flex_cm1">便利店销售同比增长</li>
+                    </a>
+                                        <a title="全国部销售同比增长 " href="/data/jndsnyoy+index.html ">
+                        <li class="flex_cm1">全国部销售同比增长</li>
+                    </a>
+                                        <a title="东京部店销售同比增长 " href="/data/jndstyoy+index.html ">
+                        <li class="flex_cm1">东京部店销售同比增长</li>
+                    </a>
+                                        <a title="真正的现金收入同比增长 " href="/data/jnlsucre+index.html ">
+                        <li class="flex_cm1">真正的现金收入同比增长</li>
+                    </a>
+                                        <a title="机床订单年率终值 " href="/data/jnmtoy+indexf.html ">
+                        <li class="flex_cm1">机床订单年率终值</li>
+                    </a>
+                                        <a title="机床订单年率初值 " href="/data/jnmtoy+indexp.html ">
+                        <li class="flex_cm1">机床订单年率初值</li>
+                    </a>
+                                        <a title="超市销售同比增长 " href="/data/jnsmtyoy+index.html ">
+                        <li class="flex_cm1">超市销售同比增长</li>
+                    </a>
+                                        <a title="贸易平衡调整 " href="/data/jntbala+index.html ">
+                        <li class="flex_cm1">贸易平衡调整</li>
+                    </a>
+                                        <a title="汽车生产年率 " href="/data/jnvhpyoy+index.html ">
+                        <li class="flex_cm1">汽车生产年率</li>
+                    </a>
+                                        <a title="汽车销售年率 " href="/data/jnvhsyoy+index.html ">
+                        <li class="flex_cm1">汽车销售年率</li>
+                    </a>
+                                        <a title="同步指标月率初值 " href="/data/jpciin%3deci.html ">
+                        <li class="flex_cm1">同步指标月率初值</li>
+                    </a>
+                                        <a title="BSI大型制造业信心指数 " href="/data/jbsibclm+index.html ">
+                        <li class="flex_cm1">BSI大型制造业信心指数</li>
+                    </a>
+                                        <a title="求才求职比 " href="/data/jbtarate+index.html ">
+                        <li class="flex_cm1">求才求职比</li>
+                    </a>
+                                        <a title="家庭消费者信心指数 " href="/data/jcomshcf+index.html ">
+                        <li class="flex_cm1">家庭消费者信心指数</li>
+                    </a>
+                                        <a title="GDP平减指数年率终值 " href="/data/jgdfdefy+indexf.html ">
+                        <li class="flex_cm1">GDP平减指数年率终值</li>
+                    </a>
+                                        <a title="GDP平减指数年率初值 " href="/data/jgdfdefy+indexp.html ">
+                        <li class="flex_cm1">GDP平减指数年率初值</li>
+                    </a>
+                                        <a title="名义GDP季率终值 " href="/data/jgdoqoq+indexf.html ">
+                        <li class="flex_cm1">名义GDP季率终值</li>
+                    </a>
+                                        <a title="名义GDP季率初值 " href="/data/jgdoqoq+indexp.html ">
+                        <li class="flex_cm1">名义GDP季率初值</li>
+                    </a>
+                                        <a title="实际GDP年化季率终值 " href="/data/jgdpagdp+indexf.html ">
+                        <li class="flex_cm1">实际GDP年化季率终值</li>
+                    </a>
+                                        <a title="实际GDP季率终值 " href="/data/jgdpqgdp+indexf.html ">
+                        <li class="flex_cm1">实际GDP季率终值</li>
+                    </a>
+                                        <a title="所有家庭支出年率 " href="/data/jhhslery+index.html ">
+                        <li class="flex_cm1">所有家庭支出年率</li>
+                    </a>
+                                        <a title="M2货币供应年率 " href="/data/jmnsm2y+index.html ">
+                        <li class="flex_cm1">M2货币供应年率</li>
+                    </a>
+                                        <a title="季调后银行贷款年率 " href="/data/jnblenda+index.html ">
+                        <li class="flex_cm1">季调后银行贷款年率</li>
+                    </a>
+                                        <a title="企业破产年率 " href="/data/jnbtyoy+index.html ">
+                        <li class="flex_cm1">企业破产年率</li>
+                    </a>
+                                        <a title="设备利用指数月率 " href="/data/jncapmom+index.html ">
+                        <li class="flex_cm1">设备利用指数月率</li>
+                    </a>
+                                        <a title="同步指标终值 " href="/data/jnciccoi+indexf.html ">
+                        <li class="flex_cm1">同步指标终值</li>
+                    </a>
+                                        <a title="同步指标初值 " href="/data/jnciccoi+indexp.html ">
+                        <li class="flex_cm1">同步指标初值</li>
+                    </a>
+                                        <a title="领先指标终值 " href="/data/jnciclei+indexf.html ">
+                        <li class="flex_cm1">领先指标终值</li>
+                    </a>
+                                        <a title="领先指标初值 " href="/data/jnciclei+indexp.html ">
+                        <li class="flex_cm1">领先指标初值</li>
+                    </a>
+                                        <a title="全国核心CPI年率 " href="/data/jcpnefey+index.html ">
+                        <li class="flex_cm1">全国核心CPI年率</li>
+                    </a>
+                                        <a title="东京CPI年率 " href="/data/jncpt+index.html ">
+                        <li class="flex_cm1">东京CPI年率</li>
+                    </a>
+                                        <a title="东京核心CPI年率 " href="/data/jcptefey+index.html ">
+                        <li class="flex_cm1">东京核心CPI年率</li>
+                    </a>
+                                        <a title="营建订单年率 " href="/data/jncstoty+index.html ">
+                        <li class="flex_cm1">营建订单年率</li>
+                    </a>
+                                        <a title="外汇储备 " href="/data/jnfrtotl+index.html ">
+                        <li class="flex_cm1">外汇储备</li>
+                    </a>
+                                        <a title="季调后新屋开工年化 " href="/data/jnhsan+index.html ">
+                        <li class="flex_cm1">季调后新屋开工年化</li>
+                    </a>
+                                        <a title="新屋开工年率 " href="/data/jnhsyoy+index.html ">
+                        <li class="flex_cm1">新屋开工年率</li>
+                    </a>
+                                        <a title="工业产出月率终值 " href="/data/jnipmom+indexf.html ">
+                        <li class="flex_cm1">工业产出月率终值</li>
+                    </a>
+                                        <a title="工业产出月率初值 " href="/data/jnipmom+indexp.html ">
+                        <li class="flex_cm1">工业产出月率初值</li>
+                    </a>
+                                        <a title="工业产出年率终值 " href="/data/jnipyoy+indexf.html ">
+                        <li class="flex_cm1">工业产出年率终值</li>
+                    </a>
+                                        <a title="工业产出年率初值 " href="/data/jnipyoy+indexp.html ">
+                        <li class="flex_cm1">工业产出年率初值</li>
+                    </a>
+                                        <a title="劳动现金收入年率 " href="/data/jnlsuctl+index.html ">
+                        <li class="flex_cm1">劳动现金收入年率</li>
+                    </a>
+                                        <a title="基础货币年率 " href="/data/jnmbyoy+index.html ">
+                        <li class="flex_cm1">基础货币年率</li>
+                    </a>
+                                        <a title="所有家庭支出月率 " href="/data/jpallm%3deci.html ">
+                        <li class="flex_cm1">所有家庭支出月率</li>
+                    </a>
+                                        <a title="核心机械订单月率 " href="/data/jnmochng+index.html ">
+                        <li class="flex_cm1">核心机械订单月率</li>
+                    </a>
+                                        <a title="未季调经常帐 " href="/data/jnbpab+index.html ">
+                        <li class="flex_cm1">未季调经常帐</li>
+                    </a>
+                                        <a title="核心机械订单年率 " href="/data/jnmoyoy+index.html ">
+                        <li class="flex_cm1">核心机械订单年率</li>
+                    </a>
+                                        <a title="零售销售年率 " href="/data/jnnetyoy+index.html ">
+                        <li class="flex_cm1">零售销售年率</li>
+                    </a>
+                                        <a title="领先指标月率初值 " href="/data/jplein%3deci.html ">
+                        <li class="flex_cm1">领先指标月率初值</li>
+                    </a>
+                                        <a title="企业服务价格指数年率 " href="/data/jnpiy+index.html ">
+                        <li class="flex_cm1">企业服务价格指数年率</li>
+                    </a>
+                                        <a title="制造业PMI初值 " href="/data/mpmijpma+indexp.html ">
+                        <li class="flex_cm1">制造业PMI初值</li>
+                    </a>
+                                        <a title="季调后零售销售月率 " href="/data/jnretmom+index.html ">
+                        <li class="flex_cm1">季调后零售销售月率</li>
+                    </a>
+                                        <a title="路透短观制造业景气判断指数 " href="/data/jprtan%3deci.html ">
+                        <li class="flex_cm1">路透短观制造业景气判断指数</li>
+                    </a>
+                                        <a title="大型零售商销售年率 " href="/data/jnrsyoy+index.html ">
+                        <li class="flex_cm1">大型零售商销售年率</li>
+                    </a>
+                                        <a title="小企业信心 " href="/data/jnsballi+index.html ">
+                        <li class="flex_cm1">小企业信心</li>
+                    </a>
+                                        <a title="未季调商品贸易帐 " href="/data/jntbal+index.html ">
+                        <li class="flex_cm1">未季调商品贸易帐</li>
+                    </a>
+                                        <a title="商品出口年率 " href="/data/jntbexpy+index.html ">
+                        <li class="flex_cm1">商品出口年率</li>
+                    </a>
+                                        <a title="商品进口年率 " href="/data/jntbimpy+index.html ">
+                        <li class="flex_cm1">商品进口年率</li>
+                    </a>
+                                        <a title="短观小型制造业景气判断指数 " href="/data/jntemfg+index.html ">
+                        <li class="flex_cm1">短观小型制造业景气判断指数</li>
+                    </a>
+                                        <a title="短观小型非制造业景气判断指数 " href="/data/jntenmfg+index.html ">
+                        <li class="flex_cm1">短观小型非制造业景气判断指数</li>
+                    </a>
+                                        <a title="所有产业活动指数月率 " href="/data/jntiaiam+index.html ">
+                        <li class="flex_cm1">所有产业活动指数月率</li>
+                    </a>
+                                        <a title="短观大型制造业景气判断指数 " href="/data/jntsmfg+index.html ">
+                        <li class="flex_cm1">短观大型制造业景气判断指数</li>
+                    </a>
+                                        <a title="短观大型非制造业景气判断指数 " href="/data/jntsnmfg+index.html ">
+                        <li class="flex_cm1">短观大型非制造业景气判断指数</li>
+                    </a>
+                                        <a title="失业率 " href="/data/jnue+index.html ">
+                        <li class="flex_cm1">失业率</li>
+                    </a>
+                                        <a title="PPI年率 " href="/data/jnwsdyoy+index.html ">
+                        <li class="flex_cm1">PPI年率</li>
+                    </a>
+                                        <a title="短观大型制造业前景指数 " href="/data/jptflmfg+index.html ">
+                        <li class="flex_cm1">短观大型制造业前景指数</li>
+                    </a>
+                                        <a title="短观大型非制造业展望 " href="/data/jptflnmf+index.html ">
+                        <li class="flex_cm1">短观大型非制造业展望</li>
+                    </a>
+                                        <a title="短观小型制造业展望 " href="/data/jptfsmfg+index.html ">
+                        <li class="flex_cm1">短观小型制造业展望</li>
+                    </a>
+                                        <a title="短观小型非制造业展望 " href="/data/jptfsnmf+index.html ">
+                        <li class="flex_cm1">短观小型非制造业展望</li>
+                    </a>
+                                        <a title="当周买进外国债券 " href="/data/jsiabond+index.html ">
+                        <li class="flex_cm1">当周买进外国债券</li>
+                    </a>
+                                        <a title="当周买进外国股票 " href="/data/jsiastck+index.html ">
+                        <li class="flex_cm1">当周买进外国股票</li>
+                    </a>
+                                        <a title="当周外资买进日债 " href="/data/jsihbond+index.html ">
+                        <li class="flex_cm1">当周外资买进日债</li>
+                    </a>
+                                        <a title="当周外资买进日股 " href="/data/jsihstck+index.html ">
+                        <li class="flex_cm1">当周外资买进日股</li>
+                    </a>
+                                        <a title="短观大型制造业资本支出 " href="/data/jtfifila+index.html ">
+                        <li class="flex_cm1">短观大型制造业资本支出</li>
+                    </a>
+                                        <a title="经济观察家现况指数 " href="/data/jwcoovrl+index.html ">
+                        <li class="flex_cm1">经济观察家现况指数</li>
+                    </a>
+                                        <a title="经济观察家前景指数 " href="/data/jwexovrl+index.html ">
+                        <li class="flex_cm1">经济观察家前景指数</li>
+                    </a>
+                                        <a title="GDP平减指数年率 " href="/data/jgdfdefy+index.html ">
+                        <li class="flex_cm1">GDP平减指数年率</li>
+                    </a>
+                                        <a title="全国CPI年率(除食品) " href="/data/jncpixff+index.html ">
+                        <li class="flex_cm1">全国CPI年率(除食品)</li>
+                    </a>
+                                        <a title="东京CPI年率(除食品) " href="/data/jncptxff+index.html ">
+                        <li class="flex_cm1">东京CPI年率(除食品)</li>
+                    </a>
+                                        <a title="PPI月率 " href="/data/jnwsdom+index.html ">
+                        <li class="flex_cm1">PPI月率</li>
+                    </a>
+                                        <a title="公司的利润 " href="/data/jncrpyoy+index.html ">
+                        <li class="flex_cm1">公司的利润</li>
+                    </a>
+                                        <a title="期间货币底端 " href="/data/jnmbmobe+index.html ">
+                        <li class="flex_cm1">期间货币底端</li>
+                    </a>
+                                        <a title="公司销售 " href="/data/jnsasyoy+index.html ">
+                        <li class="flex_cm1">公司销售</li>
+                    </a>
+                                        <a title="资本支出前软件 " href="/data/jnvniyoy+index.html ">
+                        <li class="flex_cm1">资本支出前软件</li>
+                    </a>
+                                        <a title="加班工资年率 " href="/data/jpovrt%3deci.html ">
+                        <li class="flex_cm1">加班工资年率</li>
+                    </a>
+                                        <a title="第三产业活动指数月率 " href="/data/jntiamom+index.html ">
+                        <li class="flex_cm1">第三产业活动指数月率</li>
+                    </a>
+                                        <a title="企业资本支出年率 " href="/data/jnvnyoys+index.html ">
+                        <li class="flex_cm1">企业资本支出年率</li>
+                    </a>
+                                        <a title="实际GDP年化季率初值 " href="/data/jgdpagdp+indexp.html ">
+                        <li class="flex_cm1">实际GDP年化季率初值</li>
+                    </a>
+                                        <a title="实际GDP季率初值 " href="/data/jgdpqgdp+indexp.html ">
+                        <li class="flex_cm1">实际GDP季率初值</li>
+                    </a>
+                                        <a title="全国CPI年率 " href="/data/jncpiyoy+index.html ">
+                        <li class="flex_cm1">全国CPI年率</li>
+                    </a>
+                                        <a title="实际GDP季率修正值 " href="/data/jpgdr1%3deci.html ">
+                        <li class="flex_cm1">实际GDP季率修正值</li>
+                    </a>
+                                        <a title="央行目标利率 " href="/data/bojdtr+index.html ">
+                        <li class="flex_cm1">央行目标利率</li>
+                    </a>
+                                    </ul>
+            </div>
+                        <div name="加拿大" class="j_tab_box show c_tab_nav">
+                <ul>
+                                        <a title="彭博社Nano信心指数 " href="/data/bnccindx+index.html ">
+                        <li class="flex_cm1">彭博社Nano信心指数</li>
+                    </a>
+                                        <a title="CPI季调后月率 " href="/data/cacpamom+index.html ">
+                        <li class="flex_cm1">CPI季调后月率</li>
+                    </a>
+                                        <a title="核心CPI季调后月率 " href="/data/cacpcmom+index.html ">
+                        <li class="flex_cm1">核心CPI季调后月率</li>
+                    </a>
+                                        <a title="GDP年率 " href="/data/cagdpyoy+index.html ">
+                        <li class="flex_cm1">GDP年率</li>
+                    </a>
+                                        <a title="成屋销售月率 " href="/data/econcrea+index.html ">
+                        <li class="flex_cm1">成屋销售月率</li>
+                    </a>
+                                        <a title="核心CPI年率 " href="/data/cacpx8y+index.html ">
+                        <li class="flex_cm1">核心CPI年率</li>
+                    </a>
+                                        <a title="出口 " href="/data/caexp%3deci.html ">
+                        <li class="flex_cm1">出口</li>
+                    </a>
+                                        <a title="GDP季率 " href="/data/cagdp%3deci.html ">
+                        <li class="flex_cm1">GDP季率</li>
+                    </a>
+                                        <a title="进口 " href="/data/caimp%3deci.html ">
+                        <li class="flex_cm1">进口</li>
+                    </a>
+                                        <a title="Ivey未季调PMI " href="/data/caipmi%3deci.html ">
+                        <li class="flex_cm1">Ivey未季调PMI</li>
+                    </a>
+                                        <a title="投资者净买入海外证券 " href="/data/caisec%3deci.html ">
+                        <li class="flex_cm1">投资者净买入海外证券</li>
+                    </a>
+                                        <a title="工业品物价指数年率 " href="/data/cappiy%3deci.html ">
+                        <li class="flex_cm1">工业品物价指数年率</li>
+                    </a>
+                                        <a title="Ivey季调后PMI " href="/data/iveysa+index.html ">
+                        <li class="flex_cm1">Ivey季调后PMI</li>
+                    </a>
+                                        <a title="原材料价格指数年率 " href="/data/carawy%3deci.html ">
+                        <li class="flex_cm1">原材料价格指数年率</li>
+                    </a>
+                                        <a title="产能利用率 " href="/data/cacaputl+index.html ">
+                        <li class="flex_cm1">产能利用率</li>
+                    </a>
+                                        <a title="消费者物价指数 " href="/data/cacpi+index.html ">
+                        <li class="flex_cm1">消费者物价指数</li>
+                    </a>
+                                        <a title="未季调CPI月率 " href="/data/cacpichg+index.html ">
+                        <li class="flex_cm1">未季调CPI月率</li>
+                    </a>
+                                        <a title="CPI年率 " href="/data/cacpiyoy+index.html ">
+                        <li class="flex_cm1">CPI年率</li>
+                    </a>
+                                        <a title="核心CPI月率 " href="/data/cacpx8m+index.html ">
+                        <li class="flex_cm1">核心CPI月率</li>
+                    </a>
+                                        <a title="经常帐 " href="/data/cacurent+index.html ">
+                        <li class="flex_cm1">经常帐</li>
+                    </a>
+                                        <a title="GDP月率 " href="/data/cagdpmom+index.html ">
+                        <li class="flex_cm1">GDP月率</li>
+                    </a>
+                                        <a title="营建许可月率 " href="/data/cahomom+index.html ">
+                        <li class="flex_cm1">营建许可月率</li>
+                    </a>
+                                        <a title="新屋开工 " href="/data/cahstotl+index.html ">
+                        <li class="flex_cm1">新屋开工</li>
+                    </a>
+                                        <a title="新屋价格指数月率 " href="/data/cahumom+index.html ">
+                        <li class="flex_cm1">新屋价格指数月率</li>
+                    </a>
+                                        <a title="新屋价格指数年率 " href="/data/cahuyoy+index.html ">
+                        <li class="flex_cm1">新屋价格指数年率</li>
+                    </a>
+                                        <a title="工业品物价指数月率 " href="/data/caipmom+index.html ">
+                        <li class="flex_cm1">工业品物价指数月率</li>
+                    </a>
+                                        <a title="海外投资者净买入证券 " href="/data/caitfics+index.html ">
+                        <li class="flex_cm1">海外投资者净买入证券</li>
+                    </a>
+                                        <a title="劳动生产率季率 " href="/data/calpprod+index.html ">
+                        <li class="flex_cm1">劳动生产率季率</li>
+                    </a>
+                                        <a title="制造业装船月率 " href="/data/camfchng+index.html ">
+                        <li class="flex_cm1">制造业装船月率</li>
+                    </a>
+                                        <a title="全职就业人数变动 " href="/data/canlflnc+index.html ">
+                        <li class="flex_cm1">全职就业人数变动</li>
+                    </a>
+                                        <a title="就业人数净变动 " href="/data/canlnetj+index.html ">
+                        <li class="flex_cm1">就业人数净变动</li>
+                    </a>
+                                        <a title="就业参与率 " href="/data/canlprtr+index.html ">
+                        <li class="flex_cm1">就业参与率</li>
+                    </a>
+                                        <a title="失业率 " href="/data/canlxemr+index.html ">
+                        <li class="flex_cm1">失业率</li>
+                    </a>
+                                        <a title="原材料价格指数月率 " href="/data/caramom+index.html ">
+                        <li class="flex_cm1">原材料价格指数月率</li>
+                    </a>
+                                        <a title="零售销售月率 " href="/data/carschng+index.html ">
+                        <li class="flex_cm1">零售销售月率</li>
+                    </a>
+                                        <a title="核心零售销售月率 " href="/data/carsxasc+index.html ">
+                        <li class="flex_cm1">核心零售销售月率</li>
+                    </a>
+                                        <a title="贸易帐 " href="/data/catbtotb+index.html ">
+                        <li class="flex_cm1">贸易帐</li>
+                    </a>
+                                        <a title="批发销售月率 " href="/data/cawtmom+index.html ">
+                        <li class="flex_cm1">批发销售月率</li>
+                    </a>
+                                        <a title="央行基准利率 " href="/data/cabrover+index.html ">
+                        <li class="flex_cm1">央行基准利率</li>
+                    </a>
+                                        <a title="季度GDP年率 " href="/data/cge9ann+index.html ">
+                        <li class="flex_cm1">季度GDP年率</li>
+                    </a>
+                                        <a title="兼职就业人数变动 " href="/data/canlptnc+index.html ">
+                        <li class="flex_cm1">兼职就业人数变动</li>
+                    </a>
+                                        <a title="RBC制造业采购经理人指数 " href="/data/mpmicama+index.html ">
+                        <li class="flex_cm1">RBC制造业采购经理人指数</li>
+                    </a>
+                                    </ul>
+            </div>
+                        <div name="瑞士" class="j_tab_box show c_tab_nav">
+                <ul>
+                                        <a title="瑞银房地产泡沫指数 " href="/data/chbbreal+index.html ">
+                        <li class="flex_cm1">瑞银房地产泡沫指数</li>
+                    </a>
+                                        <a title="SECO消费者信心指数 " href="/data/szcceucm+index.html ">
+                        <li class="flex_cm1">SECO消费者信心指数</li>
+                    </a>
+                                        <a title="CPI月率 " href="/data/szcpimom+index.html ">
+                        <li class="flex_cm1">CPI月率</li>
+                    </a>
+                                        <a title="CPI年率 " href="/data/szcpiyoy+index.html ">
+                        <li class="flex_cm1">CPI年率</li>
+                    </a>
+                                        <a title="GDP季率 " href="/data/szgdpcqq+index.html ">
+                        <li class="flex_cm1">GDP季率</li>
+                    </a>
+                                        <a title="KOF经济领先指标 " href="/data/szlilei+index.html ">
+                        <li class="flex_cm1">KOF经济领先指标</li>
+                    </a>
+                                        <a title="M3货币供应年率 " href="/data/szmsm3y+index.html ">
+                        <li class="flex_cm1">M3货币供应年率</li>
+                    </a>
+                                        <a title="生产者/进口物价指数月率 " href="/data/szpmimom+index.html ">
+                        <li class="flex_cm1">生产者/进口物价指数月率</li>
+                    </a>
+                                        <a title="生产者/进口物价指数年率 " href="/data/szpmiyoy+index.html ">
+                        <li class="flex_cm1">生产者/进口物价指数年率</li>
+                    </a>
+                                        <a title="SVME采购经理人指数 " href="/data/szpui+index.html ">
+                        <li class="flex_cm1">SVME采购经理人指数</li>
+                    </a>
+                                        <a title="外汇储备 " href="/data/szrafcrc+index.html ">
+                        <li class="flex_cm1">外汇储备</li>
+                    </a>
+                                        <a title="实际零售销售年率 " href="/data/szrsryoy+index.html ">
+                        <li class="flex_cm1">实际零售销售年率</li>
+                    </a>
+                                        <a title="贸易帐 " href="/data/sztbal+index.html ">
+                        <li class="flex_cm1">贸易帐</li>
+                    </a>
+                                        <a title="未季调失业率 " href="/data/szue+index.html ">
+                        <li class="flex_cm1">未季调失业率</li>
+                    </a>
+                                        <a title="季调后失业率 " href="/data/szueuea+index.html ">
+                        <li class="flex_cm1">季调后失业率</li>
+                    </a>
+                                        <a title="UBS消费指数 " href="/data/uclici+index.html ">
+                        <li class="flex_cm1">UBS消费指数</li>
+                    </a>
+                                        <a title="调和CPI月率初值 " href="/data/szhmmom+index.html ">
+                        <li class="flex_cm1">调和CPI月率初值</li>
+                    </a>
+                                        <a title="调和CPI年率初值 " href="/data/szhmyoy+index.html ">
+                        <li class="flex_cm1">调和CPI年率初值</li>
+                    </a>
+                                        <a title="工业产出年率 " href="/data/szipiyoy+index.html ">
+                        <li class="flex_cm1">工业产出年率</li>
+                    </a>
+                                        <a title="央行3个月期LIBOR上限目标范围 " href="/data/szlthigh+index.html ">
+                        <li class="flex_cm1">央行3个月期LIBOR上限目标范围</li>
+                    </a>
+                                        <a title="央行3个月期LIBOR下限目标范围 " href="/data/szltlow+index.html ">
+                        <li class="flex_cm1">央行3个月期LIBOR下限目标范围</li>
+                    </a>
+                                        <a title="央行活期存款利率 " href="/data/szltsdab+index.html ">
+                        <li class="flex_cm1">央行活期存款利率</li>
+                    </a>
+                                        <a title="实际出口月率 " href="/data/sztbexmm+index.html ">
+                        <li class="flex_cm1">实际出口月率</li>
+                    </a>
+                                        <a title="实际进口月率 " href="/data/sztbimmm+index.html ">
+                        <li class="flex_cm1">实际进口月率</li>
+                    </a>
+                                        <a title="ZEW投资者信心指数 " href="/data/grzecssz+index.html ">
+                        <li class="flex_cm1">ZEW投资者信心指数</li>
+                    </a>
+                                        <a title="工业订单年率 " href="/data/chindy%3deci.html ">
+                        <li class="flex_cm1">工业订单年率</li>
+                    </a>
+                                        <a title="非农就业人数 " href="/data/chnfp%3deci.html ">
+                        <li class="flex_cm1">非农就业人数</li>
+                    </a>
+                                        <a title="GDP年率 " href="/data/szgrgdpy+index.html ">
+                        <li class="flex_cm1">GDP年率</li>
+                    </a>
+                                        <a title="工业生产（季度环比） " href="/data/szipiqoq+index.html ">
+                        <li class="flex_cm1">工业生产（季度环比）</li>
+                    </a>
+                                    </ul>
+            </div>
+                        <div name="新西兰" class="j_tab_box show c_tab_nav">
+                <ul>
+                                        <a title="营建许可月率 " href="/data/nzbaunim+index.html ">
+                        <li class="flex_cm1">营建许可月率</li>
+                    </a>
+                                        <a title="经常帐 " href="/data/nzbpca+index.html ">
+                        <li class="flex_cm1">经常帐</li>
+                    </a>
+                                        <a title="CPI季率 " href="/data/nzcpichg+index.html ">
+                        <li class="flex_cm1">CPI季率</li>
+                    </a>
+                                        <a title="GDP年率 " href="/data/nzntgdpy+index.html ">
+                        <li class="flex_cm1">GDP年率</li>
+                    </a>
+                                        <a title="联储基准利率 " href="/data/nzocr+index.html ">
+                        <li class="flex_cm1">联储基准利率</li>
+                    </a>
+                                        <a title="输入PPI季率 " href="/data/nzppinq+index.html ">
+                        <li class="flex_cm1">输入PPI季率</li>
+                    </a>
+                                        <a title="输出PPI季率 " href="/data/nzppoutq+index.html ">
+                        <li class="flex_cm1">输出PPI季率</li>
+                    </a>
+                                        <a title="零售销售年率 " href="/data/nzrrexin+index.html ">
+                        <li class="flex_cm1">零售销售年率</li>
+                    </a>
+                                        <a title="就业人数季率 " href="/data/nzlfqoq+index.html ">
+                        <li class="flex_cm1">就业人数季率</li>
+                    </a>
+                                        <a title="贸易帐 " href="/data/nzmtbal+index.html ">
+                        <li class="flex_cm1">贸易帐</li>
+                    </a>
+                                        <a title="就业参与率 " href="/data/nzlfpart+index.html ">
+                        <li class="flex_cm1">就业参与率</li>
+                    </a>
+                                        <a title="进口 " href="/data/nzmtimp+index.html ">
+                        <li class="flex_cm1">进口</li>
+                    </a>
+                                        <a title="劳工成本指数年率 " href="/data/nzwgsy%3deci.html ">
+                        <li class="flex_cm1">劳工成本指数年率</li>
+                    </a>
+                                        <a title="出口 " href="/data/nzmtexp+index.html ">
+                        <li class="flex_cm1">出口</li>
+                    </a>
+                                        <a title="12个月贸易帐 " href="/data/nzmtbytd+index.html ">
+                        <li class="flex_cm1">12个月贸易帐</li>
+                    </a>
+                                        <a title="食品价格指数月率 " href="/data/nzfpchge+index.html ">
+                        <li class="flex_cm1">食品价格指数月率</li>
+                    </a>
+                                        <a title="季调后制造业销售额季率 " href="/data/nzmachge+index.html ">
+                        <li class="flex_cm1">季调后制造业销售额季率</li>
+                    </a>
+                                        <a title="季调后制造业销售量季率 " href="/data/nzmavoq+index.html ">
+                        <li class="flex_cm1">季调后制造业销售量季率</li>
+                    </a>
+                                        <a title="CPI年率 " href="/data/nzcpiyoy+index.html ">
+                        <li class="flex_cm1">CPI年率</li>
+                    </a>
+                                        <a title="失业率 " href="/data/nzlfuner+index.html ">
+                        <li class="flex_cm1">失业率</li>
+                    </a>
+                                    </ul>
+            </div>
+                        <div name="意大利" class="j_tab_box show c_tab_nav">
+                <ul>
+                                        <a title="制造业PMI " href="/data/mpmiitma+index.html ">
+                        <li class="flex_cm1">制造业PMI</li>
+                    </a>
+                                        <a title="零售业PMI " href="/data/mpmiitra+index.html ">
+                        <li class="flex_cm1">零售业PMI</li>
+                    </a>
+                                        <a title="服务业PMI " href="/data/mpmiitsa+index.html ">
+                        <li class="flex_cm1">服务业PMI</li>
+                    </a>
+                                        <a title="Istat商业信心指数 " href="/data/itbci+index.html ">
+                        <li class="flex_cm1">Istat商业信心指数</li>
+                    </a>
+                                        <a title="经常账 " href="/data/itcaeur+index.html ">
+                        <li class="flex_cm1">经常账</li>
+                    </a>
+                                        <a title="GDP季率初值 " href="/data/itpirlqs+indexp.html ">
+                        <li class="flex_cm1">GDP季率初值</li>
+                    </a>
+                                        <a title="调和CPI月率初值 " href="/data/itcpem+indexp.html ">
+                        <li class="flex_cm1">调和CPI月率初值</li>
+                    </a>
+                                        <a title="GDP年率初值 " href="/data/itpirlys+indexp.html ">
+                        <li class="flex_cm1">GDP年率初值</li>
+                    </a>
+                                        <a title="调和CPI年率终值 " href="/data/itcpey+indexf.html ">
+                        <li class="flex_cm1">调和CPI年率终值</li>
+                    </a>
+                                        <a title="调和CPI年率初值 " href="/data/itcpey+indexp.html ">
+                        <li class="flex_cm1">调和CPI年率初值</li>
+                    </a>
+                                        <a title="失业率季率 " href="/data/itemunes+index.html ">
+                        <li class="flex_cm1">失业率季率</li>
+                    </a>
+                                        <a title="经济景气指数 " href="/data/itesecse+index.html ">
+                        <li class="flex_cm1">经济景气指数</li>
+                    </a>
+                                        <a title="工作日调整后工业销售年率 " href="/data/itistoty+index.html ">
+                        <li class="flex_cm1">工作日调整后工业销售年率</li>
+                    </a>
+                                        <a title="季调后工业销售月率 " href="/data/itistsam+index.html ">
+                        <li class="flex_cm1">季调后工业销售月率</li>
+                    </a>
+                                        <a title="失业率初值 " href="/data/itmuurs+indexp.html ">
+                        <li class="flex_cm1">失业率初值</li>
+                    </a>
+                                        <a title="季调后零售销售月率 " href="/data/itnsstn+index.html ">
+                        <li class="flex_cm1">季调后零售销售月率</li>
+                    </a>
+                                        <a title="零售销售年率 " href="/data/itnsty+index.html ">
+                        <li class="flex_cm1">零售销售年率</li>
+                    </a>
+                                        <a title="未季调工业订单年率 " href="/data/itortoty+index.html ">
+                        <li class="flex_cm1">未季调工业订单年率</li>
+                    </a>
+                                        <a title="季调后工业订单月率 " href="/data/itortsam+index.html ">
+                        <li class="flex_cm1">季调后工业订单月率</li>
+                    </a>
+                                        <a title="GDP年率 " href="/data/itpirayy+index.html ">
+                        <li class="flex_cm1">GDP年率</li>
+                    </a>
+                                        <a title="GDP季率终值 " href="/data/itpirlqs+indexf.html ">
+                        <li class="flex_cm1">GDP季率终值</li>
+                    </a>
+                                        <a title="GDP年率终值 " href="/data/itpirlys+indexf.html ">
+                        <li class="flex_cm1">GDP年率终值</li>
+                    </a>
+                                        <a title="PPI月率 " href="/data/itpnimom+index.html ">
+                        <li class="flex_cm1">PPI月率</li>
+                    </a>
+                                        <a title="PPI年率 " href="/data/itpniyoy+index.html ">
+                        <li class="flex_cm1">PPI年率</li>
+                    </a>
+                                        <a title="季调后工业产出月率 " href="/data/itprsanm+index.html ">
+                        <li class="flex_cm1">季调后工业产出月率</li>
+                    </a>
+                                        <a title="工作日调整后工业产出年率 " href="/data/itprway+index.html ">
+                        <li class="flex_cm1">工作日调整后工业产出年率</li>
+                    </a>
+                                        <a title="Istat消费者信心指数 " href="/data/itpssa+index.html ">
+                        <li class="flex_cm1">Istat消费者信心指数</li>
+                    </a>
+                                        <a title="贸易帐 " href="/data/ittralee+index.html ">
+                        <li class="flex_cm1">贸易帐</li>
+                    </a>
+                                        <a title="对欧盟贸易帐 " href="/data/ittralex+index.html ">
+                        <li class="flex_cm1">对欧盟贸易帐</li>
+                    </a>
+                                        <a title="CPI月率终值 " href="/data/itcpi%3deci.html ">
+                        <li class="flex_cm1">CPI月率终值</li>
+                    </a>
+                                        <a title="CPI年率终值 " href="/data/itcpiy%3deci.html ">
+                        <li class="flex_cm1">CPI年率终值</li>
+                    </a>
+                                        <a title="非欧盟贸易帐 " href="/data/ittbal%3deci.html ">
+                        <li class="flex_cm1">非欧盟贸易帐</li>
+                    </a>
+                                        <a title="平均每小时工资月率 " href="/data/itnhmom+index.html ">
+                        <li class="flex_cm1">平均每小时工资月率</li>
+                    </a>
+                                        <a title="平均每小时工资年率 " href="/data/itnhyoy+index.html ">
+                        <li class="flex_cm1">平均每小时工资年率</li>
+                    </a>
+                                        <a title="CPI年率初值 " href="/data/itcpnicy+indexp.html ">
+                        <li class="flex_cm1">CPI年率初值</li>
+                    </a>
+                                        <a title="调和CPI月率终值 " href="/data/ithic%3deci.html ">
+                        <li class="flex_cm1">调和CPI月率终值</li>
+                    </a>
+                                        <a title="综合PMI " href="/data/mpmiitca+index.html ">
+                        <li class="flex_cm1">综合PMI</li>
+                    </a>
+                                        <a title="CPI月率初值 " href="/data/itcpnicm+indexp.html ">
+                        <li class="flex_cm1">CPI月率初值</li>
+                    </a>
+                                    </ul>
+            </div>
+                        <div name="法国" class="j_tab_box show c_tab_nav">
+                <ul>
+                                        <a title="经常帐 " href="/data/ffcab12s+index.html ">
+                        <li class="flex_cm1">经常帐</li>
+                    </a>
+                                        <a title="ILO本土失业率 " href="/data/fruereu+index.html ">
+                        <li class="flex_cm1">ILO本土失业率</li>
+                    </a>
+                                        <a title="薪资季率终值 " href="/data/frwamoq+indexf.html ">
+                        <li class="flex_cm1">薪资季率终值</li>
+                    </a>
+                                        <a title="薪资季率初值 " href="/data/frwamoq+indexp.html ">
+                        <li class="flex_cm1">薪资季率初值</li>
+                    </a>
+                                        <a title="工业产出月率 " href="/data/fpipmom+index.html ">
+                        <li class="flex_cm1">工业产出月率</li>
+                    </a>
+                                        <a title="工业产出年率 " href="/data/fpipyoy+index.html ">
+                        <li class="flex_cm1">工业产出年率</li>
+                    </a>
+                                        <a title="商业景气指数 " href="/data/frbsi+index.html ">
+                        <li class="flex_cm1">商业景气指数</li>
+                    </a>
+                                        <a title="调和CPI月率 " href="/data/frcpeecm+index.html ">
+                        <li class="flex_cm1">调和CPI月率</li>
+                    </a>
+                                        <a title="调和CPI年率 " href="/data/frcpeecy+index.html ">
+                        <li class="flex_cm1">调和CPI年率</li>
+                    </a>
+                                        <a title="CPI月率 " href="/data/frcpimom+index.html ">
+                        <li class="flex_cm1">CPI月率</li>
+                    </a>
+                                        <a title="CPI年率 " href="/data/frcpiyoy+index.html ">
+                        <li class="flex_cm1">CPI年率</li>
+                    </a>
+                                        <a title="自有企业生产前景 " href="/data/inseprod+index.html ">
+                        <li class="flex_cm1">自有企业生产前景</li>
+                    </a>
+                                        <a title="制造业产出月率 " href="/data/frmpmom+index.html ">
+                        <li class="flex_cm1">制造业产出月率</li>
+                    </a>
+                                        <a title="制造业产出年率 " href="/data/frmpyoy+index.html ">
+                        <li class="flex_cm1">制造业产出年率</li>
+                    </a>
+                                        <a title="PPI月率 " href="/data/frpimom+index.html ">
+                        <li class="flex_cm1">PPI月率</li>
+                    </a>
+                                        <a title="PPI年率 " href="/data/frpiyoy+index.html ">
+                        <li class="flex_cm1">PPI年率</li>
+                    </a>
+                                        <a title="非农就业人口季率终值 " href="/data/frprtotq+indexf.html ">
+                        <li class="flex_cm1">非农就业人口季率终值</li>
+                    </a>
+                                        <a title="家庭消费支出月率 " href="/data/frsnttlm+index.html ">
+                        <li class="flex_cm1">家庭消费支出月率</li>
+                    </a>
+                                        <a title="家庭消费支出年率 " href="/data/frsnttly+index.html ">
+                        <li class="flex_cm1">家庭消费支出年率</li>
+                    </a>
+                                        <a title="贸易帐 " href="/data/frtebal+index.html ">
+                        <li class="flex_cm1">贸易帐</li>
+                    </a>
+                                        <a title="ILO失业率 " href="/data/fruereuo+index.html ">
+                        <li class="flex_cm1">ILO失业率</li>
+                    </a>
+                                        <a title="GDP季率终值 " href="/data/frgegdpq+indexf.html ">
+                        <li class="flex_cm1">GDP季率终值</li>
+                    </a>
+                                        <a title="GDP季率初值 " href="/data/frgegdpq+indexp.html ">
+                        <li class="flex_cm1">GDP季率初值</li>
+                    </a>
+                                        <a title="GDP年率终值 " href="/data/frgegdpy+indexf.html ">
+                        <li class="flex_cm1">GDP年率终值</li>
+                    </a>
+                                        <a title="商业信心指数 " href="/data/insecomp+index.html ">
+                        <li class="flex_cm1">商业信心指数</li>
+                    </a>
+                                        <a title="GDP年率初值 " href="/data/frgegdpy+indexp.html ">
+                        <li class="flex_cm1">GDP年率初值</li>
+                    </a>
+                                        <a title="制造业信心指数 " href="/data/insesynt+index.html ">
+                        <li class="flex_cm1">制造业信心指数</li>
+                    </a>
+                                        <a title="非农就业人口季率初值 " href="/data/frprtotq+indexp.html ">
+                        <li class="flex_cm1">非农就业人口季率初值</li>
+                    </a>
+                                        <a title="制造业PMI初值 " href="/data/mpmifrma+indexp.html ">
+                        <li class="flex_cm1">制造业PMI初值</li>
+                    </a>
+                                        <a title="政府预算 " href="/data/frbdeuro+index.html ">
+                        <li class="flex_cm1">政府预算</li>
+                    </a>
+                                        <a title="出口 " href="/data/frexp%3deci.html ">
+                        <li class="flex_cm1">出口</li>
+                    </a>
+                                        <a title="进口 " href="/data/frimp%3deci.html ">
+                        <li class="flex_cm1">进口</li>
+                    </a>
+                                        <a title="综合PMI初值 " href="/data/mpmifrca+indexp.html ">
+                        <li class="flex_cm1">综合PMI初值</li>
+                    </a>
+                                        <a title="服务业PMI初值 " href="/data/mpmifrsa+indexp.html ">
+                        <li class="flex_cm1">服务业PMI初值</li>
+                    </a>
+                                        <a title="调和CPI月率修正值 " href="/data/frcpeecm+indexp.html ">
+                        <li class="flex_cm1">调和CPI月率修正值</li>
+                    </a>
+                                        <a title="调和CPI年率修正值 " href="/data/frcpeecy+indexp.html ">
+                        <li class="flex_cm1">调和CPI年率修正值</li>
+                    </a>
+                                        <a title="CPI月率修正值 " href="/data/frcpimom+indexp.html ">
+                        <li class="flex_cm1">CPI月率修正值</li>
+                    </a>
+                                        <a title="CPI年率 " href="/data/frcpiyoy+indexp.html ">
+                        <li class="flex_cm1">CPI年率</li>
+                    </a>
+                                        <a title="调和CPI月率终值 " href="/data/frcpeecm+indexf.html ">
+                        <li class="flex_cm1">调和CPI月率终值</li>
+                    </a>
+                                        <a title="调和CPI年率终值 " href="/data/frcpeecy+indexf.html ">
+                        <li class="flex_cm1">调和CPI年率终值</li>
+                    </a>
+                                        <a title="CPI月率终值 " href="/data/frcpimom+indexf.html ">
+                        <li class="flex_cm1">CPI月率终值</li>
+                    </a>
+                                        <a title="CPI年率终值 " href="/data/frcpiyoy+indexf.html ">
+                        <li class="flex_cm1">CPI年率终值</li>
+                    </a>
+                                        <a title="综合PMI终值 " href="/data/mpmifrca+indexf.html ">
+                        <li class="flex_cm1">综合PMI终值</li>
+                    </a>
+                                        <a title="制造业PMI终值 " href="/data/mpmifrma+indexf.html ">
+                        <li class="flex_cm1">制造业PMI终值</li>
+                    </a>
+                                        <a title="零售业PMI " href="/data/mpmifrra+index.html ">
+                        <li class="flex_cm1">零售业PMI</li>
+                    </a>
+                                        <a title="服务业PMI终值 " href="/data/mpmifrsa+indexf.html ">
+                        <li class="flex_cm1">服务业PMI终值</li>
+                    </a>
+                                        <a title="剔除烟草CPI指数 " href="/data/frcpxtob+index.html ">
+                        <li class="flex_cm1">剔除烟草CPI指数</li>
+                    </a>
+                                    </ul>
+            </div>
+                        <div name="西班牙" class="j_tab_box show c_tab_nav">
+                <ul>
+                                        <a title="核心CPI月率 " href="/data/spipccmm+index.html ">
+                        <li class="flex_cm1">核心CPI月率</li>
+                    </a>
+                                        <a title="核心CPI年率 " href="/data/spipccyy+index.html ">
+                        <li class="flex_cm1">核心CPI年率</li>
+                    </a>
+                                        <a title="CPI月率初值 " href="/data/spipcmom+indexp.html ">
+                        <li class="flex_cm1">CPI月率初值</li>
+                    </a>
+                                        <a title="CPI年率终值 " href="/data/spipcyoy+indexf.html ">
+                        <li class="flex_cm1">CPI年率终值</li>
+                    </a>
+                                        <a title="CPI年率初值 " href="/data/spipcyoy+indexp.html ">
+                        <li class="flex_cm1">CPI年率初值</li>
+                    </a>
+                                        <a title="劳工成本年率 " href="/data/splctyy+index.html ">
+                        <li class="flex_cm1">劳工成本年率</li>
+                    </a>
+                                        <a title="GDP年率终值 " href="/data/spnagdpy+indexf.html ">
+                        <li class="flex_cm1">GDP年率终值</li>
+                    </a>
+                                        <a title="PPI月率 " href="/data/sprochng+index.html ">
+                        <li class="flex_cm1">PPI月率</li>
+                    </a>
+                                        <a title="PPI年率 " href="/data/sproyoy+index.html ">
+                        <li class="flex_cm1">PPI年率</li>
+                    </a>
+                                        <a title="零售销售年率 " href="/data/sprsrgiy+index.html ">
+                        <li class="flex_cm1">零售销售年率</li>
+                    </a>
+                                        <a title="季调后零售销售年率 " href="/data/sprswdsy+index.html ">
+                        <li class="flex_cm1">季调后零售销售年率</li>
+                    </a>
+                                        <a title="失业人数 " href="/data/spuechng+index.html ">
+                        <li class="flex_cm1">失业人数</li>
+                    </a>
+                                        <a title="失业率季率 " href="/data/spunempr+index.html ">
+                        <li class="flex_cm1">失业率季率</li>
+                    </a>
+                                        <a title="GDP季率终值 " href="/data/spnagdpq+indexf.html ">
+                        <li class="flex_cm1">GDP季率终值</li>
+                    </a>
+                                        <a title="GDP季率初值 " href="/data/spnagdpq+indexp.html ">
+                        <li class="flex_cm1">GDP季率初值</li>
+                    </a>
+                                        <a title="GDP年率初值 " href="/data/spnagdpy+indexp.html ">
+                        <li class="flex_cm1">GDP年率初值</li>
+                    </a>
+                                        <a title="综合PMI " href="/data/mpmiesca+index.html ">
+                        <li class="flex_cm1">综合PMI</li>
+                    </a>
+                                        <a title="制造业PMI " href="/data/mpmiesma+index.html ">
+                        <li class="flex_cm1">制造业PMI</li>
+                    </a>
+                                        <a title="服务业PMI " href="/data/mpmiessa+index.html ">
+                        <li class="flex_cm1">服务业PMI</li>
+                    </a>
+                                        <a title="未季调工业产出年率 " href="/data/spioyoy+index.html ">
+                        <li class="flex_cm1">未季调工业产出年率</li>
+                    </a>
+                                        <a title="调后工业产出年率 " href="/data/spiowsay+index.html ">
+                        <li class="flex_cm1">调后工业产出年率</li>
+                    </a>
+                                        <a title="调和CPI月率初值 " href="/data/spcpeumm+indexp.html ">
+                        <li class="flex_cm1">调和CPI月率初值</li>
+                    </a>
+                                        <a title="调和CPI年率初值 " href="/data/spcpeuyy+indexp.html ">
+                        <li class="flex_cm1">调和CPI年率初值</li>
+                    </a>
+                                    </ul>
+            </div>
+                        <div name="ETF" class="j_tab_box show c_tab_nav">
+                <ul>
+                                        <a title="白银ETF " href="/data/etf/silver.html ">
+                        <li class="flex_cm1">白银ETF持仓量</li>
+                    </a>
+                                        <a title="黄金ETF " href="/data/etf/gold.html ">
+                        <li class="flex_cm1">黄金ETF持仓量</li>
+                    </a>
+                                    </ul>
+            </div>
+                    </div>
+        </div>
+       
+    </div>
+</body>
+<script type="text/javascript">
+</script>
+
+</html>

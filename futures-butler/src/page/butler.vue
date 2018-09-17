@@ -1,6 +1,8 @@
 <template>
   <div id="butler" >
-    <mt-header fixed title="管家"></mt-header>
+    <mt-header fixed title="管家">
+      <span class="header_icon kefu_icon" slot="right" @click="callCustomer"></span>
+    </mt-header>
     <div class="butler_wrap">
       <!-- <p class="note"><span>管家提示：</span>左右滑动弹出按钮，解锁后可用。</p> -->
       <!-- <ul class="butler_list">
@@ -16,7 +18,8 @@
       <Swiper :list="listObj[item.list]" :color="item.color"></Swiper>
       <div class="hr24"></div>
     </div>
-    
+    <mt-actionsheet :actions="actions" v-model="sheetVisible">
+    </mt-actionsheet>
    
   </div>
 </template>

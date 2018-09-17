@@ -3,7 +3,7 @@
         <div class="contain" @touchmove="moveCube" @touchstart="setCoordinate">
             <div class="box">
                 <div class="face one">one</div> <!-- 上面 -->
-                <div class="face two" @click="goto('/recommend/recommend')">{{cubeList[0]}} </div><!-- 正面 -->
+                <div class="face two" @click="goto('/recommend_homes')">{{cubeList[0]}} </div><!-- 正面 -->
                 <div class="face three" @click="goto('/recommend/crude-oil')">{{cubeList[1]}} </div> <!-- 右边 -->
                 <div class="face four" @click="goto('/recommend/stock-index')">{{cubeList[2]}}</div><!-- 后面 -->
                 <div class="face five" @click="goto('/recommend/noble-metal')">{{cubeList[3]}} </div><!-- 左边 -->
