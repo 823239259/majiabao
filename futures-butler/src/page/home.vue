@@ -43,7 +43,7 @@
       </div>
      
     </div>
-    <div class="message_box" @click="goto('/butler_community')"></div>    
+    <div class="message_box" @click="goto('/community')"></div>    
     <bottomTab :tabSelect="tabSelected"></bottomTab>
     <mt-actionsheet :actions="actions" v-model="sheetVisible">
     </mt-actionsheet>
