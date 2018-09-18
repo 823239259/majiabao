@@ -54,6 +54,7 @@
           <van-tab title="标签 4">内容 4</van-tab>
         </van-tabs>
       </div>
+      <div>1</div>
     </div>
     <!--底部tab-->
     <bottomTab :tabSelect="tabSelected"></bottomTab>
