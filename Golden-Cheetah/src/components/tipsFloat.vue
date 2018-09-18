@@ -36,7 +36,7 @@ import pro from '../assets/js/common'
 				toolsList: [
 					{
 						name: '首页',
-						path: '/home'
+						path: '/ss'
 					},
 					{
 						name: '行情',

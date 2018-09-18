@@ -1,6 +1,6 @@
 <template>
     <div id="strategy" >
-         <TopTitle title="原油回测">
+         <TopTitle title="聊天室">
             <!-- <span slot="my_right" class="header_icon reload_icon"></span> -->
         </TopTitle>
         <div class="btn_box">
@@ -46,7 +46,7 @@
           <ul class="strategy_list">
             <li :class="['item',{'checked':strategyChecked == index}]"  v-for="(item,index) in strategyList" @click="changeItem(index,'strategyChecked')" :key="item.name" >{{item.name}}</li>
           </ul>
-          
+
         </div> -->
         <!-- <div class="varieties_wrap strategy_wrap">
           <h2>品种选择</h2>
@@ -59,13 +59,13 @@
         </div>
 
         <bottom-tab :tabSelect='tabSelected'></bottom-tab>
-        
+
 <mt-actionsheet
                 :actions="actions"
                 v-model="sheetVisible">
                 </mt-actionsheet>
-       
-          
+
+
     </div>
 </template>
 

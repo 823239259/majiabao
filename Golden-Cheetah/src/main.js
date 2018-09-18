@@ -12,6 +12,9 @@ import "./assets/css/my-mint.scss";
 import router from './router'
 import store from './store'
 import pro from './assets/js/common'
+import {Button, Row, Col, Swipe, SwipeItem,Tab,Tabs} from 'vant'
+
+Vue.use(Button).use(Row).use(Col).use(Swipe).use(SwipeItem).use(Tab).use(Tabs)
 
 /* 
   用于区分打包 及开发时的依赖 begin

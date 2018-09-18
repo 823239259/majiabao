@@ -22,19 +22,19 @@
 				tabList: [
 					{
 						name: '首页',
-						path: 'quote'
+						path: 'home'
 					},
 					{
 						name: '对比',
-						path: 'quote_strategy'
+						path: 'contrast'
 					},
 					{
 						name: '聊天室',
-						path: 'strategy'
+						path: 'chat-room'
 					},
 					{
 						name: '回测',
-						path: 'oil_online'
+						path: 'back-test'
 					},
 					{
 						name: '更多',

@@ -12,17 +12,56 @@ const load = (...p)=>resolve => require([`@/${p[1]||'page'}/${p[0]}.vue`], resol
 const router = new Router({
   //mode: 'history',
   routes: [
+    // golden-cheetah
     {
       path: "/",
-      redirect: {
-        name: "quote"
-      }
+      redirect:'home'
+      //   {
+      //   name: "quote"
+      // }
     },
     {
       path: "/more",
       name: "more",
       component: load("more")
     },
+    {
+      path: "/chat-room",
+      name: "ChatRoom",
+      component: load("ChatRoom")
+    },
+    {
+      path: "/contrast",
+      name: "Contrast",
+      component: load("contrast")
+    },
+    {
+      path: "/home",
+      name: "Home",
+      component: load("home")
+    },
+    {
+      path: "/back-test",
+      name: "BackTest",
+      component: load("BackTest")
+    },
+    // 对比页面更多数据入口
+    {
+      path: "/contrast_more_data",
+      name: "ContrastMoreData",
+      component: load('account/components/contrast_more')
+    },
+    //对比页面合约介绍入口
+    {
+      path: "/agreement",
+      name: "Agreement",
+      component: load('account/components/agreement')
+    },
+
+
+
+
+    // 原油router 无用
     {
       path: "/oil_online",
       name: "oil_online",

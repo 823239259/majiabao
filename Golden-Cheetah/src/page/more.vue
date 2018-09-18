@@ -1,6 +1,7 @@
 <template>
 <div id="home">
   <TopTitle title="更多" />
+
   <div class="more_box">
     <h2>账号</h2>
     <loginDisplay></loginDisplay>
