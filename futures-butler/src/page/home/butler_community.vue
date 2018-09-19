@@ -15,7 +15,7 @@
             </div>
             <div class="msg_wrap">
                 <div class="msg_box clearfix" v-for="(n, index) in communicationList" :key="index">
-                    <div class="msg" :class="n.type === ('others1'||'others2')?'others':'my'">
+                    <div class="msg" :class="(n.type === 'others1'||n.type === 'others2')?'others':'my'">
                         <img :src="personImg[n.type]" alt="01"> 
                         <div  class="msg_s_box">
                             <div class="msg_s">

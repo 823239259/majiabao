@@ -63,8 +63,8 @@
             on: {
                 click: () => {
                   // 这里有坑，需要注意的是：this 指向的是 swpier 实例，而不是当前的 vue， 因此借助 vm，来调用 methods 里的方法 
-                    const item = this.list[this.swiper.activeIndex];
-                    this.goto(item.path)
+                    const item = this.myParameters[this.swiper.activeIndex];
+                    this.toQuoteDetails(item)
                 }
             }
 
@@ -76,6 +76,9 @@
     computed: {
       clientHeight() {
         return document.documentElement.clientHeight + "px";
+      },
+      swiper() {
+        return this.$refs.mySwiper.swiper
       },
       myParameters () {
         return this.$store.state.market.Parameters;
@@ -107,6 +110,9 @@
               this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + element.ExchangeNo + '","CommodityNo":"' + element.CommodityNo + '","ContractNo":"' + element.MainContract +'"}}');
           }
         });
+      },
+      toQuoteDetails ({CommodityNo, MainContract, ExchangeNo, contrast}){
+				this.$router.push({path: '/quoteDetails', query: {'commodityNo': CommodityNo, 'mainContract': MainContract, 'exchangeNo': ExchangeNo, 'contrast': contrast}});
 			},
        
     },

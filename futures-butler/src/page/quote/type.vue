@@ -66,6 +66,7 @@
 				});
 			},
 			toQuoteDetails: function(commodityNo, mainContract, exchangeNo, contrast){
+				console.log(contrast)
 				this.$router.push({path: '/quoteDetails', query: {'commodityNo': commodityNo, 'mainContract': mainContract, 'exchangeNo': exchangeNo, 'contrast': contrast}});
 			},
 			addoption:function(commodityNo,exchangeNo,contrastNo){
