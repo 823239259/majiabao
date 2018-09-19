@@ -1,9 +1,8 @@
 <template>
-  <div>
+  <div id="home">
     <TopTitle title="回测" >
       <span slot="my_right" class="header_icon customer_icon"></span>
     </TopTitle>
-
     <bottomTab :tabSelect="tabSelected"></bottomTab>
   </div>
 </template>
@@ -16,6 +15,7 @@
       return {
         msg: '回测',
         tabSelected: 'back-test',
+
       }
     },
     components: {
@@ -25,6 +25,15 @@
   }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+  @import "../assets/css/common.scss";
+  #home {
+    width: 7.5rem;
+    /*min-height:7rem;*/
+    background-color: $bodyBg;
+    padding-top: 0.96rem;
+    padding-bottom: 3.2rem;
+    overflow: hidden;
+    /*height: 100vh;*/
+  }
 </style>

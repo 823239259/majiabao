@@ -7,7 +7,7 @@
     <!--最新金价和时间-->
     <div class="home-container">
       <p class="new-price">最新金价</p>
-      <p class="now-date">2018-9-18 10:38:40</p>
+      <p class="now-date">{{date}}</p>
     </div>
     <!--内容大盒子-->
     <div class="home-box">
@@ -30,7 +30,7 @@
       <!--轮播vant组件-->
       <van-swipe :autoplay="1000">
         <van-swipe-item v-for="(ss,index) in swipeArr" :key="index">
-          <img :src="ss.swipeImg" alt="">
+          <img :src="ss.swipeImg">
         </van-swipe-item>
       </van-swipe>
 
@@ -45,16 +45,49 @@
       <div class="deal">
 
       </div>
-      <p class="show-more">查看更多详细数据>></p>
-      <div class="chose-tab">
-        <van-tabs v-model="active" class="tab-sm-box">
-          <van-tab title="标签 1">内容 1</van-tab>
-          <van-tab title="标签 2">内容 2</van-tab>
-          <van-tab title="标签 3">内容 3</van-tab>
-          <van-tab title="标签 4">内容 4</van-tab>
-        </van-tabs>
+      <!--开盘价/昨结价/买卖价/最高，低价-->
+      <div class="position-info">
+        <table class="info-box">
+          <tr>
+            <td>开盘价</td>
+            <td>昨结价</td>
+            <td>最高价</td>
+          </tr>
+          <tr>
+            <td>开盘价</td>
+            <td>昨结价</td>
+            <td>最高价</td>
+          </tr>
+          <tr>
+            <td>开盘价</td>
+            <td>昨结价</td>
+            <td>最高价</td>
+          </tr>
+          <tr>
+            <td>开盘价</td>
+            <td>昨结价</td>
+            <td>最高价</td>
+          </tr>
+        </table>
       </div>
-      <div>1</div>
+      <p class="show-more" @click="goto('/contrast_more_data')">查看更多详细数据>></p>
+    </div>
+    <div class="chose-tab">
+      <van-tabs v-model="active" :color="'#3180ff'" class="tab-sm-box" swipe-threshold:5>
+        <van-tab title="新闻">
+          <div class="news" @click="goto('/contrast_more_data')">
+            <p>中国智慧</p>
+            <p>2018-9-19 16:58:35</p>
+            <!--<p><img :src="" alt=""></p>-->
+          </div>
+          <!--<div>新闻3</div>-->
+        </van-tab>
+        <van-tab title="情绪">情绪</van-tab>
+        <van-tab title="发言">发言</van-tab>
+        <van-tab title="十档">十档</van-tab>
+        <van-tab title="公告">公告</van-tab>
+        <van-tab title="简介">简介</van-tab>
+      </van-tabs>
     </div>
     <!--底部tab-->
     <bottomTab :tabSelect="tabSelected"></bottomTab>
@@ -69,6 +102,7 @@
       return {
         tabSelected: 'home',
         active:2,
+        date:new Date(),
         chartArr:[
           {name:'分时图'},
           {name:'闪电图'},
@@ -97,7 +131,17 @@
             funcIcon:require('../assets/images/golden_cheetah/huice_icon_chose.png'),
             funcName:'回测'
           }
+        ],
+        newsArr:[
+          {newTitle:'中国智慧',NDate:'2018-9-19'}
         ]
+      }
+    },
+    methods:{
+      goto(path) {
+        this.$router.push({
+          path: path
+        });
       }
     },
     components: {
@@ -114,9 +158,9 @@
     /*min-height:7rem;*/
     background-color: $bodyBg;
     padding-top: 0.96rem;
-    padding-bottom: 1.26rem;
-    //overflow: hidden;
-    /*height: 130vh;*/
+    padding-bottom: 3.2rem;
+    overflow: hidden;
+    /*height: 100vh;*/
   }
   .home-container{
     width: 6.9rem;
@@ -154,7 +198,8 @@
   .or-data-box>ul>li:last-child{
     float: right;
     margin-right: .3rem;
-  }.or-data-box>ul>li:nth-child(2){
+  }
+  .or-data-box>ul>li:nth-child(2){
     float: left;
     margin-left: 1.87rem;
     font-size: .48rem;
@@ -250,8 +295,36 @@
   }
   .chose-tab{
     margin-top: .3rem;
+    width: 7.5rem;
   }
   .tab-sm-box{
     color:#fff;
+    background-color: #373a41;
+  }
+  .news{
+    width: 6.9rem;
+    height: 1.6rem;
+    background-color: #373a41;
+    margin-bottom: .3rem;
+    border-radius: .2rem;
+  }
+
+
+  .position-info{
+    height: 2.3rem;
+    background-color: #373a41;
+    border-radius: 0.2rem;
+    margin-top: .3rem;
+    color: #fff;
+  }
+  .info-box{
+    width: 6.3rem;
+    height: 1.7rem;
+    margin: 0 auto;
+    text-align: center;
+    /*line-height: .6rem;*/
+  }
+  .info-box>tr{
+    /*border: 1px solid red;*/
   }
 </style>

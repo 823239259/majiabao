@@ -1,0 +1,19 @@
+/*新闻-情绪-发言。。框的样式*/
+.van-tab{
+  background-color: #373a41;
+  color: #8d8e8f;
+}
+/*新闻小框框的样式*/
+.van-tabs__content{
+  width: 6.9rem;
+  height: 1.6rem;
+  margin: .3rem auto;
+  background-color: #303238;
+  border-radius: .2rem;
+}
+.tab-sm-box[data-v-23eb5d54]{
+  background-color: #303238!important;
+}
+.tab-sm-box[data-v-23eb5d54]{
+  background-color: #303238!important;
+}

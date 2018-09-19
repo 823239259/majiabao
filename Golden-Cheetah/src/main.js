@@ -9,6 +9,7 @@ Vue.prototype.$http = axios
 import Mint from 'mint-ui';
 import 'mint-ui/lib/style.css';
 import "./assets/css/my-mint.scss";
+import "./assets/css/my-vant.css";
 import router from './router'
 import store from './store'
 import pro from './assets/js/common'
