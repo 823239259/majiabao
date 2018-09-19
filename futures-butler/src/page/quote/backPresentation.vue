@@ -1,6 +1,7 @@
 <template>
 	<div id="backPresentation">
-		<mt-header :title="strategyName" fixed style="background-color:#169781;font-size: 0.32rem;height: 1rem;border-bottom: 1px solid #12141a;line-height: 1rem;">
+		<mt-header title="管家回测" fixed style="background-color:#169781;font-size: 0.32rem;height: 1rem;border-bottom: 1px solid #12141a;line-height: 1rem;">
+		<!-- <mt-header :title="strategyName" fixed style="background-color:#169781;font-size: 0.32rem;height: 1rem;border-bottom: 1px solid #12141a;line-height: 1rem;"> -->
 		 	<mt-button slot="left" icon="back" @click="backRounter"></mt-button>
 		</mt-header>
 		<div id="container">

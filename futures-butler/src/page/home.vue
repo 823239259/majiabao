@@ -166,9 +166,12 @@
       quoteSocket () {
         return this.$store.state.quoteSocket;
       },
-      celuePath () {
-        return `/quoteDetails?commodityNo=CL&mainContract=1810&exchangeNo=NYMEX&contrast=BRN,GC,DX,NG`
-      }
+      myOil () {
+        return this.$store.state.market.markettemp.find(element => element.CommodityNo === 'CL');
+      },
+      // celuePath () {
+      //   return `/quoteDetails?commodityNo=${this.myOil.CommodityNo}&mainContract=${this.myOil.MainContract}&exchangeNo=NYMEX&contrast=BRN,GC,DX,NG`
+      // }
       
     },
     methods: {
@@ -193,15 +196,24 @@
               this.quoteSocket.send('{"Method":"Subscribe","Parameters":{"ExchangeNo":"' + element.ExchangeNo + '","CommodityNo":"' + element.CommodityNo + '","ContractNo":"' + element.MainContract +'"}}');
           }
         });
-			},
+      },
+      setPath () {
+        this.cubeList3.forEach( item => item.path = `/quoteDetails_celue?commodityNo=${this.myOil.CommodityNo}&mainContract=${this.myOil.MainContract}&exchangeNo=NYMEX&contrast=BRN,GC,DX,NG`)
+      }
     },
     activated() {
     },
     mounted(){
       this.initQuoteClient();
       setTimeout(() => {
-        this.subscribe()
-      }, 1000);
+        new Promise((resolve, reject)=> {
+          this.subscribe();
+          resolve()
+        }).then( (params) =>{
+          this.setPath()
+        })
+        
+      }, 2000);
       
       
     }

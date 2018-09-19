@@ -8,7 +8,7 @@
         <img src="../../../assets/images/account/about_us.png" alt="about_logo">
         <h2>期货管家</h2>
         <p>您的私人期货管家</p>
-        <p>V1.0.0</p>
+        <p>V1.0.1</p>
       </div>
     </div>
   </div>
