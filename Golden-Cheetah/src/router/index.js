@@ -57,6 +57,12 @@ const router = new Router({
       name: "Agreement",
       component: load('account/components/agreement')
     },
+    // 新闻详情页入口
+    {
+      path: "/new_son",
+      name: "NewSon",
+      component: load('account/components/new_son')
+    },
 
 
 
